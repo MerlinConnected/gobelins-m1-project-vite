@@ -1,10 +1,12 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, Loader } from '@react-three/drei';
 
-import { useControls } from 'leva';
+import { Leva, useControls } from 'leva';
 
 import { Suspense, useRef, useState } from 'react';
+import { isHost } from 'playroomkit';
 
+const DEBUG = true;
 const handleClick = (direction) => {
   console.log('click', direction);
 };
@@ -61,6 +63,7 @@ function Model() {
 export default function Scene() {
   return (
     <>
+      <Leva hidden={!DEBUG || !isHost()} />
       <Canvas shadows camera={{ position: [0, 10, 0] }}>
         <Suspense fallback={null}>
           <Model />

@@ -1,10 +1,20 @@
+import { insertCoin } from 'playroomkit';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+import { DaronEngineProvider } from './hook/useDaronEngine';
+
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+
+insertCoin({
+  // skipLobby: true,
+}).then(() => {
+  root.render(
+    <DaronEngineProvider>
+      <App />
+    </DaronEngineProvider>
+  );
+});

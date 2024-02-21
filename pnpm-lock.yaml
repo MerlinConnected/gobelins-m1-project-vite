@@ -20,6 +20,9 @@ dependencies:
   leva:
     specifier: ^0.9.35
     version: 0.9.35(@types/react-dom@18.2.19)(@types/react@18.2.57)(react-dom@18.2.0)(react@18.2.0)
+  playroomkit:
+    specifier: ^0.0.67
+    version: 0.0.67(react-dom@18.2.0)(react@18.2.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -1432,6 +1435,16 @@ packages:
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
     dev: true
+
+  /playroomkit@0.0.67(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-y2ob+ytcx8/J3tO1w6EaKKwXv9V51JOt4cHa7fVxP8woxqQw24RSgmN7yTDnTjdBjgLrYVkprxgZw6sD7KwfHw==}
+    peerDependencies:
+      react: '>=17.0.2 <= 18'
+      react-dom: '>=17.0.2 <= 18'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /postcss@8.4.35:
     resolution: {integrity: sha512-u5U8qYpBCpN13BsiEB0CbR1Hhh4Gc0zLFuedrHJKMctHCHAGrMdG0PRM/KErzAL3CU6/eckEtmHNB3x6e3c0vA==}
