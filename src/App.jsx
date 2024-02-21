@@ -5,15 +5,27 @@ import { useControls } from 'leva';
 
 import { Suspense, useRef, useState } from 'react';
 
-const handleClick = () => {
-  console.log('click');
+const handleClick = (direction) => {
+  console.log('click', direction);
 };
 
 function Overlay() {
   return (
     <div style={{ position: 'absolute', top: 10, left: 10, color: 'white', display: 'flex', gap: '1rem' }}>
-      <button onClick={handleClick}>Avancer</button>
-      <button onClick={handleClick}>Reculer</button>
+      <button
+        onClick={() => {
+          handleClick('forwards');
+        }}
+      >
+        Avancer
+      </button>
+      <button
+        onClick={() => {
+          handleClick('backwards');
+        }}
+      >
+        Reculer
+      </button>
     </div>
   );
 }
