@@ -5,6 +5,19 @@ import { useControls } from 'leva';
 
 import { Suspense, useRef, useState } from 'react';
 
+const handleClick = () => {
+  console.log('click');
+};
+
+function Overlay() {
+  return (
+    <div style={{ position: 'absolute', top: 10, left: 10, color: 'white', display: 'flex', gap: '1rem' }}>
+      <button onClick={handleClick}>Avancer</button>
+      <button onClick={handleClick}>Reculer</button>
+    </div>
+  );
+}
+
 function Model() {
   const meshRef = useRef();
 
@@ -25,8 +38,6 @@ function Model() {
     }
   });
 
-  if (meshRef.current) console.log(meshRef.current);
-
   return (
     <mesh ref={meshRef} onPointerOver={() => hover(true)} onPointerOut={() => hover(false)} scale={hovered ? 2 : 1}>
       <boxGeometry args={[1, 1, 1]} />
@@ -38,15 +49,16 @@ function Model() {
 export default function Scene() {
   return (
     <>
-      <Canvas shadows>
+      <Canvas shadows camera={{ position: [0, 10, 0] }}>
         <Suspense fallback={null}>
           <Model />
-          <OrbitControls />
+          <OrbitControls target={(0, 0, 0)} />
           <ambientLight intensity={1} />
           <Environment preset="city" />
         </Suspense>
       </Canvas>
       <Loader />
+      <Overlay />
     </>
   );
 }
