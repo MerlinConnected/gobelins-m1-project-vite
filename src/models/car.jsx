@@ -13,7 +13,7 @@ export const Model = forwardRef((props, ref) => {
     <group {...props} ref={ref} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={[0.01, 0.01, 0.01]}>
         <mesh castShadow receiveShadow geometry={nodes.Object_15.geometry}>
-          <meshBasicMaterial color={props.color} />
+          <meshPhysicalMaterial color={props.color} />
         </mesh>
         <mesh castShadow receiveShadow geometry={nodes.Object_15_1.geometry} material={materials['02_-_Default']} />
         <mesh castShadow receiveShadow geometry={nodes.Object_15_2.geometry} material={materials['09_-_Default']} />
