@@ -37,7 +37,6 @@ export function DaronEngineProvider({ children }) {
 
       const randomValue = 1;
       setPlayerTurn(randomValue, true);
-
       players.forEach((player) => {
         player.setState('points', 0, true);
       });
