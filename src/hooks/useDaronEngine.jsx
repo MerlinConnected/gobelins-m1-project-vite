@@ -35,7 +35,6 @@ export function DaronEngineProvider({ children }) {
       console.log('startGame');
       setTimer(TIME_PLAYER_TURN, true);
 
-      console.log('gfkjehgalkhzrejl');
       const randomValue = 1;
       setPlayerTurn(randomValue, true);
 
@@ -80,7 +79,6 @@ export function DaronEngineProvider({ children }) {
       if (!isHost()) return;
       if (paused) return;
       let newTime = getState('timer') - 1;
-      console.log('newTime', newTime);
 
       if (newTime <= 0) {
         phaseEnd();
