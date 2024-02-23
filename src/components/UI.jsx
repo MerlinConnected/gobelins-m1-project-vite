@@ -13,9 +13,6 @@ const handleClick = (direction) => {
 function CurrentPlayer() {
   const { playerTurn, players, myPlayer } = useDaronEngine();
 
-  //   console.log(players[playerTurn]?.id);
-  //   console.log(players[playerTurn]?.myId);
-
   return <span>{players[playerTurn]?.id === players[playerTurn]?.myId ? 'It is my turn' : 'It is not my turn'}</span>;
 }
 
@@ -30,7 +27,7 @@ export default function UI() {
     switch (phase) {
       case 'playerTurn':
         if (currentPlayer?.id === me?.id) {
-          console.log('my turn');
+          // console.log('my turn');
           setDisabled(false);
         }
         break;
@@ -42,23 +39,25 @@ export default function UI() {
   return (
     <>
       <Leva hidden={!DEBUG || !isHost()} />
-      <div style={{ position: 'absolute', top: 10, left: 10, color: 'white', display: 'flex', gap: '1rem' }}>
-        <button
-          onClick={() => {
-            handleClick('forwards');
-          }}
-          disabled={disabled}
-        >
-          Avancer
-        </button>
-        <button
-          onClick={() => {
-            handleClick('backwards');
-          }}
-          disabled={disabled}
-        >
-          Reculer
-        </button>
+      <div className="overlay">
+        <div>
+          <button
+            onClick={() => {
+              handleClick('forwards');
+            }}
+            className={disabled ? 'disabled' : ''}
+          >
+            Avancer
+          </button>
+          <button
+            onClick={() => {
+              handleClick('backwards');
+            }}
+            className={disabled ? 'disabled' : ''}
+          >
+            Reculer
+          </button>
+        </div>
         <span>Time left {timer}</span>
         <span>Phase {phase}</span>
         <span>{me?.state.profile.name}</span>

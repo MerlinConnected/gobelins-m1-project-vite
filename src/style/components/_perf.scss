@@ -1,2 +1,11 @@
-.performance-monitor {
+div.performance-monitor {
+    background-color: black !important;
+
+    bottom: 10px !important;
+    left: 10px !important;
+
+    border: 1.5px solid #323232;
+    border-radius: rem(0.2);
+
+    font-family: monospace;
 }

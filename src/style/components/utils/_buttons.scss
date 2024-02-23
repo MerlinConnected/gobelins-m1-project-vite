@@ -1,0 +1,17 @@
+button {
+    border: 1.5px solid #323232;
+    border-radius: rem(0.2);
+
+    padding: rem(0.4) rem(1);
+
+    align-self: flex-start;
+
+    background-color: black;
+    &:hover {
+        background-color: #323232;
+    }
+    &.disabled {
+        cursor: not-allowed;
+        color: #a2a2a2;
+    }
+}

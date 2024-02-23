@@ -10,11 +10,12 @@ export default function Scene() {
   return (
     <>
       <Canvas shadows camera={{ position: [2, 2, 2] }}>
+        <color attach="background" args={['#000']} />
         <Suspense fallback={null}>
           <Players />
           <OrbitControls target={(0, 0, 0)} />
           <Environment preset="city" />
-          <Perf position="bottom-left" minimal />
+          <Perf position="bottom-left" minimal className="performance-monitor" />
         </Suspense>
       </Canvas>
       <Loader />
