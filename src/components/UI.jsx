@@ -29,8 +29,8 @@ export default function UI() {
   useEffect(() => {
     switch (phase) {
       case 'playerTurn':
-        if (currentPlayer.id === me.id) {
-          //   console.log('my turn');
+        if (currentPlayer?.id === me?.id) {
+          console.log('my turn');
           setDisabled(false);
         }
         break;
