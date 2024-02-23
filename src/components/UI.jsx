@@ -6,9 +6,6 @@ import { isHost, myPlayer } from 'playroomkit';
 import { Leva, useControls } from 'leva';
 
 const DEBUG = true;
-const handleClick = (direction) => {
-  console.log('click', direction);
-};
 
 function CurrentPlayer() {
   const { playerTurn, players, myPlayer } = useDaronEngine();
@@ -17,11 +14,31 @@ function CurrentPlayer() {
 }
 
 export default function UI() {
-  const { phase, startGame, timer, playerTurn, players, points } = useDaronEngine();
+  const { phase, startGame, timer, playerTurn, players } = useDaronEngine();
   const [disabled, setDisabled] = useState(false);
 
   const currentPlayer = players[playerTurn];
   const me = myPlayer();
+
+  const selectCard = (direction) => {
+    switch (direction) {
+      case 'transport':
+        currentPlayer.setState('selectedCard', 'transport', true);
+        break;
+
+      case 'backwards':
+        currentPlayer.setState('selectedCard', 'backwards', true);
+        currentPlayer.setState('availableTargets', players.filter((p) => p.id !== currentPlayer.id), true);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const selectTarget = (index) => {
+    currentPlayer.setState('target', index, true);
+  };
 
   useEffect(() => {
     switch (phase) {
@@ -39,30 +56,49 @@ export default function UI() {
   return (
     <>
       <Leva hidden={!DEBUG || !isHost()} />
-      <div className="overlay">
-        <div>
-          <button
-            onClick={() => {
-              handleClick('forwards');
-            }}
-            className={disabled ? 'disabled' : ''}
-          >
-            Avancer
-          </button>
-          <button
-            onClick={() => {
-              handleClick('backwards');
-            }}
-            className={disabled ? 'disabled' : ''}
-          >
-            Reculer
-          </button>
+      <div className='overlay'>
+        <p>Je suis {me.state.profile.name}</p>
+        <div className='board'>
+          <h2>Classement</h2>
+          {players.map((player, index) => (
+            <div
+              key={index}
+            >
+              <p>{player.state.profile.name}</p>
+              <p>{player.getState("points")} points</p>
+            </div>
+          ))}
         </div>
-        <span>Time left {timer}</span>
-        <span>Phase {phase}</span>
-        <span>{me?.state.profile.name}</span>
+        <button
+          onClick={() => {
+            selectCard('transport');
+          }}
+          className={disabled ? 'disabled' : ''}
+        >
+          Avancer
+        </button>
+        <button
+          onClick={() => {
+            selectCard('backwards');
+          }}
+          className={disabled ? 'disabled' : ''}
 
-        <CurrentPlayer />
+        >
+          Reculer
+        </button>
+        <div className='targets'>
+          {currentPlayer === me && currentPlayer.getState('availableTargets')?.map((player, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                selectTarget(index);
+              }}
+              disabled={disabled}
+            >
+              <span>{player.state.profile.name}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </>
   );
