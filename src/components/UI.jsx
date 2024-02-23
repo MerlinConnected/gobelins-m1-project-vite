@@ -10,6 +10,15 @@ const handleClick = (direction) => {
   console.log('click', direction);
 };
 
+function CurrentPlayer() {
+  const { playerTurn, players, myPlayer } = useDaronEngine();
+
+  //   console.log(players[playerTurn]?.id);
+  //   console.log(players[playerTurn]?.myId);
+
+  return <span>{players[playerTurn]?.id === players[playerTurn]?.myId ? 'It is my turn' : 'It is not my turn'}</span>;
+}
+
 export default function UI() {
   const { phase, startGame, timer, playerTurn, players, points } = useDaronEngine();
   const [disabled, setDisabled] = useState(false);
@@ -17,13 +26,11 @@ export default function UI() {
   const currentPlayer = players[playerTurn];
   const me = myPlayer();
 
-  console.log('playerTurn', playerTurn);
-
   useEffect(() => {
     switch (phase) {
       case 'playerTurn':
         if (currentPlayer.id === me.id) {
-          console.log('my turn');
+          //   console.log('my turn');
           setDisabled(false);
         }
         break;
@@ -52,7 +59,11 @@ export default function UI() {
         >
           Reculer
         </button>
-        {/* <span>Time left {timer}</span> */}
+        <span>Time left {timer}</span>
+        <span>Phase {phase}</span>
+        <span>{me?.state.profile.name}</span>
+
+        <CurrentPlayer />
       </div>
     </>
   );
