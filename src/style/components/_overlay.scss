@@ -1,7 +1,16 @@
-span {
-    color: black;
-}
+.overlay {
+    display: flex;
+    flex-direction: column;
+    gap: rem(1);
 
-button {
-    color: black;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+    color: white;
+    > div {
+        display: flex;
+        flex-direction: row;
+        gap: rem(0.5);
+    }
 }

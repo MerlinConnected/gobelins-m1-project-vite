@@ -10,9 +10,6 @@ const DEBUG = true;
 function CurrentPlayer() {
   const { playerTurn, players, myPlayer } = useDaronEngine();
 
-  //   console.log(players[playerTurn]?.id);
-  //   console.log(players[playerTurn]?.myId);
-
   return <span>{players[playerTurn]?.id === players[playerTurn]?.myId ? 'It is my turn' : 'It is not my turn'}</span>;
 }
 
@@ -47,7 +44,7 @@ export default function UI() {
     switch (phase) {
       case 'playerTurn':
         if (currentPlayer?.id === me?.id) {
-          console.log('my turn');
+          // console.log('my turn');
           setDisabled(false);
         }
         break;
@@ -59,7 +56,7 @@ export default function UI() {
   return (
     <>
       <Leva hidden={!DEBUG || !isHost()} />
-      <div style={{ position: 'absolute', top: 10, left: 10, display: 'flex', gap: '1rem' }}>
+      <div className='overlay'>
         <p>Je suis {me.state.profile.name}</p>
         <div className='board'>
           <h2>Classement</h2>
@@ -76,7 +73,7 @@ export default function UI() {
           onClick={() => {
             selectCard('transport');
           }}
-          disabled={disabled}
+          className={disabled ? 'disabled' : ''}
         >
           Avancer
         </button>
@@ -84,7 +81,8 @@ export default function UI() {
           onClick={() => {
             selectCard('backwards');
           }}
-          disabled={disabled}
+          className={disabled ? 'disabled' : ''}
+
         >
           Reculer
         </button>
