@@ -6,18 +6,33 @@ import { isHost, myPlayer } from 'playroomkit';
 import { Leva, useControls } from 'leva';
 
 const DEBUG = true;
-const handleClick = (direction) => {
-  console.log('click', direction);
-};
 
 export default function UI() {
-  const { phase, startGame, timer, playerTurn, players, points } = useDaronEngine();
+  const { phase, startGame, timer, playerTurn, players } = useDaronEngine();
   const [disabled, setDisabled] = useState(false);
 
   const currentPlayer = players[playerTurn];
   const me = myPlayer();
 
-  console.log('playerTurn', playerTurn);
+  const selectCard = (direction) => {
+    switch (direction) {
+      case 'transport':
+        currentPlayer.setState('selectedCard', 'transport', true);
+        break;
+
+      case 'backwards':
+        currentPlayer.setState('selectedCard', 'backwards', true);
+        currentPlayer.setState('availableTargets', players.filter((p) => p.id !== currentPlayer.id), true);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const selectTarget = (index) => {
+    currentPlayer.setState('target', index, true);
+  };
 
   useEffect(() => {
     switch (phase) {
@@ -35,10 +50,22 @@ export default function UI() {
   return (
     <>
       <Leva hidden={!DEBUG || !isHost()} />
-      <div style={{ position: 'absolute', top: 10, left: 10, color: 'white', display: 'flex', gap: '1rem' }}>
+      <div style={{ position: 'absolute', top: 10, left: 10, display: 'flex', gap: '1rem' }}>
+        <p>Je suis {me.state.profile.name}</p>
+        <div className='board'>
+          <h2>Classement</h2>
+          {players.map((player, index) => (
+            <div
+              key={index}
+            >
+              <p>{player.state.profile.name}</p>
+              <p>{player.getState("points")} points</p>
+            </div>
+          ))}
+        </div>
         <button
           onClick={() => {
-            handleClick('forwards');
+            selectCard('transport');
           }}
           disabled={disabled}
         >
@@ -46,13 +73,25 @@ export default function UI() {
         </button>
         <button
           onClick={() => {
-            handleClick('backwards');
+            selectCard('backwards');
           }}
           disabled={disabled}
         >
           Reculer
         </button>
-        {/* <span>Time left {timer}</span> */}
+        <div className='targets'>
+          {currentPlayer === me && currentPlayer.getState('availableTargets')?.map((player, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                selectTarget(index);
+              }}
+              disabled={disabled}
+            >
+              <span>{player.state.profile.name}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </>
   );
