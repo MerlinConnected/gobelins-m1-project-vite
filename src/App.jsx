@@ -13,7 +13,6 @@ export default function Scene() {
         <Suspense fallback={null}>
           <Players />
           <OrbitControls target={(0, 0, 0)} />
-          <ambientLight intensity={1} />
           <Environment preset="city" />
           <Perf position="bottom-left" minimal />
         </Suspense>
