@@ -106,7 +106,6 @@ export function DaronEngineProvider({ children }) {
       if (!isHost()) return;
       if (paused) return;
       let newTime = getState('timer') - 1;
-      console.log(newTime);
 
       if (newTime <= 0) {
         phaseEnd();

@@ -7,6 +7,15 @@ import { Leva, useControls } from 'leva';
 
 const DEBUG = true;
 
+function CurrentPlayer() {
+  const { playerTurn, players, myPlayer } = useDaronEngine();
+
+  //   console.log(players[playerTurn]?.id);
+  //   console.log(players[playerTurn]?.myId);
+
+  return <span>{players[playerTurn]?.id === players[playerTurn]?.myId ? 'It is my turn' : 'It is not my turn'}</span>;
+}
+
 export default function UI() {
   const { phase, startGame, timer, playerTurn, players } = useDaronEngine();
   const [disabled, setDisabled] = useState(false);
@@ -37,7 +46,7 @@ export default function UI() {
   useEffect(() => {
     switch (phase) {
       case 'playerTurn':
-        if (currentPlayer.id === me.id) {
+        if (currentPlayer?.id === me?.id) {
           console.log('my turn');
           setDisabled(false);
         }
