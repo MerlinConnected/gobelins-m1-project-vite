@@ -4,7 +4,7 @@ import { useFrame, useGraph } from '@react-three/fiber';
 import { SkeletonUtils } from 'three-stdlib';
 
 export const Model = forwardRef((props, ref) => {
-  const { scene, materials } = useGLTF('/car_low_poly.glb');
+  const { scene, materials } = useGLTF('/models/car_low_poly.glb');
 
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes } = useGraph(clone);
@@ -25,4 +25,4 @@ export const Model = forwardRef((props, ref) => {
   );
 });
 
-useGLTF.preload('/car_low_poly.glb');
+useGLTF.preload('/models/car_low_poly.glb');
