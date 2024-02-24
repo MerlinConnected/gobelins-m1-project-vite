@@ -28,7 +28,11 @@ export default function UI() {
 
       case 'backwards':
         currentPlayer.setState('selectedCard', 'backwards', true);
-        currentPlayer.setState('availableTargets', players.filter((p) => p.id !== currentPlayer.id), true);
+        currentPlayer.setState(
+          'availableTargets',
+          players.filter((p) => p.id !== currentPlayer.id),
+          true
+        );
         break;
 
       default:
@@ -55,17 +59,15 @@ export default function UI() {
 
   return (
     <>
-      <Leva hidden={!DEBUG || !isHost()} />
-      <div className='overlay'>
+      <Leva hidden={!DEBUG} />
+      <div className="overlay">
         <p>Je suis {me.state.profile.name}</p>
-        <div className='board'>
+        <div className="board">
           <h2>Classement</h2>
           {players.map((player, index) => (
-            <div
-              key={index}
-            >
+            <div key={index}>
               <p>{player.state.profile.name}</p>
-              <p>{player.getState("points")} points</p>
+              <p>{player.getState('points')} points</p>
             </div>
           ))}
         </div>
@@ -82,22 +84,22 @@ export default function UI() {
             selectCard('backwards');
           }}
           className={disabled ? 'disabled' : ''}
-
         >
           Reculer
         </button>
-        <div className='targets'>
-          {currentPlayer === me && currentPlayer.getState('availableTargets')?.map((player, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                selectTarget(index);
-              }}
-              disabled={disabled}
-            >
-              <span>{player.state.profile.name}</span>
-            </button>
-          ))}
+        <div className="targets">
+          {currentPlayer === me &&
+            currentPlayer.getState('availableTargets')?.map((player, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  selectTarget(index);
+                }}
+                disabled={disabled}
+              >
+                <span>{player.state.profile.name}</span>
+              </button>
+            ))}
         </div>
       </div>
     </>

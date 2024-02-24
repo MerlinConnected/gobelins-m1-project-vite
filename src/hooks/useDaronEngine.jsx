@@ -38,7 +38,7 @@ export function DaronEngineProvider({ children }) {
 
       players.forEach((player) => {
         player.setState('points', 0, true);
-        player.setState("selectedCard", '', true);
+        player.setState('selectedCard', '', true);
         player.setState('target', null, true);
         player.setState('availableTargets', [], true);
       });
@@ -53,26 +53,26 @@ export function DaronEngineProvider({ children }) {
 
   const performPlayerAction = () => {
     const currentPlayer = players[playerTurn];
-    const selectedCard = currentPlayer.getState("selectedCard");
+    const selectedCard = currentPlayer.getState('selectedCard');
 
     switch (selectedCard) {
-      case "transport":
+      case 'transport':
         currentPlayer.setState('availableTargets', [currentPlayer], true);
-        currentPlayer.setState("points", currentPlayer.getState("points") + 1, true);
+        currentPlayer.setState('points', currentPlayer.getState('points') + 1, true);
         break;
-      case "backwards":
+      case 'backwards':
         const availableTargets = players.filter((p) => p.id !== currentPlayer.id);
         currentPlayer.setState('availableTargets', availableTargets, true);
-        let targetIndex = currentPlayer.getState("target");
+        let targetIndex = currentPlayer.getState('target');
         if (targetIndex !== null && targetIndex !== undefined) {
           let target = availableTargets[targetIndex];
-          target.setState("points", target.getState("points") - 1, true);
+          target.setState('points', target.getState('points') - 1, true);
         }
         break;
       default:
         break;
     }
-    currentPlayer.setState("selectedCard", '', true);
+    currentPlayer.setState('selectedCard', '', true);
     currentPlayer.setState('target', null, true);
     currentPlayer.setState('availableTargets', [], true);
   };

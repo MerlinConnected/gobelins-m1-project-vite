@@ -10,7 +10,7 @@ export default function Scene() {
   return (
     <>
       <Canvas shadows camera={{ position: [2, 2, 2] }}>
-        <color attach="background" args={['#000']} />
+        <color attach="background" args={['#121212']} />
         <Suspense fallback={null}>
           <Players />
           <OrbitControls target={(0, 0, 0)} />
