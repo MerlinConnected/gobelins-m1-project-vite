@@ -1,5 +1,6 @@
-@import './abstracts/variables';
-@import './abstracts/functions';
+@import './libs/grid';
+@import './libs/functions';
+@import './libs/variables';
 
 @import './base/reset';
 @import './base/base';
