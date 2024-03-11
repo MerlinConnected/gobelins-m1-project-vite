@@ -5,13 +5,13 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, Loader, PerspectiveCamera } from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 
-import UI from './bloks/UI/UI';
+import UI from './bloks/ui/UI';
 import Players from './bloks/players/Players';
 
 function Scene() {
   return (
     <>
-      <Canvas shadows camera={{ position: [2, 2, 2] }}>
+      <Canvas className="canvas" shadows camera={{ position: [2, 2, 2] }}>
         <color attach="background" args={['#121212']} />
         <Suspense fallback={null}>
           <Players />

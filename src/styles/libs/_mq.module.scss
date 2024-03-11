@@ -1,0 +1,92 @@
+$tablet-max-width: 1024px;
+$tablet-portrait-max-width: 900px;
+$phone-max-width: 740px;
+$phone-portrait-max-width: 420px;
+
+/* stylelint-disable */
+:export {
+  tabletMaxWidth: $tablet-max-width;
+  tabletPortraitMaxWidth: $tablet-portrait-max-width;
+  phoneMaxWidth: $phone-max-width;
+  phonePortraitMaxWidth: $phone-portrait-max-width;
+}
+/* stylelint-enable */
+
+@mixin small() {
+  @media all and (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin medium() {
+  @media all and (max-width: 1400px) {
+    @content;
+  }
+}
+
+@mixin tablet() {
+  @media all and (max-width: #{$tablet-max-width}) {
+    @content;
+  }
+}
+
+@mixin not-tablet() {
+  @media all and (min-width: #{$tablet-max-width + 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet-portrait() {
+  @media screen and (max-width: #{$tablet-portrait-max-width}) {
+    @content;
+  }
+}
+
+@mixin not-tablet-portrait() {
+  @media screen and (min-width: #{$tablet-portrait-max-width + 1px}) {
+    @content;
+  }
+}
+
+@mixin phone() {
+  @media screen and (max-width: #{$phone-max-width}) {
+    @content;
+  }
+}
+
+@mixin phone-portrait() {
+  @media screen and (max-width: #{$phone-portrait-max-width}) {
+    @content;
+  }
+}
+
+@mixin not-phone() {
+  @media screen and (min-width: #{$phone-portrait-max-width + 1}) {
+    @content;
+  }
+}
+
+@mixin hover() {
+  @media screen and (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+@mixin touch() {
+  @media screen and (hover: none) {
+    @content;
+  }
+}
+
+@mixin hover-active() {
+  @include hover {
+    &:hover {
+      @content;
+    }
+  }
+  @include touch {
+    &:active {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,78 @@
+/* stylelint-disable color-no-hex */
+/* stylelint-disable custom-property-empty-line-before */
+
+@mixin variables {
+    /* UNITS */
+    --vw: 100vw;
+    --vh: 100vh;
+    --ivh: 100vh;
+    --rem: 1px;
+
+    /* COLORS */
+    --color-bg-body: #f4f4f4;
+    --color-bg-display: #f9f9f9;
+    --color-bg-floating: rgb(229 229 229 / 50%);
+    --color-bg-overylay: rgba(#255, 255, 255, 40%);
+
+    --color-fill-main: #fff;
+    --color-fill-secondary: #eee;
+
+    --color-content-main: #191919;
+    --color-content-secondary: #8f8f8f;
+    --color-content-third: #c6c6c6;
+    --color-content-fourth: #8f8f8f;
+
+    --color-divider: #ebebeb;
+    --color-symbol: #f0f0f0;
+
+    --color-box-shadow: rgb(0 0 0 / 10%);
+    --box-shadow: inset 0px 1px 1px 0 var(--color-box-shadow);
+    --box-shadow-right: inset -1px 1px 1px 0 var(--color-box-shadow);
+    --box-shadow-left: inset 1px 1px 1px 0 var(--color-box-shadow);
+
+    /* SHORTCUTS */
+    --color-background: var(--color-bg-body);
+    --color-main: var(--color-content-main);
+
+    /* SIZES */
+    --padding: #{rem(20)};
+    --padding-y: #{rem(120)};
+    --small-padding-y: #{rem(40)};
+
+    /* BUTTONS */
+    --button-height: #{rem(32)};
+    --button-padding: #{rem(4)};
+    --button-inner-padding: #{rem(12)};
+    --button-border-radius: #{rem(4)};
+
+    /* GRID */
+    --line-height: #{rem(62)};
+    --grid-gutter: var(--padding);
+    --grid-column: #{computeGridColumn(12, true)};
+
+    /* NOTIFICATION */
+    --notification-height: 0px;
+    --notification-offset: 0px;
+
+    @include tablet-portrait {
+        --subheader-height: #{rem(50)};
+
+        --small-border-radius: #{rem(3)};
+        --large-header-height: #{rem(72)};
+        --small-header-height: #{rem(54)};
+
+        /* SIZES */
+        --padding: #{rem(20)};
+
+        /* GRID */
+        --grid-column: #{computeGridColumn(4, true)};
+    }
+}
+
+$width-reference: 1440;
+$width-reference-m: 375;
+$rem-reference: 1px;
+
+/* EXPORT */
+@value widthReference: #{$width-reference};
+@value widthReferenceM: #{$width-reference-m};

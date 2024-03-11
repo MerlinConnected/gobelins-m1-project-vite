@@ -1,0 +1,214 @@
+@use 'sass:math';
+
+@mixin arrow {
+  width: rem(10);
+  display: block;
+  background-image: url("/svg/arrow.svg");
+  height: rem(10);
+  background-size: contain;
+  background-position: top right;
+}
+
+@mixin hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin overlay-children {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  & > * {
+    grid-column-start: 1;
+    grid-row-start: 1;
+  }
+}
+
+@mixin style($style) {
+  composes: $style from '/styles/layout/styling.module.scss';
+}
+
+@mixin ui($style) {
+  composes: $style from '/styles/layout/ui.module.scss';
+}
+
+@mixin keepRatio($ratio: math.div(3,4)) {
+  position: relative;
+
+  & > * {
+    @include fullscreen;
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: math.div(1, $ratio) * 100%;
+  }
+}
+
+@mixin background-image-retina($file, $type, $width, $height) {
+  background-image: url($file + '.' + $type);
+  background-size: $width $height;
+  background-repeat: no-repeat;
+
+  @media (min-device-pixel-ratio: 2), (resolution >= 144dpi) {
+    & {
+      background-image: url($file + '@2x.' + $type);
+    }
+  }
+}
+
+@mixin transition($properties :'visibility, opacity', $duration:.5s, $ease:$quad-ease-out, $delay:0s) {
+  $value: '';
+  $list: explode($properties, ',');
+
+  @each $property in $list {
+    @if  value != '' {
+      $value: $value + ', ';
+    }
+
+    $value: $value + '#{$property} #{$duration} #{$ease} #{$delay}';
+  }
+  transition: #{$value};
+}
+
+@mixin on-line-text-no-wrap() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin ellipsis($lines-to-show, $line-height : '1em') {
+  display: block; /* Fallback for non-webkit */
+  display: -webkit-box;
+  max-height: calc($lines-to-show * $line-height);
+  -webkit-line-clamp: $lines-to-show;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin fullscreen( $position: absolute ) {
+  position: $position;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin fullscreen-center() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin fullscreen-cover() {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin fullscreen-contain() {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin vertical-align-children($target : '*') {
+  .flexbox & {
+    display: flex;
+    align-items: center;
+  }
+
+  .no-flexbox & > #{$target} {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translateY(-50%);
+  }
+}
+
+@mixin center-children($target : '*', $modernizrAddons:'') {
+  #{$modernizrAddons}.flexbox & {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -moz-box-align: center;
+  }
+
+  #{$modernizrAddons}.no-flexbox & > #{$target} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@mixin fade-transition($show : true, $selector : '&.show') {
+  @include transition;
+
+  @if  $show {
+    opacity: 0;
+    visibility: hidden;
+  } @else {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  #{$selector} {
+    @if  $show {
+      opacity: 1;
+      visibility: visible;
+    } @else {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+}
+
+@mixin box-shadow($distance :5px, $opacity : .5) {
+  box-shadow: 0 0 $distance rgba(0, 0, 0, $opacity);
+}
+
+@mixin text-shadow($distance :5px, $color : rgba(0, 0, 0, .5)) {
+  text-shadow: 0 0 $distance $color;
+}
+
+@mixin filter-shadow($distance : 2px, $opacity : .3) {
+  filter: drop-shadow(0 0 $distance rgba(0, 0, 0, $opacity));
+}
+
+@mixin css-parralax($translateZ, $perspective: 1px) {
+  transform: translateZ($translateZ) scale(parralax-depth-correct($translateZ, $perspective));
+}
+
+@mixin justify-one-line() {
+  text-align: justify;
+
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+@mixin mix-blend-mode() {
+  @supports (mix-blend-mode: exclusion) {
+    @content;
+  }
+}

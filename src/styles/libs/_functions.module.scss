@@ -1,0 +1,47 @@
+@use 'sass:math';
+
+@function sqrt($r) {
+  $x0: 1;
+  $x1: $x0;
+
+  @for $i from 1 through 10 {
+    $x1: $x0 - ($x0 * $x0 - abs($r)) / (2 * $x0);
+    $x0: $x1;
+  }
+
+  @return $x1;
+}
+
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return math.div($number, $number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@function parralax-depth-correct($translateZ, $perpective : 1px) {
+  @return 1 + ($translateZ * -1) / $perpective;
+}
+
+@function explode($string,$dem) {
+  $list: ();
+  $sum: str-length($string);
+
+  @for $i from 1 through $sum {
+    $str: str-index($string, $dem);
+
+    @if str-length($string) >= 1 and $str == null {
+      $list: append($list, $string);
+      $string: '';
+    }
+
+    @if type-of($str) == number {
+      $each: str-slice($string, 0, ($str - 1));
+      $list: append($list, $each);
+      $string: str-slice($string, ($str + 1), $sum);
+    }
+  }
+
+  @return $list;
+}

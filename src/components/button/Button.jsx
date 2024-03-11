@@ -7,7 +7,7 @@ import styles from './Button.module.scss';
 function Button({ className, disable, ...props }) {
   return (
     <button
-      className={classNames(styles.button, className, {
+      className={classNames(styles.wrapper, className, {
         [styles.disabled]: disable,
       })}
       {...props}

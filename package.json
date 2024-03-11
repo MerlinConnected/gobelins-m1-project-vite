@@ -2,7 +2,6 @@
   "name": "r3f-boilerplate",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
