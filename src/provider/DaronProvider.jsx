@@ -6,14 +6,14 @@ import { randInt } from 'three/src/math/MathUtils';
 import { useControls } from 'leva';
 import { useRef } from 'react';
 
-const DaronEngineContext = React.createContext();
+const DaronContext = React.createContext();
 
 //
 const TIME_PLAYER_TURN = 5;
 const MAX_POINTS = 10;
 const TIME_END_TURN = 2;
 
-export function DaronEngineProvider({ children }) {
+export function DaronProvider({ children }) {
   const [timer, setTimer] = useMultiplayerState('timer', 0);
   const [maxPoints, setMaxPoints] = useMultiplayerState('maxPoints', 0);
   const [phase, setPhase] = useMultiplayerState('phase', 'lobby');
@@ -124,14 +124,11 @@ export function DaronEngineProvider({ children }) {
     return clearTimer;
   }, [phase, paused]);
 
-  return <DaronEngineContext.Provider value={{ ...gameState, startGame }}>{children}</DaronEngineContext.Provider>;
+  return <DaronContext.Provider value={{ ...gameState, startGame }}>{children}</DaronContext.Provider>;
 }
 
-export function useDaronEngine() {
-  const context = React.useContext(DaronEngineContext);
-
-  if (!context) {
-    throw new Error('useDaronEngine must be used within a DaronEngineProvider');
-  }
+export function useDaronContext() {
+  const context = React.useContext(DaronContext);
+  if (!context) throw new Error('useDaronEngine must be used within a DaronEngineProvider');
   return context;
 }

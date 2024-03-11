@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDaronEngine } from '../hooks/useDaronEngine';
+import { useDaronContext } from '../provider/DaronProvider';
 
 import { isHost, myPlayer } from 'playroomkit';
 
@@ -8,13 +8,13 @@ import { Leva, useControls } from 'leva';
 const DEBUG = true;
 
 function CurrentPlayer() {
-  const { playerTurn, players, myPlayer } = useDaronEngine();
+  const { playerTurn, players, myPlayer } = useDaronContext();
 
   return <span>{players[playerTurn]?.id === players[playerTurn]?.myId ? 'It is my turn' : 'It is not my turn'}</span>;
 }
 
 export default function UI() {
-  const { phase, startGame, timer, playerTurn, players } = useDaronEngine();
+  const { phase, startGame, timer, playerTurn, players } = useDaronContext();
   const [disabled, setDisabled] = useState(false);
 
   const currentPlayer = players[playerTurn];
