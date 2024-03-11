@@ -19,7 +19,6 @@ export default function Players() {
   });
 
   useEffect(() => {
-    // Ensure that the length of the refs array matches the number of players
     modelRefs.current = Array(players.length)
       .fill()
       .map((_, i) => modelRefs.current[i] || createRef());
@@ -33,6 +32,8 @@ export default function Players() {
 
       if (model) {
         camera.lookAt(model.position);
+        console.log(camera.position);
+        // camera.position.set(model.position.x, model.position.y.model.position.z);
       }
     }
   });
