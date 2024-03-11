@@ -6,7 +6,7 @@ import { isHost, myPlayer } from 'playroomkit';
 import { Leva, useControls } from 'leva';
 
 import classNames from 'classnames';
-import Button from '../../components/button/button';
+import Button from '../../components/button/Button';
 
 import styles from './UI.module.scss';
 
