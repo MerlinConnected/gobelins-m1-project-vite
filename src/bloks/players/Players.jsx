@@ -3,14 +3,14 @@ import { useFrame, useThree } from '@react-three/fiber';
 
 import { useControls } from 'leva';
 import { myPlayer } from 'playroomkit';
-import { useDaronEngine } from '../hooks/useDaronEngine';
+import { useDaronContext } from '../../provider/DaronProvider';
 
-import { Model } from '../models/car';
+import { Model } from '../../models/car';
 
-export default function Players() {
+function Players({ ...props }) {
   const modelRefs = useRef([]);
   const { camera } = useThree();
-  const { players } = useDaronEngine();
+  const { players } = useDaronContext();
 
   const me = myPlayer();
 
@@ -53,3 +53,5 @@ export default function Players() {
     </>
   );
 }
+
+export default React.memo(Players);

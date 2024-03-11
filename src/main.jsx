@@ -2,9 +2,9 @@ import { insertCoin } from 'playroomkit';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import './style/index.scss';
+import './styles/index.scss';
 
-import { DaronEngineProvider } from './hooks/useDaronEngine';
+import { GlobalProvider } from './provider/GlobalProvider';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -13,8 +13,8 @@ insertCoin({
   skipLobby: true,
 }).then(() => {
   root.render(
-    <DaronEngineProvider>
+    <GlobalProvider>
       <App />
-    </DaronEngineProvider>
+    </GlobalProvider>
   );
 });

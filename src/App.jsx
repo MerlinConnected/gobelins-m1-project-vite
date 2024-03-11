@@ -1,13 +1,15 @@
+import React from 'react';
+
 import { Suspense, useRef, useState, useEffect, createRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, Loader, PerspectiveCamera } from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 
-import UI from './components/UI';
-import Players from './components/Players';
+import UI from './bloks/UI/UI';
+import Players from './bloks/players/Players';
 import Lobby from './components/Lobby';
 
-export default function Scene() {
+function Scene() {
   return (
     <>
       <Canvas shadows camera={{ position: [2, 2, 2] }}>
@@ -25,3 +27,5 @@ export default function Scene() {
     </>
   );
 }
+
+export default React.memo(Scene);
