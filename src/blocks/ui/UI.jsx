@@ -10,8 +10,6 @@ import Button from '../../components/button/Button';
 
 import styles from './UI.module.scss';
 
-const DEBUG = true;
-
 function CurrentPlayer() {
   const { playerTurn, players, myPlayer } = useDaronContext();
 
@@ -64,7 +62,6 @@ function UI({ className, ...props }) {
 
   return (
     <>
-      <Leva hidden={!DEBUG} />
       <div className={classNames(styles.wrapper, className)} {...props}>
         <p>Je suis {me.state.profile.name}</p>
         <div className="styles.board">
