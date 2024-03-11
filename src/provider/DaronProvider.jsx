@@ -6,18 +6,28 @@ import { randInt } from 'three/src/math/MathUtils';
 import { useControls } from 'leva';
 import { useRef } from 'react';
 
-const DaronContext = React.createContext();
 
-//
-const TIME_PLAYER_TURN = 5;
-const MAX_POINTS = 10;
+let context = {};
+const DaronContext = React.createContext(context);
+
+const TIME_START_GAME = 2;
+const TIME_START_TURN = 2;
+const TIME_PLAYER_TURN = 6;
 const TIME_END_TURN = 2;
+const AMOUNT_TRANSPORT_CARDS = 10;
+const AMOUNT_ACTION_CARDS = 10;
+const MAX_POINTS = 10;
 
 export function DaronProvider({ children }) {
+
+  // GLOBAL STATE (for everyone)
   const [timer, setTimer] = useMultiplayerState('timer', 0);
   const [maxPoints, setMaxPoints] = useMultiplayerState('maxPoints', 0);
   const [phase, setPhase] = useMultiplayerState('phase', 'lobby');
+  const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', '');
   const [playerTurn, setPlayerTurn] = useMultiplayerState('playerTurn', 0);
+  const [transportDrawer, setTransportDrawer] = useMultiplayerState('transportDrawer', []);
+  const [actionDrawer, setActionDrawer] = useMultiplayerState('actionDrawer', []);
 
   const players = usePlayersList(true);
   players.sort((a, b) => a.id.localeCompare(b.id));
@@ -25,24 +35,92 @@ export function DaronProvider({ children }) {
   const gameState = {
     timer,
     phase,
+    playerPhase,
+    setPlayerPhase,
     playerTurn,
     players,
   };
 
+  const distributeCard = (type) => {
+    const transportDrawer = [...getState('transportDrawer')];
+    const randomTransportIndex = randInt(0, transportDrawer.length - 1);
+
+    const actionDrawer = [...getState('actionDrawer')];
+    const randomActionIndex = randInt(0, actionDrawer.length - 1);
+
+    const currentPlayer = players[playerTurn];
+    const cards = currentPlayer.getState('cards');
+
+    switch (type) {
+
+      case 'transport':
+        cards.push(transportDrawer[randomTransportIndex]);
+        currentPlayer.setState('cards', cards, true);
+        console.log(currentPlayer.getState('cards'));
+        break;
+
+      case 'action':
+        cards.push(actionDrawer[randomActionIndex]);
+        currentPlayer.setState('cards', cards, true);
+        console.log(currentPlayer.getState('cards'));
+        break;
+
+      case 'initial':
+        players.forEach((player) => {
+          const cards = player.getState('cards') || [];
+          const randomTransportIndex = randInt(0, transportDrawer.length - 1);
+          cards.push(transportDrawer[randomTransportIndex]);
+          const actionDrawer = [...getState('actionDrawer')];
+          cards.push(actionDrawer[randomActionIndex]);
+
+          player.setState('cards', cards, true);
+        });
+
+      default:
+        break;
+    }
+  };
+
   const startGame = () => {
     if (isHost()) {
-      setTimer(TIME_PLAYER_TURN, true);
+      setPhase('startGame', true);
+      setTimer(TIME_START_GAME, true);
       const randomValue = 1;
       setPlayerTurn(randomValue, true);
       setMaxPoints(MAX_POINTS, true);
+      setTransportDrawer(
+        [
+          ...new Array(AMOUNT_TRANSPORT_CARDS).fill({ name: 'velo', type: 'transport' }),
+          ...new Array(AMOUNT_TRANSPORT_CARDS).fill({ name: 'voiture', type: 'transport' }),
+          ...new Array(AMOUNT_TRANSPORT_CARDS).fill({ name: 'moto', type: 'transport' }),
+          ...new Array(AMOUNT_TRANSPORT_CARDS).fill({ name: 'tramway', type: 'transport' }),
+          ...new Array(AMOUNT_TRANSPORT_CARDS).fill({ name: 'metro', type: 'transport' }),
+        ],
+        true
+      );
+
+      setActionDrawer(
+        [
+          ...new Array(AMOUNT_ACTION_CARDS).fill({ name: 'moins', type: 'action' }),
+          ...new Array(AMOUNT_ACTION_CARDS).fill({ name: 'pied', type: 'action' }),
+        ],
+        true
+      );
 
       players.forEach((player) => {
         player.setState('points', 0, true);
+        player.setState('cards', [], true);
         player.setState('selectedCard', '', true);
         player.setState('target', null, true);
         player.setState('availableTargets', [], true);
+        player.setState('winner', false, true);
       });
-      setPhase('playerTurn', true);
+
+      distributeCard('initial');
+
+      setPhase('startTurn', true);
+      setTimer(TIME_START_TURN, true);
+      console.log('Animation de début de partie');
     }
   };
 
@@ -60,7 +138,7 @@ export function DaronProvider({ children }) {
         currentPlayer.setState('availableTargets', [currentPlayer], true);
         currentPlayer.setState('points', currentPlayer.getState('points') + 1, true);
         break;
-      case 'backwards':
+      case 'action':
         const availableTargets = players.filter((p) => p.id !== currentPlayer.id);
         currentPlayer.setState('availableTargets', availableTargets, true);
         let targetIndex = currentPlayer.getState('target');
@@ -77,19 +155,26 @@ export function DaronProvider({ children }) {
     currentPlayer.setState('availableTargets', [], true);
   };
 
+  // manage timers & phases when timer is ending
   const phaseEnd = () => {
     let newTime = 0;
     switch (getState('phase')) {
+      case 'startTurn':
+        // "performRandomEvent()"
+        const newPlayerTurn = (getState('playerTurn') + 1) % players.length;
+        setPlayerTurn(newPlayerTurn, true);
+        setPhase('playerTurn', true);
+        setPlayerPhase('drawCards', true);
+        newTime = TIME_PLAYER_TURN;
+        break;
       case 'playerTurn':
         performPlayerAction();
         setPhase('endTurn', true);
         newTime = TIME_END_TURN;
         break;
       case 'endTurn':
-        const newPlayerTurn = (getState('playerTurn') + 1) % players.length;
-        setPlayerTurn(newPlayerTurn, true);
-        setPhase('playerTurn', true);
-        newTime = TIME_PLAYER_TURN;
+        setPhase('startTurn', true);
+        newTime = TIME_START_TURN;
         break;
     }
     setTimer(newTime, true);
@@ -120,11 +205,19 @@ export function DaronProvider({ children }) {
   };
 
   useEffect(() => {
+    // is fired when phase or paused changes
+    console.log('phase', phase);
     runTimer();
     return clearTimer;
   }, [phase, paused]);
 
-  return <DaronContext.Provider value={{ ...gameState, startGame }}>{children}</DaronContext.Provider>;
+  context = {
+    ...gameState,
+    startGame,
+    distributeCard,
+  };
+
+  return <DaronContext.Provider value={context}>{children}</DaronContext.Provider>;
 }
 
 export function useDaronContext() {

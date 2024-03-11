@@ -4,30 +4,26 @@ import { useDaronContext } from '../provider/DaronProvider';
 import { isHost, myPlayer } from 'playroomkit';
 
 import { Leva, useControls } from 'leva';
+import { getState } from 'playroomkit';
 
 const DEBUG = true;
 
-function CurrentPlayer() {
-  const { playerTurn, players, myPlayer } = useDaronContext();
-
-  return <span>{players[playerTurn]?.id === players[playerTurn]?.myId ? 'It is my turn' : 'It is not my turn'}</span>;
-}
-
 export default function UI() {
-  const { phase, startGame, timer, playerTurn, players } = useDaronContext();
-  const [disabled, setDisabled] = useState(false);
+  const { phase, playerPhase, setPlayerPhase, startGame, timer, playerTurn, players, distributeCard } = useDaronContext();
+  const [cardsDisabled, setCardsDisabled] = useState(true);
+  const [drawersDisabled, setDrawersDisabled] = useState(true);
 
   const currentPlayer = players[playerTurn];
   const me = myPlayer();
 
-  const selectCard = (direction) => {
-    switch (direction) {
+  const selectCard = (type) => {
+    switch (type) {
       case 'transport':
         currentPlayer.setState('selectedCard', 'transport', true);
         break;
 
-      case 'backwards':
-        currentPlayer.setState('selectedCard', 'backwards', true);
+      case 'action':
+        currentPlayer.setState('selectedCard', 'action', true);
         currentPlayer.setState(
           'availableTargets',
           players.filter((p) => p.id !== currentPlayer.id),
@@ -40,27 +36,57 @@ export default function UI() {
     }
   };
 
+  const handleDrawer = (type) => {
+    if (type === 'transport' && currentPlayer.getState('cards').length < 4) {
+      distributeCard('transport');
+    }
+    if (type === 'action' && currentPlayer.getState('cards').length < 4) {
+      distributeCard('action');
+    }
+
+    if (currentPlayer.getState('cards').length >= 4) {
+      setPlayerPhase('performFirst', true);
+    }
+  };
+
   const selectTarget = (index) => {
     currentPlayer.setState('target', index, true);
   };
 
   useEffect(() => {
-    switch (phase) {
-      case 'playerTurn':
-        if (currentPlayer?.id === me?.id) {
-          // console.log('my turn');
-          setDisabled(false);
+
+    switch (playerPhase) {
+      case 'drawCards':
+        if (currentPlayer?.id === me?.id && currentPlayer?.getState('cards').length < 4) {
+          setCardsDisabled(true);
+          setDrawersDisabled(false);
         }
         break;
+
+      case 'performFirst' || 'performLast':
+        if (currentPlayer?.id === me?.id) {
+          setCardsDisabled(false);
+          setDrawersDisabled(true);
+        }
+        break;
+
+      case 'firstResult' || 'lastResult':
+        setCardsDisabled(true);
+        setDrawersDisabled(true);
+        break;
+
       default:
-        setDisabled(true);
+        setCardsDisabled(true);
+        setDrawersDisabled(true);
     }
-  }, [phase]);
+
+  }, [playerPhase]);
 
   return (
     <>
       <Leva hidden={!DEBUG} />
       <div className="overlay">
+        {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
         <p>Je suis {me.state.profile.name}</p>
         <div className="board">
           <h2>Classement</h2>
@@ -71,22 +97,19 @@ export default function UI() {
             </div>
           ))}
         </div>
-        <button
-          onClick={() => {
-            selectCard('transport');
-          }}
-          className={disabled ? 'disabled' : ''}
-        >
-          Avancer
-        </button>
-        <button
-          onClick={() => {
-            selectCard('backwards');
-          }}
-          className={disabled ? 'disabled' : ''}
-        >
-          Reculer
-        </button>
+
+        <div className="deck">
+          {me.getState('cards')?.map((card, index) => (
+            <button onClick={() => {
+              selectCard(card.type);
+            }}
+              disabled={cardsDisabled}
+              className={cardsDisabled ? 'disabled' : ''} key={index}>
+              {card.type} {card.name}
+            </button>
+          ))}
+        </div>
+
         <div className="targets">
           {currentPlayer === me &&
             currentPlayer.getState('availableTargets')?.map((player, index) => (
@@ -95,11 +118,33 @@ export default function UI() {
                 onClick={() => {
                   selectTarget(index);
                 }}
-                disabled={disabled}
+                disabled={cardsDisabled}
+                className={cardsDisabled ? 'disabled' : ''}
               >
                 <span>{player.state.profile.name}</span>
               </button>
             ))}
+        </div>
+
+        <div className="drawers">
+          <button
+            onClick={() => {
+              handleDrawer('transport');
+            }}
+            disabled={drawersDisabled}
+            className={drawersDisabled ? 'disabled' : ''}
+          >
+            Piocher carte Transport
+          </button>
+          <button
+            onClick={() => {
+              handleDrawer('action');
+            }}
+            disabled={drawersDisabled}
+            className={drawersDisabled ? 'disabled' : ''}
+          >
+            Piocher carte Action
+          </button>
         </div>
       </div>
     </>
