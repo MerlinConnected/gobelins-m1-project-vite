@@ -1,9 +1,14 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
-import { useDaronContext } from '../provider/DaronProvider';
 
+import { useDaronContext } from '../../provider/DaronProvider';
 import { isHost, myPlayer } from 'playroomkit';
-
 import { Leva, useControls } from 'leva';
+
+import classNames from 'classnames';
+import Button from '../../components/button/button';
+
+import styles from './UI.module.scss';
 
 const DEBUG = true;
 
@@ -13,7 +18,7 @@ function CurrentPlayer() {
   return <span>{players[playerTurn]?.id === players[playerTurn]?.myId ? 'It is my turn' : 'It is not my turn'}</span>;
 }
 
-export default function UI() {
+function UI({ className, ...props }) {
   const { phase, startGame, timer, playerTurn, players } = useDaronContext();
   const [disabled, setDisabled] = useState(false);
 
@@ -60,9 +65,9 @@ export default function UI() {
   return (
     <>
       <Leva hidden={!DEBUG} />
-      <div className="overlay">
+      <div className={classNames(styles.wrapper, className)} {...props}>
         <p>Je suis {me.state.profile.name}</p>
-        <div className="board">
+        <div className="styles.board">
           <h2>Classement</h2>
           {players.map((player, index) => (
             <div key={index}>
@@ -71,26 +76,16 @@ export default function UI() {
             </div>
           ))}
         </div>
-        <button
-          onClick={() => {
-            selectCard('transport');
-          }}
-          className={disabled ? 'disabled' : ''}
-        >
+        <Button onClick={() => selectCard('transport')} disable={disabled ? 'disabled' : ''}>
           Avancer
-        </button>
-        <button
-          onClick={() => {
-            selectCard('backwards');
-          }}
-          className={disabled ? 'disabled' : ''}
-        >
+        </Button>
+        <Button onClick={() => selectCard('backwards')} disable={disabled ? 'disabled' : ''}>
           Reculer
-        </button>
+        </Button>
         <div className="targets">
           {currentPlayer === me &&
             currentPlayer.getState('availableTargets')?.map((player, index) => (
-              <button
+              <Button
                 key={index}
                 onClick={() => {
                   selectTarget(index);
@@ -98,10 +93,12 @@ export default function UI() {
                 disabled={disabled}
               >
                 <span>{player.state.profile.name}</span>
-              </button>
+              </Button>
             ))}
         </div>
       </div>
     </>
   );
 }
+
+export default React.memo(UI);
