@@ -5,8 +5,8 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, Loader, PerspectiveCamera } from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 
-import UI from './bloks/UI/UI';
-import Players from './bloks/players/Players';
+import UI from './blocks/ui/UI';
+import Players from './blocks/players/Players';
 
 function Scene() {
   return (
