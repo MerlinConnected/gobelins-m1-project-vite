@@ -1,7 +1,20 @@
+@import '../../styles/libs/functions.scss';
+
 .wrapper {
     position: absolute;
     top: 10px;
     left: 10px;
 
     color: white;
+    > div {
+        display: flex;
+        align-items: center;
+        gap: rem(0.5);
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: rem(0.5);
+        }
+    }
 }
