@@ -2,15 +2,16 @@ import React from 'react';
 
 import { useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Loader } from '@react-three/drei';
+import { Loader, OrbitControls, Environment } from '@react-three/drei';
 import { Leva } from 'leva';
+import { Suspense } from 'react';
+import { Perf } from 'r3f-perf';
 
 import UI from './blocks/ui/UI';
 import Lobby from './blocks/lobby/Lobby';
+import Players from './blocks/players/Players';
 
 import { useMultiplayerState } from 'playroomkit';
-
-import Experience from './blocks/experience/Experience';
 
 function Scene() {
   const [gameState] = useMultiplayerState('gameState', 'lobby');
@@ -29,7 +30,12 @@ function Scene() {
       <Loader />
       <Canvas className="canvas" shadows camera={{ position: [2, 2, 2] }}>
         <color attach="background" args={['#121212']} />
-        <Experience />
+        <Suspense fallback={null}>
+          {gameState === 'game' && <Players />}
+          <OrbitControls target={(0, 0, 0)} />
+          <Environment preset="city" />
+          {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
+        </Suspense>
       </Canvas>
 
       {gameState === 'lobby' && <Lobby />}
