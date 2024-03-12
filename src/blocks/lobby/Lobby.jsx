@@ -26,57 +26,55 @@ function Lobby({ className, ...props }) {
   };
 
   return (
-    <>
-      <div className={classNames(styles.wrapper, className)}>
-        <h1>Game Lobby</h1>
-        <p>Waiting for players to join...</p>
-        {players.map((player) => (
-          <div key={player.id}>
-            <p>{player.state.profile?.name}</p>
-            {player.id === me?.id && (
-              <>
-                <div>
-                  <button
-                    onClick={() => {
-                      setGameState('loading');
-                      setTimeout(() => {
-                        setGameState('game');
-                      }, 500);
-                    }}
-                  >
-                    Start Matchmaking
-                  </button>
-                  <button
-                    onClick={async () => {
-                      setGameState('loading');
-                      await startMatchmaking();
+    <div className={classNames(styles.wrapper, className)}>
+      <h1>Game Lobby</h1>
+      <p>Waiting for players to join...</p>
+      {players.map((player) => (
+        <div key={player.id}>
+          <p>{player.state.profile?.name}</p>
+          {player.id === me?.id && (
+            <>
+              <div>
+                <button
+                  onClick={() => {
+                    setGameState('loading');
+                    setTimeout(() => {
                       setGameState('game');
-                    }}
-                  >
-                    Start Private Game
-                  </button>
-                </div>
-                <div>
-                  <button disabled={invited} onClick={invite}>
-                    {invited ? (
-                      <>
-                        <UserCheck width={16} height={16} />
-                        Copied!
-                      </>
-                    ) : (
-                      <>
-                        <UserPlus width={16} height={16} />
-                        Invite Friends
-                      </>
-                    )}
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        ))}
-      </div>
-    </>
+                    }, 500);
+                  }}
+                >
+                  Start Matchmaking
+                </button>
+                <button
+                  onClick={async () => {
+                    setGameState('loading');
+                    await startMatchmaking();
+                    setGameState('game');
+                  }}
+                >
+                  Start Private Game
+                </button>
+              </div>
+              <div>
+                <button disabled={invited} onClick={invite}>
+                  {invited ? (
+                    <>
+                      <UserCheck width={16} height={16} />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <UserPlus width={16} height={16} />
+                      Invite Friends
+                    </>
+                  )}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      ))}
+    </div>
   );
 }
 
