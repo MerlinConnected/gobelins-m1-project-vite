@@ -1,0 +1,12 @@
+.wrapper {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+    color: white;
+    > div {
+        display: flex;
+        align-items: center;
+        gap: rem(0.5);
+    }
+}

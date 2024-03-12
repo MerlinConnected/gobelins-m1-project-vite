@@ -7,10 +7,10 @@ import './styles/global.scss';
 import { GlobalProvider } from './provider/GlobalProvider';
 
 const container = document.getElementById('root');
-const root = createRoot(container); // createRoot(container!) if you use TypeScript
+const root = createRoot(container);
 
 insertCoin({
-  // skipLobby: true,
+  skipLobby: true,
 }).then(() => {
   root.render(
     <GlobalProvider>
