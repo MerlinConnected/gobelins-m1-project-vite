@@ -9,12 +9,23 @@ import { GlobalProvider } from './provider/GlobalProvider';
 const container = document.getElementById('root');
 const root = createRoot(container);
 
-insertCoin({
-  skipLobby: true,
-}).then(() => {
-  root.render(
-    <GlobalProvider>
-      <App />
-    </GlobalProvider>
-  );
-});
+try {
+  await insertCoin({
+    skipLobby: true,
+    maxPlayersPerRoom: 2,
+  }).then(() => {
+    root.render(
+      <GlobalProvider>
+        <App />
+      </GlobalProvider>
+    );
+  });
+} catch (error) {
+  if (error.message === 'ROOM_LIMIT_EXCEEDED') {
+    root.render(
+      <div>
+        <p>casses toi de la t'es de trop</p>
+      </div>
+    );
+  }
+}
