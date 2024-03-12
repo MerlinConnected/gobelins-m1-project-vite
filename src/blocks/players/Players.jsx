@@ -32,7 +32,7 @@ function Players({ ...props }) {
 
       if (model) {
         camera.lookAt(model.position);
-        console.log(camera.position);
+        // console.log(camera.position);
         // camera.position.set(model.position.x, model.position.y.model.position.z);
       }
     }
