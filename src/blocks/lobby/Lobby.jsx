@@ -36,7 +36,7 @@ function Lobby({ className, ...props }) {
           {player.id === me?.id && (
             <>
               <div>
-                <Button
+                <button
                   onClick={() => {
                     setGameState('loading');
                     setTimeout(() => {
@@ -45,10 +45,10 @@ function Lobby({ className, ...props }) {
                   }}
                 >
                   Start Game
-                </Button>
+                </button>
               </div>
               <div>
-                <Button disabled={invited} onClick={invite}>
+                <button disabled={invited} onClick={invite}>
                   {invited ? (
                     <>
                       <UserCheck width={16} height={16} />
@@ -60,7 +60,7 @@ function Lobby({ className, ...props }) {
                       Invite Friends
                     </>
                   )}
-                </Button>
+                </button>
               </div>
             </>
           )}
