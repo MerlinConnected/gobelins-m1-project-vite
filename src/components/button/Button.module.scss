@@ -1,7 +1,7 @@
 @import '../../styles/libs/functions.scss';
 
 .wrapper {
-    border: 1.5px solid #323232;
+    border: 1.5px solid #1f1f1f;
     border-radius: rem(0.2);
 
     padding: rem(0.4) rem(1);
@@ -10,7 +10,7 @@
 
     background-color: black;
     &:hover {
-        background-color: #323232;
+        background-color: #1f1f1f;
     }
 }
 
