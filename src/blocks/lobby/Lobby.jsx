@@ -31,8 +31,8 @@ function Lobby({ className, ...props }) {
         <h1>Game Lobby</h1>
         <p>Waiting for players to join...</p>
         {players.map((player) => (
-          <>
-            <p key={player.id}>{player.state.profile?.name}</p>
+          <div key={player.id}>
+            <p>{player.state.profile?.name}</p>
             {player.id === me?.id && (
               <>
                 <div>
@@ -73,7 +73,7 @@ function Lobby({ className, ...props }) {
                 </div>
               </>
             )}
-          </>
+          </div>
         ))}
       </div>
     </>
