@@ -43,16 +43,7 @@ function Lobby({ className, ...props }) {
                     }, 500);
                   }}
                 >
-                  Start Matchmaking
-                </button>
-                <button
-                  onClick={async () => {
-                    setGameState('loading');
-                    await startMatchmaking();
-                    setGameState('game');
-                  }}
-                >
-                  Start Private Game
+                  Start Game
                 </button>
               </div>
               <div>
