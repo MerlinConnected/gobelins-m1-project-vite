@@ -10,12 +10,12 @@ import { useRef } from 'react';
 let context = {};
 const DaronContext = React.createContext(context);
 
-const TIME_START_GAME = 2;
-const TIME_START_TURN = 2;
+const TIME_START_GAME = 1;
+const TIME_START_TURN = 1;
 const TIME_PLAYER_TURN = 6;
-const TIME_END_TURN = 2;
+const TIME_END_TURN = 1;
 const AMOUNT_TRANSPORT_CARDS = 10;
-const AMOUNT_ACTION_CARDS = 10;
+const AMOUNT_ACTION_CARDS = 1;
 const MAX_POINTS = 10;
 
 export function DaronProvider({ children }) {
@@ -56,13 +56,11 @@ export function DaronProvider({ children }) {
       case 'transport':
         cards.push(transportDrawer[randomTransportIndex]);
         currentPlayer.setState('cards', cards, true);
-        console.log(currentPlayer.getState('cards'));
         break;
 
       case 'action':
         cards.push(actionDrawer[randomActionIndex]);
         currentPlayer.setState('cards', cards, true);
-        console.log(currentPlayer.getState('cards'));
         break;
 
       case 'initial':
@@ -70,7 +68,7 @@ export function DaronProvider({ children }) {
           const cards = player.getState('cards') || [];
           const randomTransportIndex = randInt(0, transportDrawer.length - 1);
           cards.push(transportDrawer[randomTransportIndex]);
-          const actionDrawer = [...getState('actionDrawer')];
+          const randomActionIndex = randInt(0, actionDrawer.length - 1);
           cards.push(actionDrawer[randomActionIndex]);
 
           player.setState('cards', cards, true);
@@ -90,19 +88,19 @@ export function DaronProvider({ children }) {
       setMaxPoints(MAX_POINTS, true);
       setTransportDrawer(
         [
-          ...new Array(AMOUNT_TRANSPORT_CARDS).fill({ name: 'velo', type: 'transport' }),
-          ...new Array(AMOUNT_TRANSPORT_CARDS).fill({ name: 'voiture', type: 'transport' }),
-          ...new Array(AMOUNT_TRANSPORT_CARDS).fill({ name: 'moto', type: 'transport' }),
-          ...new Array(AMOUNT_TRANSPORT_CARDS).fill({ name: 'tramway', type: 'transport' }),
-          ...new Array(AMOUNT_TRANSPORT_CARDS).fill({ name: 'metro', type: 'transport' }),
+          ...new Array(AMOUNT_TRANSPORT_CARDS).fill().map((_, index) => ({ id: index, name: 'velo', type: 'transport' })),
+          ...new Array(AMOUNT_TRANSPORT_CARDS).fill().map((_, index) => ({ id: index + AMOUNT_TRANSPORT_CARDS, name: 'voiture', type: 'transport' })),
+          ...new Array(AMOUNT_TRANSPORT_CARDS).fill().map((_, index) => ({ id: index + 2 * AMOUNT_TRANSPORT_CARDS, name: 'moto', type: 'transport' })),
+          ...new Array(AMOUNT_TRANSPORT_CARDS).fill().map((_, index) => ({ id: index + 3 * AMOUNT_TRANSPORT_CARDS, name: 'tramway', type: 'transport' })),
+          ...new Array(AMOUNT_TRANSPORT_CARDS).fill().map((_, index) => ({ id: index + 4 * AMOUNT_TRANSPORT_CARDS, name: 'metro', type: 'transport' })),
         ],
         true
       );
 
       setActionDrawer(
         [
-          ...new Array(AMOUNT_ACTION_CARDS).fill({ name: 'moins', type: 'action' }),
-          ...new Array(AMOUNT_ACTION_CARDS).fill({ name: 'pied', type: 'action' }),
+          ...new Array(AMOUNT_ACTION_CARDS).fill().map((_, index) => ({ id: index, name: 'moins', type: 'action' })),
+          ...new Array(AMOUNT_ACTION_CARDS).fill().map((_, index) => ({ id: index + AMOUNT_ACTION_CARDS, name: 'pied', type: 'action' })),
         ],
         true
       );
@@ -110,7 +108,8 @@ export function DaronProvider({ children }) {
       players.forEach((player) => {
         player.setState('points', 0, true);
         player.setState('cards', [], true);
-        player.setState('selectedCard', '', true);
+        player.setState('selectedCardType', '', true);
+        player.setState('selectedCardId', '', true);
         player.setState('target', null, true);
         player.setState('availableTargets', [], true);
         player.setState('winner', false, true);
@@ -131,9 +130,11 @@ export function DaronProvider({ children }) {
 
   const performPlayerAction = () => {
     const currentPlayer = players[playerTurn];
-    const selectedCard = currentPlayer.getState('selectedCard');
+    const selectedCardType = currentPlayer.getState('selectedCardType');
+    const selectedCardId = currentPlayer.getState('selectedCardId');
+    const cards = currentPlayer.getState("cards");
 
-    switch (selectedCard) {
+    switch (selectedCardType) {
       case 'transport':
         currentPlayer.setState('availableTargets', [currentPlayer], true);
         currentPlayer.setState('points', currentPlayer.getState('points') + 1, true);
@@ -150,7 +151,13 @@ export function DaronProvider({ children }) {
       default:
         break;
     }
-    currentPlayer.setState('selectedCard', '', true);
+    if (currentPlayer.getState('selectedCardId') !== '') {
+      cards.splice(cards.findIndex(card => card.id === selectedCardId), 1);
+      console.log('REMOVED', selectedCardId);
+    }
+    currentPlayer.setState("cards", cards, true);
+    currentPlayer.setState('selectedCardType', '', true);
+    currentPlayer.setState('selectedCardId', '', true);
     currentPlayer.setState('target', null, true);
     currentPlayer.setState('availableTargets', [], true);
   };
@@ -171,6 +178,7 @@ export function DaronProvider({ children }) {
         performPlayerAction();
         setPhase('endTurn', true);
         newTime = TIME_END_TURN;
+        setPlayerPhase('firstResult', true);
         break;
       case 'endTurn':
         setPhase('startTurn', true);
@@ -204,8 +212,8 @@ export function DaronProvider({ children }) {
     clearInterval(timerInterval.current);
   };
 
+  // is fired when phase or paused changes
   useEffect(() => {
-    // is fired when phase or paused changes
     console.log('phase', phase);
     runTimer();
     return clearTimer;

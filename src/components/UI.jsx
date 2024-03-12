@@ -16,23 +16,16 @@ export default function UI() {
   const currentPlayer = players[playerTurn];
   const me = myPlayer();
 
-  const selectCard = (type) => {
-    switch (type) {
-      case 'transport':
-        currentPlayer.setState('selectedCard', 'transport', true);
-        break;
+  const selectCard = (type, id) => {
+    currentPlayer.setState('selectedCardType', type, true);
+    currentPlayer.setState('selectedCardId', id, true);
 
-      case 'action':
-        currentPlayer.setState('selectedCard', 'action', true);
-        currentPlayer.setState(
-          'availableTargets',
-          players.filter((p) => p.id !== currentPlayer.id),
-          true
-        );
-        break;
-
-      default:
-        break;
+    if (type === 'action') {
+      currentPlayer.setState(
+        'availableTargets',
+        players.filter((p) => p.id !== currentPlayer.id),
+        true
+      );
     }
   };
 
@@ -53,6 +46,7 @@ export default function UI() {
     currentPlayer.setState('target', index, true);
   };
 
+  // manage disabled states according to the playerPhase
   useEffect(() => {
 
     switch (playerPhase) {
@@ -101,11 +95,11 @@ export default function UI() {
         <div className="deck">
           {me.getState('cards')?.map((card, index) => (
             <button onClick={() => {
-              selectCard(card.type);
+              selectCard(card.type, card.id);
             }}
               disabled={cardsDisabled}
               className={cardsDisabled ? 'disabled' : ''} key={index}>
-              {card.type} {card.name}
+              {card.id} {card.type} {card.name}
             </button>
           ))}
         </div>
