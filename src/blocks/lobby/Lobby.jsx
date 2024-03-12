@@ -32,7 +32,7 @@ function Lobby({ className, ...props }) {
         <p>Waiting for players to join...</p>
         {players.map((player) => (
           <>
-            <p key={player.id}>{player.state.profile.name}</p>
+            <p key={player.id}>{player.state.profile?.name}</p>
             {player.id === me?.id && (
               <>
                 <div>
