@@ -5,14 +5,16 @@ import { usePlayersList, useMultiplayerState } from 'playroomkit';
 import classNames from 'classnames';
 
 import styles from './Lobby.module.scss';
-import { myPlayer } from 'playroomkit';
+import { myPlayer, isHost } from 'playroomkit';
 
 import { UserPlus, UserCheck } from 'lucide-react';
 import { startMatchmaking } from 'playroomkit';
 import Button from '../../components/button/Button';
+import { usePlayerContext } from '../../provider/PlayerProvider';
+import { useGameStateContext } from '../../provider/GameStateProvider';
 
 function Lobby({ className, ...props }) {
-  const [gameState, setGameState] = useMultiplayerState('gameState', 'lobby');
+  const { setGlobalPhase } = useGameStateContext();
   const players = usePlayersList(true);
   const me = myPlayer();
 
@@ -36,16 +38,18 @@ function Lobby({ className, ...props }) {
           {player.id === me?.id && (
             <>
               <div>
-                <button
-                  onClick={() => {
-                    setGameState('loading');
-                    setTimeout(() => {
-                      setGameState('game');
-                    }, 500);
-                  }}
-                >
-                  Start Game
-                </button>
+                {isHost() && (
+                  <button
+                    onClick={() => {
+                      // setPhase('loading');
+                      setTimeout(() => {
+                        setGlobalPhase('startGame', true);
+                      }, 500);
+                    }}
+                  >
+                    Start Game
+                  </button>
+                )}
               </div>
               <div>
                 <button disabled={invited} onClick={invite}>

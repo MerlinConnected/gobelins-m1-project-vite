@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import './styles/global.scss';
 
-import { GlobalProvider } from './provider/GlobalProvider';
+import { DaronProvider } from './provider/DaronProvider';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -15,9 +15,9 @@ try {
     maxPlayersPerRoom: 2,
   }).then(() => {
     root.render(
-      <GlobalProvider>
+      <DaronProvider>
         <App />
-      </GlobalProvider>
+      </DaronProvider>
     );
   });
 } catch (error) {

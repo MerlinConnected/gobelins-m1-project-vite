@@ -10,11 +10,12 @@ import { Perf } from 'r3f-perf';
 import UI from './blocks/ui/UI';
 import Lobby from './blocks/lobby/Lobby';
 import Players from './blocks/players/Players';
-
-import { useMultiplayerState } from 'playroomkit';
+import { usePlayerContext } from './provider/PlayerProvider';
+import { GLOBAL_PHASE, useGameStateContext } from './provider/GameStateProvider';
 
 function Scene() {
-  const [gameState] = useMultiplayerState('gameState', 'lobby');
+  const { phase } = usePlayerContext();
+  const { globalPhase } = useGameStateContext();
   const [isDebug, setisDebug] = useState(true);
 
   useEffect(() => {
@@ -31,16 +32,15 @@ function Scene() {
       <Canvas className="canvas" shadows camera={{ position: [2, 2, 2] }}>
         <color attach="background" args={['#121212']} />
         <Suspense fallback={null}>
-          {gameState === 'game' && <Players />}
+          {globalPhase === GLOBAL_PHASE.startGame && <Players />}
           <OrbitControls target={(0, 0, 0)} />
           <Environment preset="city" />
           {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
         </Suspense>
       </Canvas>
 
-      {gameState === 'lobby' && <Lobby />}
-      {/* <Lobby /> */}
-      {gameState === 'game' && <UI />}
+      {globalPhase === GLOBAL_PHASE.lobby && <Lobby />}
+      {globalPhase === GLOBAL_PHASE.startGame && <UI />}
     </>
   );
 }

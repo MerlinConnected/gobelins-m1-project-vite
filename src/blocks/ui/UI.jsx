@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 
-import { useDaronContext } from '../../provider/DaronProvider';
+import { usePlayerContext } from '../../provider/PlayerProvider';
 import { isHost, myPlayer } from 'playroomkit';
 import { Leva, useControls } from 'leva';
 import { getState } from 'playroomkit';
@@ -10,10 +10,11 @@ import classNames from 'classnames';
 import Button from '../../components/button/Button';
 
 import styles from './UI.module.scss';
+import { useGameStateContext } from '../../provider/GameStateProvider';
 
 function UI({ className, ...props }) {
-  const { phase, playerPhase, setPlayerPhase, startGame, timer, playerTurn, players, distributeCard } =
-    useDaronContext();
+  const { playerTurn, players, distributeCard } = usePlayerContext();
+  const { playerPhase, setPlayerPhase } = useGameStateContext();
   const [cardsDisabled, setCardsDisabled] = useState(true);
   const [drawersDisabled, setDrawersDisabled] = useState(true);
 

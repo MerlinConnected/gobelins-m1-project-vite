@@ -3,14 +3,14 @@ import { useFrame, useThree } from '@react-three/fiber';
 
 import { useControls } from 'leva';
 import { myPlayer } from 'playroomkit';
-import { useDaronContext } from '../../provider/DaronProvider';
+import { usePlayerContext } from '../../provider/PlayerProvider';
 
 import { Model } from '../../models/car';
 
 function Players({ ...props }) {
   const modelRefs = useRef([]);
   const { camera } = useThree();
-  const { players } = useDaronContext();
+  const { players } = usePlayerContext();
 
   const me = myPlayer();
 
@@ -28,7 +28,7 @@ function Players({ ...props }) {
     if (!targetPlayer) return;
     if (me) {
       const player = players.find((p) => p.id === me.id);
-      const model = modelRefs.current[players.indexOf(player)].current;
+      const model = modelRefs.current[players.indexOf(player)]?.current;
 
       if (model) {
         camera.lookAt(model.position);
