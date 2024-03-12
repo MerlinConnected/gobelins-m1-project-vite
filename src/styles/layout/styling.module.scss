@@ -1,0 +1,117 @@
+@mixin rule() {
+    &-desktop {
+        @content;
+    }
+    & {
+        @content;
+    }
+}
+
+@mixin mobile-rule() {
+    &-mobile {
+        @include tablet-portrait {
+            @content;
+        }
+    }
+    & {
+        @include tablet-portrait {
+            @content;
+        }
+    }
+}
+
+.default {
+    @include rule {
+        // font-family: $sans-font;
+        font-size: rem(13);
+        line-height: 120%;
+        text-transform: none;
+        font-weight: normal;
+    }
+
+    @include mobile-rule {
+        font-size: rem(14);
+        line-height: 100%;
+    }
+}
+
+.serif {
+    @include rule {
+        // font-family: $serif-font;
+        font-size: rem(14);
+        line-height: 100%;
+        text-transform: none;
+        font-weight: normal;
+    }
+
+    @include mobile-rule {
+        font-size: rem(14);
+        line-height: 120%;
+    }
+}
+
+.link {
+    @include rule {
+        // font-family: $sans-font;
+        font-size: rem(13);
+        line-height: 100%;
+        text-transform: none;
+        font-weight: normal;
+    }
+
+    @include mobile-rule {
+        font-size: rem(14);
+        line-height: 100%;
+    }
+}
+
+.h1 {
+    @include rule {
+        // font-family: $serif-font;
+        font-size: rem(24);
+        line-height: 120%;
+    }
+
+    @include mobile-rule {
+        font-size: rem(22);
+        line-height: 120%;
+    }
+}
+
+.h2 {
+    @include rule {
+        // font-family: $serif-font;
+        font-size: rem(30);
+        line-height: 120%;
+    }
+
+    @include mobile-rule {
+        font-size: rem(22);
+        line-height: 120%;
+    }
+}
+
+.display {
+    @include rule {
+        // font-family: $sans-font;
+        font-size: rem(18);
+        line-height: 140%;
+    }
+
+    @include mobile-rule {
+        font-size: rem(20);
+        line-height: 140%;
+    }
+}
+
+.footer {
+    @include rule {
+        font-size: rem(16);
+        line-height: 140%;
+    }
+
+    @include mobile-rule {
+        font-size: rem(16);
+        line-height: 140%;
+    }
+}

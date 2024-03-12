@@ -2,7 +2,7 @@ import { insertCoin } from 'playroomkit';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import './styles/index.scss';
+import './styles/global.scss';
 
 import { GlobalProvider } from './provider/GlobalProvider';
 

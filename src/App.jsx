@@ -21,7 +21,7 @@ function Scene() {
   }, []);
   return (
     <>
-      <Canvas shadows camera={{ position: [2, 2, 2] }}>
+      <Canvas className="canvas" shadows camera={{ position: [2, 2, 2] }}>
         <color attach="background" args={['#121212']} />
         <Suspense fallback={null}>
           <Players />

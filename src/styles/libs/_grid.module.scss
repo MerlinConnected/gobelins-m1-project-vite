@@ -1,0 +1,34 @@
+@use 'sass:math';
+@use 'sass:map';
+
+@function computeGridColumn($columnCount, $outerGutter: true) {
+  @return calc(
+    (var(--vw) - (#{$columnCount - 1 + if($outerGutter, 2, 0)} * var(--grid-gutter))) / #{$columnCount}
+  );
+}
+
+@function computeGrid($columns, $additionalGutters: 0) {
+  $gutters: max(0, $columns - 1) + $additionalGutters;
+  @return ($columns, $gutters);
+}
+
+@function computeGridCalc($computed) {
+  $columns: nth($computed, 1);
+  $gutters: nth($computed, 2);
+
+  @if  $columns == 0 {
+    @return calc(var(--grid-gutter) * #{$gutters});
+  }
+
+  @if  $columns == 1 and $gutters == 0 {
+    @return var(--grid-column);
+  }
+
+  @return calc(
+    (var(--grid-column) * #{$columns}) + (var(--grid-gutter) * #{$gutters})
+  );
+}
+
+@function grid($columns, $additionalGutters: 0) {
+  @return computeGridCalc(computeGrid($columns, $additionalGutters));
+}
