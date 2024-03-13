@@ -4,12 +4,7 @@ import { isHost } from 'playroomkit';
 import { usePlayerContext } from './PlayerProvider';
 import { useGameStateContext } from './GameStateProvider';
 
-import {
-  GLOBAL_PHASE,
-  TIME_START_GAME,
-  TIME_START_TURN,
-  TURN_PHASE,
-} from '../utils/constants';
+import { GLOBAL_PHASE, TIME_START_GAME, TIME_START_TURN, TURN_PHASE } from '../utils/constants';
 
 let context = {};
 export const InitContext = createContext();
@@ -44,9 +39,7 @@ export function InitProvider({ children }) {
     if (globalPhase === GLOBAL_PHASE.startGame) startGame();
   }, [globalPhase]);
 
-  context = {
-    ...initState,
-  };
+  context = {};
 
   return <InitContext.Provider value={context}>{children}</InitContext.Provider>;
 }
