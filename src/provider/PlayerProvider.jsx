@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useMultiplayerState, usePlayersList, getState } from 'playroomkit';
 import { randInt } from 'three/src/math/MathUtils';
+import { transportDrawer, actionDrawer } from '../utils/constants';
 
 let context = {};
 const PlayerContext = React.createContext(context);
@@ -19,10 +20,8 @@ export function PlayerProvider({ children }) {
   };
 
   const distributeCard = (type) => {
-    const transportDrawer = [...getState('transportDrawer')];
     const randomTransportIndex = randInt(0, transportDrawer.length - 1);
 
-    const actionDrawer = [...getState('actionDrawer')];
     const randomActionIndex = randInt(0, actionDrawer.length - 1);
 
     const currentPlayer = players[playerTurn];

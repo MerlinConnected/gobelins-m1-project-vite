@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { usePlayersList, useMultiplayerState } from 'playroomkit';
+import { usePlayersList } from 'playroomkit';
 
 import classNames from 'classnames';
 
