@@ -11,7 +11,8 @@ import UI from './blocks/ui/UI';
 import Lobby from './blocks/lobby/Lobby';
 import Players from './blocks/players/Players';
 import { usePlayerContext } from './provider/PlayerProvider';
-import { GLOBAL_PHASE, useGameStateContext } from './provider/GameStateProvider';
+import { useGameStateContext } from './provider/GameStateProvider';
+import { GLOBAL_PHASE } from './utils/constants';
 
 function Scene() {
   const { phase } = usePlayerContext();

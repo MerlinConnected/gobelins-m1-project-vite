@@ -1,12 +1,18 @@
 import React, { createContext, useState, useContext, useEffect, useMemo, PropsWithChildren } from 'react';
 
-import { GLOBAL_PHASE, TIME_START_GAME, TIME_START_TURN, TURN_PHASE, useGameStateContext } from './GameStateProvider';
 import { useMultiplayerState, isHost } from 'playroomkit';
 import { usePlayerContext } from './PlayerProvider';
+import { useGameStateContext } from './GameStateProvider';
 
-const MAX_POINTS = 10;
-const AMOUNT_TRANSPORT_CARDS = 10;
-const AMOUNT_ACTION_CARDS = 1;
+import {
+  GLOBAL_PHASE,
+  TIME_START_GAME,
+  TIME_START_TURN,
+  TURN_PHASE,
+  MAX_POINTS,
+  AMOUNT_TRANSPORT_CARDS,
+  AMOUNT_ACTION_CARDS,
+} from '../utils/constants';
 
 let context = {};
 export const InitContext = createContext();

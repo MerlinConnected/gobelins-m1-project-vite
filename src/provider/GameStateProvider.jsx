@@ -4,31 +4,14 @@ import { useMultiplayerState, getState, isHost } from 'playroomkit';
 import { useControls } from 'leva';
 import { usePlayerContext } from './PlayerProvider';
 
-export const GLOBAL_PHASE = {
-  lobby: 'lobby',
-  startGame: 'startGame',
-  playGame: 'playGame',
-  endGame: 'endGame',
-};
-
-export const TURN_PHASE = {
-  startTurn: 'startTurn',
-  playTurn: 'playTurn',
-  endTurn: 'endTurn',
-};
-
-export const PLAYER_PHASE = {
-  drawCards: 'drawCards',
-  performFirst: 'performFirst',
-  firstResult: 'firstResult',
-  performLast: 'performLast',
-  lastResult: 'lastResult',
-};
-
-export const TIME_START_GAME = 1;
-export const TIME_START_TURN = 1;
-const TIME_PLAYER_TURN = 6;
-const TIME_END_TURN = 1;
+import {
+  GLOBAL_PHASE,
+  TURN_PHASE,
+  PLAYER_PHASE,
+  TIME_START_TURN,
+  TIME_PLAYER_TURN,
+  TIME_END_TURN,
+} from '../utils/constants';
 
 let context = {};
 const GameStateContext = React.createContext();
