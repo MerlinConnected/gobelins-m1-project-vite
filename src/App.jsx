@@ -8,13 +8,15 @@ import { Suspense } from 'react';
 import { Perf } from 'r3f-perf';
 
 import UI from './blocks/ui/UI';
-import Lobby from './blocks/lobby/Lobby';
 import Game from './blocks/game/Game';
+import Lobby from './blocks/lobby/Lobby';
+import Onboarding from './blocks/onboarding/Onboarding';
 import { useGameStateContext } from './provider/GameStateProvider';
-import { GLOBAL_PHASE } from './utils/constants';
+import { GAME_PHASE } from './utils/constants';
+import InfoLobby from './blocks/info-lobby/InfoLobby';
 
 function Scene() {
-  const { globalPhase } = useGameStateContext();
+  const { onboarding, infoLobby, lobby, globalPhase } = useGameStateContext();
   const [isDebug, setisDebug] = useState(true);
 
   useEffect(() => {
@@ -26,12 +28,16 @@ function Scene() {
   }, []);
   return (
     <>
+      {onboarding && <Onboarding />}
+      {infoLobby && <InfoLobby />}
+      {lobby && <Lobby />}
+
       <Leva hidden={isDebug} />
       <Loader />
       <Canvas className="canvas" shadows>
-        <color attach="background" args={['#121212']} />
+        <color attach="background" args={['#efd8bd']} />
         <Suspense fallback={null}>
-          {globalPhase === GLOBAL_PHASE.startGame && <Game />}
+          {globalPhase === GAME_PHASE.startGame && <Game />}
           <OrbitControls target={(0, 0, 0)} />
           <Environment preset="city" />
           {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
@@ -42,9 +48,7 @@ function Scene() {
           </mesh>
         </Suspense>
       </Canvas>
-
-      {globalPhase === GLOBAL_PHASE.lobby && <Lobby />}
-      {globalPhase === GLOBAL_PHASE.startGame && <UI />}
+      {globalPhase === GAME_PHASE.startGame && <UI />}
     </>
   );
 }
