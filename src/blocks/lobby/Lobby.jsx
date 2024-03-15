@@ -1,72 +1,60 @@
 import React, { useState } from 'react';
 
-import { usePlayersList, useMultiplayerState } from 'playroomkit';
+import { usePlayersList, getRoomCode, isHost } from 'playroomkit';
 
 import classNames from 'classnames';
 
 import styles from './Lobby.module.scss';
-import { myPlayer } from 'playroomkit';
 
 import { UserPlus, UserCheck } from 'lucide-react';
 import { startMatchmaking } from 'playroomkit';
 import Button from '../../components/button/Button';
+import { usePlayerContext } from '../../provider/PlayerProvider';
+import { useGameStateContext } from '../../provider/GameStateProvider';
+import { GAME_PHASE } from '../../utils/constants';
 
 function Lobby({ className, ...props }) {
-  const [gameState, setGameState] = useMultiplayerState('gameState', 'lobby');
+  const { setLobby, setOnboarding, setGlobalPhase } = useGameStateContext();
+
   const players = usePlayersList(true);
-  const me = myPlayer();
 
-  const [invited, setInvited] = useState(false);
+  function copyRoomCode() {
+    navigator.clipboard.writeText(getRoomCode());
+  }
 
-  const invite = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setInvited(true);
-    setTimeout(() => {
-      setInvited(false);
-    }, 1000);
-  };
+  function removeRoomHash() {
+    window.location.hash = '';
+    window.location.reload();
+  }
 
   return (
-    <div className={classNames(styles.wrapper, className)}>
-      <h1>Game Lobby</h1>
-      <p>Waiting for players to join...</p>
-      {players.map((player) => (
-        <div key={player.id}>
-          <p>{player.state.profile?.name}</p>
-          {player.id === me?.id && (
-            <>
-              <div>
-                <button
-                  onClick={() => {
-                    setGameState('loading');
-                    setTimeout(() => {
-                      setGameState('game');
-                    }, 500);
-                  }}
-                >
-                  Start Game
-                </button>
-              </div>
-              <div>
-                <button disabled={invited} onClick={invite}>
-                  {invited ? (
-                    <>
-                      <UserCheck width={16} height={16} />
-                      Copied!
-                    </>
-                  ) : (
-                    <>
-                      <UserPlus width={16} height={16} />
-                      Invite Friends
-                    </>
-                  )}
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-      ))}
-    </div>
+    <>
+      <div style={{ position: 'absolute', top: 0, zIndex: 1 }}>
+        <button
+          onClick={() => {
+            copyRoomCode();
+          }}
+        >
+          Copy room code
+        </button>
+        <button onClick={() => removeRoomHash()}>Leave room</button>
+
+        {players.map((player) => (
+          <p key={player.id}>{player.state.name || player.state.profile?.name}</p>
+        ))}
+
+        {isHost() && (
+          <button
+            onClick={() => {
+              setLobby(false);
+              setGlobalPhase(GAME_PHASE.startGame, true);
+            }}
+          >
+            Start game
+          </button>
+        )}
+      </div>
+    </>
   );
 }
 
