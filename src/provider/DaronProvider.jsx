@@ -128,7 +128,7 @@ export function DaronProvider({ children }) {
 
       setPhase('startTurn', true);
       setTimer(TIME_START_TURN, true);
-      console.log('Animation de début de partie');
+      // console.log('Animation de début de partie');
     }
   };
 
@@ -226,7 +226,7 @@ export function DaronProvider({ children }) {
 
   // is fired when phase or paused changes
   useEffect(() => {
-    console.log('phase', phase);
+    // console.log('phase', phase);
     runTimer();
     return clearTimer;
   }, [phase, paused]);
