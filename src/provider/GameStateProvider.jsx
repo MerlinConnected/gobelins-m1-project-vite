@@ -13,7 +13,6 @@ const GameStateContext = React.createContext();
 export function GameStateProvider({ children }) {
   const { setPlayerTurn, performPlayerAction, players } = usePlayerContext();
 
-  const [roomCode, setRoomCode] = useState('');
   const [onboarding, setOnboarding] = useState(true);
   const [infoLobby, setInfoLobby] = useState(false);
   const [lobby, setLobby] = useState(false);
@@ -23,7 +22,7 @@ export function GameStateProvider({ children }) {
   const [turnPhase, setTurnPhase] = useMultiplayerState('turnPhase', null);
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
 
-  function handleInsertCoin() {
+  function handleInsertCoin(roomCode) {
     insertCoin({
       skipLobby: true,
       roomCode: roomCode,
@@ -34,8 +33,6 @@ export function GameStateProvider({ children }) {
   }
 
   const gameState = {
-    roomCode,
-    setRoomCode,
     onboarding,
     setOnboarding,
     infoLobby,

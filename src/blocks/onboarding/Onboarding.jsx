@@ -18,8 +18,7 @@ function Onboarding() {
         onClick={() => {
           const roomCode = prompt('Enter room code');
           if (roomCode) {
-            setRoomCode(roomCode);
-            handleInsertCoin();
+            handleInsertCoin(roomCode);
           }
         }}
       >
