@@ -1,5 +1,4 @@
-export const GLOBAL_PHASE = {
-  lobby: 'lobby',
+export const GAME_PHASE = {
   startGame: 'startGame',
   playGame: 'playGame',
   endGame: 'endGame',
@@ -29,9 +28,7 @@ export const AMOUNT_TRANSPORT_CARDS = 10;
 export const AMOUNT_ACTION_CARDS = 1;
 
 export const transportDrawer = [
-  ...new Array(AMOUNT_TRANSPORT_CARDS)
-    .fill()
-    .map((_, index) => ({ id: index, name: 'velo', type: 'transport' })),
+  ...new Array(AMOUNT_TRANSPORT_CARDS).fill().map((_, index) => ({ id: index, name: 'velo', type: 'transport' })),
   ...new Array(AMOUNT_TRANSPORT_CARDS)
     .fill()
     .map((_, index) => ({ id: index + AMOUNT_TRANSPORT_CARDS, name: 'voiture', type: 'transport' })),

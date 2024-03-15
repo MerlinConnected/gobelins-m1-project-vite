@@ -1,8 +1,4 @@
-import React, { useRef, useState, useEffect, createRef } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
-
-import { useControls } from 'leva';
-import { myPlayer } from 'playroomkit';
+import React, { useRef, useEffect, createRef } from 'react';
 
 import Player from '../player/Player';
 

@@ -4,7 +4,7 @@ import { isHost } from 'playroomkit';
 import { usePlayerContext } from './PlayerProvider';
 import { useGameStateContext } from './GameStateProvider';
 
-import { GLOBAL_PHASE, TIME_START_GAME, TIME_START_TURN, TURN_PHASE } from '../utils/constants';
+import { GAME_PHASE, TIME_START_GAME, TIME_START_TURN, TURN_PHASE } from '../utils/constants';
 
 let context = {};
 export const InitContext = createContext();
@@ -36,7 +36,7 @@ export function InitProvider({ children }) {
   };
 
   useEffect(() => {
-    if (globalPhase === GLOBAL_PHASE.startGame) startGame();
+    if (globalPhase === GAME_PHASE.startGame) startGame();
   }, [globalPhase]);
 
   context = {};

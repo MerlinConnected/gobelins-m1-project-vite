@@ -1,14 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, createRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { Vector3 } from 'three';
 
 import { useControls } from 'leva';
 import { myPlayer } from 'playroomkit';
-import { usePlayerContext } from '../../provider/PlayerProvider';
 
 import { Model } from '../../models/car';
-import { isHost } from 'playroomkit';
 import { usePlayerState } from 'playroomkit';
 
 function Player({ player, index, ...props }) {
@@ -54,7 +52,7 @@ function Player({ player, index, ...props }) {
 
   return (
     <group>
-      <Model position={progress} color={state.profile.color} ref={model} />
+      <Model position={progress} color={state?.profile?.color} ref={model} />
       {me?.id === id && <PerspectiveCamera makeDefault position={progress.clone().add(new Vector3(4, 5, 4))} />}
     </group>
   );

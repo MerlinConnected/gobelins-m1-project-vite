@@ -1,17 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 
-import { useMultiplayerState, getState, isHost } from 'playroomkit';
+import { useMultiplayerState, getState, isHost, insertCoin } from 'playroomkit';
 import { useControls } from 'leva';
 import { usePlayerContext } from './PlayerProvider';
 
-import {
-  GLOBAL_PHASE,
-  TURN_PHASE,
-  PLAYER_PHASE,
-  TIME_START_TURN,
-  TIME_PLAYER_TURN,
-  TIME_END_TURN,
-} from '../utils/constants';
+import { TURN_PHASE, PLAYER_PHASE, TIME_START_TURN, TIME_PLAYER_TURN, TIME_END_TURN } from '../utils/constants';
+import { useState } from 'react';
 
 let context = {};
 const GameStateContext = React.createContext();
@@ -19,13 +13,32 @@ const GameStateContext = React.createContext();
 export function GameStateProvider({ children }) {
   const { setPlayerTurn, performPlayerAction, players } = usePlayerContext();
 
-  const [timer, setTimer] = useMultiplayerState('timer', 0);
+  const [onboarding, setOnboarding] = useState(true);
+  const [infoLobby, setInfoLobby] = useState(false);
+  const [lobby, setLobby] = useState(false);
 
-  const [globalPhase, setGlobalPhase] = useMultiplayerState('globalPhase', GLOBAL_PHASE.lobby);
+  const [timer, setTimer] = useMultiplayerState('timer', 0);
+  const [globalPhase, setGlobalPhase] = useMultiplayerState('globalPhase', null);
   const [turnPhase, setTurnPhase] = useMultiplayerState('turnPhase', null);
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
 
+  function handleInsertCoin(roomCode) {
+    insertCoin({
+      skipLobby: true,
+      roomCode: roomCode,
+    }).then(() => {
+      setOnboarding(false);
+      setInfoLobby(true);
+    });
+  }
+
   const gameState = {
+    onboarding,
+    setOnboarding,
+    infoLobby,
+    setInfoLobby,
+    lobby,
+    setLobby,
     timer,
     setTimer,
     globalPhase,
@@ -34,6 +47,7 @@ export function GameStateProvider({ children }) {
     setTurnPhase,
     playerPhase,
     setPlayerPhase,
+    handleInsertCoin,
   };
 
   const phaseEnd = () => {
