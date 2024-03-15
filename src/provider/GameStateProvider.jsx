@@ -84,16 +84,16 @@ export function GameStateProvider({ children }) {
     setTimer(newTime, true);
   };
 
-  const { paused } = useControls({
-    paused: false,
-  });
+  // const { paused } = useControls({
+  //   paused: false,
+  // });
 
   const timerInterval = useRef();
 
   const runTimer = () => {
     timerInterval.current = setInterval(() => {
       if (!isHost()) return;
-      if (paused) return;
+      // if (paused) return;
       let newTime = getState('timer') - 1;
 
       if (newTime <= 0) {
@@ -113,7 +113,7 @@ export function GameStateProvider({ children }) {
     console.log('phase', turnPhase);
     runTimer();
     return clearTimer;
-  }, [turnPhase, paused]);
+  }, [turnPhase]);
 
   context = {
     ...gameState,
