@@ -1,0 +1,23 @@
+.wrapper {
+    position: absolute;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    place-items: center;
+
+    color: white;
+    > div {
+        h1 {
+            font-size: rem(16);
+            margin-bottom: rem(12);
+            text-align: center;
+        }
+        > div {
+            display: flex;
+            align-items: center;
+            gap: rem(4);
+        }
+    }
+}
