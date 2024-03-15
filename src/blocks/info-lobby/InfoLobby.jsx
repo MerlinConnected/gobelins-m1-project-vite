@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 
 import { myPlayer } from 'playroomkit';
+
 import { usePlayerContext } from '../../provider/PlayerProvider';
 import { useGameStateContext } from '../../provider/GameStateProvider';
 
-function InfoLobby() {
+import classNames from 'classnames';
+import styles from './InfoLobby.module.scss';
+
+import Button from '../../components/button/Button';
+
+function InfoLobby({ className, ...props }) {
   const { setNameEditing } = usePlayerContext();
   const { setInfoLobby, setLobby } = useGameStateContext();
 
   const me = myPlayer();
 
-  const [nameInput, setNameInput] = useState(me?.getState('name') || me?.state?.profile?.name);
+  const [nameInput, setNameInput] = useState(me?.getState('name') || me?.state?.profile?.name || '');
 
   const goToLobby = () => {
     setInfoLobby(false);
@@ -19,30 +25,26 @@ function InfoLobby() {
 
   console.log(me);
   return (
-    <>
-      <input
-        type="text"
-        value={nameInput}
-        onChange={(e) => {
-          setNameInput(e.target.value);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            me.setState('name', nameInput);
+    <div className={classNames(styles.wrapper, className)} {...props}>
+      <div>
+        <form
+          onSubmit={() => {
+            me?.setState('name', nameInput);
             setNameEditing(false);
-          }
-        }}
-      />
-      <button
-        onClick={() => {
-          me?.setState('name', nameInput);
-          setNameEditing(false);
-          goToLobby();
-        }}
-      >
-        continue to lobby
-      </button>
-    </>
+            goToLobby();
+          }}
+        >
+          <input
+            type="text"
+            value={nameInput}
+            onChange={(e) => {
+              setNameInput(e.target.value);
+            }}
+          />
+          <Button type="submit">Join game</Button>
+        </form>
+      </div>
+    </div>
   );
 }
 
