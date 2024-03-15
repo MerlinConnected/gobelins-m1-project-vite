@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useMultiplayerState, usePlayersList, getState } from 'playroomkit';
 import { randInt } from 'three/src/math/MathUtils';
@@ -8,12 +8,15 @@ let context = {};
 const PlayerContext = React.createContext(context);
 
 export function PlayerProvider({ children }) {
+  const [nameEditing, setNameEditing] = useState(false);
   const [playerTurn, setPlayerTurn] = useMultiplayerState('playerTurn', 0);
 
   const players = usePlayersList(true);
   players.sort((a, b) => a.id.localeCompare(b.id));
 
   const gameState = {
+    nameEditing,
+    setNameEditing,
     playerTurn,
     setPlayerTurn,
     players,

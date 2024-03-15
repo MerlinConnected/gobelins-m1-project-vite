@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { usePlayersList, getRoomCode, isHost } from 'playroomkit';
 
@@ -6,15 +6,11 @@ import classNames from 'classnames';
 
 import styles from './Lobby.module.scss';
 
-import { UserPlus, UserCheck } from 'lucide-react';
-import { startMatchmaking } from 'playroomkit';
-import Button from '../../components/button/Button';
-import { usePlayerContext } from '../../provider/PlayerProvider';
 import { useGameStateContext } from '../../provider/GameStateProvider';
 import { GAME_PHASE } from '../../utils/constants';
 
 function Lobby({ className, ...props }) {
-  const { setLobby, setOnboarding, setGlobalPhase } = useGameStateContext();
+  const { setLobby, setGlobalPhase } = useGameStateContext();
 
   const players = usePlayersList(true);
 
@@ -26,6 +22,8 @@ function Lobby({ className, ...props }) {
     window.location.hash = '';
     window.location.reload();
   }
+
+  console.log(players);
 
   return (
     <>

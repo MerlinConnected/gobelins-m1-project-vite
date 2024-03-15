@@ -28,8 +28,8 @@ export function GameStateProvider({ children }) {
       skipLobby: true,
       roomCode: roomCode,
     }).then(() => {
-      setInfoLobby(false);
-      setLobby(true);
+      setOnboarding(false);
+      setInfoLobby(true);
     });
   }
 

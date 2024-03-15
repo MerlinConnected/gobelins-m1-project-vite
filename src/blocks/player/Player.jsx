@@ -1,14 +1,12 @@
 import React, { useRef, useState, useEffect, createRef } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { Vector3 } from 'three';
 
 import { useControls } from 'leva';
 import { myPlayer } from 'playroomkit';
-import { usePlayerContext } from '../../provider/PlayerProvider';
 
 import { Model } from '../../models/car';
-import { isHost } from 'playroomkit';
 import { usePlayerState } from 'playroomkit';
 
 function Player({ player, index, ...props }) {
