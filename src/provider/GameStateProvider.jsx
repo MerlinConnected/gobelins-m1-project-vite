@@ -23,13 +23,23 @@ export function GameStateProvider({ children }) {
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
 
   function handleInsertCoin(roomCode) {
-    insertCoin({
-      skipLobby: true,
-      roomCode: roomCode,
-    }).then(() => {
-      setOnboarding(false);
-      setInfoLobby(true);
-    });
+    try {
+      insertCoin({
+        skipLobby: true,
+        roomCode: roomCode,
+      }).then(() => {
+        setOnboarding(false);
+        setInfoLobby(true);
+      });
+    } catch (error) {
+      if (error.message === 'ROOM_LIMIT_EXCEEDED') {
+        root.render(
+          <div>
+            <p>casses toi de la t'es de trop</p>
+          </div>
+        );
+      }
+    }
   }
 
   const gameState = {
