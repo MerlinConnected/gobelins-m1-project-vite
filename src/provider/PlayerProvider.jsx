@@ -56,37 +56,30 @@ export function PlayerProvider({ children }) {
 
   const performPlayerAction = () => {
     const currentPlayer = players[playerTurn];
-    const selectedCardType = currentPlayer.getState('selectedCardType');
-    const selectedCardId = currentPlayer.getState('selectedCardId');
+    const selectedCard = currentPlayer.getState('selectedCard');
     const cards = currentPlayer.getState('cards');
 
-    switch (selectedCardType) {
+    switch (selectedCard.type) {
       case 'transport':
-        currentPlayer.setState('availableTargets', [currentPlayer], true);
-        currentPlayer.setState('points', currentPlayer.getState('points') + 1, true);
+        let selfTarget = currentPlayer.getState('target');
+        if (selfTarget !== null && selfTarget !== undefined) {
+          currentPlayer.setState('points', currentPlayer.getState('points') + 1, true);
+        }
         break;
       case 'action':
-        const availableTargets = players.filter((p) => p.id !== currentPlayer.id);
-        currentPlayer.setState('availableTargets', availableTargets, true);
-        let targetIndex = currentPlayer.getState('target');
-        if (targetIndex !== null && targetIndex !== undefined) {
-          let target = availableTargets[targetIndex];
-          target.setState('points', target.getState('points') - 1, true);
+        const availableTargets = players.filter((p) => p.id !== currentPlayer.id); // todo: essayer de remplacer par 'availableTargets' à récupérer dans le state du currentPlayer
+        let target = currentPlayer.getState('target');
+        if (target !== null && target !== undefined) {
+          let targetPlayer = availableTargets.find((p) => p.id === target.id);
+          targetPlayer.setState('points', targetPlayer.getState('points') - 1, true);
         }
         break;
       default:
         break;
     }
-    if (currentPlayer.getState('selectedCardId') !== '') {
-      cards.splice(
-        cards.findIndex((card) => card.id === selectedCardId),
-        1
-      );
-      console.log('REMOVED', selectedCardId);
-    }
+
     currentPlayer.setState('cards', cards, true);
-    currentPlayer.setState('selectedCardType', '', true);
-    currentPlayer.setState('selectedCardId', '', true);
+    currentPlayer.setState('selectedCard', '', true);
     currentPlayer.setState('target', null, true);
     currentPlayer.setState('availableTargets', [], true);
   };

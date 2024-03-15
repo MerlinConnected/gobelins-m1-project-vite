@@ -49,7 +49,6 @@ export function GameStateProvider({ children }) {
       case TURN_PHASE.playTurn:
         performPlayerAction();
         setTurnPhase(TURN_PHASE.endTurn, true);
-        setPlayerPhase(PLAYER_PHASE.firstResult, true);
         newTime = TIME_END_TURN;
         break;
       case TURN_PHASE.endTurn:
