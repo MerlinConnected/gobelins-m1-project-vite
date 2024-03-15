@@ -29,7 +29,7 @@ function Player({ player, index, ...props }) {
 
   return (
     <group>
-      <Model position={new Vector3(-index * 1.5, 0, -points)} color={state.profile.color} ref={model} />
+      <Model position={new Vector3(-index * 1.5, 0, -points)} color={state?.profile?.color} ref={model} />
       {me?.id === id && <PerspectiveCamera makeDefault position={[4, 5, 4]} />}
     </group>
   );

@@ -83,13 +83,13 @@ function UI({ className, ...props }) {
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
-        <p>Je suis {me.state.profile.name}</p>
+        <p>Je suis {me?.state?.profile?.name}</p>
         <div className="styles.board">
           <h2>Classement</h2>
           {players.map((player, index) => (
             <div key={index}>
-              <p>{player.state.profile.name}</p>
-              <p>{player.getState('points')} points</p>
+              <p>{player?.state?.profile?.name}</p>
+              <p>{player?.getState('points')} points</p>
             </div>
           ))}
         </div>
@@ -120,7 +120,7 @@ function UI({ className, ...props }) {
                 disabled={cardsDisabled}
                 // className={cardsDisabled ? 'disabled' : ''}
               >
-                <span>{player.state.profile.name}</span>
+                <span>{player?.state?.profile?.name}</span>
               </Button>
             ))}
         </div>
