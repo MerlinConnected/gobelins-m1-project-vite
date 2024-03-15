@@ -23,6 +23,7 @@ function Onboarding({ className, ...props }) {
             New room
           </Button>
           <Button
+            className={styles.white}
             onClick={() => {
               const roomCode = prompt('Enter room code');
               if (roomCode) {
