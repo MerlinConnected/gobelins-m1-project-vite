@@ -61,6 +61,9 @@ function UI({ className, ...props }) {
     currentPlayer.setState('target', player, true);
     const cards = currentPlayer.getState('cards');
     const selectedCard = currentPlayer.getState('selectedCard');
+    const decisions = currentPlayer.getState('decisions');
+    decisions.push({ type: selectedCard.type, impact: selectedCard.impact, target: player });
+    currentPlayer.setState('decisions', decisions, true);
 
     // remove the selected card from the deck
     if (selectedCard) {
@@ -93,20 +96,45 @@ function UI({ className, ...props }) {
         if (currentPlayer?.id === me?.id && currentPlayer?.getState('cards')?.length < 4) {
           setCardsDisabled(true);
           setDrawersDisabled(false);
+          console.log('PIOCHE, ' + currentPlayer.state.profile.name);
         }
         break;
 
-      case PLAYER_PHASE.performFirst || PLAYER_PHASE.performLast:
+      case PLAYER_PHASE.performFirst:
         if (currentPlayer?.id === me?.id) {
           setCardsDisabled(false);
           setDrawersDisabled(true);
+          console.log('1) A TOI DE JOUER ' + currentPlayer.state.profile.name);
         }
         break;
 
-      case PLAYER_PHASE.firstResult || PLAYER_PHASE.lastResult:
+      case PLAYER_PHASE.performLast:
+        if (currentPlayer?.id === me?.id) {
+          setCardsDisabled(false);
+          setDrawersDisabled(true);
+          console.log('2) REJOUE ' + currentPlayer.state.profile.name);
+        }
+        break;
+
+      case PLAYER_PHASE.firstResult:
+        console.log('Le joueur ' + currentPlayer.state.profile.name + ' a joué sa 1ère action ' + currentPlayer.getState('selectedCard').type + ' ' + currentPlayer.getState('selectedCard').name + ' sur le joueur ' + currentPlayer.getState('target').state.profile.name);
         setCardsDisabled(true);
         setDrawersDisabled(true);
-        console.log('Le joueur ' + currentPlayer.state.profile.name + ' a joué' + currentPlayer.getState('selectedCard').type + ' ' + currentPlayer.getState('selectedCard').name + ' sur le joueur ' + currentPlayer.getState('target').state.profile.name);
+        setTimeout(() => {
+          setPlayerPhase(PLAYER_PHASE.performLast, true);
+        }, 1000);
+        break;
+
+      case PLAYER_PHASE.lastResult:
+        console.log('Le joueur ' + currentPlayer.state.profile.name + ' a joué sa 2ème action ' + currentPlayer.getState('selectedCard').type + ' ' + currentPlayer.getState('selectedCard').name + ' sur le joueur ' + currentPlayer.getState('target').state.profile.name);
+        setCardsDisabled(true);
+        setDrawersDisabled(true);
+        setTimeout(() => {
+          setPlayerPhase(null, true);
+          currentPlayer.setState('selectedCard', null, true);
+          currentPlayer.setState('target', null, true);
+          currentPlayer.setState('availableTargets', [], true);
+        }, 1000);
         break;
 
       default:

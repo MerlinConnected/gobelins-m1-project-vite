@@ -22,9 +22,10 @@ export function InitProvider({ children }) {
       players.forEach((player) => {
         player.setState('points', 0, true);
         player.setState('cards', [], true);
-        player.setState('selectedCard', '', true);
+        player.setState('selectedCard', null, true);
         player.setState('target', null, true);
         player.setState('availableTargets', [], true);
+        player.setState('decisions', [], true);
       });
 
       distributeCard('initial');

@@ -56,32 +56,37 @@ export function PlayerProvider({ children }) {
 
   const performPlayerAction = () => {
     const currentPlayer = players[playerTurn];
-    const selectedCard = currentPlayer.getState('selectedCard');
-    const cards = currentPlayer.getState('cards');
 
-    switch (selectedCard.type) {
-      case 'transport':
-        let selfTarget = currentPlayer.getState('target');
-        if (selfTarget !== null && selfTarget !== undefined) {
-          currentPlayer.setState('points', currentPlayer.getState('points') + 1, true);
-        }
-        break;
-      case 'action':
-        const availableTargets = players.filter((p) => p.id !== currentPlayer.id); // todo: essayer de remplacer par 'availableTargets' à récupérer dans le state du currentPlayer
-        let target = currentPlayer.getState('target');
-        if (target !== null && target !== undefined) {
-          let targetPlayer = availableTargets.find((p) => p.id === target.id);
-          targetPlayer.setState('points', targetPlayer.getState('points') - 1, true);
-        }
-        break;
-      default:
-        break;
+    const decisions = currentPlayer.getState('decisions');
+
+
+
+    // boucle pour 2 cartes
+    for (let i = 0; i < currentPlayer.getState('decisions').length; i++) {
+      const decision = currentPlayer.getState('decisions')[i];
+      let target = decision.target;
+      switch (decision.type) {
+        case 'transport':
+          if (target.id == currentPlayer.id) {
+            currentPlayer.setState('points', currentPlayer.getState('points') + decision.impact, true);
+          }
+          break;
+        case 'action':
+          const availableTargets = players.filter((p) => p.id !== currentPlayer.id); // todo: essayer de remplacer par 'availableTargets' à récupérer dans le state du currentPlayer
+          if (target !== null && target !== undefined) {
+            let targetPlayer = availableTargets.find((p) => p.id === target.id);
+            targetPlayer.setState('points', targetPlayer.getState('points') + decision.impact, true);
+          }
+          break;
+        default:
+          break;
+      }
     }
 
-    currentPlayer.setState('cards', cards, true);
     currentPlayer.setState('selectedCard', '', true);
     currentPlayer.setState('target', null, true);
     currentPlayer.setState('availableTargets', [], true);
+    currentPlayer.setState('decisions', [], true);
   };
 
   context = {
