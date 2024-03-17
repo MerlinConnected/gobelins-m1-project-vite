@@ -45,7 +45,7 @@ export function GameStateProvider({ children }) {
       if (error.message === 'ROOM_LIMIT_EXCEEDED') {
         root.render(
           <div>
-            <p>casses toi de la t'es de trop</p>
+            <p>casse toi de la t'es de trop</p>
           </div>
         );
       }
