@@ -10,34 +10,17 @@
     color: white;
     > div {
         width: 40vw;
+        max-width: rem(400);
         > div {
             display: flex;
             align-items: center;
 
             gap: rem(12);
-
             h1 {
                 font-size: rem(16);
             }
-
-            > div {
-                display: flex;
-                gap: rem(4);
-            }
             &:first-of-type {
                 justify-content: space-between;
-            }
-            &:last-of-type {
-                flex-direction: row;
-                margin: rem(12) 0;
-                h2 {
-                    font-size: rem(16);
-                    font-weight: 500;
-                    color: #c8c8c8;
-                    &.me {
-                        color: #fff;
-                    }
-                }
             }
         }
     }
