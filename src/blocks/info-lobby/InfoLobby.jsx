@@ -22,8 +22,6 @@ function InfoLobby({ className, ...props }) {
     setInfoLobby(false);
     setLobby(true);
   };
-
-  console.log(me);
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
       <div>
