@@ -7,6 +7,8 @@ import styles from './Lobby.module.scss';
 
 import Button from '../../components/button/Button';
 
+import { Toaster, toast } from 'sonner';
+
 import { useGameStateContext } from '../../provider/GameStateProvider';
 import { GAME_PHASE } from '../../utils/constants';
 import { myPlayer } from 'playroomkit';
@@ -37,8 +39,12 @@ function Lobby({ className, ...props }) {
         <div>
           <h1>Lobby</h1>
           <div>
+            <Toaster theme="dark" />
             <Button
               onClick={() => {
+                toast('Code copied to clipboard!', {
+                  position: 'top-center',
+                });
                 copyRoomCode();
               }}
             >
