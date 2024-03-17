@@ -22,11 +22,21 @@ export function GameStateProvider({ children }) {
   const [turnPhase, setTurnPhase] = useMultiplayerState('turnPhase', null);
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
 
+  const avatars = [
+    'images/profiles/pp1.webp',
+    'images/profiles/pp2.webp',
+    'images/profiles/pp3.webp',
+    'images/profiles/pp4.webp',
+    'images/profiles/pp5.webp',
+    'images/profiles/pp6.webp',
+  ];
+
   function handleInsertCoin(roomCode) {
     try {
       insertCoin({
         skipLobby: true,
         roomCode: roomCode,
+        avatars: avatars,
       }).then(() => {
         setOnboarding(false);
         setInfoLobby(true);
