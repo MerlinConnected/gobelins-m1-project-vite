@@ -132,6 +132,18 @@ textarea {
     background: transparent;
 }
 
+p,
+table,
+blockquote,
+address,
+pre,
+iframe,
+form,
+figure,
+dl {
+    margin: 0;
+}
+
 .hidden {
     position: fixed;
     left: -100vh;
