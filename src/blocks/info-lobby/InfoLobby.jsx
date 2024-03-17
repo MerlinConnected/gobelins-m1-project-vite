@@ -37,6 +37,7 @@ function InfoLobby({ className, ...props }) {
           <input
             type="text"
             value={nameInput}
+            placeholder="Enter your name"
             onChange={(e) => {
               setNameInput(e.target.value);
             }}
