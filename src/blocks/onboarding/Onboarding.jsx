@@ -13,7 +13,7 @@ function Onboarding({ className, ...props }) {
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
       <div>
-        <h1>Onboarding</h1>
+        <h1>On Time 🛬</h1>
         <div>
           <Button
             onClick={() => {
