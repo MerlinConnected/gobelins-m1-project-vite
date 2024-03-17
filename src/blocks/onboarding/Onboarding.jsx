@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useGameStateContext } from '../../provider/GameStateProvider';
 
@@ -10,29 +10,40 @@ import Button from '../../components/button/Button';
 function Onboarding({ className, ...props }) {
   const { handleInsertCoin } = useGameStateContext();
 
+  const [roomCode, setRoomCode] = useState('');
+
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
       <div>
         <h1>On Time 🛬</h1>
         <div>
-          <Button
-            onClick={() => {
-              handleInsertCoin();
+          <div>
+            <h2>Do you think have what it takes to catch your train ?</h2>
+            <Button
+              className={styles.white}
+              onClick={() => {
+                handleInsertCoin();
+              }}
+            >
+              New Game
+            </Button>
+          </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleInsertCoin(roomCode);
             }}
           >
-            New room
-          </Button>
-          <Button
-            className={styles.white}
-            onClick={() => {
-              const roomCode = prompt('Enter room code');
-              if (roomCode) {
-                handleInsertCoin(roomCode);
-              }
-            }}
-          >
-            Join room
-          </Button>
+            <input
+              type="text"
+              placeholder="Enter room code"
+              value={roomCode}
+              onChange={(e) => {
+                setRoomCode(e.target.value);
+              }}
+            />
+            <Button type="submit">Join room</Button>
+          </form>
         </div>
       </div>
     </div>
