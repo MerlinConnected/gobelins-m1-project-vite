@@ -12,6 +12,7 @@ import { Toaster, toast } from 'sonner';
 import { useGameStateContext } from '../../provider/GameStateProvider';
 import { GAME_PHASE } from '../../utils/constants';
 import { myPlayer } from 'playroomkit';
+import { useEffect } from 'react';
 
 function Lobby({ className, ...props }) {
   const { setLobby, setGlobalPhase } = useGameStateContext();
@@ -29,7 +30,14 @@ function Lobby({ className, ...props }) {
     window.location.reload();
   }
 
-  console.log(players);
+  useEffect(() => {
+    players.forEach((player) => {
+      if (!player.getState('avatar')) {
+        const randomIndex = Math.floor(Math.random() * player.avatarList.length);
+        player.setState('avatar', player.avatarList[randomIndex]);
+      }
+    });
+  }, [players.length]);
 
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
@@ -52,11 +60,16 @@ function Lobby({ className, ...props }) {
         </div>
         <div>
           <p>Players :</p>
-          {players.map((player) => (
-            <h2 key={player.id} className={classNames({ [styles.me]: me?.id === player?.id })}>
-              {player.state.name || player.state.profile?.name}
-            </h2>
-          ))}
+          {players.map((player) => {
+            return (
+              <div className="player-card" key={player.id}>
+                <img src={player.state.avatar} alt="avatar" className={styles.avatar} />
+                <h2 className={classNames({ [styles.me]: me?.id === player?.id })}>
+                  {player.state.name || player.state.profile?.name}
+                </h2>
+              </div>
+            );
+          })}
         </div>
         {isHost() && (
           <Button
