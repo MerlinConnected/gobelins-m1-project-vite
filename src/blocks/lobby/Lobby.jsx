@@ -20,8 +20,6 @@ function Lobby({ className, ...props }) {
 
   const me = myPlayer();
 
-  console.log(me);
-
   function copyRoomCode() {
     navigator.clipboard.writeText(getRoomCode());
   }
