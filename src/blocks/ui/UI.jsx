@@ -15,7 +15,7 @@ import { PLAYER_PHASE } from '../../utils/constants';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, distributeCard } = usePlayerContext();
-  const { playerPhase, setPlayerPhase } = useGameStateContext();
+  const { playerPhase, setPlayerPhase, timer } = useGameStateContext();
   const [cardsDisabled, setCardsDisabled] = useState(true);
   const [drawersDisabled, setDrawersDisabled] = useState(true);
 
@@ -23,6 +23,7 @@ function UI({ className, ...props }) {
   const me = myPlayer();
 
   const selectCard = (card) => {
+    console.log('selectCard');
     if (currentPlayer?.id !== me?.id) return;
     currentPlayer.setState('selectedCard', card, true);
 
@@ -47,9 +48,10 @@ function UI({ className, ...props }) {
   };
 
   const handleDrawer = (type) => {
+    console.log('handleDrawer');
     if (currentPlayer?.id !== me?.id) return;
     if (currentPlayer?.getState('cards')?.length < 4) {
-      distributeCard(type);
+      distributeCard(type, currentPlayer);
     }
 
     if (currentPlayer?.getState('cards')?.length == 4) {
@@ -58,11 +60,12 @@ function UI({ className, ...props }) {
   };
 
   const selectTarget = (player) => {
+    console.log('selectTarget');
     currentPlayer.setState('target', player, true);
     const cards = currentPlayer.getState('cards');
     const selectedCard = currentPlayer.getState('selectedCard');
     const decisions = currentPlayer.getState('decisions');
-    decisions.push({ type: selectedCard.type, impact: selectedCard.impact, target: player });
+    decisions.push({ card: selectedCard, target: player });
     currentPlayer.setState('decisions', decisions, true);
 
     // remove the selected card from the deck
@@ -108,14 +111,6 @@ function UI({ className, ...props }) {
         }
         break;
 
-      case PLAYER_PHASE.performLast:
-        if (currentPlayer?.id === me?.id) {
-          setCardsDisabled(false);
-          setDrawersDisabled(true);
-          console.log('2) REJOUE ' + currentPlayer.state.profile.name);
-        }
-        break;
-
       case PLAYER_PHASE.firstResult:
         console.log('Le joueur ' + currentPlayer.state.profile.name + ' a joué sa 1ère action ' + currentPlayer.getState('selectedCard').type + ' ' + currentPlayer.getState('selectedCard').name + ' sur le joueur ' + currentPlayer.getState('target').state.profile.name);
         setCardsDisabled(true);
@@ -123,6 +118,14 @@ function UI({ className, ...props }) {
         setTimeout(() => {
           setPlayerPhase(PLAYER_PHASE.performLast, true);
         }, 1000);
+        break;
+
+      case PLAYER_PHASE.performLast:
+        if (currentPlayer?.id === me?.id) {
+          setCardsDisabled(false);
+          setDrawersDisabled(true);
+          console.log('2) REJOUE ' + currentPlayer.state.profile.name);
+        }
         break;
 
       case PLAYER_PHASE.lastResult:
@@ -137,22 +140,29 @@ function UI({ className, ...props }) {
         }, 1000);
         break;
 
+      case null:
+        setCardsDisabled(true);
+        setDrawersDisabled(true);
+
       default:
         setCardsDisabled(true);
         setDrawersDisabled(true);
     }
+
+    console.log('playerPhase', playerPhase);
   }, [getState('playerPhase')]);
 
   return (
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
-        {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
+        {currentPlayer?.id === me?.id && <p>C'est mon tour !! {timer}</p>}
         <p>Je suis {me?.state.profile.name}</p>
         <div className="styles.board">
           <h2>Classement</h2>
           {players.map((player, index) => (
             <div key={index}>
               <p>{player.state.profile.name}</p>
+              <p>{player.getState('status')?.name}</p>
               <p>{player.getState('points')} points</p>
             </div>
           ))}
@@ -161,11 +171,11 @@ function UI({ className, ...props }) {
         <div className="deck">
           {me.getState('cards')?.map((card, index) => (
             <Button
+              disabled={cardsDisabled}
+              className={cardsDisabled ? 'disabled' : ''}
               onClick={() => {
                 selectCard(card);
               }}
-              disabled={cardsDisabled}
-              // className={cardsDisabled ? 'disabled' : ''}
               key={index}
             >
               {card.id} {card.type} {card.name}
@@ -178,11 +188,11 @@ function UI({ className, ...props }) {
             currentPlayer.getState('availableTargets')?.map((player, index) => (
               <Button
                 key={index}
+                disabled={cardsDisabled}
+                className={cardsDisabled ? 'disabled' : ''}
                 onClick={() => {
                   selectTarget(player);
                 }}
-                disabled={cardsDisabled}
-              // className={cardsDisabled ? 'disabled' : ''}
               >
                 <span>{player.state.profile.name}</span>
               </Button>
@@ -191,20 +201,20 @@ function UI({ className, ...props }) {
 
         <div className="drawers">
           <Button
+            disabled={drawersDisabled}
+            className={drawersDisabled ? 'disabled' : ''}
             onClick={() => {
               handleDrawer('transport');
             }}
-            disabled={drawersDisabled}
-          // className={drawersDisabled ? 'disabled' : ''}
           >
             Piocher carte Transport
           </Button>
           <Button
+            disabled={drawersDisabled}
+            className={drawersDisabled ? 'disabled' : ''}
             onClick={() => {
               handleDrawer('action');
             }}
-            disabled={drawersDisabled}
-          // className={drawersDisabled ? 'disabled' : ''}
           >
             Piocher carte Action
           </Button>

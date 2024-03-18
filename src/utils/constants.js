@@ -47,8 +47,8 @@ export const transportDrawer = [
 ];
 
 export const actionDrawer = [
-  ...new Array(AMOUNT_ACTION_CARDS).fill().map((_, index) => ({ id: index, name: 'moins 1', type: 'action', impact: -1 })),
-  ...new Array(AMOUNT_ACTION_CARDS).fill().map((_, index) => ({ id: index, name: 'moins 2', type: 'action', impact: -2 })),
+  ...new Array(AMOUNT_ACTION_CARDS).fill().map((_, index) => ({ id: index, name: 'moins1', type: 'action', impact: -1 })),
+  ...new Array(AMOUNT_ACTION_CARDS).fill().map((_, index) => ({ id: index, name: 'moins2', type: 'action', impact: -2 })),
   ...new Array(AMOUNT_ACTION_CARDS)
     .fill()
     .map((_, index) => ({ id: index + AMOUNT_ACTION_CARDS, name: 'pied', type: 'action', impact: 1 })),

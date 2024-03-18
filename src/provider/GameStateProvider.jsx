@@ -17,7 +17,7 @@ let context = {};
 const GameStateContext = React.createContext();
 
 export function GameStateProvider({ children }) {
-  const { setPlayerTurn, performPlayerAction, players } = usePlayerContext();
+  const { setPlayerTurn, performPlayerAction, move, players } = usePlayerContext();
 
   const [timer, setTimer] = useMultiplayerState('timer', 0);
 
@@ -48,7 +48,14 @@ export function GameStateProvider({ children }) {
         break;
       case TURN_PHASE.playTurn:
         performPlayerAction();
+        move();
+        players.forEach((player) => {
+          player.setState('selectedCard', null, true);
+          player.setState('target', null, true);
+          player.setState('availableTargets', [], true);
+        });
         setTurnPhase(TURN_PHASE.endTurn, true);
+        setPlayerPhase(null, true);
         newTime = TIME_END_TURN;
         break;
       case TURN_PHASE.endTurn:
