@@ -59,7 +59,17 @@ export function PlayerProvider({ children }) {
 
     const decisions = currentPlayer.getState('decisions');
 
+    let isSameTarget = false;
 
+    if (currentPlayer.getState('decisions').length > 1) {
+      isSameTarget = decisions.slice(1).every((obj, index) => {
+        return obj.target.id === decisions[0].target.id;
+      });
+    }
+
+    if (isSameTarget) {
+      currentPlayer.setState('decisions', currentPlayer.getState('decisions').slice(1), true);
+    }
 
     // boucle pour 2 cartes
     for (let i = 0; i < currentPlayer.getState('decisions').length; i++) {
