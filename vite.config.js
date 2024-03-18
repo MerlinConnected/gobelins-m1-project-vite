@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 
 import path from 'path';
 
-const pathSrc = path.resolve(__dirname, './src');
+const pathSrc = path.resolve(__dirname, './src').replace(/\\/g, '/');
 
 // https://vitejs.dev/config/
 export default defineConfig({

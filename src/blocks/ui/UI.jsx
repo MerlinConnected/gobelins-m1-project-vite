@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 
-import { useDaronContext } from '../../provider/DaronProvider';
+import { usePlayerContext } from '../../provider/PlayerProvider';
 import { isHost, myPlayer } from 'playroomkit';
 import { Leva, useControls } from 'leva';
 import { getState } from 'playroomkit';
@@ -10,10 +10,11 @@ import classNames from 'classnames';
 import Button from '../../components/button/Button';
 
 import styles from './UI.module.scss';
+import { useGameStateContext } from '../../provider/GameStateProvider';
 
 function UI({ className, ...props }) {
-  const { phase, playerPhase, setPlayerPhase, startGame, timer, playerTurn, players, distributeCard } =
-    useDaronContext();
+  const { playerTurn, players, distributeCard } = usePlayerContext();
+  const { playerPhase, setPlayerPhase } = useGameStateContext();
   const [cardsDisabled, setCardsDisabled] = useState(true);
   const [drawersDisabled, setDrawersDisabled] = useState(true);
 
@@ -82,13 +83,13 @@ function UI({ className, ...props }) {
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
-        <p>Je suis {me.state.profile.name}</p>
+        <p>Je suis {me?.state?.profile?.name}</p>
         <div className="styles.board">
           <h2>Classement</h2>
           {players.map((player, index) => (
             <div key={index}>
-              <p>{player.state.profile.name}</p>
-              <p>{player.getState('points')} points</p>
+              <p>{player?.state?.profile?.name}</p>
+              <p>{player?.getState('points')} points</p>
             </div>
           ))}
         </div>
@@ -119,7 +120,7 @@ function UI({ className, ...props }) {
                 disabled={cardsDisabled}
                 // className={cardsDisabled ? 'disabled' : ''}
               >
-                <span>{player.state.profile.name}</span>
+                <span>{player?.state?.profile?.name}</span>
               </Button>
             ))}
         </div>

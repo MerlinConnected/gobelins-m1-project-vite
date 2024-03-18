@@ -4,17 +4,13 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import './styles/global.scss';
 
-import { GlobalProvider } from './provider/GlobalProvider';
+import { DaronProvider } from './provider/DaronProvider';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
-insertCoin({
-  skipLobby: true,
-}).then(() => {
-  root.render(
-    <GlobalProvider>
-      <App />
-    </GlobalProvider>
-  );
-});
+root.render(
+  <DaronProvider>
+    <App />
+  </DaronProvider>
+);

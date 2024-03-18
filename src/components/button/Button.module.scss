@@ -1,18 +1,16 @@
 .wrapper {
-    border: 1.5px solid #1f1f1f;
-    border-radius: rem(0.2);
+    border: 1.5px solid #222222;
+    border-radius: rem(6);
 
-    padding: rem(12) rem(8);
-
-    align-self: flex-start;
+    padding: rem(8) rem(12);
 
     background-color: black;
     &:hover {
-        background-color: #1f1f1f;
+        background-color: #222222;
     }
 }
 
 .disabled {
     cursor: not-allowed;
-    color: #a2a2a2;
+    color: #222222;
 }

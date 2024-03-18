@@ -1,40 +1,25 @@
 import React from 'react';
 
-import { useState, useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { Loader } from '@react-three/drei';
-import { Leva } from 'leva';
+import { useGameStateContext } from './provider/GameStateProvider';
 
-import UI from './blocks/ui/UI';
+import { GAME_PHASE } from './utils/constants';
+
+import Onboarding from './blocks/onboarding/Onboarding';
+import InfoLobby from './blocks/info-lobby/InfoLobby';
 import Lobby from './blocks/lobby/Lobby';
-
-import { useMultiplayerState } from 'playroomkit';
-
-import Experience from './blocks/experience/Experience';
+import Game from './blocks/game/Game';
+import UI from './blocks/ui/UI';
 
 function Scene() {
-  const [gameState] = useMultiplayerState('gameState', 'lobby');
-  const [isDebug, setisDebug] = useState(true);
+  const { onboarding, infoLobby, lobby, globalPhase } = useGameStateContext();
 
-  useEffect(() => {
-    const url = new URL(window.location.href);
-
-    const isDebugMode = url.searchParams.has('debug');
-
-    setisDebug(!isDebugMode);
-  }, []);
   return (
     <>
-      <Leva hidden={isDebug} />
-      <Loader />
-      <Canvas className="canvas" shadows camera={{ position: [2, 2, 2] }}>
-        <color attach="background" args={['#121212']} />
-        <Experience />
-      </Canvas>
-
-      {gameState === 'lobby' && <Lobby />}
-      {/* <Lobby /> */}
-      {gameState === 'game' && <UI />}
+      {onboarding && <Onboarding />}
+      {infoLobby && <InfoLobby />}
+      {lobby && <Lobby />}
+      {globalPhase === GAME_PHASE.startGame && <Game />}
+      {globalPhase === GAME_PHASE.startGame && <UI />}
     </>
   );
 }
