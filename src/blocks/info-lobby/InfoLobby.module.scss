@@ -1,0 +1,41 @@
+.wrapper {
+    position: absolute;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    place-items: center;
+
+    color: white;
+
+    form {
+        display: flex;
+        gap: rem(4);
+        input {
+            border: 1.5px solid #222222;
+            border-radius: rem(6);
+
+            padding: rem(8) rem(12);
+
+            background-color: #0e0e0e;
+
+            color: white;
+            &:focus {
+                outline: none;
+                border-color: white;
+            }
+        }
+        button {
+            border: none;
+
+            background-color: white;
+            color: black;
+
+            font-weight: 500;
+            &:hover {
+                background-color: #ebebeb;
+            }
+        }
+    }
+}

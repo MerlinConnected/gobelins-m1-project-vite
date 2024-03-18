@@ -1,18 +1,20 @@
 import React from 'react';
 
-import { usePlayersList, getRoomCode, isHost } from 'playroomkit';
+import { getRoomCode, isHost } from 'playroomkit';
 
 import classNames from 'classnames';
-
 import styles from './Lobby.module.scss';
+
+import Button from '../../components/button/Button';
+import PlayerCards from '../../components/cards/PlayerCards';
+
+import { Toaster, toast } from 'sonner';
 
 import { useGameStateContext } from '../../provider/GameStateProvider';
 import { GAME_PHASE } from '../../utils/constants';
 
 function Lobby({ className, ...props }) {
   const { setLobby, setGlobalPhase } = useGameStateContext();
-
-  const players = usePlayersList(true);
 
   function copyRoomCode() {
     navigator.clipboard.writeText(getRoomCode());
@@ -23,36 +25,45 @@ function Lobby({ className, ...props }) {
     window.location.reload();
   }
 
-  console.log(players);
-
   return (
-    <>
-      <div style={{ position: 'absolute', top: 0, zIndex: 1 }}>
-        <button
-          onClick={() => {
-            copyRoomCode();
-          }}
-        >
-          Copy room code
-        </button>
-        <button onClick={() => removeRoomHash()}>Leave room</button>
-
-        {players.map((player) => (
-          <p key={player.id}>{player.state.name || player.state.profile?.name}</p>
-        ))}
-
+    <div className={classNames(styles.wrapper, className)} {...props}>
+      <div>
+        <div>
+          <h1>Lobby</h1>
+          <div>
+            <Toaster theme="dark" />
+            <Button
+              onClick={() => {
+                toast('Code copied to clipboard!', {
+                  position: 'top-center',
+                });
+                copyRoomCode();
+              }}
+            >
+              Invite friends
+            </Button>
+          </div>
+        </div>
+        <div>
+          <PlayerCards />
+        </div>
         {isHost() && (
-          <button
+          <Button
+            className={styles.white}
             onClick={() => {
               setLobby(false);
               setGlobalPhase(GAME_PHASE.startGame, true);
             }}
           >
             Start game
-          </button>
+          </Button>
         )}
+        {!isHost() && <em>Waiting for host to start</em>}
       </div>
-    </>
+      <Button className={styles.leave} onClick={() => removeRoomHash()}>
+        Leave room
+      </Button>
+    </div>
   );
 }
 

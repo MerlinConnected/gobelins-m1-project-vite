@@ -22,14 +22,34 @@ export function GameStateProvider({ children }) {
   const [turnPhase, setTurnPhase] = useMultiplayerState('turnPhase', null);
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
 
+  const avatars = [
+    'images/profiles/pp1.webp',
+    'images/profiles/pp2.webp',
+    'images/profiles/pp3.webp',
+    'images/profiles/pp4.webp',
+    'images/profiles/pp5.webp',
+    'images/profiles/pp6.webp',
+  ];
+
   function handleInsertCoin(roomCode) {
-    insertCoin({
-      skipLobby: true,
-      roomCode: roomCode,
-    }).then(() => {
-      setOnboarding(false);
-      setInfoLobby(true);
-    });
+    try {
+      insertCoin({
+        skipLobby: true,
+        roomCode: roomCode,
+        avatars: avatars,
+      }).then(() => {
+        setOnboarding(false);
+        setInfoLobby(true);
+      });
+    } catch (error) {
+      if (error.message === 'ROOM_LIMIT_EXCEEDED') {
+        root.render(
+          <div>
+            <p>casse toi de la t'es de trop</p>
+          </div>
+        );
+      }
+    }
   }
 
   const gameState = {
@@ -74,16 +94,16 @@ export function GameStateProvider({ children }) {
     setTimer(newTime, true);
   };
 
-  const { paused } = useControls({
-    paused: false,
-  });
+  // const { paused } = useControls({
+  //   paused: false,
+  // });
 
   const timerInterval = useRef();
 
   const runTimer = () => {
     timerInterval.current = setInterval(() => {
       if (!isHost()) return;
-      if (paused) return;
+      // if (paused) return;
       let newTime = getState('timer') - 1;
 
       if (newTime <= 0) {
@@ -103,7 +123,7 @@ export function GameStateProvider({ children }) {
     console.log('phase', turnPhase);
     runTimer();
     return clearTimer;
-  }, [turnPhase, paused]);
+  }, [turnPhase]);
 
   context = {
     ...gameState,

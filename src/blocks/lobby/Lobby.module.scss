@@ -1,12 +1,45 @@
 .wrapper {
     position: absolute;
-    top: 10px;
-    left: 10px;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    place-items: center;
 
     color: white;
     > div {
-        display: flex;
-        align-items: center;
-        gap: rem(0.5);
+        width: 40vw;
+        max-width: rem(400);
+        > div {
+            display: flex;
+            align-items: center;
+
+            gap: rem(12);
+            h1 {
+                font-size: rem(16);
+            }
+            &:first-of-type {
+                justify-content: space-between;
+            }
+        }
     }
+}
+
+.white {
+    border: none;
+
+    background-color: white;
+    color: black;
+
+    font-weight: 500;
+    &:hover {
+        background-color: #ebebeb;
+    }
+}
+
+.leave {
+    position: absolute;
+    top: rem(12);
+    right: rem(12);
 }
