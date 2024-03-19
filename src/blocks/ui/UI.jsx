@@ -59,17 +59,6 @@ function UI({ className, ...props }) {
     console.log('availableTargets', currentPlayer.getState('availableTargets'));
   };
 
-  const deleteCard = (card) => {
-    console.log('deleteCard');
-    const cards = currentPlayer.getState('cards');
-    cards.splice(
-      cards.findIndex((c) => c.id === card.id),
-      1
-    );
-    currentPlayer.setState('cards', cards, true);
-    setBin(false);
-  }
-
   const handleDrawer = (type) => {
     console.log('handleDrawer');
     if (currentPlayer?.id !== me?.id) return;
@@ -117,6 +106,31 @@ function UI({ className, ...props }) {
     setBin(false);
   };
 
+  const deleteCard = (card) => {
+    console.log('deleteCard');
+    const cards = currentPlayer.getState('cards');
+    cards.splice(
+      cards.findIndex((c) => c.id === card.id),
+      1
+    );
+    currentPlayer.setState('cards', cards, true);
+    setBin(false);
+
+    // change playerPhase
+    switch (playerPhase) {
+      case PLAYER_PHASE.performFirst:
+        setPlayerPhase(PLAYER_PHASE.firstResult, true);
+        break;
+
+      case PLAYER_PHASE.performLast:
+        setPlayerPhase(PLAYER_PHASE.lastResult, true);
+        break;
+
+      default:
+        break;
+    }
+  };
+
   // manage disabled states according to the playerPhase
   useEffect(() => {
     switch (playerPhase) {
@@ -137,7 +151,7 @@ function UI({ className, ...props }) {
         break;
 
       case PLAYER_PHASE.firstResult:
-        console.log('Le joueur ' + currentPlayer.state.name + ' a joué sa 1ère action ' + currentPlayer?.getState('selectedCard').type + ' ' + currentPlayer?.getState('selectedCard').name + ' sur le joueur ' + currentPlayer.getState('target').state.name);
+        console.log(currentPlayer?.state.name + ' a joué sa 1ère carte ' + currentPlayer?.getState('selectedCard').type + ' ' + currentPlayer?.getState('selectedCard').name + ' sur ' + currentPlayer?.getState('target')?.state?.name);
         setCardsDisabled(true);
         setDrawersDisabled(true);
         setBin(false);
@@ -155,7 +169,7 @@ function UI({ className, ...props }) {
         break;
 
       case PLAYER_PHASE.lastResult:
-        console.log('Le joueur ' + currentPlayer.state.name + ' a joué sa 2ème action ' + currentPlayer.getState('selectedCard').type + ' ' + currentPlayer.getState('selectedCard').name + ' sur le joueur ' + currentPlayer.getState('target').state.name);
+        console.log(currentPlayer?.state.name + ' a joué sa 2ème carte ' + currentPlayer?.getState('selectedCard').type + ' ' + currentPlayer?.getState('selectedCard').name + ' sur ' + currentPlayer?.getState('target')?.state?.name);
         setCardsDisabled(true);
         setDrawersDisabled(true);
         setBin(false);
