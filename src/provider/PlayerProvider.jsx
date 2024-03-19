@@ -42,18 +42,6 @@ export function PlayerProvider({ children }) {
 
     const decisions = currentPlayer.getState('decisions');
 
-    let isSameTarget = false;
-
-    if (currentPlayer.getState('decisions').length > 1) {
-      isSameTarget = decisions.slice(1).every((obj) => {
-        return obj.target.id === decisions[0].target.id;
-      });
-    }
-
-    if (isSameTarget) {
-      currentPlayer.setState('decisions', currentPlayer.getState('decisions').slice(1), true);
-    }
-
     // set status
     for (let i = 0; i < currentPlayer.getState('decisions').length; i++) {
       const decision = currentPlayer.getState('decisions')[i];
