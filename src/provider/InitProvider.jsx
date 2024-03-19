@@ -11,7 +11,7 @@ export const InitContext = createContext();
 
 export function InitProvider({ children }) {
   const { globalPhase, setTurnPhase, setTimer } = useGameStateContext();
-  const { players, setPlayerTurn, distributeCard } = usePlayerContext();
+  const { players, setPlayerTurn, drawCard, distributeCard } = usePlayerContext();
 
   const startGame = () => {
     if (isHost()) {
@@ -22,14 +22,17 @@ export function InitProvider({ children }) {
       players.forEach((player) => {
         player.setState('points', 0, true);
         player.setState('cards', [], true);
-        player.setState('selectedCardType', '', true);
-        player.setState('selectedCardId', '', true);
+        player.setState('selectedCard', null, true);
         player.setState('target', null, true);
         player.setState('availableTargets', [], true);
-        player.setState('winner', false, true);
+        player.setState('decisions', [], true);
+        player.setState('minus', null, true);
+        distributeCard('transport', player);
+        distributeCard('action', player);
+        const statusCard = drawCard('transport');
+        player.setState('status', statusCard, true);
       });
 
-      distributeCard('initial');
       setTurnPhase(TURN_PHASE.startTurn, true);
       setTimer(TIME_START_TURN, true);
     }

@@ -22,82 +22,82 @@ export function PlayerProvider({ children }) {
     players,
   };
 
-  const distributeCard = (type) => {
-    const randomTransportIndex = randInt(0, transportDrawer.length - 1);
-
-    const randomActionIndex = randInt(0, actionDrawer.length - 1);
-
-    const currentPlayer = players[playerTurn];
-    const cards = currentPlayer.getState('cards');
-
-    switch (type) {
-      case 'transport':
-        cards.push(transportDrawer[randomTransportIndex]);
-        currentPlayer.setState('cards', cards, true);
-        break;
-
-      case 'action':
-        cards.push(actionDrawer[randomActionIndex]);
-        currentPlayer.setState('cards', cards, true);
-        break;
-
-      case 'initial':
-        players.forEach((player) => {
-          const cards = player.getState('cards') || [];
-          const randomTransportIndex = randInt(0, transportDrawer.length - 1);
-          cards.push(transportDrawer[randomTransportIndex]);
-          const randomActionIndex = randInt(0, actionDrawer.length - 1);
-          cards.push(actionDrawer[randomActionIndex]);
-
-          player.setState('cards', cards, true);
-        });
-
-      default:
-        break;
+  const drawCard = (type) => {
+    if (type === 'transport') {
+      const randomTransportIndex = randInt(0, transportDrawer.length - 1);
+      return transportDrawer[randomTransportIndex];
     }
+    if (type === 'action') {
+      const randomActionIndex = randInt(0, actionDrawer.length - 1);
+      return actionDrawer[randomActionIndex];
+    }
+  }
+
+  const distributeCard = (type, player) => {
+    const cards = player.getState('cards');
+    const newCard = drawCard(type);
+    cards.push(newCard);
+    player.setState('cards', cards, true);
   };
 
   const performPlayerAction = () => {
     const currentPlayer = players[playerTurn];
-    const selectedCardType = currentPlayer.getState('selectedCardType');
-    const selectedCardId = currentPlayer.getState('selectedCardId');
-    const cards = currentPlayer.getState('cards');
 
-    switch (selectedCardType) {
-      case 'transport':
-        currentPlayer.setState('availableTargets', [currentPlayer], true);
-        currentPlayer.setState('points', currentPlayer.getState('points') + 1, true);
-        break;
-      case 'action':
-        const availableTargets = players.filter((p) => p.id !== currentPlayer.id);
-        currentPlayer.setState('availableTargets', availableTargets, true);
-        let targetIndex = currentPlayer.getState('target');
-        if (targetIndex !== null && targetIndex !== undefined) {
-          let target = availableTargets[targetIndex];
-          target.setState('points', target.getState('points') - 1, true);
-        }
-        break;
-      default:
-        break;
+    const decisions = currentPlayer.getState('decisions');
+
+    // set status
+    for (let i = 0; i < currentPlayer.getState('decisions').length; i++) {
+      const decision = currentPlayer.getState('decisions')[i];
+      let target = decision.target;
+      switch (decision.card.type) {
+        case 'transport':
+          if (target.id == currentPlayer.id) {
+            currentPlayer.setState('status', decision.card, true);
+          }
+          break;
+        case 'action':
+          const availableTargets = players.filter((p) => p.id !== currentPlayer.id); // todo: essayer de remplacer par 'availableTargets' à récupérer dans le state du currentPlayer
+          if (target !== null && target !== undefined) {
+            let targetPlayer = availableTargets.find((p) => p.id === target.id);
+
+            if (decision.card.name === 'pied') {
+              targetPlayer.setState('status', decision.card, true);
+            } else {
+              targetPlayer.setState('minus', decision.card.impact, true);
+            }
+          }
+          break;
+        default:
+          break;
+      }
     }
-    if (currentPlayer.getState('selectedCardId') !== '') {
-      cards.splice(
-        cards.findIndex((card) => card.id === selectedCardId),
-        1
-      );
-      console.log('REMOVED', selectedCardId);
-    }
-    currentPlayer.setState('cards', cards, true);
-    currentPlayer.setState('selectedCardType', '', true);
-    currentPlayer.setState('selectedCardId', '', true);
+
+    currentPlayer.setState('selectedCard', '', true);
     currentPlayer.setState('target', null, true);
     currentPlayer.setState('availableTargets', [], true);
+    currentPlayer.setState('decisions', [], true);
   };
+
+  // verifier toutes les conditions de chaque player et faire les avancées en fonction de l'état de chaque player
+  const move = () => {
+    players.forEach((p) => {
+      if (p.getState('minus') !== null) {
+        p.setState('points', p.getState('points') + p.getState('minus'), true);
+        p.setState('minus', null, true);
+      } else {
+        const statusPoints = p.getState('status').impact;
+        console.log('STATUS POINTS' + statusPoints);
+        p.setState('points', p.getState('points') + statusPoints, true);
+      }
+    });
+  }
 
   context = {
     ...gameState,
+    drawCard,
     distributeCard,
     performPlayerAction,
+    move,
   };
 
   return <PlayerContext.Provider value={context}>{children}</PlayerContext.Provider>;
