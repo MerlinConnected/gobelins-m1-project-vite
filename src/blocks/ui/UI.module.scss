@@ -15,3 +15,10 @@
         gap: rem(0.5);
     }
 }
+
+.remove {
+    background-color: red;
+    &:hover {
+        background-color: #ff0000;
+    }
+}

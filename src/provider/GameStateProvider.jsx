@@ -21,6 +21,7 @@ export function GameStateProvider({ children }) {
   const [globalPhase, setGlobalPhase] = useMultiplayerState('globalPhase', null);
   const [turnPhase, setTurnPhase] = useMultiplayerState('turnPhase', null);
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
+  const [toastMessage, setToastMessage] = useMultiplayerState('toastMessage', null);
 
   const avatars = [
     'images/profiles/pp1.webp',
@@ -45,7 +46,7 @@ export function GameStateProvider({ children }) {
       if (error.message === 'ROOM_LIMIT_EXCEEDED') {
         root.render(
           <div>
-            <p>casse toi de la t'es de trop</p>
+            <p>Casse-toi de là t'es de trop</p>
           </div>
         );
       }
@@ -68,6 +69,8 @@ export function GameStateProvider({ children }) {
     playerPhase,
     setPlayerPhase,
     handleInsertCoin,
+    toastMessage,
+    setToastMessage,
   };
 
   const phaseEnd = () => {

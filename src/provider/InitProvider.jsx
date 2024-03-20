@@ -26,7 +26,7 @@ export function InitProvider({ children }) {
         player.setState('target', null, true);
         player.setState('availableTargets', [], true);
         player.setState('decisions', [], true);
-        player.setState('minus', null, true);
+        player.setState('minus', 0, true);
         distributeCard('transport', player);
         distributeCard('action', player);
         const statusCard = drawCard('transport');
