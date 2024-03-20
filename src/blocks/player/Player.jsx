@@ -17,7 +17,7 @@ function Loop({ poi, points }) {
     const target = new Vector3().addVectors(poi.current.position, motion.tangent);
     poi.current.lookAt(target);
 
-    const step = 5;
+    const step = 20;
     const currentPoints = points / step;
 
     motion.current = currentPoints;
