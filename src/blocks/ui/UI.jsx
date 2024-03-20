@@ -11,11 +11,12 @@ import Button from '../../components/button/Button';
 
 import styles from './UI.module.scss';
 import { useGameStateContext } from '../../provider/GameStateProvider';
-import { PLAYER_PHASE } from '../../utils/constants';
+import { PLAYER_PHASE, TURN_PHASE } from '../../utils/constants';
+import { Toaster, toast } from 'sonner';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, distributeCard } = usePlayerContext();
-  const { playerPhase, setPlayerPhase, timer } = useGameStateContext();
+  const { playerPhase, setPlayerPhase, timer, toastMessage, setToastMessage } = useGameStateContext();
   const [cardsDisabled, setCardsDisabled] = useState(true);
   const [drawersDisabled, setDrawersDisabled] = useState(true);
   const [bin, setBin] = useState(false);
@@ -24,7 +25,6 @@ function UI({ className, ...props }) {
   const me = myPlayer();
 
   const selectCard = (card) => {
-    console.log('selectCard');
     if (currentPlayer?.id !== me?.id) return;
     currentPlayer.setState('selectedCard', card, true);
 
@@ -60,8 +60,7 @@ function UI({ className, ...props }) {
   };
 
   const handleDrawer = (type) => {
-    console.log('handleDrawer');
-    if (currentPlayer?.id !== me?.id) return;
+    if ((currentPlayer?.id !== me?.id) || getState('playerPhase') !== PLAYER_PHASE.drawCards) return;
     if (currentPlayer?.getState('cards')?.length < 4) {
       distributeCard(type, currentPlayer);
     }
@@ -72,7 +71,7 @@ function UI({ className, ...props }) {
   };
 
   const selectTarget = (player) => {
-    console.log('selectTarget');
+    if ((currentPlayer?.id !== me?.id) || cardsDisabled || getState('turnPhase') !== TURN_PHASE.playTurn) return;
     currentPlayer.setState('target', player, true);
     const cards = currentPlayer.getState('cards');
     const selectedCard = currentPlayer.getState('selectedCard');
@@ -80,8 +79,25 @@ function UI({ className, ...props }) {
     decisions.push({ card: selectedCard, target: player });
     currentPlayer.setState('decisions', decisions, true);
 
-    // remove the selected card from the deck
     if (selectedCard) {
+
+      switch (selectedCard.type) {
+        case 'transport':
+          setToastMessage(currentPlayer?.state.name + ' décide de prendre le ' + selectedCard.name + ' !');
+          break;
+
+        case 'action':
+          if (selectedCard.name === 'pied') {
+            setToastMessage(currentPlayer?.getState('target').state.name + ' retourne à pied à cause de ' + currentPlayer?.state.name + ' !');
+          } else if (selectedCard.name === 'moins') {
+            setToastMessage(currentPlayer?.getState('target').state.name + ' recule de ' + selectedCard.name + '  à cause de ' + currentPlayer?.state.name + ' !');
+          }
+
+        default:
+          break;
+      }
+
+      // remove the selected card from the deck
       cards.splice(
         cards.findIndex((card) => card.id === selectedCard.id),
         1
@@ -106,7 +122,15 @@ function UI({ className, ...props }) {
     setBin(false);
   };
 
+  useEffect(() => {
+    if (!toastMessage) return;
+    toast(toastMessage, {
+      position: 'top-center',
+    });
+  }, [toastMessage]);
+
   const deleteCard = (card) => {
+    if ((currentPlayer?.id !== me?.id) || cardsDisabled) return;
     console.log('deleteCard');
     const cards = currentPlayer.getState('cards');
     cards.splice(
@@ -129,6 +153,8 @@ function UI({ className, ...props }) {
       default:
         break;
     }
+
+    setToastMessage(currentPlayer?.state.name + ' a défaussé la carte ' + currentPlayer?.getState('selectedCard').name);
   };
 
   // manage disabled states according to the playerPhase
@@ -138,7 +164,7 @@ function UI({ className, ...props }) {
         if (currentPlayer?.id === me?.id && currentPlayer?.getState('cards')?.length < 4) {
           setCardsDisabled(true);
           setDrawersDisabled(false);
-          console.log('PIOCHE, ' + currentPlayer.state.name);
+          setToastMessage('Au tour de ' + currentPlayer.state.name);
         }
         break;
 
@@ -146,12 +172,10 @@ function UI({ className, ...props }) {
         if (currentPlayer?.id === me?.id) {
           setCardsDisabled(false);
           setDrawersDisabled(true);
-          console.log('1) A TOI DE JOUER ' + currentPlayer.state.name);
         }
         break;
 
       case PLAYER_PHASE.firstResult:
-        console.log(currentPlayer?.state.name + ' a joué sa 1ère carte ' + currentPlayer?.getState('selectedCard').type + ' ' + currentPlayer?.getState('selectedCard').name + ' sur ' + currentPlayer?.getState('target')?.state?.name);
         setCardsDisabled(true);
         setDrawersDisabled(true);
         setBin(false);
@@ -164,12 +188,10 @@ function UI({ className, ...props }) {
         if (currentPlayer?.id === me?.id) {
           setCardsDisabled(false);
           setDrawersDisabled(true);
-          console.log('2) REJOUE ' + currentPlayer.state.name);
         }
         break;
 
       case PLAYER_PHASE.lastResult:
-        console.log(currentPlayer?.state.name + ' a joué sa 2ème carte ' + currentPlayer?.getState('selectedCard').type + ' ' + currentPlayer?.getState('selectedCard').name + ' sur ' + currentPlayer?.getState('target')?.state?.name);
         setCardsDisabled(true);
         setDrawersDisabled(true);
         setBin(false);
@@ -198,6 +220,7 @@ function UI({ className, ...props }) {
   return (
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
+        <Toaster theme="dark" />
         {currentPlayer?.id === me?.id && <p>C'est mon tour !! {timer}</p>}
         <p>Je suis {me?.state.name}</p>
         <div className="styles.board">
@@ -237,7 +260,7 @@ function UI({ className, ...props }) {
                   selectTarget(player);
                 }}
               >
-                <span>{player?.state.name}</span>
+                <span>{player?.id === me.id ? 'Changer' : player?.state.name}</span>
               </Button>
             ))}
           {bin &&
