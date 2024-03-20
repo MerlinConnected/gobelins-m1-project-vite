@@ -70,7 +70,7 @@ export function PlayerProvider({ children }) {
             if (decision.card.name === 'pied') {
               targetPlayer.setState('status', piedTransportCard, true);
             } else {
-              targetPlayer.setState('minus', decision.card.impact, true);
+              targetPlayer.setState('minus', targetPlayer.getState('minus') + decision.card.impact, true);
             }
           }
           break;
@@ -88,9 +88,10 @@ export function PlayerProvider({ children }) {
   // verifier toutes les conditions de chaque player et faire les avancées en fonction de l'état de chaque player
   const move = () => {
     players.forEach((p) => {
-      if (p.getState('minus') !== null) {
-        p.setState('points', p.getState('points') + p.getState('minus'), true);
-        p.setState('minus', null, true);
+      if (p.getState('minus') !== 0) {
+        const tempPoints = p.getState('points') + p.getState('minus') > 0 ? p.getState('points') + p.getState('minus') : 0;
+        p.setState('points', tempPoints, true);
+        p.setState('minus', 0, true);
       } else {
         const statusPoints = p.getState('status').impact;
         console.log('STATUS POINTS' + statusPoints);

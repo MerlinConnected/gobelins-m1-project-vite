@@ -25,6 +25,7 @@ export const CATEGORY = {
   rails: 'rails',
   interieur: 'interieur',
   commun: 'commun',
+  pied: 'pied',
 };
 
 export const TIME_START_GAME = 1;
@@ -82,4 +83,4 @@ export const actionDrawer = [
     .map((_, index) => ({ id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 5 * AMOUNT_PIED_CARDS, name: 'pied', type: 'action', impact: 1, category: [CATEGORY.interieur] })),
 ];
 
-export const piedTransportCard = { id: transportDrawer.length + actionDrawer.length, name: 'pied', type: 'transport', impact: 1, category: [] }
+export const piedTransportCard = { id: transportDrawer.length + actionDrawer.length, name: 'pied', type: 'transport', impact: 1, category: [CATEGORY.pied] }
