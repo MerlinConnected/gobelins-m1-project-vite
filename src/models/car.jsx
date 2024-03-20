@@ -10,7 +10,7 @@ export const Model = forwardRef((props, ref) => {
   const { nodes } = useGraph(clone);
 
   return (
-    <group {...props} ref={ref} dispose={null}>
+    <group {...props} ref={ref} dispose={null} scale={[1, 1, -1]}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={[0.01, 0.01, 0.01]}>
         <mesh castShadow receiveShadow geometry={nodes.Object_15.geometry}>
           <meshPhysicalMaterial color={props.color} />
