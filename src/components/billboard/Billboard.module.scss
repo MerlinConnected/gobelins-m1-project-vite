@@ -1,0 +1,15 @@
+.wrapper {
+    width: 100%;
+    > div {
+        border: 1.5px solid #222222;
+        border-radius: rem(6);
+
+        background-color: black;
+        padding: rem(32);
+
+        p {
+            color: white;
+            // font-size: rem(14);
+        }
+    }
+}
