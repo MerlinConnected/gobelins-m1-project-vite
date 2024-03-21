@@ -8,6 +8,8 @@ import { myPlayer, usePlayerState } from 'playroomkit';
 import Curves from '../curves/Curves';
 import { useMemo } from 'react';
 
+import { Model } from '../../models/car';
+
 import Billboard from '../../components/billboard/Billboard';
 
 function Loop({ poi, points }) {
@@ -71,6 +73,7 @@ function Player({ player, index, ...props }) {
         <Loop poi={poi} points={points} />
       </MotionPathControls>
       <group ref={poi}>
+        <Model color={state?.profile?.color} />
         <Billboard player={player} />
       </group>
       {me?.id === id && <PerspectiveCamera makeDefault position={cameraPos} />}

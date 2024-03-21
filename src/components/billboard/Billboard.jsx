@@ -4,8 +4,6 @@ import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 
-import { Model } from '../../models/car';
-
 import { usePlayerContext } from '../../provider/PlayerProvider';
 
 export default function Billboard({ player }) {
@@ -60,7 +58,6 @@ export default function Billboard({ player }) {
 
   return (
     <>
-      <Model color={state?.profile?.color} />
       <group ref={planeRef} position={[0, 1, 0]}>
         <Html wrapperClass={'wrapper'} center>
           <p style={{ color: 'white' }}>{`${state?.name || state?.profile?.name} - ${rank}`}</p>
