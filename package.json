@@ -12,6 +12,7 @@
     "@react-three/fiber": "^8.15.16",
     "@react-three/postprocessing": "^2.16.0",
     "@types/three": "^0.161.2",
+    "@vercel/speed-insights": "^1.0.10",
     "classnames": "^2.5.1",
     "lucide-react": "^0.356.0",
     "playroomkit": "^0.0.67",
