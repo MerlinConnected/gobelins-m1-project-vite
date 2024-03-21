@@ -1,20 +1,25 @@
-import React, { useRef, useState, useEffect, createRef } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
-import { PerspectiveCamera } from '@react-three/drei';
+import React, { useRef, useState, useEffect } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Html } from '@react-three/drei';
+import * as THREE from 'three';
 import { Vector3 } from 'three';
 
-import { useControls } from 'leva';
-import { myPlayer } from 'playroomkit';
-
-import { Model } from '../../models/car';
 import { usePlayerState } from 'playroomkit';
 
+import { Model } from '../../models/car';
+import { usePlayerContext } from '../../provider/PlayerProvider';
+
 function Player({ player, index, ...props }) {
-  const { id, state } = player;
+  const { state } = player;
   const model = useRef();
-  const me = myPlayer();
+  const planeRef = useRef();
+
+  const [rank, setRank] = useState('');
+
+  const game = usePlayerContext();
 
   const [points] = usePlayerState(player, 'points');
+
   const [progress, setProgress] = useState(new Vector3(-index * 1.5, 0, 0));
 
   useEffect(() => {
@@ -35,26 +40,64 @@ function Player({ player, index, ...props }) {
           setProgress(end);
         }
       };
-
       updatePosition();
     };
 
     animate();
   }, [points]);
 
-  useFrame(({ camera }) => {
-    if (!model.current) return;
+  const direction = new THREE.Vector3();
+  const cameraPositionProjection = new THREE.Vector3();
 
-    if (me?.id === id) {
-      camera.lookAt(model.current.position);
-    }
+  useFrame(({ camera }) => {
+    if (!model.current || !planeRef.current) return;
+
+    cameraPositionProjection.set(camera.position.x, planeRef.current.position.y, camera.position.z);
+    direction.subVectors(cameraPositionProjection, planeRef.current.position).normalize();
+
+    const angle = Math.atan2(direction.x, direction.z);
+
+    planeRef.current.rotation.y = angle;
   });
 
+  useEffect(() => {
+    if (game.useScoreboard.length) {
+      const sortedPoints = [...game.useScoreboard].sort((a, b) => b.points - a.points);
+
+      let currentRank = 1;
+      let prevPoints = sortedPoints[0].points;
+      let actualRank = 1;
+
+      sortedPoints.forEach((player, index) => {
+        if (player.points < prevPoints) {
+          currentRank = actualRank;
+          prevPoints = player.points;
+        }
+        if (player.name === state?.name || player.name === state?.profile?.name) {
+          setRankWithSuffix(currentRank);
+        }
+        actualRank++;
+      });
+    }
+  }, [game.useScoreboard]);
+
+  const setRankWithSuffix = (rank) => {
+    const ordinalSuffix = ['th', 'st', 'nd', 'rd'],
+      v = rank % 100;
+    setRank(`${rank}${ordinalSuffix[(v - 20) % 10] || ordinalSuffix[v] || ordinalSuffix[0]}`);
+  };
+
   return (
-    <group>
-      <Model position={progress} color={state?.profile?.color} ref={model} />
-      {me?.id === id && <PerspectiveCamera makeDefault position={progress.clone().add(new Vector3(4, 5, 4))} />}
-    </group>
+    <>
+      <group position={progress} ref={model} {...props}>
+        <Model color={state?.profile?.color} />
+        <group ref={planeRef} position={[0, 1, 0]}>
+          <Html wrapperClass={'wrapper'} center>
+            <p style={{ color: 'white' }}>{`${state?.name || state?.profile?.name} - ${rank}`}</p>
+          </Html>
+        </group>
+      </group>
+    </>
   );
 }
 

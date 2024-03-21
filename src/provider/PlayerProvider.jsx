@@ -94,10 +94,22 @@ export function PlayerProvider({ children }) {
     currentPlayer.setState('availableTargets', [], true);
   };
 
+  const useScoreboard = players
+    .map((player) => {
+      return {
+        name: player.getState('name'),
+        points: player.getState('points'),
+      };
+    })
+    .sort((a, b) => b.points - a.points);
+
+  // console.log('useScoreboard', useScoreboard);
+
   context = {
     ...gameState,
     distributeCard,
     performPlayerAction,
+    useScoreboard,
   };
 
   return <PlayerContext.Provider value={context}>{children}</PlayerContext.Provider>;
