@@ -73,8 +73,8 @@ function Player({ player, index, ...props }) {
         <Loop poi={poi} points={points} />
       </MotionPathControls>
       <group ref={poi}>
+        <Billboard player={player} position={[0, 2, 0]} />
         <Model color={state?.profile?.color} />
-        <Billboard player={player} />
       </group>
       {me?.id === id && <PerspectiveCamera makeDefault position={cameraPos} />}
     </group>

@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import { usePlayerContext } from '../../provider/PlayerProvider';
 
 export default function Billboard({ player }) {
+export default function Billboard({ player, className, ...props }) {
   const { state } = player;
 
   const planeRef = useRef();
@@ -61,6 +62,7 @@ export default function Billboard({ player }) {
       <group ref={planeRef} position={[0, 1, 0]}>
         <Html wrapperClass={'wrapper'} center>
           <p style={{ color: 'white' }}>{`${state?.name || state?.profile?.name} - ${rank}`}</p>
+      <group ref={planeRef} {...props}>
         </Html>
       </group>
     </>
