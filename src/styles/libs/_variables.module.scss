@@ -6,7 +6,7 @@
     --vw: 100vw;
     --vh: 100vh;
     --ivh: 100vh;
-    --rem: 1px;
+    --rem: 16px;
 
     /* COLORS */
     --color-bg-body: #000;
@@ -71,7 +71,7 @@
 
 $width-reference: 1440;
 $width-reference-m: 375;
-$rem-reference: 1px;
+$rem-reference: 16px;
 
 /* EXPORT */
 @value widthReference: #{$width-reference};
