@@ -26,7 +26,8 @@ function InfoLobby({ className, ...props }) {
     <div className={classNames(styles.wrapper, className)} {...props}>
       <div>
         <form
-          onSubmit={() => {
+          onSubmit={(e) => {
+            e.preventDefault();
             me?.setState('name', nameInput);
             setNameEditing(false);
             goToLobby();

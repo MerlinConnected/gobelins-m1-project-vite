@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, createRef, useState } from 'react';
 
 import { Canvas } from '@react-three/fiber';
-import { Loader, OrbitControls, Environment, Plane, GizmoHelper, GizmoViewport } from '@react-three/drei';
-import { Leva } from 'leva';
+import { Loader, OrbitControls, Environment, Grid, GizmoHelper, GizmoViewport } from '@react-three/drei';
+import { Leva, useControls } from 'leva';
 import { Suspense } from 'react';
 import { Perf } from 'r3f-perf';
 
@@ -33,19 +33,12 @@ const Game = () => {
     setisDebug(!isDebugMode);
   }, []);
 
-  let cubes = [
-    [0, 0, 10],
-    [10, 0, 0],
-    [0, 0, -10],
-    [-10, 0, 0],
-  ];
-
   return (
     <>
       <Leva hidden={isDebug} />
       <Loader />
       <Canvas className="canvas" shadows>
-        <color attach="background" args={['#efd8bd']} />
+        <color attach="background" args={['#0A090F']} />
         <Suspense fallback={null}>
           <group>
             {players.map((player, i) => (
@@ -57,22 +50,22 @@ const Game = () => {
             <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
           </GizmoHelper>
 
-          <group>
-            {cubes.map(([x, y, z], i) => (
-              <mesh key={i} position={[x, y, z]} castShadow receiveShadow>
-                <boxGeometry args={[1, 0.1, 1]} />
-                <meshStandardMaterial color="red" />
-              </mesh>
-            ))}
-          </group>
           <OrbitControls target={[0, 0, 0]} />
           <Environment preset="city" />
           {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
-
-          <mesh rotation-x={-Math.PI * 0.5} scale={10}>
-            <planeGeometry />
-            <meshBasicMaterial color="greenyellow" />
-          </mesh>
+          <Grid
+            args={[10, 10]}
+            cellSize={0.5}
+            cellThickness={1}
+            cellColor={'#5c5c5c'}
+            sectionSize={2}
+            sectionThickness={1.5}
+            sectionColor={'#8d4747'}
+            fadeDistance={30}
+            fadeStrength={1}
+            followCamera={false}
+            infiniteGrid
+          />
         </Suspense>
       </Canvas>
     </>
