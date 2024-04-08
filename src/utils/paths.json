@@ -1,0 +1,20 @@
+{
+  "players": [
+    {
+      "id": 1,
+      "paths": ["forward", "left", "forward", "forward", "right"]
+    },
+    {
+      "id": 2,
+      "paths": ["forward", "forward", "left", "forward", "right"]
+    },
+    {
+      "id": 3,
+      "paths": ["right", "forward", "forward", "left", "forward"]
+    },
+    {
+      "id": 4,
+      "paths": ["left", "forward", "right", "forward", "forward"]
+    }
+  ]
+}
