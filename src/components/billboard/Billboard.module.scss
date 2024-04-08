@@ -1,15 +1,18 @@
 .wrapper {
     width: 100%;
+    user-select: none;
     > div {
         border: 1.5px solid #222222;
         border-radius: rem(6);
 
         background-color: black;
-        padding: rem(32);
+        padding: rem(12);
 
         p {
             color: white;
-            // font-size: rem(14);
+            &:hover {
+                color: red;
+            }
         }
     }
 }

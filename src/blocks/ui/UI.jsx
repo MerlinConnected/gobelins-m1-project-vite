@@ -34,21 +34,13 @@ function UI({ className, ...props }) {
         console.log('cardCategories', cardCategories);
 
         const otherPlayers = players.filter((p) => p.id !== currentPlayer.id);
-        const currentTargets = otherPlayers.filter(player =>
-          player.getState('status').category.some(cat => cardCategories.includes(cat))
+        const currentTargets = otherPlayers.filter((player) =>
+          player.getState('status').category.some((cat) => cardCategories.includes(cat))
         );
-        currentPlayer.setState(
-          'availableTargets',
-          currentTargets,
-          true
-        );
+        currentPlayer.setState('availableTargets', currentTargets, true);
         break;
       case 'transport':
-        currentPlayer.setState(
-          'availableTargets',
-          [currentPlayer],
-          true
-        );
+        currentPlayer.setState('availableTargets', [currentPlayer], true);
         break;
       default:
         break;
@@ -60,7 +52,7 @@ function UI({ className, ...props }) {
   };
 
   const handleDrawer = (type) => {
-    if ((currentPlayer?.id !== me?.id) || getState('playerPhase') !== PLAYER_PHASE.drawCards) return;
+    if (currentPlayer?.id !== me?.id || getState('playerPhase') !== PLAYER_PHASE.drawCards) return;
     if (currentPlayer?.getState('cards')?.length < 4) {
       distributeCard(type, currentPlayer);
     }
@@ -71,7 +63,7 @@ function UI({ className, ...props }) {
   };
 
   const selectTarget = (player) => {
-    if ((currentPlayer?.id !== me?.id) || cardsDisabled || getState('turnPhase') !== TURN_PHASE.playTurn) return;
+    if (currentPlayer?.id !== me?.id || cardsDisabled || getState('turnPhase') !== TURN_PHASE.playTurn) return;
     currentPlayer.setState('target', player, true);
     const cards = currentPlayer.getState('cards');
     const selectedCard = currentPlayer.getState('selectedCard');
@@ -80,7 +72,6 @@ function UI({ className, ...props }) {
     currentPlayer.setState('decisions', decisions, true);
 
     if (selectedCard) {
-
       switch (selectedCard.type) {
         case 'transport':
           setToastMessage(currentPlayer?.state.name + ' décide de prendre le ' + selectedCard.name + ' !');
@@ -88,9 +79,21 @@ function UI({ className, ...props }) {
 
         case 'action':
           if (selectedCard.name === 'pied') {
-            setToastMessage(currentPlayer?.getState('target').state.name + ' retourne à pied à cause de ' + currentPlayer?.state.name + ' !');
+            setToastMessage(
+              currentPlayer?.getState('target').state.name +
+                ' retourne à pied à cause de ' +
+                currentPlayer?.state.name +
+                ' !'
+            );
           } else if (selectedCard.name === 'moins') {
-            setToastMessage(currentPlayer?.getState('target').state.name + ' recule de ' + selectedCard.name + '  à cause de ' + currentPlayer?.state.name + ' !');
+            setToastMessage(
+              currentPlayer?.getState('target').state.name +
+                ' recule de ' +
+                selectedCard.name +
+                '  à cause de ' +
+                currentPlayer?.state.name +
+                ' !'
+            );
           }
 
         default:
@@ -130,7 +133,7 @@ function UI({ className, ...props }) {
   }, [toastMessage]);
 
   const deleteCard = (card) => {
-    if ((currentPlayer?.id !== me?.id) || cardsDisabled) return;
+    if (currentPlayer?.id !== me?.id || cardsDisabled) return;
     console.log('deleteCard');
     const cards = currentPlayer.getState('cards');
     cards.splice(
@@ -220,19 +223,10 @@ function UI({ className, ...props }) {
   return (
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
-        <Toaster />
+        <Toaster theme="dark" />
+
         {currentPlayer?.id === me?.id && <p>C'est mon tour !! {timer}</p>}
         <p>Je suis {me?.state.name}</p>
-        <div className="styles.board">
-          <h2>Classement</h2>
-          {players.map((player, index) => (
-            <div key={index}>
-              <p>{player?.state.name}</p>
-              <p>{player.getState('status')?.name}</p>
-              <p>{player.getState('points')} points</p>
-            </div>
-          ))}
-        </div>
 
         <div className="deck">
           {me.getState('cards')?.map((card, index) => (
@@ -263,7 +257,7 @@ function UI({ className, ...props }) {
                 <span>{player?.id === me.id ? 'Changer' : player?.state.name}</span>
               </Button>
             ))}
-          {bin &&
+          {bin && (
             <Button
               className={styles.remove}
               onClick={() => {
@@ -272,7 +266,7 @@ function UI({ className, ...props }) {
             >
               <span>Jeter</span>
             </Button>
-          }
+          )}
         </div>
 
         <div className="drawers">
