@@ -1,37 +1,20 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { PerspectiveCamera, MotionPathControls, useMotion } from '@react-three/drei';
+import React, { useMemo } from 'react';
+import { PerspectiveCamera } from '@react-three/drei';
 import { Vector3 } from 'three';
 
 import { myPlayer, usePlayerState } from 'playroomkit';
-
-import Curves from '../curves/Curves';
-import { useMemo } from 'react';
 
 import { Model } from '../../models/car';
 
 import Billboard from '../../components/billboard/Billboard';
 
-function Loop({ poi, points }) {
-  const motion = useMotion();
-
-  useFrame((delta) => {
-    const target = new Vector3().addVectors(poi.current.position, motion.tangent);
-    poi.current.lookAt(target);
-
-    const step = 20;
-    const currentPoints = points / step;
-
-    motion.current = currentPoints;
-  });
-
-  return null;
-}
+import paths from '../../utils/paths.json';
 
 function Player({ player, index, ...props }) {
   const { id, state } = player;
   const me = myPlayer();
-  const poi = useRef();
+
+  console.log(paths.players);
 
   const [points] = usePlayerState(player, 'points');
 
@@ -40,39 +23,9 @@ function Player({ player, index, ...props }) {
     return pos;
   }, []);
 
-  const [progress, setProgress] = useState(new Vector3(-index * 1.5, 0, 0));
-
-  useEffect(() => {
-    const newPosition = new Vector3(-index * 1.5, 0, -points);
-    const animationDuration = 0.5;
-
-    const animate = () => {
-      const start = progress.clone();
-      const end = newPosition;
-      const startTime = Date.now();
-
-      const updatePosition = () => {
-        const elapsedTime = (Date.now() - startTime) / (animationDuration * 1000);
-        if (elapsedTime < 1) {
-          setProgress(start.clone().lerp(end, elapsedTime));
-          requestAnimationFrame(updatePosition);
-        } else {
-          setProgress(end);
-        }
-      };
-      updatePosition();
-    };
-
-    animate();
-  }, [points]);
-
   return (
     <group>
-      <MotionPathControls object={poi} debug smooth focusObject={poi} damping={0.6}>
-        <Curves index={index} />
-        <Loop poi={poi} points={points} />
-      </MotionPathControls>
-      <group ref={poi}>
+      <group>
         <Billboard player={player} position={[0, 2, 0]} />
         <Model color={state?.profile?.color} />
       </group>
