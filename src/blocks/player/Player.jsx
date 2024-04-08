@@ -26,7 +26,7 @@ function Player({ player, index, ...props }) {
   }, []);
 
   return (
-    <group>
+    <group {...props}>
       <group>
         <Billboard player={player} position={[0, 2, 0]} />
         <Model color={state?.profile?.color} />
