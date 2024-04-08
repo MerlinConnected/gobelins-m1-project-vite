@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import styles from './Lobby.module.scss';
 
 import Button from '../../components/button/Button';
-import PlayerCards from '../../components/cards/PlayerCards';
+import PlayerCards from '../../components/player-cards/PlayerCards';
 
 import { Toaster, toast } from 'sonner';
 
