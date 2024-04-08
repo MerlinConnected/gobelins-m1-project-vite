@@ -3,7 +3,7 @@ import { useGLTF } from '@react-three/drei';
 import { useFrame, useGraph } from '@react-three/fiber';
 import { SkeletonUtils } from 'three-stdlib';
 
-export const Model = forwardRef((props, ref) => {
+export const Car = forwardRef((props, ref) => {
   const { scene, materials } = useGLTF('/models/car_low_poly.glb');
 
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);

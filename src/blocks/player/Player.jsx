@@ -1,14 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useMemo, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { PerspectiveCamera, MotionPathControls, useMotion } from '@react-three/drei';
 import { Vector3 } from 'three';
 
 import { myPlayer, usePlayerState } from 'playroomkit';
 
-import Curves from '../curves/Curves';
-import { useMemo } from 'react';
+import Curves from '../../components/curves/Curves';
 
-import { Model } from '../../models/car';
+import { Car } from '../../models/car';
 
 import Billboard from '../../components/billboard/Billboard';
 
@@ -19,7 +18,7 @@ function Loop({ poi, points }) {
     const target = new Vector3().addVectors(poi.current.position, motion.tangent);
     poi.current.lookAt(target);
 
-    const step = 20;
+    const step = 40;
     const currentPoints = points / step;
 
     motion.current = currentPoints;
@@ -36,35 +35,9 @@ function Player({ player, index, ...props }) {
   const [points] = usePlayerState(player, 'points');
 
   const cameraPos = useMemo(() => {
-    const pos = new Vector3(10, 8, 20);
+    const pos = new Vector3(10, 8, 30);
     return pos;
   }, []);
-
-  const [progress, setProgress] = useState(new Vector3(-index * 1.5, 0, 0));
-
-  useEffect(() => {
-    const newPosition = new Vector3(-index * 1.5, 0, -points);
-    const animationDuration = 0.5;
-
-    const animate = () => {
-      const start = progress.clone();
-      const end = newPosition;
-      const startTime = Date.now();
-
-      const updatePosition = () => {
-        const elapsedTime = (Date.now() - startTime) / (animationDuration * 1000);
-        if (elapsedTime < 1) {
-          setProgress(start.clone().lerp(end, elapsedTime));
-          requestAnimationFrame(updatePosition);
-        } else {
-          setProgress(end);
-        }
-      };
-      updatePosition();
-    };
-
-    animate();
-  }, [points]);
 
   return (
     <group>
@@ -73,8 +46,8 @@ function Player({ player, index, ...props }) {
         <Loop poi={poi} points={points} />
       </MotionPathControls>
       <group ref={poi}>
-        <Billboard player={player} position={[0, 2, 0]} />
-        <Model color={state?.profile?.color} />
+        {/* <Billboard player={player} position={[0, 2, 0]} /> */}
+        <Car color={state?.profile?.color} />
       </group>
       {me?.id === id && <PerspectiveCamera makeDefault position={cameraPos} />}
     </group>
