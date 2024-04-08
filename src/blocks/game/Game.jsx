@@ -6,22 +6,12 @@ import { Leva, useControls } from 'leva';
 import { Suspense } from 'react';
 import { Perf } from 'r3f-perf';
 
-import Player from '../player/Player';
-
 import { usePlayerContext } from '../../provider/PlayerProvider';
 import { myPlayer } from 'playroomkit';
+import Tiles from '../tiles/Tiles';
 
 const Game = () => {
   const { players } = usePlayerContext();
-  const me = myPlayer();
-
-  const modelRefs = useRef([]);
-
-  useEffect(() => {
-    modelRefs.current = Array(players.length)
-      .fill()
-      .map((_, i) => modelRefs.current[i] || createRef());
-  }, [players.length, modelRefs.current]);
 
   const [isDebug, setisDebug] = useState(true);
 
@@ -38,13 +28,9 @@ const Game = () => {
       <Leva hidden={isDebug} />
       <Loader />
       <Canvas className="canvas" shadows>
-        <color attach="background" args={['#0A090F']} />
+        <color attach="background" args={['#f9efc7']} />
         <Suspense fallback={null}>
-          <group>
-            {players.map((player, i) => (
-              <Player key={player.id} player={player} index={i} ref={modelRefs.current[player.id]} />
-            ))}
-          </group>
+          <Tiles players={players} amount={16} />
 
           <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
             <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
@@ -61,8 +47,8 @@ const Game = () => {
             sectionSize={2}
             sectionThickness={1.5}
             sectionColor={'#8d4747'}
-            fadeDistance={30}
-            fadeStrength={1}
+            fadeDistance={50}
+            fadeStrength={0.5}
             followCamera={false}
             infiniteGrid
           />

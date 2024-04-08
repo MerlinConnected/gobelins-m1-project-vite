@@ -11,6 +11,8 @@ import Billboard from '../../components/billboard/Billboard';
 import paths from '../../utils/paths.json';
 
 function Player({ player, index, ...props }) {
+  const { position } = props;
+
   const { id, state } = player;
   const me = myPlayer();
 
