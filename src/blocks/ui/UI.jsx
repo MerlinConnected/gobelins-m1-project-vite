@@ -217,7 +217,7 @@ function UI({ className, ...props }) {
         setBin(false);
     }
 
-    console.log('playerPhase', playerPhase);
+    // console.log('playerPhase', playerPhase);
   }, [getState('playerPhase')]);
 
   return (
