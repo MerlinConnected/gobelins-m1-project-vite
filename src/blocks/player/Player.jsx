@@ -29,6 +29,8 @@ function Loop({ poi, points }) {
 }
 
 function Player({ player, index, ...props }) {
+  const { position } = props;
+
   const { id, state } = player;
   const me = myPlayer();
   const poi = useRef();
@@ -42,40 +44,34 @@ function Player({ player, index, ...props }) {
 
   const [progress, setProgress] = useState(new Vector3(-index * 1.5, 0, 0));
 
-  useEffect(() => {
-    const newPosition = new Vector3(-index * 1.5, 0, -points);
-    const animationDuration = 0.5;
+  // useEffect(() => {
+  //   const newPosition = new Vector3(-index * 1.5, 0, -points);
+  //   const animationDuration = 0.5;
 
-    const animate = () => {
-      const start = progress.clone();
-      const end = newPosition;
-      const startTime = Date.now();
+  //   const animate = () => {
+  //     const start = progress.clone();
+  //     const end = newPosition;
+  //     const startTime = Date.now();
 
-      const updatePosition = () => {
-        const elapsedTime = (Date.now() - startTime) / (animationDuration * 1000);
-        if (elapsedTime < 1) {
-          setProgress(start.clone().lerp(end, elapsedTime));
-          requestAnimationFrame(updatePosition);
-        } else {
-          setProgress(end);
-        }
-      };
-      updatePosition();
-    };
+  //     const updatePosition = () => {
+  //       const elapsedTime = (Date.now() - startTime) / (animationDuration * 1000);
+  //       if (elapsedTime < 1) {
+  //         setProgress(start.clone().lerp(end, elapsedTime));
+  //         requestAnimationFrame(updatePosition);
+  //       } else {
+  //         setProgress(end);
+  //       }
+  //     };
+  //     updatePosition();
+  //   };
 
-    animate();
-  }, [points]);
+  //   animate();
+  // }, [points]);
 
   return (
-    <group>
-      <MotionPathControls object={poi} debug smooth focusObject={poi} damping={0.6}>
-        <Curves index={index} />
-        <Loop poi={poi} points={points} />
-      </MotionPathControls>
-      <group ref={poi}>
-        <Billboard player={player} position={[0, 2, 0]} />
-        <Model color={state?.profile?.color} />
-      </group>
+    <group {...props}>
+      {/* <Billboard player={player} position={[0, 2, 0]} /> */}
+      <Model color={state?.profile?.color} />
       {me?.id === id && <PerspectiveCamera makeDefault position={cameraPos} />}
     </group>
   );
