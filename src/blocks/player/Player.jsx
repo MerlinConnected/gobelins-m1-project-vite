@@ -28,12 +28,11 @@ function Player({ player, index, ...props }) {
   const cameraPos = useMemo(() => {
     const pos = new Vector3(position[0], position[1], position[2]);
     return pos;
-  }, [me]);
+  }, [player]);
 
   useEffect(() => {
     if (me?.id === id) {
-      camRef.current.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
-      // camRef.current.lookAt(0, 0, 0);
+      camRef.current.position.copy(cameraPos);
 
       let tempVec = new Vector3();
 
@@ -43,9 +42,6 @@ function Player({ player, index, ...props }) {
       tempVec.cross(new Vector3(0, 1, 0)).normalize();
       camRef.current.position.addScaledVector(tempVec, 2);
       camRef.current.position.y += 2;
-
-      // camera.position.sub
-      console.log(camRef.current.position);
     }
   }, [player]);
 
