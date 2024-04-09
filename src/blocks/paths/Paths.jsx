@@ -1,18 +1,10 @@
-import React, { useEffect, useRef, createRef } from 'react';
-// import { Flow, modifyShader } from 'three/examples/jsm/modifiers/CurveModifier.js';
+import React, { useRef } from 'react';
+
 import Player from '../player/Player';
 
-function Tiles({ players, amount, ...props }) {
+export default function Paths({ players, amount, ...props }) {
   const ref = useRef();
   const modelRefs = useRef([]);
-
-  useEffect(() => {
-    modelRefs.current = Array(players.length)
-      .fill()
-      .map((_, i) => modelRefs.current[i] || createRef());
-
-    console.log(modelRefs.current);
-  }, [players.length, modelRefs.current]);
 
   const positionPlayer = (index) => {
     let position = [];
@@ -53,5 +45,3 @@ function Tiles({ players, amount, ...props }) {
     </group>
   );
 }
-
-export default Tiles;

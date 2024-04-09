@@ -1,14 +1,14 @@
-import React, { useRef, useEffect, createRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Canvas } from '@react-three/fiber';
 import { Loader, OrbitControls, Environment, Grid, GizmoHelper, GizmoViewport } from '@react-three/drei';
-import { Leva, useControls } from 'leva';
+import { Leva } from 'leva';
 import { Suspense } from 'react';
 import { Perf } from 'r3f-perf';
 
 import { usePlayerContext } from '../../provider/PlayerProvider';
-import { myPlayer } from 'playroomkit';
-import Tiles from '../tiles/Tiles';
+
+import Paths from '../paths/Paths';
 
 const Game = () => {
   const { players } = usePlayerContext();
@@ -30,7 +30,7 @@ const Game = () => {
       <Canvas className="canvas" shadows>
         <color attach="background" args={['#f9efc7']} />
         <Suspense fallback={null}>
-          <Tiles players={players} amount={16} />
+          <Paths players={players} amount={16} />
 
           <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
             <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
