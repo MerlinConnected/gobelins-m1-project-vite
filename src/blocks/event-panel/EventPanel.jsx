@@ -1,15 +1,9 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-
-import { usePlayerContext } from '../../provider/PlayerProvider';
-import { isHost, myPlayer } from 'playroomkit';
-import { getState } from 'playroomkit';
 
 import classNames from 'classnames';
 import styles from './EventPanel.module.scss';
 
-import { useGameStateContext } from '../../provider/GameStateProvider';
-import { CATEGORY, PLAYER_PHASE, TURN_PHASE } from '../../utils/constants';
+import { TRANSPORT } from '../../utils/constants';
 import { useEventContext } from '../../provider/EventProvider';
 
 function EventPanel({ className, ...props }) {
@@ -18,9 +12,21 @@ function EventPanel({ className, ...props }) {
     return (
         <>
             <div className={classNames(styles.wrapper, className)} {...props}>
-                {events?.map(event => {
-                    return <div key={event.id} className={styles.category}>{event.category}</div>;
-                })}
+                {TRANSPORT.map((transport) => (
+                    <div key={transport.id} className={styles.transport}>
+                        <div className={classNames(styles.transportIcon,
+                            { [styles.current]: events?.some(event => transport.category.includes(event.category)) }
+                        )}>
+                            {transport.name}
+                        </div>
+                        <div className={styles.tooltip}>
+                            <p>Vitesse: {transport.impact}</p>
+                            <ul>Catégories: {transport.category.map((category) => (
+                                <li key={category}>{category}</li>
+                            ))}</ul>
+                        </div>
+                    </div>
+                ))}
             </div>
         </>
     );

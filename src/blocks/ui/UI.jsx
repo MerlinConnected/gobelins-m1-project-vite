@@ -223,14 +223,12 @@ function UI({ className, ...props }) {
       <div className={classNames(styles.wrapper, className)} {...props}>
         <Toaster />
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
-        {turnPhase === TURN_PHASE.playTurn && <p>{timer}</p>}
+        {turnPhase === TURN_PHASE.playTurn && <p className={styles.timer}>{timer}</p>}
         <p>Je suis {me?.state.name}</p>
-        <div className="styles.board">
-          <h2>Classement</h2>
+        <div className={styles.board}>
           {players.map((player, index) => (
-            <div key={index}>
+            <div key={index} className={styles.board__player}>
               <p>{player?.state.name}</p>
-              <p>{player.getState('status')?.name}</p>
               <p>{player.getState('points')} points</p>
             </div>
           ))}
@@ -238,7 +236,7 @@ function UI({ className, ...props }) {
 
         <EventPanel />
 
-        <div className="deck">
+        <div className={styles.deck}>
           {me.getState('cards')?.map((card, index) => (
             <Button
               disabled={cardsDisabled}
@@ -253,7 +251,7 @@ function UI({ className, ...props }) {
           ))}
         </div>
 
-        <div className="targets">
+        <div className={styles.targets}>
           {currentPlayer === me &&
             currentPlayer.getState('availableTargets')?.map((player, index) => (
               <Button
@@ -279,7 +277,7 @@ function UI({ className, ...props }) {
           }
         </div>
 
-        <div className="drawers">
+        <div className={styles.drawers}>
           <Button
             disabled={drawersDisabled}
             className={drawersDisabled ? 'disabled' : ''}
