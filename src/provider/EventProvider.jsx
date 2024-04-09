@@ -10,7 +10,7 @@ let context = {};
 export const EventContext = createContext();
 
 export function EventProvider({ children }) {
-    const { drawCard } = usePlayerContext();
+    const { players } = usePlayerContext();
 
     const [events, setEvents] = useMultiplayerState('events', []);
 
@@ -65,10 +65,30 @@ export function EventProvider({ children }) {
         return eventDrawer;
     }
 
+    const setBlockedPlayers = () => {
+        const currentEvents = getState('events');
+
+        if (currentEvents.length > 0) {
+            players.forEach((player) => {
+                const playerCategories = player.getState('status').category;
+                if (currentEvents.some(event => playerCategories.includes(event.category))) {
+                    player.setState('blocked', true, true);
+                } else {
+                    player.setState('blocked', false, true);
+                }
+            });
+        } else {
+            players.forEach((player) => {
+                player.setState('blocked', false, true);
+            });
+        }
+    }
+
     const handleEvent = () => {
         removeEvent();
         addEvent();
         handleEventDrawer();
+        setBlockedPlayers();
     };
 
     context = {

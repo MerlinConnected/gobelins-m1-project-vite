@@ -93,9 +93,10 @@ export function PlayerProvider({ children }) {
         p.setState('points', tempPoints, true);
         p.setState('minus', 0, true);
       } else {
-        const statusPoints = p.getState('status').impact;
-        console.log('STATUS POINTS' + statusPoints);
-        p.setState('points', p.getState('points') + statusPoints, true);
+        if (!p.getState('blocked')) {
+          const statusPoints = p.getState('status').impact;
+          p.setState('points', p.getState('points') + statusPoints, true);
+        }
       }
     });
   }

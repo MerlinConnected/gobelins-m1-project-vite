@@ -65,7 +65,7 @@ export default function Billboard({ player, className, ...props }) {
         <Html wrapperClass={classNames(styles.wrapper, className)} center>
           <p>{`${state?.name || state?.profile?.name} - ${rank}`}</p>
           <p>{state?.points} Points</p>
-          {/* <p>{state?.status.name}</p> */}
+          <p>{state?.status.name}</p>
         </Html>
       </group>
     </>
