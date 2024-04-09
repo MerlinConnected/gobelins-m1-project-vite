@@ -11,17 +11,19 @@ import Billboard from '../../components/billboard/Billboard';
 
 import paths from '../../utils/paths.json';
 import { useEffect } from 'react';
+import { useState } from 'react';
 
 function Player({ player, index, ...props }) {
   const ref = React.useRef();
   const { position, rotationY } = props;
 
-  // console.log(position);
+  const [prevPoints, setPrevPoints] = useState(0);
 
   const { id, state } = player;
   const me = myPlayer();
   const camRef = React.useRef();
-  // console.log(paths.players);
+
+  const path = paths.players[index];
 
   const [points] = usePlayerState(player, 'points');
 
@@ -45,10 +47,15 @@ function Player({ player, index, ...props }) {
     }
   }, [player]);
 
-  // useEffect(() => {
-  //   console.log(points);
-  // }),
-  //   [points];
+  useEffect(() => {
+    let currentPoints = points;
+    let tilesToMove = currentPoints - prevPoints;
+    setPrevPoints(currentPoints);
+
+    console.log('tilesToMove', tilesToMove, 'prevPoints', prevPoints);
+
+    const startingPoint = path[prevPoints - 1];
+  }, [points]);
 
   return (
     <>

@@ -2,19 +2,87 @@
   "players": [
     {
       "id": 1,
-      "paths": ["forward", "left", "forward", "forward", "right"]
+      "paths": [
+        "forward",
+        "left",
+        "forward",
+        "forward",
+        "right",
+        "forward",
+        "left",
+        "forward",
+        "forward",
+        "right",
+        "forward",
+        "right",
+        "forward",
+        "left",
+        "forward",
+        "forward"
+      ]
     },
     {
       "id": 2,
-      "paths": ["forward", "forward", "left", "forward", "right"]
+      "paths": [
+        "forward",
+        "forward",
+        "left",
+        "forward",
+        "right",
+        "forward",
+        "left",
+        "forward",
+        "forward",
+        "right",
+        "forward",
+        "right",
+        "forward",
+        "left",
+        "forward",
+        "forward"
+      ]
     },
     {
       "id": 3,
-      "paths": ["right", "forward", "forward", "left", "forward"]
+      "paths": [
+        "right",
+        "forward",
+        "forward",
+        "left",
+        "forward",
+        "forward",
+        "left",
+        "forward",
+        "forward",
+        "right",
+        "forward",
+        "right",
+        "forward",
+        "left",
+        "forward",
+        "forward"
+      ]
     },
     {
       "id": 4,
-      "paths": ["left", "forward", "right", "forward", "forward"]
+      "paths": [
+        "left",
+        "forward",
+        "right",
+        "forward",
+        "forward",
+        "forward",
+        "left",
+        "forward",
+        "forward",
+        "right",
+        "forward",
+        "right",
+        "forward",
+        "left",
+        "forward",
+        "forward"
+      ]
     }
   ]
 }
