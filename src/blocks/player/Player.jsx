@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
+
 import { PerspectiveCamera } from '@react-three/drei';
 import { Vector3 } from 'three';
 
@@ -11,12 +12,18 @@ import Billboard from '../../components/billboard/Billboard';
 import paths from '../../utils/paths.json';
 
 function Player({ player, index, ...props }) {
+  const group = useRef(null);
+
+  console.log(group.current);
+
   const { position } = props;
+
+  // console.log(position);
 
   const { id, state } = player;
   const me = myPlayer();
 
-  console.log(paths.players);
+  // console.log(paths.players);
 
   const [points] = usePlayerState(player, 'points');
 
@@ -25,8 +32,13 @@ function Player({ player, index, ...props }) {
     return pos;
   }, []);
 
+  // useEffect(() => {
+  //   console.log(points);
+  // }),
+  //   [points];
+
   return (
-    <group {...props}>
+    <group {...props} ref={group}>
       <group>
         <Billboard player={player} position={[0, 2, 0]} />
         <Model color={state?.profile?.color} />
