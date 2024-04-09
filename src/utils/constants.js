@@ -84,3 +84,12 @@ export const actionDrawer = [
 ];
 
 export const piedTransportCard = { id: transportDrawer.length + actionDrawer.length, name: 'pied', type: 'transport', impact: 1, category: [CATEGORY.pied] }
+
+export const initialEventDrawer = [
+  { id: transportDrawer.length + actionDrawer.length + 1, name: 'accident', type: 'event', impact: 0, category: CATEGORY.deuxRoues },
+  { id: transportDrawer.length + actionDrawer.length + 2, name: 'grève', type: 'event', impact: 0, category: CATEGORY.route },
+  { id: transportDrawer.length + actionDrawer.length + 3, name: 'travaux', type: 'event', impact: 0, category: CATEGORY.moteur },
+  { id: transportDrawer.length + actionDrawer.length + 4, name: 'panne', type: 'event', impact: 0, category: CATEGORY.rails },
+  { id: transportDrawer.length + actionDrawer.length + 5, name: 'grève', type: 'event', impact: 0, category: CATEGORY.interieur },
+  { id: transportDrawer.length + actionDrawer.length + 6, name: 'accident', type: 'event', impact: 0, category: CATEGORY.commun },
+];

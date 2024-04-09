@@ -13,10 +13,11 @@ import Button from '../../components/button/Button';
 import styles from './UI.module.scss';
 
 import { Toaster, toast } from 'sonner';
+import EventPanel from '../event-panel/EventPanel';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, distributeCard } = usePlayerContext();
-  const { playerPhase, setPlayerPhase, timer, toastMessage, setToastMessage } = useGameStateContext();
+  const { playerPhase, setPlayerPhase, turnPhase, timer, toastMessage, setToastMessage } = useGameStateContext();
   const [cardsDisabled, setCardsDisabled] = useState(true);
   const [drawersDisabled, setDrawersDisabled] = useState(true);
   const [bin, setBin] = useState(false);
@@ -221,7 +222,8 @@ function UI({ className, ...props }) {
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
         <Toaster />
-        {currentPlayer?.id === me?.id && <p>C'est mon tour !! {timer}</p>}
+        {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
+        {turnPhase === TURN_PHASE.playTurn && <p>{timer}</p>}
         <p>Je suis {me?.state.name}</p>
         <div className="styles.board">
           <h2>Classement</h2>
@@ -233,6 +235,8 @@ function UI({ className, ...props }) {
             </div>
           ))}
         </div>
+
+        <EventPanel />
 
         <div className="deck">
           {me.getState('cards')?.map((card, index) => (

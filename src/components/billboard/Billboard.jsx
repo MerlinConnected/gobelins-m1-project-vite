@@ -12,8 +12,6 @@ import styles from './Billboard.module.scss';
 export default function Billboard({ player, className, ...props }) {
   const { state } = player;
 
-  console.log(state);
-
   const planeRef = useRef();
 
   const [rank, setRank] = useState('');

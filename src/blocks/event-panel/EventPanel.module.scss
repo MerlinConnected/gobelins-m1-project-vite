@@ -1,0 +1,25 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    gap: rem(12);
+
+    position: absolute;
+    width: grid(4);
+    // top: grid(0, 1);
+    // left: grid(4);
+    top: -20px;
+}
+
+.category {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    width: rem(40);
+    height: rem(40);
+    font-size: rem(12);
+
+    &--current {
+        background-color: var(--color-dark);
+        color: var(--color-light);
+        border: 1px solid red;
+    }
+}

@@ -6,12 +6,14 @@ import { usePlayerContext } from './PlayerProvider';
 
 import { TURN_PHASE, PLAYER_PHASE, TIME_START_TURN, TIME_PLAYER_TURN, TIME_END_TURN } from '../utils/constants';
 import { useState } from 'react';
+import { useEventContext } from './EventProvider';
 
 let context = {};
 const GameStateContext = React.createContext();
 
 export function GameStateProvider({ children }) {
   const { setPlayerTurn, performPlayerAction, move, players } = usePlayerContext();
+  const { handleEvent } = useEventContext();
 
   const [onboarding, setOnboarding] = useState(true);
   const [infoLobby, setInfoLobby] = useState(false);
@@ -98,6 +100,7 @@ export function GameStateProvider({ children }) {
       case TURN_PHASE.endTurn:
         setTurnPhase(TURN_PHASE.startTurn, true);
         newTime = TIME_START_TURN;
+        handleEvent();
         break;
     }
     setTimer(newTime, true);
