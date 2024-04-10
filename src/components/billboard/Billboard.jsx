@@ -9,6 +9,7 @@ import styles from './Billboard.module.scss';
 
 export default function Billboard({ player, className, ...props }) {
   const { state } = player;
+
   const planeRef = useRef();
   const direction = new THREE.Vector3();
 
@@ -30,7 +31,7 @@ export default function Billboard({ player, className, ...props }) {
       <group ref={planeRef} {...props}>
         <Html wrapperClass={classNames(styles.wrapper, className)} center>
           <p>{state?.points} Points</p>
-          <p>{state?.status?.name}</p>
+          <p>{state?.status.name}</p>
         </Html>
       </group>
     </>

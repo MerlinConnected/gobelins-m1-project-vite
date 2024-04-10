@@ -19,14 +19,22 @@ export const PLAYER_PHASE = {
 };
 
 export const CATEGORY = {
-  deuxRoues: 'deuxRoues',
-  route: 'route',
-  moteur: 'moteur',
-  rails: 'rails',
-  interieur: 'interieur',
-  commun: 'commun',
-  pied: 'pied',
+  deuxRoues: '2 roues',
+  route: 'Route',
+  moteur: 'Moteur',
+  rails: 'Rails',
+  interieur: 'Intérieur',
+  commun: 'Transports en commun',
+  pied: 'Pied',
 };
+
+export const TRANSPORT = [
+  { name: 'velo', type: 'transport', impact: 2, category: [CATEGORY.deuxRoues] },
+  { name: 'voiture', type: 'transport', impact: 3, category: [CATEGORY.route, CATEGORY.moteur] },
+  { name: 'tramway', type: 'transport', impact: 3, category: [CATEGORY.rails, CATEGORY.commun] },
+  { name: 'metro', type: 'transport', impact: 4, category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur] },
+  { name: 'moto', type: 'transport', impact: 4, category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur] },
+]
 
 export const TIME_START_GAME = 1;
 export const TIME_START_TURN = 1;
@@ -41,19 +49,19 @@ export const AMOUNT_MINUS_CARDS = 3;
 export const transportDrawer = [
   ...new Array(AMOUNT_TRANSPORT_CARDS)
     .fill()
-    .map((_, index) => ({ id: index, name: 'velo', type: 'transport', impact: 2, category: [CATEGORY.deuxRoues] })),
+    .map((_, index) => ({ ...TRANSPORT[0], id: index })),
   ...new Array(AMOUNT_TRANSPORT_CARDS)
     .fill()
-    .map((_, index) => ({ id: index + AMOUNT_TRANSPORT_CARDS, name: 'voiture', type: 'transport', impact: 3, category: [CATEGORY.route, CATEGORY.moteur] })),
+    .map((_, index) => ({ ...TRANSPORT[1], id: index + AMOUNT_TRANSPORT_CARDS })),
   ...new Array(AMOUNT_TRANSPORT_CARDS)
     .fill()
-    .map((_, index) => ({ id: index + 2 * AMOUNT_TRANSPORT_CARDS, name: 'moto', type: 'transport', impact: 4, category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur] })),
+    .map((_, index) => ({ ...TRANSPORT[2], id: index + 2 * AMOUNT_TRANSPORT_CARDS })),
   ...new Array(AMOUNT_TRANSPORT_CARDS)
     .fill()
-    .map((_, index) => ({ id: index + 3 * AMOUNT_TRANSPORT_CARDS, name: 'tramway', type: 'transport', impact: 3, category: [CATEGORY.rails, CATEGORY.commun] })),
+    .map((_, index) => ({ ...TRANSPORT[3], id: index + 3 * AMOUNT_TRANSPORT_CARDS })),
   ...new Array(AMOUNT_TRANSPORT_CARDS)
     .fill()
-    .map((_, index) => ({ id: index + 4 * AMOUNT_TRANSPORT_CARDS, name: 'metro', type: 'transport', impact: 4, category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur] })),
+    .map((_, index) => ({ ...TRANSPORT[4], id: index + 4 * AMOUNT_TRANSPORT_CARDS })),
 ];
 
 export const actionDrawer = [
@@ -84,3 +92,12 @@ export const actionDrawer = [
 ];
 
 export const piedTransportCard = { id: transportDrawer.length + actionDrawer.length, name: 'pied', type: 'transport', impact: 1, category: [CATEGORY.pied] }
+
+export const initialEventDrawer = [
+  { id: transportDrawer.length + actionDrawer.length + 1, name: 'accident', type: 'event', impact: 0, category: CATEGORY.deuxRoues },
+  { id: transportDrawer.length + actionDrawer.length + 2, name: 'grève', type: 'event', impact: 0, category: CATEGORY.route },
+  { id: transportDrawer.length + actionDrawer.length + 3, name: 'travaux', type: 'event', impact: 0, category: CATEGORY.moteur },
+  { id: transportDrawer.length + actionDrawer.length + 4, name: 'panne', type: 'event', impact: 0, category: CATEGORY.rails },
+  { id: transportDrawer.length + actionDrawer.length + 5, name: 'grève', type: 'event', impact: 0, category: CATEGORY.interieur },
+  { id: transportDrawer.length + actionDrawer.length + 6, name: 'accident', type: 'event', impact: 0, category: CATEGORY.commun },
+];

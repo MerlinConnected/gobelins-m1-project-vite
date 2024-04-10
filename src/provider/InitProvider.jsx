@@ -5,6 +5,7 @@ import { usePlayerContext } from './PlayerProvider';
 import { useGameStateContext } from './GameStateProvider';
 
 import { GAME_PHASE, TIME_START_GAME, TIME_START_TURN, TURN_PHASE } from '../utils/constants';
+import { useEventContext } from './EventProvider';
 
 let context = {};
 export const InitContext = createContext();
@@ -12,6 +13,7 @@ export const InitContext = createContext();
 export function InitProvider({ children }) {
   const { globalPhase, setTurnPhase, setTimer } = useGameStateContext();
   const { players, setPlayerTurn, drawCard, distributeCard } = usePlayerContext();
+  const { handleEvent, setEvents } = useEventContext();
 
   const startGame = () => {
     if (isHost()) {
@@ -27,6 +29,7 @@ export function InitProvider({ children }) {
         player.setState('availableTargets', [], true);
         player.setState('decisions', [], true);
         player.setState('minus', 0, true);
+        player.setState('blocked', false, true);
         distributeCard('transport', player);
         distributeCard('action', player);
         const statusCard = drawCard('transport');
@@ -35,6 +38,8 @@ export function InitProvider({ children }) {
 
       setTurnPhase(TURN_PHASE.startTurn, true);
       setTimer(TIME_START_TURN, true);
+      setEvents([], true);
+      handleEvent();
     }
   };
 
