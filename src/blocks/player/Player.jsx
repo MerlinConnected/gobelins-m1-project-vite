@@ -81,4 +81,4 @@ function Player({ player, index, ...props }) {
   );
 }
 
-export default React.memo(Player);
+export default Player;

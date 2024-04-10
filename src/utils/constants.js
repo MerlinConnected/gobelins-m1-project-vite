@@ -67,10 +67,10 @@ export const transportDrawer = [
 export const actionDrawer = [
   ...new Array(AMOUNT_MINUS_CARDS)
     .fill()
-    .map((_, index) => ({ id: index + transportDrawer.length, name: 'moins1', type: 'action', impact: -1, category: Object.keys(CATEGORY) })),
+    .map((_, index) => ({ id: index + transportDrawer.length, name: 'moins1', type: 'action', impact: -1, category: Object.values(CATEGORY) })),
   ...new Array(AMOUNT_MINUS_CARDS)
     .fill()
-    .map((_, index) => ({ id: index + transportDrawer.length + AMOUNT_MINUS_CARDS, name: 'moins2', type: 'action', impact: -2, category: Object.keys(CATEGORY) })),
+    .map((_, index) => ({ id: index + transportDrawer.length + AMOUNT_MINUS_CARDS, name: 'moins2', type: 'action', impact: -2, category: Object.values(CATEGORY) })),
   ...new Array(AMOUNT_PIED_CARDS)
     .fill()
     .map((_, index) => ({ id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS, name: 'pied', type: 'action', impact: 1, category: [CATEGORY.deuxRoues] })),

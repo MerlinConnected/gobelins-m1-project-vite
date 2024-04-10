@@ -32,7 +32,6 @@ function UI({ className, ...props }) {
     switch (card.type) {
       case 'action':
         const cardCategories = card.category;
-        console.log('cardCategories', cardCategories);
 
         const otherPlayers = players.filter((p) => p.id !== currentPlayer.id);
         const currentTargets = otherPlayers.filter((player) =>
@@ -82,18 +81,18 @@ function UI({ className, ...props }) {
           if (selectedCard.name === 'pied') {
             setToastMessage(
               currentPlayer?.getState('target').state.name +
-                ' retourne à pied à cause de ' +
-                currentPlayer?.state.name +
-                ' !'
+              ' retourne à pied à cause de ' +
+              currentPlayer?.state.name +
+              ' !'
             );
           } else if (selectedCard.name === 'moins') {
             setToastMessage(
               currentPlayer?.getState('target').state.name +
-                ' recule de ' +
-                selectedCard.name +
-                '  à cause de ' +
-                currentPlayer?.state.name +
-                ' !'
+              ' recule de ' +
+              selectedCard.name +
+              '  à cause de ' +
+              currentPlayer?.state.name +
+              ' !'
             );
           }
 
@@ -135,7 +134,6 @@ function UI({ className, ...props }) {
 
   const deleteCard = (card) => {
     if (currentPlayer?.id !== me?.id || cardsDisabled) return;
-    console.log('deleteCard');
     const cards = currentPlayer.getState('cards');
     cards.splice(
       cards.findIndex((c) => c.id === card.id),
@@ -218,7 +216,6 @@ function UI({ className, ...props }) {
         setBin(false);
     }
 
-    console.log('playerPhase', playerPhase);
   }, [getState('playerPhase')]);
 
   return (

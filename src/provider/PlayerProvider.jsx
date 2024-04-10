@@ -8,6 +8,7 @@ let context = {};
 const PlayerContext = React.createContext(context);
 
 export function PlayerProvider({ children }) {
+
   const [nameEditing, setNameEditing] = useState(false);
   const [playerTurn, setPlayerTurn] = useMultiplayerState('playerTurn', 0);
 
@@ -45,6 +46,25 @@ export function PlayerProvider({ children }) {
     player.setState('cards', autoDeck, true);
   }
 
+  const setBlockedPlayers = () => {
+    const currentEvents = getState('events');
+
+    if (currentEvents.length > 0) {
+      players.forEach((player) => {
+        const playerCategories = player.getState('status').category;
+        if (currentEvents.some(event => playerCategories.includes(event.category))) {
+          player.setState('blocked', true, true);
+        } else {
+          player.setState('blocked', false, true);
+        }
+      });
+    } else {
+      players.forEach((player) => {
+        player.setState('blocked', false, true);
+      });
+    }
+  }
+
   const performPlayerAction = () => {
     const currentPlayer = players[playerTurn];
 
@@ -79,6 +99,8 @@ export function PlayerProvider({ children }) {
       }
     }
 
+    setBlockedPlayers();
+
     currentPlayer.setState('selectedCard', '', true);
     currentPlayer.setState('target', null, true);
     currentPlayer.setState('availableTargets', [], true);
@@ -110,8 +132,6 @@ export function PlayerProvider({ children }) {
     })
     .sort((a, b) => b.points - a.points);
 
-  // console.log('useScoreboard', useScoreboard);
-
   context = {
     ...gameState,
     drawCard,
@@ -119,6 +139,7 @@ export function PlayerProvider({ children }) {
     performPlayerAction,
     move,
     useScoreboard,
+    setBlockedPlayers,
   };
 
   return <PlayerContext.Provider value={context}>{children}</PlayerContext.Provider>;

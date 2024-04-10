@@ -132,7 +132,7 @@ export function GameStateProvider({ children }) {
 
   // is fired when phase or paused changes
   useEffect(() => {
-    console.log('phase', turnPhase);
+    // console.log('phase', turnPhase);
     runTimer();
     return clearTimer;
   }, [turnPhase]);
