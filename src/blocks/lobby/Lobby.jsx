@@ -12,17 +12,13 @@ import { Toaster, toast } from 'sonner';
 
 import { useGameStateContext } from '../../provider/GameStateProvider';
 import { GAME_PHASE } from '../../utils/constants';
+import removeRoomHash from '../../utils/removeRoomHash';
 
 function Lobby({ className, ...props }) {
   const { setLobby, setGlobalPhase } = useGameStateContext();
 
   function copyRoomCode() {
     navigator.clipboard.writeText(getRoomCode());
-  }
-
-  function removeRoomHash() {
-    window.location.hash = '';
-    window.location.reload();
   }
 
   return (

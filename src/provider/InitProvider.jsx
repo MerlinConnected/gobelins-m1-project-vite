@@ -30,6 +30,7 @@ export function InitProvider({ children }) {
         player.setState('decisions', [], true);
         player.setState('minus', 0, true);
         player.setState('blocked', false, true);
+        player.setState('winner', false, true);
         distributeCard('transport', player);
         distributeCard('action', player);
         const statusCard = drawCard('transport');
