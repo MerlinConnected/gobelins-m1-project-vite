@@ -14,6 +14,7 @@
     "@types/three": "^0.161.2",
     "@vercel/speed-insights": "^1.0.10",
     "classnames": "^2.5.1",
+    "framer-motion": "^11.0.28",
     "lucide-react": "^0.356.0",
     "playroomkit": "^0.0.67",
     "react": "^18.2.0",
