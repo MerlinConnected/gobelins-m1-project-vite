@@ -4,7 +4,7 @@ import { useMultiplayerState, getState, isHost, insertCoin } from 'playroomkit';
 import { useControls } from 'leva';
 import { usePlayerContext } from './PlayerProvider';
 
-import { TURN_PHASE, PLAYER_PHASE, TIME_START_TURN, TIME_PLAYER_TURN, TIME_END_TURN } from '../utils/constants';
+import { GAME_PHASE, TURN_PHASE, PLAYER_PHASE, TIME_START_TURN, TIME_PLAYER_TURN, TIME_END_TURN, MAX_POINTS } from '../utils/constants';
 import { useState } from 'react';
 import { useEventContext } from './EventProvider';
 
@@ -20,7 +20,7 @@ export function GameStateProvider({ children }) {
   const [lobby, setLobby] = useState(false);
 
   const [timer, setTimer] = useMultiplayerState('timer', 0);
-  const [globalPhase, setGlobalPhase] = useMultiplayerState('globalPhase', null);
+  const [globalPhase, setGlobalPhase] = useMultiplayerState('globalPhase', GAME_PHASE.lobby);
   const [turnPhase, setTurnPhase] = useMultiplayerState('turnPhase', null);
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
   const [toastMessage, setToastMessage] = useMultiplayerState('toastMessage', null);
@@ -75,6 +75,22 @@ export function GameStateProvider({ children }) {
     setToastMessage,
   };
 
+  const getFinishers = () => {
+    return players.filter((player) => player.getState('winner'));
+  }
+
+  const setFinishers = (players, MAX_POINTS) => {
+    players.forEach((player) => {
+      if (player.getState('points') >= MAX_POINTS) {
+        player.setState('winner', true, true);
+      }
+    });
+  };
+
+  const isGameFinished = () => {
+    return getFinishers().length === 2;
+  };
+
   const phaseEnd = () => {
     let newTime = 0;
     switch (getState('turnPhase')) {
@@ -98,9 +114,15 @@ export function GameStateProvider({ children }) {
         newTime = TIME_END_TURN;
         break;
       case TURN_PHASE.endTurn:
-        setTurnPhase(TURN_PHASE.startTurn, true);
-        newTime = TIME_START_TURN;
-        handleEvent();
+        setFinishers(players, MAX_POINTS);
+        if (isGameFinished()) {
+          setTurnPhase(null, true);
+          setGlobalPhase(GAME_PHASE.endGame, true);
+        } else {
+          setTurnPhase(TURN_PHASE.startTurn, true);
+          newTime = TIME_START_TURN;
+          handleEvent();
+        }
         break;
     }
     setTimer(newTime, true);
@@ -139,6 +161,7 @@ export function GameStateProvider({ children }) {
 
   context = {
     ...gameState,
+    getFinishers,
   };
 
   return <GameStateContext.Provider value={context}>{children}</GameStateContext.Provider>;
