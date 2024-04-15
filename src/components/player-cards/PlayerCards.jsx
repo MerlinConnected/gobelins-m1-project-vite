@@ -49,7 +49,7 @@ function PlayerCards({ className, ...props }) {
               Kick
             </Button>
           )}
-          <Toaster theme="dark" />
+          {/* <Toaster theme="dark" /> */}
         </div>
       ))}
     </div>

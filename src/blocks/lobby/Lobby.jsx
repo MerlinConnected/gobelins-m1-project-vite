@@ -27,7 +27,7 @@ function Lobby({ className, ...props }) {
         <div>
           <h1>Lobby</h1>
           <div>
-            <Toaster theme="dark" />
+            {/* <Toaster theme="dark" /> */}
             <Button
               onClick={() => {
                 toast('Code copied to clipboard!', {

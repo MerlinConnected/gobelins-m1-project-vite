@@ -32,7 +32,7 @@ export function PlayerProvider({ children }) {
       const randomActionIndex = randInt(0, actionDrawer.length - 1);
       return actionDrawer[randomActionIndex];
     }
-  }
+  };
 
   const distributeCard = (type, player) => {
     const cards = player.getState('cards');
@@ -44,7 +44,7 @@ export function PlayerProvider({ children }) {
   const removeCardsAuto = (player) => {
     const autoDeck = player.getState('cards').slice(0, 2);
     player.setState('cards', autoDeck, true);
-  }
+  };
 
   const setBlockedPlayers = () => {
     const currentEvents = getState('events');
@@ -111,7 +111,8 @@ export function PlayerProvider({ children }) {
   const move = () => {
     players.forEach((p) => {
       if (p.getState('minus') !== 0) {
-        const tempPoints = p.getState('points') + p.getState('minus') > 0 ? p.getState('points') + p.getState('minus') : 0;
+        const tempPoints =
+          p.getState('points') + p.getState('minus') > 0 ? p.getState('points') + p.getState('minus') : 0;
         p.setState('points', tempPoints, true);
         p.setState('minus', 0, true);
       } else {
@@ -121,7 +122,7 @@ export function PlayerProvider({ children }) {
         }
       }
     });
-  }
+  };
 
   const useScoreboard = players
     .map((player) => {
