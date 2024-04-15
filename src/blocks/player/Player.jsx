@@ -32,6 +32,8 @@ function Player({ player, index, ...props }) {
 
   let curve = useRef(null);
 
+  const newArr = Path[index].map((p) => p.clone());
+
   useEffect(() => {
     if (me?.id === id) {
       // set the camera pos next to the player
@@ -54,7 +56,9 @@ function Player({ player, index, ...props }) {
     setPrevPoints(currentPoints);
 
     if (tilesToMove > 0 && currentPoints < Path[index].length) {
-      const newPointsArray = Path[index].slice(prevPoints, prevPoints + tilesToMove);
+      console.log('plus');
+      const newPointsArray = newArr.slice(prevPoints, prevPoints + tilesToMove);
+      // console.log(newPointsArray);
 
       const playerPos = ref.current.position.clone();
 
@@ -71,7 +75,37 @@ function Player({ player, index, ...props }) {
           ref.current.position.copy(pos);
           let tangent = curve.current.getTangentAt(value).normalize();
           pos.add(tangent);
-          ref.current.lookAt(pos);
+          // ref.current.lookAt(pos);
+        },
+      });
+    } else if (tilesToMove < 0) {
+      console.log('moins');
+      const newPointsArray = newArr.slice(prevPoints + tilesToMove, prevPoints);
+      newPointsArray.reverse();
+
+      // invert the x and z values of newPointsArray
+      newPointsArray.forEach((point) => {
+        point.x *= -1;
+        point.y *= -1;
+        point.z *= -1;
+      });
+
+      const playerPos = ref.current.position.clone();
+
+      curve.current = getCurveFromPlayer(playerPos, newPointsArray, -1);
+
+      const geometry = new THREE.TubeGeometry(curve.current, 200, 0.1, 8, false);
+      const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00 }));
+      scene.add(mesh);
+
+      animate(progress.current, 1, {
+        duration: 2,
+        onUpdate: (value) => {
+          let pos = curve.current.getPointAt(value);
+          ref.current.position.copy(pos);
+          let tangent = curve.current.getTangentAt(value).normalize();
+          pos.add(tangent);
+          // ref.current.lookAt(pos);
         },
       });
     }

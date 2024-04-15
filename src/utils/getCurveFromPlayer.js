@@ -5,7 +5,7 @@ function getCurveFromPlayer(position, points) {
   const data = { position: new Vector3(position.x, position.y, position.z) };
   const p = [];
 
-  console.log(position);
+  // console.log(position);
 
   p.push(data.position.clone());
 
@@ -21,7 +21,7 @@ function getCurveFromPlayer(position, points) {
     if (direction.z < -0.5) {
       offset.y = -1;
     }
-    const start = data.position.clone();
+    // const start = data.position.clone();
     const center = new Vector3(data.position.x + offset.x, 0, Math.floor(data.position.z) + 0.5 + offset.y);
     const point = data.position.add(direction);
     if (center.z > point.z) {

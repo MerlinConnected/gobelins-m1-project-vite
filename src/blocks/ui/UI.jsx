@@ -223,7 +223,7 @@ function UI({ className, ...props }) {
   return (
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
-        <Toaster theme="dark" />
+        {/* <Toaster theme="dark" /> */}
 
         {currentPlayer?.id === me?.id && <p>C'est mon tour !! {timer}</p>}
         <p>Je suis {me?.state.name}</p>
