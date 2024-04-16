@@ -16,7 +16,7 @@ import { Toaster, toast } from 'sonner';
 import EventPanel from '../event-panel/EventPanel';
 
 function UI({ className, ...props }) {
-  const { playerTurn, players, distributeCard } = usePlayerContext();
+  const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
   const { playerPhase, setPlayerPhase, turnPhase, timer, toastMessage, setToastMessage } = useGameStateContext();
   const [cardsDisabled, setCardsDisabled] = useState(true);
   const [drawersDisabled, setDrawersDisabled] = useState(true);
@@ -33,7 +33,7 @@ function UI({ className, ...props }) {
       case 'action':
         const cardCategories = card.category;
 
-        const otherPlayers = players.filter((p) => p.id !== currentPlayer.id);
+        const otherPlayers = inGamePlayers.filter((p) => p.id !== currentPlayer.id);
         const currentTargets = otherPlayers.filter((player) =>
           player.getState('status').category.some((cat) => cardCategories.includes(cat))
         );

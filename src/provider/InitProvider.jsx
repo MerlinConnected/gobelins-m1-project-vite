@@ -18,7 +18,7 @@ export function InitProvider({ children }) {
   const startGame = () => {
     if (isHost()) {
       setTimer(TIME_START_GAME, true);
-      const randomValue = 1;
+      const randomValue = Math.floor(Math.random() * 4);
       setPlayerTurn(randomValue, true);
 
       players.forEach((player) => {
@@ -30,7 +30,8 @@ export function InitProvider({ children }) {
         player.setState('decisions', [], true);
         player.setState('minus', 0, true);
         player.setState('blocked', false, true);
-        player.setState('winner', false, true);
+        player.setState('winner', null, true);
+        player.setState('qualified', false, true);
         distributeCard('transport', player);
         distributeCard('action', player);
         const statusCard = drawCard('transport');

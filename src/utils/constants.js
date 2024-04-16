@@ -39,9 +39,9 @@ export const TRANSPORT = [
 export const TIME_START_GAME = 1;
 export const TIME_START_TURN = 1;
 export const TIME_PLAYER_TURN = 10;
-export const TIME_END_TURN = 1;
+export const TIME_END_TURN = 4;
 
-export const MAX_POINTS = 10;
+export const MAX_POINTS = 7;
 export const AMOUNT_TRANSPORT_CARDS = 1;
 export const AMOUNT_PIED_CARDS = 2;
 export const AMOUNT_MINUS_CARDS = 3;

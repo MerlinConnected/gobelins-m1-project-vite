@@ -12,7 +12,7 @@ let context = {};
 const GameStateContext = React.createContext();
 
 export function GameStateProvider({ children }) {
-  const { setPlayerTurn, performPlayerAction, move, players } = usePlayerContext();
+  const { setPlayerTurn, performPlayerAction, move, players, inGamePlayers } = usePlayerContext();
   const { handleEvent } = useEventContext();
 
   const [onboarding, setOnboarding] = useState(true);
@@ -75,32 +75,58 @@ export function GameStateProvider({ children }) {
     setToastMessage,
   };
 
-  const getFinishers = () => {
-    return players.filter((player) => player.getState('winner'));
+  const setFinishers = () => {
+    const alreadyQualified = players.filter((player) => player.getState('qualified') === true);
+    const finishers = inGamePlayers.filter((player) => player.getState('winner') !== null);
+    finishers.sort((a, b) => a.getState('winner') - b.getState('winner'));
+    const newFinishers = finishers.length > 2 ? finishers.slice(0, 2) : finishers;
+
+    switch (alreadyQualified.length) {
+      case 0:
+        newFinishers.forEach((player) => {
+          player.setState('qualified', true, true);
+        });
+        break;
+
+      case 1:
+        if (newFinishers.length > 0) {
+          newFinishers[0].setState('qualified', true, true);
+        }
+        break;
+
+      case 2:
+        console.log('fin du game, 2 joueurs déjà qualifiés');
+        break;
+
+      default:
+        break;
+    }
   }
 
-  const setFinishers = (players, MAX_POINTS) => {
-    players.forEach((player) => {
-      if (player.getState('points') >= MAX_POINTS) {
-        player.setState('winner', true, true);
-      }
-    });
+  const getFinishers = () => {
+    const finishers = players.filter((player) => player.getState('qualified') === true);
+    return finishers;
   };
 
   const isGameFinished = () => {
-    return getFinishers().length === 2;
+    return getFinishers().length == 2;
   };
 
   const phaseEnd = () => {
     let newTime = 0;
     switch (getState('turnPhase')) {
+
       case TURN_PHASE.startTurn:
-        const newPlayerTurn = (getState('playerTurn') + 1) % players.length;
+        let newPlayerTurn = (getState('playerTurn') + 1) % players.length;
+        while (!inGamePlayers.includes(players[newPlayerTurn])) {
+          newPlayerTurn = (newPlayerTurn + 1) % players.length;
+        }
         setPlayerTurn(newPlayerTurn, true);
         setTurnPhase(TURN_PHASE.playTurn, true);
         setPlayerPhase(PLAYER_PHASE.drawCards, true);
         newTime = TIME_PLAYER_TURN;
         break;
+
       case TURN_PHASE.playTurn:
         performPlayerAction();
         move();
@@ -113,8 +139,9 @@ export function GameStateProvider({ children }) {
         setPlayerPhase(null, true);
         newTime = TIME_END_TURN;
         break;
+
       case TURN_PHASE.endTurn:
-        setFinishers(players, MAX_POINTS);
+        setFinishers();
         if (isGameFinished()) {
           setTurnPhase(null, true);
           setGlobalPhase(GAME_PHASE.endGame, true);
