@@ -14,6 +14,7 @@ import styles from './UI.module.scss';
 
 import { Toaster, toast } from 'sonner';
 import EventPanel from '../event-panel/EventPanel';
+import Cards from '../../components/cards/Cards';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, distributeCard } = usePlayerContext();
@@ -24,32 +25,6 @@ function UI({ className, ...props }) {
 
   const currentPlayer = players[playerTurn];
   const me = myPlayer();
-
-  const selectCard = (card) => {
-    if (currentPlayer?.id !== me?.id) return;
-    currentPlayer.setState('selectedCard', card, true);
-
-    switch (card.type) {
-      case 'action':
-        const cardCategories = card.category;
-
-        const otherPlayers = players.filter((p) => p.id !== currentPlayer.id);
-        const currentTargets = otherPlayers.filter((player) =>
-          player.getState('status').category.some((cat) => cardCategories.includes(cat))
-        );
-        currentPlayer.setState('availableTargets', currentTargets, true);
-        break;
-      case 'transport':
-        currentPlayer.setState('availableTargets', [currentPlayer], true);
-        break;
-      default:
-        break;
-    }
-
-    setBin(true);
-
-    console.log('availableTargets', currentPlayer.getState('availableTargets'));
-  };
 
   const handleDrawer = (type) => {
     if (currentPlayer?.id !== me?.id || getState('playerPhase') !== PLAYER_PHASE.drawCards) return;
@@ -62,102 +37,12 @@ function UI({ className, ...props }) {
     }
   };
 
-  const selectTarget = (player) => {
-    if (currentPlayer?.id !== me?.id || cardsDisabled || getState('turnPhase') !== TURN_PHASE.playTurn) return;
-    currentPlayer.setState('target', player, true);
-    const cards = currentPlayer.getState('cards');
-    const selectedCard = currentPlayer.getState('selectedCard');
-    const decisions = currentPlayer.getState('decisions');
-    decisions.push({ card: selectedCard, target: player });
-    currentPlayer.setState('decisions', decisions, true);
-
-    if (selectedCard) {
-      switch (selectedCard.type) {
-        case 'transport':
-          setToastMessage(currentPlayer?.state.name + ' décide de prendre le ' + selectedCard.name + ' !');
-          break;
-
-        case 'action':
-          if (selectedCard.name === 'pied') {
-            setToastMessage(
-              currentPlayer?.getState('target').state.name +
-              ' retourne à pied à cause de ' +
-              currentPlayer?.state.name +
-              ' !'
-            );
-          } else if (selectedCard.name === 'moins') {
-            setToastMessage(
-              currentPlayer?.getState('target').state.name +
-              ' recule de ' +
-              selectedCard.name +
-              '  à cause de ' +
-              currentPlayer?.state.name +
-              ' !'
-            );
-          }
-
-        default:
-          break;
-      }
-
-      // remove the selected card from the deck
-      cards.splice(
-        cards.findIndex((card) => card.id === selectedCard.id),
-        1
-      );
-      currentPlayer.setState('cards', cards, true);
-    }
-
-    // change playerPhase
-    switch (playerPhase) {
-      case PLAYER_PHASE.performFirst:
-        setPlayerPhase(PLAYER_PHASE.firstResult, true);
-        break;
-
-      case PLAYER_PHASE.performLast:
-        setPlayerPhase(PLAYER_PHASE.lastResult, true);
-        break;
-
-      default:
-        break;
-    }
-
-    setBin(false);
-  };
-
   useEffect(() => {
     if (!toastMessage) return;
     toast(toastMessage, {
       position: 'top-center',
     });
   }, [toastMessage]);
-
-  const deleteCard = (card) => {
-    if (currentPlayer?.id !== me?.id || cardsDisabled) return;
-    const cards = currentPlayer.getState('cards');
-    cards.splice(
-      cards.findIndex((c) => c.id === card.id),
-      1
-    );
-    currentPlayer.setState('cards', cards, true);
-    setBin(false);
-
-    // change playerPhase
-    switch (playerPhase) {
-      case PLAYER_PHASE.performFirst:
-        setPlayerPhase(PLAYER_PHASE.firstResult, true);
-        break;
-
-      case PLAYER_PHASE.performLast:
-        setPlayerPhase(PLAYER_PHASE.lastResult, true);
-        break;
-
-      default:
-        break;
-    }
-
-    setToastMessage(currentPlayer?.state.name + ' a défaussé la carte ' + currentPlayer?.getState('selectedCard').name);
-  };
 
   // manage disabled states according to the playerPhase
   useEffect(() => {
@@ -215,13 +100,12 @@ function UI({ className, ...props }) {
         setDrawersDisabled(true);
         setBin(false);
     }
-
   }, [getState('playerPhase')]);
 
   return (
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
-        <Toaster />
+        {/* <Toaster /> */}
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
         {turnPhase === TURN_PHASE.playTurn && <p className={styles.timer}>{timer}</p>}
         <p>Je suis {me?.state.name}</p>
@@ -236,46 +120,7 @@ function UI({ className, ...props }) {
 
         <EventPanel />
 
-        <div className={styles.deck}>
-          {me.getState('cards')?.map((card, index) => (
-            <Button
-              disabled={cardsDisabled}
-              className={cardsDisabled ? 'disabled' : ''}
-              onClick={() => {
-                selectCard(card);
-              }}
-              key={index}
-            >
-              {card.id} {card.type} {card.name}
-            </Button>
-          ))}
-        </div>
-
-        <div className={styles.targets}>
-          {currentPlayer === me &&
-            currentPlayer.getState('availableTargets')?.map((player, index) => (
-              <Button
-                key={index}
-                disabled={cardsDisabled}
-                className={cardsDisabled ? 'disabled' : ''}
-                onClick={() => {
-                  selectTarget(player);
-                }}
-              >
-                <span>{player?.id === me.id ? 'Changer' : player?.state.name}</span>
-              </Button>
-            ))}
-          {bin && (
-            <Button
-              className={styles.remove}
-              onClick={() => {
-                deleteCard(currentPlayer?.getState('selectedCard'));
-              }}
-            >
-              <span>Jeter</span>
-            </Button>
-          )}
-        </div>
+        <Cards cardsDisabled={cardsDisabled} />
 
         <div className={styles.drawers}>
           <Button

@@ -43,18 +43,9 @@
     transform: translateY(-50%);
 }
 
-.deck {
-    display: flex;
-    
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
 .targets {
     display: flex;
-    
+
     position: absolute;
     bottom: rem(60);
     left: 50%;

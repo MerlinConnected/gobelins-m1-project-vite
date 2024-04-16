@@ -63,7 +63,6 @@ function Player({ player, index, ...props }) {
       const playerPos = ref.current.position.clone();
 
       curve.current = getCurveFromPlayer(playerPos, newPointsArray);
-
       const geometry = new THREE.TubeGeometry(curve.current, 200, 0.1, 8, false);
       const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0xff0000 }));
       scene.add(mesh);

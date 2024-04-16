@@ -1,0 +1,19 @@
+// .wrapper {
+//     display: flex;
+
+//     position: absolute;
+//     bottom: rem(60);
+//     left: 50%;
+//     transform: translateX(-50%);
+// }
+
+.remove {
+    background-color: red;
+    &:hover {
+        background-color: #ff0000;
+    }
+}
+
+.clicked {
+    background-color: green;
+}
