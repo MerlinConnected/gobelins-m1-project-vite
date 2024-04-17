@@ -4,7 +4,15 @@ import { useMultiplayerState, getState, isHost, insertCoin } from 'playroomkit';
 import { useControls } from 'leva';
 import { usePlayerContext } from './PlayerProvider';
 
-import { GAME_PHASE, TURN_PHASE, PLAYER_PHASE, TIME_START_TURN, TIME_PLAYER_TURN, TIME_END_TURN, MAX_POINTS } from '../utils/constants';
+import {
+  GAME_PHASE,
+  TURN_PHASE,
+  PLAYER_PHASE,
+  TIME_START_TURN,
+  TIME_PLAYER_TURN,
+  TIME_END_TURN,
+  MAX_POINTS,
+} from '../utils/constants';
 import { useState } from 'react';
 import { useEventContext } from './EventProvider';
 
@@ -77,7 +85,7 @@ export function GameStateProvider({ children }) {
 
   const getFinishers = () => {
     return players.filter((player) => player.getState('winner'));
-  }
+  };
 
   const setFinishers = (players, MAX_POINTS) => {
     players.forEach((player) => {
@@ -152,6 +160,21 @@ export function GameStateProvider({ children }) {
     clearInterval(timerInterval.current);
   };
 
+  const handlePlayerPhase = () => {
+    switch (playerPhase) {
+      case PLAYER_PHASE.performFirst:
+        setPlayerPhase(PLAYER_PHASE.firstResult, true);
+        break;
+
+      case PLAYER_PHASE.performLast:
+        setPlayerPhase(PLAYER_PHASE.lastResult, true);
+        break;
+
+      default:
+        break;
+    }
+  };
+
   // is fired when phase or paused changes
   useEffect(() => {
     // console.log('phase', turnPhase);
@@ -162,6 +185,7 @@ export function GameStateProvider({ children }) {
   context = {
     ...gameState,
     getFinishers,
+    handlePlayerPhase,
   };
 
   return <GameStateContext.Provider value={context}>{children}</GameStateContext.Provider>;
