@@ -12,7 +12,7 @@ import { TURN_PHASE } from '../../utils/constants';
 
 import Button from '../button/Button';
 
-function Card({ className, key, id, active, ...props }) {
+function Card({ className, key, id, active, selected, ...props }) {
   const { playerTurn, players } = usePlayerContext();
   const { handlePlayerPhase } = useGameStateContext();
   const me = myPlayer();
@@ -107,23 +107,26 @@ function Card({ className, key, id, active, ...props }) {
   return (
     <div {...props}>
       <Button
-        className={classNames(styles.wrapper, className, { [styles.clicked]: active })}
+        className={classNames(styles.wrapper, className, { [styles.clicked]: active && selected })}
         disabled={!active}
         onClick={() => selectCard()}
       >
         <div>
           {id} {card.type} {card.name}
         </div>
-        <div className={styles.targets}>
-          {card.type && card.type === 'transport' && (
-            <Button disabled={!active} onClick={() => selectTarget(currentPlayer)}>
-              <span>Changer</span>
+
+        {selected && (
+          <div className={styles.targets}>
+            {card.type && card.type === 'transport' && (
+              <Button disabled={!active} onClick={() => selectTarget(currentPlayer)}>
+                <span>Changer</span>
+              </Button>
+            )}
+            <Button className={styles.remove} disabled={!active} onClick={() => deleteCard()}>
+              <span>Jeter</span>
             </Button>
-          )}
-          <Button className={styles.remove} disabled={!active} onClick={() => deleteCard()}>
-            <span>Jeter</span>
-          </Button>
-        </div>
+          </div>
+        )}
       </Button>
     </div>
   );

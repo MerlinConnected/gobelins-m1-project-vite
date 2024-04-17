@@ -10,8 +10,7 @@ import styles from './Cards.module.scss';
 import Card from '../card/Card';
 import { PLAYER_PHASE, TURN_PHASE } from '../../utils/constants';
 
-function Cards({ className, ...props }) {
-  const { cardsDisabled } = props;
+function Cards({ className, cardsDisabled, ...props }) {
   const { turnPhase, playerPhase } = useGameStateContext();
   const me = myPlayer();
 
@@ -20,6 +19,7 @@ function Cards({ className, ...props }) {
   const handleCardSelection = (index) => {
     if (cardsDisabled) return;
     setSelectedCardIndex(index);
+    console.log('card selected');
   };
 
   useEffect(() => {
@@ -37,7 +37,8 @@ function Cards({ className, ...props }) {
         <Card
           key={index}
           id={card.id}
-          active={selectedCardIndex === index}
+          active={!cardsDisabled}
+          selected={selectedCardIndex === index}
           onClick={() => handleCardSelection(index)}
         />
       ))}
