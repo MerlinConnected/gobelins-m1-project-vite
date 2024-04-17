@@ -29,7 +29,6 @@ export function EventProvider({ children }) {
         if (events.length > 0) {
             events.forEach((event) => {
                 const isEventRemoved = probability();
-                console.log('isEventRemoved', isEventRemoved);
                 if (isEventRemoved) {
                     events.splice(events.indexOf(event), 1);
                     setEvents([...events], true);
@@ -40,7 +39,6 @@ export function EventProvider({ children }) {
 
     const addEvent = () => {
         const isEventAdded = probability();
-        console.log('isEventAdded', isEventAdded);
         const newEventDrawer = handleEventDrawer();
 
         if (isEventAdded) {

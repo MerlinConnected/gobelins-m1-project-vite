@@ -25,7 +25,7 @@ function Lobby({ className, ...props }) {
     <div className={classNames(styles.wrapper, className)} {...props}>
       <div>
         <div>
-          <h1>Lobby</h1>
+          <h1>Code de la room : {getRoomCode()}</h1>
           <div>
             {/* <Toaster theme="dark" /> */}
             <Button

@@ -17,7 +17,7 @@ import EventPanel from '../event-panel/EventPanel';
 import Cards from '../../components/cards/Cards';
 
 function UI({ className, ...props }) {
-  const { playerTurn, players, distributeCard } = usePlayerContext();
+  const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
   const { playerPhase, setPlayerPhase, turnPhase, timer, toastMessage, setToastMessage } = useGameStateContext();
   const [cardsDisabled, setCardsDisabled] = useState(true);
   const [drawersDisabled, setDrawersDisabled] = useState(true);

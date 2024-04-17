@@ -18,10 +18,20 @@ function Results({ className, ...props }) {
 
   const finishers = getFinishers();
 
+  players.sort((a, b) => {
+    if (a.getState('winner') === null && b.getState('winner') !== null) {
+      return 1;
+    } else if (a.getState('winner') !== null && b.getState('winner') === null) {
+      return -1;
+    } else {
+      return a.getState('winner') - b.getState('winner');
+    }
+  });
+
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
       <h1>{finishers.includes(me) ? 'Victoire' : 'Défaite'} !</h1>
-      <h2>Résultats</h2>
+      <h2>Classement</h2>
       <div className={styles.results}>
         {players.map((player, index) => (
           <div key={index} className={styles.player}>
