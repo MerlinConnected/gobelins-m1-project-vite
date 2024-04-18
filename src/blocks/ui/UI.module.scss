@@ -14,6 +14,20 @@
     color: white;
 }
 
+.topCenterZone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: rem(12);
+
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: grid(4);
+}
+
 .board {
     display: flex;
     flex-direction: column;

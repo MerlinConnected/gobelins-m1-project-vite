@@ -11,10 +11,12 @@ import styles from './Card.module.scss';
 import { TURN_PHASE } from '../../utils/constants';
 
 import Button from '../button/Button';
+import { useMessageContext } from '../../provider/MessageProvider';
 
-function Card({ className, key, id, active, selected, ...props }) {
-  const { playerTurn, players } = usePlayerContext();
+function Card({ className, id, active, selected, ...props }) {
+  const { playerTurn, players, inGamePlayers } = usePlayerContext();
   const { handlePlayerPhase } = useGameStateContext();
+  const { setMessage } = useMessageContext();
   const me = myPlayer();
 
   const card = me.getState('cards')?.find((card) => card.id === id);
@@ -29,7 +31,7 @@ function Card({ className, key, id, active, selected, ...props }) {
       case 'action':
         const cardCategories = card.category;
 
-        const otherPlayers = players.filter((p) => p.id !== currentPlayer.id);
+        const otherPlayers = inGamePlayers.filter((p) => p.id !== currentPlayer.id);
         const currentTargets = otherPlayers.filter((player) =>
           player.getState('status').category.some((cat) => cardCategories.includes(cat))
         );
@@ -55,26 +57,30 @@ function Card({ className, key, id, active, selected, ...props }) {
     if (selectedCard) {
       switch (selectedCard.type) {
         case 'transport':
-          // setToastMessage(currentPlayer?.state.name + ' décide de prendre le ' + selectedCard.name + ' !');
+          setMessage({ type: 'action', text: currentPlayer?.state.name + ' décide de prendre le ' + selectedCard.name + ' !' });
           break;
 
         case 'action':
           if (selectedCard.name === 'pied') {
-            // setToastMessage(
-            //   currentPlayer?.getState('target').state.name +
-            //     ' retourne à pied à cause de ' +
-            //     currentPlayer?.state.name +
-            //     ' !'
-            // );
+            setMessage({
+              type: 'action', text:
+                currentPlayer?.getState('target').state.name +
+                ' retourne à pied à cause de ' +
+                currentPlayer?.state.name +
+                ' !'
+            }
+            );
           } else if (selectedCard.name === 'moins') {
-            // setToastMessage(
-            //   currentPlayer?.getState('target').state.name +
-            //     ' recule de ' +
-            //     selectedCard.name +
-            //     '  à cause de ' +
-            //     currentPlayer?.state.name +
-            //     ' !'
-            // );
+            setMessage({
+              type: 'action', text:
+                currentPlayer?.getState('target').state.name +
+                ' recule de ' +
+                selectedCard.name +
+                '  à cause de ' +
+                currentPlayer?.state.name +
+                ' !'
+            }
+            );
           }
 
         default:
@@ -100,11 +106,13 @@ function Card({ className, key, id, active, selected, ...props }) {
       1
     );
     currentPlayer.setState('cards', cards, true);
+    setMessage({ type: 'info', text: currentPlayer?.state.name + 'a jeté une carte' });
 
     handlePlayerPhase();
   };
 
   return (
+    card &&
     <div {...props}>
       <Button
         className={classNames(styles.wrapper, className, { [styles.clicked]: active && selected })}
@@ -122,6 +130,22 @@ function Card({ className, key, id, active, selected, ...props }) {
                 <span>Changer</span>
               </Button>
             )}
+
+            {card.type === 'action' && currentPlayer === me &&
+              currentPlayer.getState('availableTargets')?.map((player, index) => (
+                <Button
+                  className={styles.target}
+                  key={index}
+                  disabled={!active}
+                  onClick={() => {
+                    selectTarget(player);
+                  }}
+                >
+                  <span>{player?.state.name}</span>
+                </Button>
+              ))
+            }
+
             <Button className={styles.remove} disabled={!active} onClick={() => deleteCard()}>
               <span>Jeter</span>
             </Button>
