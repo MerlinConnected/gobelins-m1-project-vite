@@ -12,6 +12,8 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
+        @import "${pathSrc}/styles/libs/_font-name.module.scss";\n
+        @import "${pathSrc}/styles/fonts/_font.scss";\n
         @import "${pathSrc}/styles/libs/_variables.module.scss";\n
         @import "${pathSrc}/styles/libs/_functions.module.scss";\n
         @import "${pathSrc}/styles/libs/_rem.module.scss";\n
