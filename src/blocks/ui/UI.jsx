@@ -1,6 +1,8 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 
+import { AnimatePresence } from "framer-motion";
+
 import { useGameStateContext } from '../../provider/GameStateProvider';
 import { usePlayerContext } from '../../provider/PlayerProvider';
 
@@ -12,13 +14,19 @@ import classNames from 'classnames';
 import Button from '../../components/button/Button';
 import styles from './UI.module.scss';
 
-import { Toaster, toast } from 'sonner';
 import EventPanel from '../event-panel/EventPanel';
 import Cards from '../../components/cards/Cards';
+import Message from '../message/Message';
+import Feedback from '../feedback/Feedback';
+
+import { useMessageContext } from '../../provider/MessageProvider';
+import StrokeText from '../../components/stroke-text/StrokeText';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
-  const { playerPhase, setPlayerPhase, turnPhase, timer, toastMessage, setToastMessage } = useGameStateContext();
+  const { playerPhase, setPlayerPhase, turnPhase, timer } = useGameStateContext();
+  const { setMessage } = useMessageContext();
+  const { message } = useMessageContext();
   const [cardsDisabled, setCardsDisabled] = useState(true);
   const [drawersDisabled, setDrawersDisabled] = useState(true);
   const [bin, setBin] = useState(false);
@@ -37,13 +45,6 @@ function UI({ className, ...props }) {
     }
   };
 
-  useEffect(() => {
-    if (!toastMessage) return;
-    toast(toastMessage, {
-      position: 'top-center',
-    });
-  }, [toastMessage]);
-
   // manage disabled states according to the playerPhase
   useEffect(() => {
     switch (playerPhase) {
@@ -51,7 +52,7 @@ function UI({ className, ...props }) {
         if (currentPlayer?.id === me?.id && currentPlayer?.getState('cards')?.length < 4) {
           setCardsDisabled(true);
           setDrawersDisabled(false);
-          setToastMessage('Au tour de ' + currentPlayer.state.name);
+          setMessage({ type: 'info', text: 'Au tour de ' + currentPlayer.state.name });
         }
         break;
 
@@ -105,20 +106,29 @@ function UI({ className, ...props }) {
   return (
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
-        {/* <Toaster /> */}
+
+        <div className={styles.topCenterZone}>
+          <Message />
+          <EventPanel />
+        </div>
+
+        <AnimatePresence>
+          {(message.type === 'action' && (getState('playerPhase') === PLAYER_PHASE.firstResult || getState('playerPhase') === PLAYER_PHASE.lastResult)) && <Feedback />}
+        </AnimatePresence>
+
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
         {turnPhase === TURN_PHASE.playTurn && <p className={styles.timer}>{timer}</p>}
         <p>Je suis {me?.state.name}</p>
         <div className={styles.board}>
           {players.map((player, index) => (
             <div key={index} className={styles.board__player}>
-              <p>{player?.state.name}</p>
+              <StrokeText regular color={player.state?.profile?.color}>
+                {player?.state.name}
+              </StrokeText>
               <p>{player.getState('points')} points</p>
             </div>
           ))}
         </div>
-
-        <EventPanel />
 
         <Cards cardsDisabled={cardsDisabled} />
 

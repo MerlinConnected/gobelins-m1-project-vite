@@ -1,0 +1,41 @@
+.wrapper {
+    font-family: $astounder-lc-font;
+    color: var(--color-content-main);
+    font-size: rem(36);
+    text-shadow: var(--white-stroke);
+    position: relative;
+    white-space: nowrap;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 80%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        box-shadow: var(--text-shadow);
+    }
+}
+
+.regular {
+    font-size: rem(24);
+    text-shadow: var(--white-stroke-regular);
+    &::before {
+        box-shadow: var(--text-shadow-regular);
+    }
+}
+
+.medium {
+    font-size: rem(36);
+    &::before {
+        box-shadow: var(--text-shadow-medium);
+    }
+}
+
+.large {
+    font-size: rem(48);
+    &::before {
+        box-shadow: var(--text-shadow-large);
+    }
+}

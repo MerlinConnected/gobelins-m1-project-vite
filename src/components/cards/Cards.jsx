@@ -19,7 +19,6 @@ function Cards({ className, cardsDisabled, ...props }) {
   const handleCardSelection = (index) => {
     if (cardsDisabled) return;
     setSelectedCardIndex(index);
-    console.log('card selected');
   };
 
   useEffect(() => {

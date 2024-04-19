@@ -29,7 +29,7 @@ export default function Billboard({ player, className, ...props }) {
   return (
     <>
       <group ref={planeRef} {...props}>
-        <Html wrapperClass={classNames(styles.wrapper, className)} center>
+        <Html wrapperClass={classNames(styles.wrapper, className)} center zIndexRange={[0, 0]}>
           <p>{state?.name}</p>
           <p>{state?.points} Points</p>
           <p>{state?.status?.name}</p>

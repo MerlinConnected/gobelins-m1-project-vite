@@ -4,11 +4,12 @@ import { PlayerProvider } from './PlayerProvider';
 import { GameStateProvider } from './GameStateProvider';
 import { InitProvider } from './InitProvider';
 import { EventProvider } from './EventProvider';
+import { MessageProvider } from './MessageProvider';
 
 export const DaronContext = createContext();
 
 export const DaronProvider = ({ children }) => {
-  const providers = [PlayerProvider, EventProvider, GameStateProvider, InitProvider].reverse();
+  const providers = [MessageProvider, PlayerProvider, EventProvider, GameStateProvider, InitProvider].reverse();
 
   const initialValue = {};
 

@@ -56,9 +56,7 @@ function Player({ player, index, ...props }) {
     setPrevPoints(currentPoints);
 
     if (tilesToMove > 0 && currentPoints < Path[index].length) {
-      console.log('plus');
       const newPointsArray = newArr.slice(prevPoints, prevPoints + tilesToMove);
-      // console.log(newPointsArray);
 
       const playerPos = ref.current.position.clone();
 
