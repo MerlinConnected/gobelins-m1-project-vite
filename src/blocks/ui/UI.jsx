@@ -20,6 +20,7 @@ import Message from '../message/Message';
 import Feedback from '../feedback/Feedback';
 
 import { useMessageContext } from '../../provider/MessageProvider';
+import StrokeText from '../../components/stroke-text/StrokeText';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
@@ -121,7 +122,9 @@ function UI({ className, ...props }) {
         <div className={styles.board}>
           {players.map((player, index) => (
             <div key={index} className={styles.board__player}>
-              <p>{player?.state.name}</p>
+              <StrokeText regular color={player.state?.profile?.color}>
+                {player?.state.name}
+              </StrokeText>
               <p>{player.getState('points')} points</p>
             </div>
           ))}

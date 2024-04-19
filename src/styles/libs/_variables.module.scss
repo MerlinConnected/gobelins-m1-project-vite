@@ -33,6 +33,28 @@
     --box-shadow-right: inset -1px 1px 1px 0 var(--color-box-shadow);
     --box-shadow-left: inset 1px 1px 1px 0 var(--color-box-shadow);
 
+    --white-stroke: -3px -3px 0 var(--color-light),
+    0   -3px 0 var(--color-light),
+    3px -3px 0 var(--color-light),
+    3px  0   0 var(--color-light),
+    3px  3px 0 var(--color-light),
+    0    3px 0 var(--color-light),
+    -3px  3px 0 var(--color-light),
+    -3px  0   0 var(--color-light);
+    --white-stroke-regular: -2px -2px 0 var(--color-light),
+    0   -2px 0 var(--color-light),
+    2px -2px 0 var(--color-light),
+    2px  0   0 var(--color-light),
+    2px  2px 0 var(--color-light),
+    0    2px 0 var(--color-light),
+    -2px  2px 0 var(--color-light),
+    -2px  0   0 var(--color-light);
+
+    --text-shadow: 2px 4px 8px 5px rgba(0, 0, 0, 0.8);
+    --text-shadow-regular: 2px 4px 6px 6px rgba(0, 0, 0, 0.2);
+    --text-shadow-medium: 2px 4px 8px 10px rgba(0, 0, 0, 0.2);
+    --text-shadow-large: 2px 4px 8px 10px rgba(0, 0, 0, 0.2);
+
     /* SHORTCUTS */
     --color-background: var(--color-bg-body);
     --color-main: var(--color-content-main);

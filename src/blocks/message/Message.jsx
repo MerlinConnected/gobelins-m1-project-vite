@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import styles from './Message.module.scss';
 import { useMessageContext } from '../../provider/MessageProvider';
+import StrokeText from '../../components/stroke-text/StrokeText';
 
 function Message({ className, ...props }) {
     const { message } = useMessageContext();
@@ -27,7 +28,9 @@ function Message({ className, ...props }) {
                     scale: 0.6,
                 }}
             >
-                {message.text}
+                <StrokeText large color='var(--color-content-main)'>
+                    {message.text}
+                </StrokeText>
             </motion.p>
         </div>
 

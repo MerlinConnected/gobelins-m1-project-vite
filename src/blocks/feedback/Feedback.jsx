@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 import styles from './Feedback.module.scss';
 import { usePlayerContext } from '../../provider/PlayerProvider';
+import StrokeText from '../../components/stroke-text/StrokeText';
 
 function Feedback({ className, ...props }) {
     const { playerTurn, players } = usePlayerContext();
@@ -31,12 +32,16 @@ function Feedback({ className, ...props }) {
                 }}
             >
                 <div className={styles.selectedCard}>
-                    <p>{selectedCard.type} {selectedCard.name}</p>
+                    <StrokeText regular color='var(--color-content-main)'>
+                        {selectedCard.type} {selectedCard.name}
+                    </StrokeText>
                 </div>
 
                 {selectedCard.type === 'action' && (
                     <div className={styles.target}>
-                        <p>{currentPlayer?.getState('target').state.name}</p>
+                        <StrokeText regular color={currentPlayer?.getState('target').state?.profile?.color}>
+                            {currentPlayer?.getState('target').state.name}
+                        </StrokeText>
                     </div>
                 )}
             </motion.div>
