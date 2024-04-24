@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 import { myPlayer, getState } from 'playroomkit';
 import { usePlayerContext } from '../../provider/PlayerProvider';
@@ -11,13 +12,18 @@ import styles from './Card.module.scss';
 import { TURN_PHASE } from '../../utils/constants';
 
 import Button from '../button/Button';
+import { AnimatePresence } from 'framer-motion';
+import { cardAppear } from '../../core/animation';
+import CardLayers from '../card-layers/CardLayers';
+import SpeedIndicator from '../speed-indicator/SpeedIndicator';
+import { useEffect } from 'react';
+import { useMemo } from 'react';
 
-function Card({ className, key, id, active, selected, ...props }) {
+function Card({ className, card, active, selected, ...props }) {
+  const bgColorRef = React.useRef([]);
   const { playerTurn, players } = usePlayerContext();
   const { handlePlayerPhase } = useGameStateContext();
   const me = myPlayer();
-
-  const card = me.getState('cards')?.find((card) => card.id === id);
 
   const currentPlayer = players[playerTurn];
 
@@ -83,7 +89,7 @@ function Card({ className, key, id, active, selected, ...props }) {
 
       // remove the selected card from the deck
       cards.splice(
-        cards.findIndex((card) => card.id === selectedCard.id),
+        cards.findIndex((card) => card.uuid === selectedCard.uuid),
         1
       );
       currentPlayer.setState('cards', cards, true);
@@ -96,7 +102,7 @@ function Card({ className, key, id, active, selected, ...props }) {
     if (currentPlayer?.id !== me?.id || !active) return;
     const cards = currentPlayer.getState('cards');
     cards.splice(
-      cards.findIndex((c) => c.id === card.id),
+      cards.findIndex((c) => c.uuid === card.uuid),
       1
     );
     currentPlayer.setState('cards', cards, true);
@@ -104,31 +110,74 @@ function Card({ className, key, id, active, selected, ...props }) {
     handlePlayerPhase();
   };
 
-  return (
-    <div {...props}>
-      <Button
-        className={classNames(styles.wrapper, className, { [styles.clicked]: active && selected })}
-        disabled={!active}
-        onClick={() => selectCard()}
-      >
-        <div>
-          {id} {card.type} {card.name}
-        </div>
+  const bgColor = useMemo(() => {
+    let color = null;
 
-        {selected && (
-          <div className={styles.targets}>
-            {card.type && card.type === 'transport' && (
-              <Button disabled={!active} onClick={() => selectTarget(currentPlayer)}>
-                <span>Changer</span>
-              </Button>
-            )}
-            <Button className={styles.remove} disabled={!active} onClick={() => deleteCard()}>
-              <span>Jeter</span>
-            </Button>
+    if (card.impact > 1) {
+      color = `var(--color-background-transport-bg-${card.impact})`;
+    } else if (card.impact === 1) {
+      color = `var(--color-background-action-bg-${card.impact})`;
+    } else if (card.impact < 0) {
+      color = `var(--color-background-action-bg--minus-${Math.abs(card.impact)})`;
+    }
+
+    return color;
+  }, []);
+
+  const patternCard = useMemo(() => {
+    let pattern = null;
+
+    if (card.impact > 1) {
+      pattern = 'pattern2';
+    } else {
+      pattern = 'pattern3';
+    }
+
+    return pattern;
+  }, []);
+
+  return (
+    card && (
+      <motion.div
+        {...cardAppear}
+        className={classNames(styles.wrapper, className)}
+        style={{ '--background': `${bgColor}` }}
+        {...props}
+      >
+        <div className={styles.card}>
+          <div className={styles.background} />
+          <div className={styles.layers}>
+            <CardLayers className={styles.layer} id={patternCard} />
+            <CardLayers className={styles.layer} id="layer1" />
           </div>
-        )}
-      </Button>
-    </div>
+
+          <SpeedIndicator className={styles.speedIndicator} impact={card.impact} />
+
+          <Button
+            className={classNames(styles.card, { [styles.clicked]: active && selected })}
+            disabled={!active}
+            onClick={() => selectCard()}
+          >
+            <div>
+              {card.id} {card.type} {card.name}
+            </div>
+
+            {selected && (
+              <div className={styles.targets}>
+                {card.type && card.type === 'transport' && (
+                  <Button disabled={!active} onClick={() => selectTarget(currentPlayer)}>
+                    <span>Changer</span>
+                  </Button>
+                )}
+                <Button className={styles.remove} disabled={!active} onClick={() => deleteCard()}>
+                  <span>Jeter</span>
+                </Button>
+              </div>
+            )}
+          </Button>
+        </div>
+      </motion.div>
+    )
   );
 }
 

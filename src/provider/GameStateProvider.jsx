@@ -109,7 +109,7 @@ export function GameStateProvider({ children }) {
       default:
         break;
     }
-  }
+  };
 
   const getFinishers = () => {
     const finishers = players.filter((player) => player.getState('qualified') === true);
@@ -123,7 +123,6 @@ export function GameStateProvider({ children }) {
   const phaseEnd = () => {
     let newTime = 0;
     switch (getState('turnPhase')) {
-
       case TURN_PHASE.startTurn:
         let newPlayerTurn = (getState('playerTurn') + 1) % players.length;
         while (!inGamePlayers.includes(players[newPlayerTurn])) {
