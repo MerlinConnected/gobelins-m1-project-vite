@@ -17,7 +17,6 @@ export function InitProvider({ children }) {
 
   const startGame = () => {
     if (isHost()) {
-      setTimer(TIME_START_GAME, true);
       const randomValue = Math.floor(Math.random() * 4);
       setPlayerTurn(randomValue, true);
 

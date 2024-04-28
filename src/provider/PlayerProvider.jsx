@@ -113,7 +113,7 @@ export function PlayerProvider({ children }) {
 
     setBlockedPlayers();
 
-    currentPlayer.setState('selectedCard', '', true);
+    currentPlayer.setState('selectedCard', null, true);
     currentPlayer.setState('target', null, true);
     currentPlayer.setState('availableTargets', [], true);
     currentPlayer.setState('decisions', [], true);

@@ -31,7 +31,6 @@ export function GameStateProvider({ children }) {
   const [globalPhase, setGlobalPhase] = useMultiplayerState('globalPhase', GAME_PHASE.lobby);
   const [turnPhase, setTurnPhase] = useMultiplayerState('turnPhase', null);
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
-  const [toastMessage, setToastMessage] = useMultiplayerState('toastMessage', null);
 
   const avatars = [
     'images/profiles/pp1.webp',
@@ -79,8 +78,6 @@ export function GameStateProvider({ children }) {
     playerPhase,
     setPlayerPhase,
     handleInsertCoin,
-    toastMessage,
-    setToastMessage,
   };
 
   const setFinishers = () => {
