@@ -31,7 +31,6 @@ export function GameStateProvider({ children }) {
   const [globalPhase, setGlobalPhase] = useMultiplayerState('globalPhase', GAME_PHASE.lobby);
   const [turnPhase, setTurnPhase] = useMultiplayerState('turnPhase', null);
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
-  const [toastMessage, setToastMessage] = useMultiplayerState('toastMessage', null);
 
   const avatars = [
     'images/profiles/pp1.webp',
@@ -79,8 +78,6 @@ export function GameStateProvider({ children }) {
     playerPhase,
     setPlayerPhase,
     handleInsertCoin,
-    toastMessage,
-    setToastMessage,
   };
 
   const setFinishers = () => {
@@ -109,7 +106,7 @@ export function GameStateProvider({ children }) {
       default:
         break;
     }
-  }
+  };
 
   const getFinishers = () => {
     const finishers = players.filter((player) => player.getState('qualified') === true);
@@ -123,7 +120,6 @@ export function GameStateProvider({ children }) {
   const phaseEnd = () => {
     let newTime = 0;
     switch (getState('turnPhase')) {
-
       case TURN_PHASE.startTurn:
         let newPlayerTurn = (getState('playerTurn') + 1) % players.length;
         while (!inGamePlayers.includes(players[newPlayerTurn])) {
