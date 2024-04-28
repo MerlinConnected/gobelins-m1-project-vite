@@ -9,12 +9,16 @@ import styles from './Cards.module.scss';
 
 import Card from '../card/Card';
 import { PLAYER_PHASE, TURN_PHASE } from '../../utils/constants';
+import { AnimatePresence } from 'framer-motion';
+import { baseVariants } from '../../core/animation';
+// import Path from '../icon/Path';
 
 function Cards({ className, cardsDisabled, ...props }) {
   const { turnPhase, playerPhase } = useGameStateContext();
   const me = myPlayer();
 
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [cards, setCards] = useState(me.getState('cards'));
 
   const handleCardSelection = (index) => {
     if (cardsDisabled) return;
@@ -30,17 +34,25 @@ function Cards({ className, cardsDisabled, ...props }) {
       setSelectedCardIndex(null);
   }, [turnPhase, playerPhase]);
 
+  // console.log(me.state.cards?.map((card) => card.uuid));
+
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
-      {me.getState('cards')?.map((card, index) => (
-        <Card
-          key={index}
-          id={card.id}
-          active={!cardsDisabled}
-          selected={selectedCardIndex === index}
-          onClick={() => handleCardSelection(index)}
-        />
-      ))}
+      <AnimatePresence>
+        {me.state.cards?.map((card, index) => (
+          <Card
+            {...baseVariants}
+            layout="position"
+            key={card.uuid}
+            card={card}
+            active={!cardsDisabled}
+            selected={selectedCardIndex === index}
+            onClick={() => handleCardSelection(index)}
+          />
+        ))}
+      </AnimatePresence>
+
+      {/* <Path className={styles.path} id="arrow" /> */}
     </div>
   );
 }

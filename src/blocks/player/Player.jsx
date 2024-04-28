@@ -32,7 +32,7 @@ function Player({ player, index, ...props }) {
 
   let curve = useRef(null);
 
-  const newArr = Path[index].map((p) => p.clone());
+  const newArr = Path[index]?.map((p) => p.clone());
 
   useEffect(() => {
     if (me?.id === id) {
@@ -55,7 +55,7 @@ function Player({ player, index, ...props }) {
     let tilesToMove = currentPoints - prevPoints;
     setPrevPoints(currentPoints);
 
-    if (tilesToMove > 0 && currentPoints < Path[index].length) {
+    if (tilesToMove > 0 && currentPoints < Path[index]?.length) {
       const newPointsArray = newArr.slice(prevPoints, prevPoints + tilesToMove);
 
       const playerPos = ref.current.position.clone();
