@@ -29,11 +29,11 @@ export const CATEGORY = {
 };
 
 export const TRANSPORT = [
-  { name: 'velo', type: 'transport', impact: 2, category: [CATEGORY.deuxRoues] },
-  { name: 'voiture', type: 'transport', impact: 3, category: [CATEGORY.route, CATEGORY.moteur] },
-  { name: 'tramway', type: 'transport', impact: 3, category: [CATEGORY.rails, CATEGORY.commun] },
-  { name: 'metro', type: 'transport', impact: 4, category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur] },
-  { name: 'moto', type: 'transport', impact: 4, category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur] },
+  { name: 'velo', type: 'transport', impact: 2, category: [CATEGORY.deuxRoues], icon: '/images/icons/transport/velo.svg' },
+  { name: 'voiture', type: 'transport', impact: 3, category: [CATEGORY.route, CATEGORY.moteur], icon: '/images/icons/transport/voiture.svg' },
+  { name: 'tramway', type: 'transport', impact: 3, category: [CATEGORY.rails, CATEGORY.commun], icon: '/images/icons/transport/tramway.svg' },
+  { name: 'metro', type: 'transport', impact: 4, category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur], icon: '/images/icons/transport/metro.svg' },
+  { name: 'moto', type: 'transport', impact: 4, category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur], icon: '/images/icons/transport/moto.svg' },
 ];
 
 export const TIME_START_GAME = 1;
@@ -132,42 +132,42 @@ export const piedTransportCard = {
 export const initialEventDrawer = [
   {
     id: transportDrawer.length + actionDrawer.length + 1,
-    name: 'accident',
+    name: 'Averses',
     type: 'event',
     impact: 0,
     category: CATEGORY.deuxRoues,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 2,
-    name: 'grève',
+    name: 'Grève',
     type: 'event',
     impact: 0,
     category: CATEGORY.route,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 3,
-    name: 'travaux',
+    name: 'Panne de moteur',
     type: 'event',
     impact: 0,
     category: CATEGORY.moteur,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 4,
-    name: 'panne',
+    name: 'Travaux sur les rails',
     type: 'event',
     impact: 0,
     category: CATEGORY.rails,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 5,
-    name: 'grève',
+    name: 'Inondation',
     type: 'event',
     impact: 0,
     category: CATEGORY.interieur,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 6,
-    name: 'accident',
+    name: 'Retards dans les transports',
     type: 'event',
     impact: 0,
     category: CATEGORY.commun,

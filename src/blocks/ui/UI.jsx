@@ -21,6 +21,7 @@ import Feedback from '../feedback/Feedback';
 
 import { useMessageContext } from '../../provider/MessageProvider';
 import StrokeText from '../../components/stroke-text/StrokeText';
+import EventRecap from '../event-recap/EventRecap';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
@@ -115,6 +116,10 @@ function UI({ className, ...props }) {
           {message.type === 'action' &&
             (getState('playerPhase') === PLAYER_PHASE.firstResult ||
               getState('playerPhase') === PLAYER_PHASE.lastResult) && <Feedback />}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {(getState('turnPhase') === TURN_PHASE.startTurn) && <EventRecap />}
         </AnimatePresence>
 
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
