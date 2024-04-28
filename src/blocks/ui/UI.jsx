@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from 'framer-motion';
 
 import { useGameStateContext } from '../../provider/GameStateProvider';
 import { usePlayerContext } from '../../provider/PlayerProvider';
@@ -107,14 +107,15 @@ function UI({ className, ...props }) {
   return (
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
-
         <div className={styles.topCenterZone}>
           <Message />
           <EventPanel />
         </div>
 
         <AnimatePresence>
-          {(message.type === 'action' && (getState('playerPhase') === PLAYER_PHASE.firstResult || getState('playerPhase') === PLAYER_PHASE.lastResult)) && <Feedback />}
+          {message.type === 'action' &&
+            (getState('playerPhase') === PLAYER_PHASE.firstResult ||
+              getState('playerPhase') === PLAYER_PHASE.lastResult) && <Feedback />}
         </AnimatePresence>
 
         <AnimatePresence>

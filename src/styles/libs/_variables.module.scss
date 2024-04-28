@@ -28,8 +28,8 @@
     --color-dark: #000;
     --color-light: #fff;
 
-    --color-box-shadow: rgb(0 0 0 / 10%);
-    --box-shadow: inset 0px 1px 1px 0 var(--color-box-shadow);
+    --color-box-shadow: rgb(0 0 0 / 8%);
+    --box-shadow: 2px 4px 1px 0 var(--color-box-shadow);
     --box-shadow-right: inset -1px 1px 1px 0 var(--color-box-shadow);
     --box-shadow-left: inset 1px 1px 1px 0 var(--color-box-shadow);
 
@@ -54,6 +54,22 @@
     --text-shadow-regular: 2px 4px 6px 6px rgba(0, 0, 0, 0.2);
     --text-shadow-medium: 2px 4px 8px 10px rgba(0, 0, 0, 0.2);
     --text-shadow-large: 2px 4px 8px 10px rgba(0, 0, 0, 0.2);
+
+    /* TRANSPORT COLORS */
+    --color-background-transport-main-2: #13db7e;
+    --color-background-transport-main-3: #0d6eff;
+    --color-background-transport-main-4: #c70dff;
+    --color-background-transport-bg-2: #d4fce9;
+    --color-background-transport-bg-3: #e3eeff;
+    --color-background-transport-bg-4: #f8e3ff;
+
+    /* ACTION COLORS */
+    --color-background-action-main-1: #ff0d47;
+    --color-background-action-main--minus-1: #ffae0d;
+    --color-background-action-main--minus-2: #ff5e0d;
+    --color-background-action-bg-1: #ffe2e9;
+    --color-background-action-bg--minus-1: #fff5e2;
+    --color-background-action-bg--minus-2: #ffece2;
 
     /* SHORTCUTS */
     --color-background: var(--color-bg-body);
