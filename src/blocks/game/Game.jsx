@@ -30,7 +30,7 @@ const Game = () => {
       <Canvas className="canvas" shadows>
         <color attach="background" args={['#f9efc7']} />
         <Suspense fallback={null}>
-          <Paths players={players} amount={16} />
+          <Paths players={players} amount={13} />
 
           <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
             <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
@@ -40,7 +40,7 @@ const Game = () => {
           <Environment preset="city" />
           {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
           <Grid
-            args={[10, 10]}
+            args={[5, 5]}
             cellSize={0.5}
             cellThickness={1}
             cellColor={'#5c5c5c'}

@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useRef, useState, forwardRef } from 'react';
-import { useGLTF } from '@react-three/drei';
-import { useFrame, useGraph } from '@react-three/fiber';
+import React, { useMemo, forwardRef } from 'react';
+
+import { useGraph } from '@react-three/fiber';
 import { SkeletonUtils } from 'three-stdlib';
+import { useGLTF } from '@react-three/drei';
 
 export const Model = forwardRef((props, ref) => {
   const { scene, materials } = useGLTF('/models/car_low_poly.glb');
@@ -10,7 +11,7 @@ export const Model = forwardRef((props, ref) => {
   const { nodes } = useGraph(clone);
 
   return (
-    <group {...props} ref={ref} dispose={null} scale={[1, 1, -1]}>
+    <group {...props} ref={ref} dispose={null} scale={[0.3, 0.3, -0.3]}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={[0.01, 0.01, 0.01]}>
         <mesh castShadow receiveShadow geometry={nodes.Object_15.geometry}>
           <meshPhysicalMaterial color={props.color} />
