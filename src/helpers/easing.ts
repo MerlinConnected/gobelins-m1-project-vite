@@ -1,5 +1,3 @@
-import mapValues from 'lodash/mapValues';
-
 const linear = [0, 0, 1, 1] as any;
 
 const principle = [0.25, 0.1, 0.25, 1] as any;
@@ -68,7 +66,4 @@ const bezier = {
   backEaseInOut,
 };
 
-const easing = mapValues(bezier, (array) => `cubic-bezier(${array.join(',')})`);
-
-export default easing;
 export { bezier };
