@@ -8,7 +8,6 @@ let context = {};
 const PlayerContext = React.createContext(context);
 
 export function PlayerProvider({ children }) {
-
   const [nameEditing, setNameEditing] = useState(false);
   const [turnNumber, setTurnNumber] = useState(1);
   const [playerTimeouts, setPlayerTimeouts] = useState([]);
@@ -56,7 +55,7 @@ export function PlayerProvider({ children }) {
     if (currentEvents.length > 0) {
       inGamePlayers.forEach((player) => {
         const playerCategories = player.getState('status').category;
-        if (currentEvents.some(event => playerCategories.includes(event.category))) {
+        if (currentEvents.some((event) => playerCategories.includes(event.category))) {
           player.setState('blocked', true, true);
         } else {
           player.setState('blocked', false, true);
@@ -67,7 +66,7 @@ export function PlayerProvider({ children }) {
         player.setState('blocked', false, true);
       });
     }
-  }
+  };
 
   const performPlayerAction = () => {
     const currentPlayer = players[playerTurn];
@@ -103,7 +102,7 @@ export function PlayerProvider({ children }) {
       }
     }
 
-    setBlockedPlayers();
+    // setBlockedPlayers();
 
     currentPlayer.setState('selectedCard', '', true);
     currentPlayer.setState('target', null, true);
@@ -113,8 +112,7 @@ export function PlayerProvider({ children }) {
 
   // verifier toutes les conditions de chaque player et faire les avancées en fonction de l'état de chaque player
   const move = () => {
-
-    playerTimeouts.forEach(timeout => clearTimeout(timeout));
+    playerTimeouts.forEach((timeout) => clearTimeout(timeout));
     setPlayerTimeouts([]);
 
     const newTimeouts = [];
@@ -125,7 +123,8 @@ export function PlayerProvider({ children }) {
 
       const timeout = setTimeout(() => {
         if (p.getState('minus') !== 0) {
-          const tempPoints = p.getState('points') + p.getState('minus') > 0 ? p.getState('points') + p.getState('minus') : 0;
+          const tempPoints =
+            p.getState('points') + p.getState('minus') > 0 ? p.getState('points') + p.getState('minus') : 0;
           p.setState('points', tempPoints, true);
           p.setState('minus', 0, true);
         } else {
@@ -145,7 +144,7 @@ export function PlayerProvider({ children }) {
     setPlayerTimeouts(newTimeouts);
 
     setTurnNumber(turnNumber + 1);
-  }
+  };
 
   const useScoreboard = players
     .map((player) => {

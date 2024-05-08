@@ -8,32 +8,9 @@ import { animate } from 'framer-motion';
 
 import Billboard from '../../components/billboard/Billboard';
 import Path from '../../utils/paths';
-import { tilesPath } from '../../utils/tilesPath';
 import getCurveFromPlayer from '../../utils/getCurveFromPlayer';
 
 import { Model } from '../../models/car';
-
-import { CornerTiles, StraightTiles } from '../tiles/Tiles';
-
-function calculateRange(dataArray, score) {
-  if (dataArray.length === 0) {
-    return 0;
-  }
-
-  let lastIndex = 0;
-  for (let i = 0; i < dataArray.length; i++) {
-    if (dataArray[i].index <= score) {
-      lastIndex = i;
-    }
-  }
-
-  if (lastIndex === 0 && dataArray[0].index > score) {
-    return 0;
-  }
-
-  const range = lastIndex + 1;
-  return range;
-}
 
 function Player({ player, index, ...props }) {
   const { position, rotationY } = props;
@@ -47,9 +24,6 @@ function Player({ player, index, ...props }) {
 
   const me = myPlayer();
   const [points] = usePlayerState(player, 'points');
-
-  const cornerRange = calculateRange(tilesPath.corner, points);
-  const straightRange = calculateRange(tilesPath.straight, points);
 
   const cameraPos = useMemo(() => {
     const pos = new THREE.Vector3(position[0], position[1], position[2]);
@@ -143,8 +117,6 @@ function Player({ player, index, ...props }) {
         <Model color={state?.profile?.color} />
       </group>
       {me?.id === id && <PerspectiveCamera ref={camRef} makeDefault />}
-      <CornerTiles data={tilesPath.corner} range={cornerRange} />
-      <StraightTiles data={tilesPath.straight} range={straightRange} />
     </>
   );
 }

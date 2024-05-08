@@ -104,8 +104,8 @@ function UI({ className, ...props }) {
 
   return (
     <>
-      <div className={classNames(styles.wrapper, className)} {...props}>
-        {/* <Toaster /> */}
+      {/* <div className={classNames(styles.wrapper, className)} {...props}>
+        <Toaster />
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
         {turnPhase === TURN_PHASE.playTurn && <p className={styles.timer}>{timer}</p>}
         <p>Je suis {me?.state.name}</p>
@@ -142,7 +142,7 @@ function UI({ className, ...props }) {
             Piocher carte Action
           </Button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
