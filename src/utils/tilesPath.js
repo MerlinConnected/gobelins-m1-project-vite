@@ -90,12 +90,17 @@ const tilesPath = {
     {
       position: [2, 0, 7.5],
       rotation: [0, Math.PI / 2, 0],
-      index: 8,
+      index: 12,
     },
     {
       position: [2, 0, 4.5],
       rotation: [0, Math.PI, 0],
-      index: 11,
+      index: 15,
+    },
+    {
+      position: [0, 0, 4.5],
+      rotation: [0, 0, 0],
+      index: 17,
     },
   ],
 };
