@@ -8,7 +8,6 @@ import { animate } from 'framer-motion';
 
 import Billboard from '../../components/billboard/Billboard';
 import Path from '../../utils/paths';
-import getCurveFromPlayer from '../../utils/getCurveFromPlayer';
 
 import { Model } from '../../models/car';
 
@@ -18,9 +17,7 @@ function Player({ player, index, ...props }) {
 
   const ref = useRef();
   const camRef = useRef();
-  const progress = useRef(0);
   const [prevPoints, setPrevPoints] = useState(0);
-  const { scene } = useThree();
 
   const me = myPlayer();
   const [points] = usePlayerState(player, 'points');
@@ -30,9 +27,14 @@ function Player({ player, index, ...props }) {
     return pos;
   }, [player]);
 
-  let curve = useRef(null);
+  const path = useMemo(() => Path[index], [index]);
 
-  const newArr = Path[index].map((p) => p.clone());
+  const targetIndex = useMemo(() => {
+    let targetIndex = Math.min(points, path.length - 1);
+    return targetIndex;
+  }, [points, path]);
+
+  const targetPosition = useMemo(() => path[targetIndex], [path, targetIndex]);
 
   useEffect(() => {
     if (me?.id === id) {
@@ -40,9 +42,7 @@ function Player({ player, index, ...props }) {
       camRef.current.position.copy(cameraPos);
 
       let tempVec = new THREE.Vector3();
-
       ref.current.getWorldDirection(tempVec);
-
       camRef.current.position.addScaledVector(tempVec, -20);
       tempVec.cross(new THREE.Vector3(0, 1, 0)).normalize();
       camRef.current.position.addScaledVector(tempVec, 2);
@@ -51,64 +51,32 @@ function Player({ player, index, ...props }) {
   }, [player]);
 
   useEffect(() => {
-    let currentPoints = points;
-    let tilesToMove = currentPoints - prevPoints;
-    setPrevPoints(currentPoints);
-
-    if (tilesToMove > 0 && currentPoints < Path[index].length) {
-      console.log('plus');
-      const newPointsArray = newArr.slice(prevPoints, prevPoints + tilesToMove);
-      // console.log(newPointsArray);
-
-      const playerPos = ref.current.position.clone();
-
-      curve.current = getCurveFromPlayer(playerPos, newPointsArray);
-      const geometry = new THREE.TubeGeometry(curve.current, 200, 0.1, 8, false);
-      const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-      scene.add(mesh);
-
-      animate(progress.current, 1, {
-        duration: 2,
-        onUpdate: (value) => {
-          let pos = curve.current.getPointAt(value);
-          ref.current.position.copy(pos);
-          let tangent = curve.current.getTangentAt(value).normalize();
-          pos.add(tangent);
-          // ref.current.lookAt(pos);
-        },
-      });
-    } else if (tilesToMove < 0) {
-      console.log('moins');
-      const newPointsArray = newArr.slice(prevPoints + tilesToMove, prevPoints);
-      newPointsArray.reverse();
-
-      // invert the x and z values of newPointsArray
-      newPointsArray.forEach((point) => {
-        point.x *= -1;
-        point.y *= -1;
-        point.z *= -1;
-      });
-
-      const playerPos = ref.current.position.clone();
-
-      curve.current = getCurveFromPlayer(playerPos, newPointsArray, -1);
-
-      const geometry = new THREE.TubeGeometry(curve.current, 200, 0.1, 8, false);
-      const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00 }));
-      scene.add(mesh);
-
-      animate(progress.current, 1, {
-        duration: 2,
-        onUpdate: (value) => {
-          let pos = curve.current.getPointAt(value);
-          ref.current.position.copy(pos);
-          let tangent = curve.current.getTangentAt(value).normalize();
-          pos.add(tangent);
-          // ref.current.lookAt(pos);
-        },
-      });
+    if (points !== prevPoints) {
+      setPrevPoints(points);
+      animateToTargetPosition();
     }
   }, [points]);
+
+  const animateToTargetPosition = () => {
+    const startPosition = ref.current.position.clone();
+    const endPosition = new THREE.Vector3(targetPosition.x, position[1], targetPosition.z);
+
+    const duration = 1;
+    let elapsedTime = 0;
+
+    const movePlayer = () => {
+      elapsedTime += 1 / 60;
+      const t = Math.min(elapsedTime / duration, 1);
+
+      ref.current.position.lerpVectors(startPosition, endPosition, t);
+
+      if (t < 1) {
+        requestAnimationFrame(movePlayer);
+      }
+    };
+
+    movePlayer();
+  };
 
   return (
     <>
