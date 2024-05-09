@@ -30,7 +30,7 @@ const Game = () => {
       <Canvas className="canvas" shadows>
         <color attach="background" args={['#f9efc7']} />
         <Suspense fallback={null}>
-          <Paths players={players} amount={13} />
+          <Paths players={players} amount={17} />
 
           <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
             <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />

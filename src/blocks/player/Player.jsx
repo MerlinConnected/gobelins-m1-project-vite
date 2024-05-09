@@ -51,7 +51,7 @@ function Player({ player, index, ...props }) {
 
   const movePlayerOneStep = () => {
     setIsAnimating(true);
-    const direction = points > currentPoint ? 1 : -1; // Determine the direction of movement
+    const direction = points > currentPoint ? 1 : -1;
     const nextPoint = currentPoint + direction;
     const startPosition = ref.current.position.clone();
     const endPosition = path[nextPoint].clone();
