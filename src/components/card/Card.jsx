@@ -19,6 +19,7 @@ import CardLayers from '../card-layers/CardLayers';
 import SpeedIndicator from '../speed-indicator/SpeedIndicator';
 import { useEffect } from 'react';
 import { useMemo } from 'react';
+import ImpactIndicator from '../value-indicator/ImpactIndicator';
 
 function Card({ className, card, active, selected, ...props }) {
   const { playerTurn, players, inGamePlayers } = usePlayerContext();
@@ -160,6 +161,7 @@ function Card({ className, card, active, selected, ...props }) {
             <CardLayers className={styles.layer} id="layer1" />
           </div>
 
+          <ImpactIndicator className={styles.impactIndicator} impact={card.impact} />
           <SpeedIndicator className={styles.speedIndicator} impact={card.impact} />
 
           <Button
