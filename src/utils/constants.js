@@ -1,4 +1,5 @@
 export const GAME_PHASE = {
+  lobby: 'lobby',
   startGame: 'startGame',
   playGame: 'playGame',
   endGame: 'endGame',
