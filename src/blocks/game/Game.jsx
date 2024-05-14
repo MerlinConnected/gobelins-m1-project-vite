@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
+import { Loader, OrbitControls, Environment, Grid, GizmoHelper, GizmoViewport, Gltf } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Loader, OrbitControls, Environment, Grid, GizmoHelper, GizmoViewport } from '@react-three/drei';
-import { Leva } from 'leva';
 import { Suspense } from 'react';
 import { Perf } from 'r3f-perf';
+import { Leva } from 'leva';
 
 import { usePlayerContext } from '../../provider/PlayerProvider';
 
-import Paths from '../paths/Paths';
+import Tiles from '../paths/Paths';
+
+import { Selection, Select, EffectComposer, Outline } from '@react-three/postprocessing';
 
 const Game = () => {
   const { players } = usePlayerContext();
@@ -28,13 +30,18 @@ const Game = () => {
       <Leva hidden={isDebug} />
       <Loader />
       <Canvas className="canvas" shadows>
-        <color attach="background" args={['#f9efc7']} />
+        <color attach="background" args={['#0b0b0b']} />
         <Suspense fallback={null}>
-          <Paths players={players} amount={17} />
-
           <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
             <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
           </GizmoHelper>
+
+          <Selection>
+            <EffectComposer multisampling={8} autoClear={false}>
+              <Outline blur visibleEdgeColor="purple" edgeStrength={100} width={1000} />
+            </EffectComposer>
+            <Tiles players={players} amount={17} />
+          </Selection>
 
           <OrbitControls target={[0, 0, 0]} />
           <Environment preset="city" />

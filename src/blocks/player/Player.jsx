@@ -9,6 +9,8 @@ import Billboard from '../../components/billboard/Billboard';
 import Path from '../../utils/paths';
 import { Model } from '../../models/car';
 
+import { EffectComposer, Selection, Outline } from '@react-three/postprocessing';
+
 function Player({ player, index, ...props }) {
   const { rotationY, position } = props;
   const me = myPlayer();
@@ -82,7 +84,12 @@ function Player({ player, index, ...props }) {
     <>
       <group ref={ref} position={path[0]} rotation-y={rotationY} {...props}>
         <Billboard player={player} position={[0, 2, 0]} />
-        <Model color={player.state?.profile?.color} />
+        <Selection>
+          <EffectComposer multisampling={0} autoClear={false}>
+            <Outline blur visibleEdgeColor="purple" edgeStrength={100} width={1000} />
+          </EffectComposer>
+          <Model color={player.state?.profile?.color} />
+        </Selection>
       </group>
       {myPlayer()?.id === player.id && <PerspectiveCamera ref={camRef} makeDefault />}
     </>
