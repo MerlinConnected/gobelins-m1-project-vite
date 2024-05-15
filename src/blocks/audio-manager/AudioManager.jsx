@@ -7,27 +7,28 @@ import Button from '../../components/button/Button';
 import styles from './AudioManager.module.scss';
 import { useEffect } from 'react';
 import CircleButton from '../../components/circle-button/CircleButton';
+import { useAudioContext } from '../../provider/AudioProvider';
 
 function AudioManager({ className, ...props }) {
 
-    const audios = {
-        background: new Audio('/audios/mariah.mp3'),
-    }
+    const { audioEnabled, setAudioEnabled } = useAudioContext();
 
-    const [audioEnabled, setAudioEnabled] = useState(false); // FOR PROD: set to 'true'
+    const music = new Audio('/audios/mariah.mp3');
+
     const toggleAudio = () => {
         setAudioEnabled((prev) => !prev);
     }
 
     useEffect(() => {
         if (audioEnabled) {
-            audios.background.play();
-            audios.background.loop = true;
+            music.play();
+            music.volume = 0.2;
+            music.loop = true;
         } else {
-            audios.background.pause();
+            music.pause();
         }
         return () => {
-            audios.background.pause();
+            music.pause();
         }
     }, [audioEnabled]);
 
