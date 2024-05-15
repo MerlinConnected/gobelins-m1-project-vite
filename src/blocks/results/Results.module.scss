@@ -12,13 +12,23 @@
     height: 100vh;
 
     color: var(--color-light);
+    background-color: var(--color-bg-overlay);
 }
 
 .results {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     gap: rem(32);
+    padding: 0 rem(64);
+    width: 100%;
+    max-width: rem(460);
+    color: var(--color-content-main);
+    background-image: url('/images/ui/results-bg.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 95%;
 
     .player {
         display: flex;
@@ -26,5 +36,149 @@
         justify-content: center;
         align-items: center;
         gap: rem(8);
+    }
+}
+
+.resultsTitle {
+    font-family: $polaquita-font;
+    color: var(--color-background-transport-main-2);
+    transform: rotate(-2deg);
+}
+
+.defeatTitle {
+    color: var(--color-background-transport-main-3);
+}
+
+.players {
+    display: flex;
+    flex-direction: column;
+    gap: rem(28);
+    width: 100%;
+}
+
+.finishers {
+    display: flex;
+    justify-content: space-around;
+    gap: rem(12);
+
+    .finisher {
+        position: relative;
+
+        .name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .status {
+            width: rem(120);
+        }
+    }
+}
+
+.loosers {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(16);
+}
+
+.looserWrapper {
+    width: 100%;
+    position: relative;
+
+    .looser {
+        display: flex;
+        align-items: center;
+        gap: rem(12);
+        position: relative;
+        z-index: 5;
+
+        .status {
+            width: rem(60);
+        }
+
+        .name {
+            margin-right: auto;
+        }
+
+        .distanceLeft {
+            font-weight: 900;
+            font-style: italic;
+            padding-right: rem(24);
+        }
+    }
+}
+
+.bgWrapper {
+    width: 100%;
+    height: 110%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url('/images/ui/looser-bg-white.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    .background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin: rem(8);
+    }
+
+    .layerWrapper {
+        position: relative;
+        width: 100%;
+        height: 90%;
+        z-index: 2;
+        padding: rem(12);
+        clip-path: polygon( 1.691% 7.935%,10.571% 3.75%,39.006% 3.75%,94.609% 3.75%,100% 17.56%,97.886% 92.886%,77.167% 100%,51.057% 92.886%,3.805% 100%,0% 66.94%,1.691% 7.935% );
+        background-color: var(--color-background-action-main--minus-1);
+        filter: brightness(1.4);
+
+        .layer {
+            opacity: 0.1;
+            position: absolute;
+            top: -140%;
+            mix-blend-mode: overlay;
+        }
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .results {
+        gap: rem(20);
+        max-width: rem(380);
+    }
+
+    .players {
+        gap: rem(16);
+    }
+
+    .finishers {
+        .finisher {
+            .status {
+                width: rem(100);
+            }
+        }
+    }
+
+    .loosers {
+        .looser {
+            .status {
+                width: rem(40);
+            }
+           
+            .name {
+                font-size: rem(18);
+            } 
+
+            .distanceLeft {
+                font-size: rem(14);
+            }
+        }
     }
 }

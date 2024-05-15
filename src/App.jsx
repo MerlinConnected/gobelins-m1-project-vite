@@ -20,7 +20,7 @@ function Scene() {
       {globalPhase === GAME_PHASE.lobby && onboarding && <Onboarding />}
       {globalPhase === GAME_PHASE.lobby && infoLobby && <InfoLobby />}
       {globalPhase === GAME_PHASE.lobby && lobby && <Lobby />}
-      {globalPhase === GAME_PHASE.startGame && <Game />}
+      {globalPhase !== GAME_PHASE.lobby && <Game />}
       {globalPhase === GAME_PHASE.startGame && <UI />}
       {globalPhase === GAME_PHASE.endGame && <Results />}
     </>

@@ -1,4 +1,5 @@
 export const GAME_PHASE = {
+  lobby: 'lobby',
   startGame: 'startGame',
   playGame: 'playGame',
   endGame: 'endGame',
@@ -29,15 +30,37 @@ export const CATEGORY = {
 };
 
 export const TRANSPORT = [
-  { name: 'velo', edito: 'vélo', type: 'transport', impact: 2, category: [CATEGORY.deuxRoues] },
-  { name: 'voiture', edito: 'voiture', type: 'transport', impact: 3, category: [CATEGORY.route, CATEGORY.moteur] },
-  { name: 'tramway', edito: 'tram', type: 'transport', impact: 3, category: [CATEGORY.rails, CATEGORY.commun] },
+  {
+    name: 'velo',
+    edito: 'vélo',
+    type: 'transport',
+    impact: 2,
+    category: [CATEGORY.deuxRoues],
+    icon: '/images/icons/transport/velo.svg',
+  },
+  {
+    name: 'voiture',
+    edito: 'voiture',
+    type: 'transport',
+    impact: 3,
+    category: [CATEGORY.route, CATEGORY.moteur],
+    icon: '/images/icons/transport/voiture.svg',
+  },
+  {
+    name: 'tramway',
+    edito: 'tram',
+    type: 'transport',
+    impact: 3,
+    category: [CATEGORY.rails, CATEGORY.commun],
+    icon: '/images/icons/transport/tramway.svg',
+  },
   {
     name: 'metro',
     edito: 'métro',
     type: 'transport',
     impact: 4,
     category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur],
+    icon: '/images/icons/transport/metro.svg',
   },
   {
     name: 'moto',
@@ -45,6 +68,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 4,
     category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur],
+    icon: '/images/icons/transport/moto.svg',
   },
 ];
 
@@ -53,7 +77,7 @@ export const TIME_START_TURN = 1;
 export const TIME_PLAYER_TURN = 10;
 export const TIME_END_TURN = 2;
 
-export const MAX_POINTS = 400; // default to 20
+export const MAX_POINTS = 2; // default to 20
 export const AMOUNT_TRANSPORT_CARDS = 1;
 export const AMOUNT_PIED_CARDS = 2;
 export const AMOUNT_MINUS_CARDS = 3;
@@ -153,42 +177,42 @@ export const piedTransportCard = {
 export const initialEventDrawer = [
   {
     id: transportDrawer.length + actionDrawer.length + 1,
-    name: 'accident',
+    name: 'Averses',
     type: 'event',
     impact: 0,
     category: CATEGORY.deuxRoues,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 2,
-    name: 'grève',
+    name: 'Grève',
     type: 'event',
     impact: 0,
     category: CATEGORY.route,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 3,
-    name: 'travaux',
+    name: 'Panne de moteur',
     type: 'event',
     impact: 0,
     category: CATEGORY.moteur,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 4,
-    name: 'panne',
+    name: 'Travaux sur les rails',
     type: 'event',
     impact: 0,
     category: CATEGORY.rails,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 5,
-    name: 'grève',
+    name: 'Inondation',
     type: 'event',
     impact: 0,
     category: CATEGORY.interieur,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 6,
-    name: 'accident',
+    name: 'Retards dans les transports',
     type: 'event',
     impact: 0,
     category: CATEGORY.commun,
