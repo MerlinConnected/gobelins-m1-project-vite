@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 
 import styles from './CardLayers.module.scss';
-import { fill } from 'lodash-es';
 
 const Pattern1 = ({ fill = '#000', ...props }) => {
   return (
@@ -62,12 +61,71 @@ const Layer1 = ({ fill = '#000', ...props }) => {
 
 const Arrow = ({ ...props }) => {
   return (
-    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" {...props}>
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M45.3 15.7v33L23 32.7l-19.7 15L5.8 19 24.6 1.3l20.7 14.4ZM9.6 21 25 6.4l16.3 11.4V41L23 27.8 8 39l1.6-18Z"
         fill="#fff"
+      />
+    </svg>
+  );
+};
+
+const ImpactLayer = ({ ...props }) => {
+  return (
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" {...props}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M61.6 57.9a20 20 0 0 0 8.9-11.5l2.7-9.3L72 8l-49-3.2A27 27 0 0 0 9.1 26.3L8.5 58l4 14.4L35.9 76 51 64.2l10.5-6.3Zm-13 2.3L58.9 54c3.3-2 5.8-5.2 6.9-8.9l2.4-8.4-1.1-23.9L24.4 10c-6 3.4-10.2 10-10.4 16.9l-.5 30 3 11L35 70.7l13.6-10.5Z"
+        fill="#fff"
+      />
+    </svg>
+  );
+};
+
+const SpeedUp = ({ ...props }) => {
+  return (
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" {...props}>
+      <path
+        d="M0 64V45.1l31.5-9.6L64 45.1V64L31.5 54 0 64ZM64 23.9 31.5 14 0 23.9v-19L16.2 0h30.9L64 5v18.9Z"
+        fill="#000"
+      />
+    </svg>
+  );
+};
+
+const SpeedEqual = ({ ...props }) => {
+  return (
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" {...props}>
+      <path
+        d="m21 0 10.7 3.3L42.3 0H64v12.2l-32.3 10L0 12.3V0h21ZM2.4 64H0V45.9L31.7 36l32.3 10V64h-3l-29.3-9-29.3 9Z"
+        fill="#000"
+      />
+    </svg>
+  );
+};
+
+const SpeedDown = ({ ...props }) => {
+  return (
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" {...props}>
+      <path
+        d="M64 0v18.9l-31.5 9.6L0 18.9V0l32.5 10L64 0ZM0 40.1 32.5 50 64 40.1v19L47.8 64H16.9L0 59V40.1Z"
+        fill="#000"
+      />
+    </svg>
+  );
+};
+
+const TagOuter = ({ ...props }) => {
+  return (
+    <svg preserveAspectRatio="none" viewBox="0 0 84 30" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0.64899 0H83.9091L82.1 6.32661L83.359 8.77265L82.2163 11.881L84 15L82.2811 18.0057L82.9578 19.5833L82.4777 20.7025L83.8295 22.2783L81.6215 30H2.69204L0 22.6777L1.27982 19.6939L0.593375 16.8932L1.3394 13.4146L0.325626 10.4602L2.06368 7.42105L0.64899 0ZM6.26231 8.125L4.6896 10.875L5.47596 13.1667L4.6896 16.8333L5.47596 20.0417L4.29642 22.7917L5.47596 26H78.6124L79.3988 23.25L77.8261 21.4167L78.6124 19.5833L77.8261 17.75L79.3988 15L77.8261 12.25L79.0056 9.04167L77.8261 6.75L78.6124 4H5.47596L6.26231 8.125Z"
+        fill="white"
       />
     </svg>
   );
@@ -79,6 +137,11 @@ const icons = {
   pattern3: Pattern3,
   layer1: Layer1,
   arrow: Arrow,
+  impact_layer: ImpactLayer,
+  speed_up: SpeedUp,
+  speed_equal: SpeedEqual,
+  speed_down: SpeedDown,
+  tag_outer: TagOuter,
 };
 
 // type IconsProps = {

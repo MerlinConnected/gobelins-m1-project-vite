@@ -4,9 +4,13 @@
     justify-content: center;
 
     position: absolute;
-    bottom: var(--padding);
+    bottom: calc(var(--padding) * 1.5);
     left: 50%;
     transform: translateX(-50%);
+}
+
+.card {
+    border: 1px solid greenyellow;
 }
 
 .image {

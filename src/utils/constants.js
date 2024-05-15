@@ -1,4 +1,5 @@
 export const GAME_PHASE = {
+  lobby: 'lobby',
   startGame: 'startGame',
   playGame: 'playGame',
   endGame: 'endGame',
@@ -21,19 +22,54 @@ export const PLAYER_PHASE = {
 export const CATEGORY = {
   deuxRoues: '2 roues',
   route: 'Route',
-  moteur: 'Moteur',
+  moteur: 'Motorisé',
   rails: 'Rails',
-  interieur: 'Intérieur',
-  commun: 'Transports en commun',
+  interieur: 'Souterain',
+  commun: 'En commun',
   pied: 'Pied',
 };
 
 export const TRANSPORT = [
-  { name: 'velo', type: 'transport', impact: 2, category: [CATEGORY.deuxRoues], icon: '/images/icons/transport/velo.svg' },
-  { name: 'voiture', type: 'transport', impact: 3, category: [CATEGORY.route, CATEGORY.moteur], icon: '/images/icons/transport/voiture.svg' },
-  { name: 'tramway', type: 'transport', impact: 3, category: [CATEGORY.rails, CATEGORY.commun], icon: '/images/icons/transport/tramway.svg' },
-  { name: 'metro', type: 'transport', impact: 4, category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur], icon: '/images/icons/transport/metro.svg' },
-  { name: 'moto', type: 'transport', impact: 4, category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur], icon: '/images/icons/transport/moto.svg' },
+  {
+    name: 'velo',
+    edito: 'vélo',
+    type: 'transport',
+    impact: 2,
+    category: [CATEGORY.deuxRoues],
+    icon: '/images/icons/transport/velo.svg',
+  },
+  {
+    name: 'voiture',
+    edito: 'voiture',
+    type: 'transport',
+    impact: 3,
+    category: [CATEGORY.route, CATEGORY.moteur],
+    icon: '/images/icons/transport/voiture.svg',
+  },
+  {
+    name: 'tramway',
+    edito: 'tram',
+    type: 'transport',
+    impact: 3,
+    category: [CATEGORY.rails, CATEGORY.commun],
+    icon: '/images/icons/transport/tramway.svg',
+  },
+  {
+    name: 'metro',
+    edito: 'métro',
+    type: 'transport',
+    impact: 4,
+    category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur],
+    icon: '/images/icons/transport/metro.svg',
+  },
+  {
+    name: 'moto',
+    edito: 'moto',
+    type: 'transport',
+    impact: 4,
+    category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur],
+    icon: '/images/icons/transport/moto.svg',
+  },
 ];
 
 export const TIME_START_GAME = 1;
@@ -41,7 +77,7 @@ export const TIME_START_TURN = 1;
 export const TIME_PLAYER_TURN = 10;
 export const TIME_END_TURN = 2;
 
-export const MAX_POINTS = 400; // default to 20
+export const MAX_POINTS = 2; // default to 20
 export const AMOUNT_TRANSPORT_CARDS = 1;
 export const AMOUNT_PIED_CARDS = 2;
 export const AMOUNT_MINUS_CARDS = 3;
@@ -66,6 +102,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_MINUS_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length,
     name: 'moins1',
+    edito: 'recuuule',
     type: 'action',
     impact: -1,
     category: Object.values(CATEGORY),
@@ -73,6 +110,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_MINUS_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + AMOUNT_MINUS_CARDS,
     name: 'moins2',
+    edito: 'recuuule',
     type: 'action',
     impact: -2,
     category: Object.values(CATEGORY),
@@ -80,6 +118,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.deuxRoues],
@@ -87,6 +126,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + AMOUNT_PIED_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.route],
@@ -94,6 +134,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 2 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.commun],
@@ -101,6 +142,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 3 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.moteur],
@@ -108,6 +150,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 4 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.rails],
@@ -115,6 +158,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 5 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.interieur],
@@ -124,6 +168,7 @@ export const actionDrawer = [
 export const piedTransportCard = {
   id: transportDrawer.length + actionDrawer.length,
   name: 'pied',
+  edito: 'descends',
   type: 'transport',
   impact: 1,
   category: [CATEGORY.pied],

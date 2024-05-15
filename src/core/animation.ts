@@ -14,7 +14,7 @@ export const baseVariants: Variants = {
 
 export const baseTransition = {
   duration: 0.5,
-  ease: bezier.quadEaseOut,
+  ease: bezier.quadEaseIn,
   // opacity: { duration: 0.5, ease: 'linear' },
 };
 

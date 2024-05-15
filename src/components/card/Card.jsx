@@ -19,6 +19,9 @@ import CardLayers from '../card-layers/CardLayers';
 import SpeedIndicator from '../speed-indicator/SpeedIndicator';
 import { useEffect } from 'react';
 import { useMemo } from 'react';
+import ImpactIndicator from '../value-indicator/ImpactIndicator';
+import StrokeText from '../stroke-text/StrokeText';
+import TransportTag from '../transport-tag/TransportTag';
 
 function Card({ className, card, active, selected, ...props }) {
   const { playerTurn, players, inGamePlayers } = usePlayerContext();
@@ -119,18 +122,21 @@ function Card({ className, card, active, selected, ...props }) {
     handlePlayerPhase();
   };
 
-  const bgColor = useMemo(() => {
-    let color = null;
+  const colors = useMemo(() => {
+    let el = { bg: null, font: null };
 
     if (card.impact > 1) {
-      color = `var(--color-background-transport-bg-${card.impact})`;
+      el.bg = `var(--color-background-transport-bg-${card.impact})`;
+      el.font = `var(--color-background-transport-main-${card.impact})`;
     } else if (card.impact === 1) {
-      color = `var(--color-background-action-bg-${card.impact})`;
+      el.bg = `var(--color-background-action-bg-${card.impact})`;
+      el.font = `var(--color-background-action-main-${card.impact})`;
     } else if (card.impact < 0) {
-      color = `var(--color-background-action-bg--minus-${Math.abs(card.impact)})`;
+      el.bg = `var(--color-background-action-bg--minus-${Math.abs(card.impact)})`;
+      el.font = `var(--color-background-action-main--minus-${Math.abs(card.impact)})`;
     }
 
-    return color;
+    return el;
   }, []);
 
   const patternCard = useMemo(() => {
@@ -145,12 +151,16 @@ function Card({ className, card, active, selected, ...props }) {
     return pattern;
   }, []);
 
+  console.log(card);
+
+  const linkImage = `/images/transports/${card.name}.svg`;
+
   return (
     card && (
       <motion.div
         {...cardAppear}
         className={classNames(styles.wrapper, className)}
-        style={{ '--background': `${bgColor}` }}
+        style={{ '--background': `${colors.bg}` }}
         {...props}
       >
         <div className={styles.card}>
@@ -160,9 +170,26 @@ function Card({ className, card, active, selected, ...props }) {
             <CardLayers className={styles.layer} id="layer1" />
           </div>
 
+          <img src={linkImage} className={styles.image} />
+
+          {card.impact >= 1 && (
+            <div className={styles.transportWrapper}>
+              {card.impact >= 1 &&
+                card.category.map((transport) => {
+                  return <TransportTag transport={transport} />;
+                })}
+            </div>
+          )}
+          <ImpactIndicator className={styles.impactIndicator} impact={card.impact} />
           <SpeedIndicator className={styles.speedIndicator} impact={card.impact} />
 
-          <Button
+          <div className={styles.editoWrapper}>
+            <StrokeText large className={styles.test} style={{ '--font-color': `${colors.font}` }}>
+              {card.edito}
+            </StrokeText>
+          </div>
+
+          {/* <Button
             className={classNames(styles.card, { [styles.clicked]: active && selected })}
             disabled={!active}
             onClick={() => selectCard()}
@@ -199,7 +226,7 @@ function Card({ className, card, active, selected, ...props }) {
                 </Button>
               </div>
             )}
-          </Button>
+          </Button> */}
         </div>
       </motion.div>
     )
