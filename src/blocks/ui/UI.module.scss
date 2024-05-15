@@ -14,6 +14,12 @@
     color: white;
 }
 
+.topLeftZone {
+    position: absolute;
+    top: rem(16);
+    left: rem(16);
+}
+
 .topCenterZone {
     display: flex;
     flex-direction: column;
