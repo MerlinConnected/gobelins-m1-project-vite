@@ -44,6 +44,7 @@ function Cards({ className, cardsDisabled, ...props }) {
             {...baseVariants}
             layout="position"
             key={card.uuid}
+            className={styles.card}
             card={card}
             active={!cardsDisabled}
             selected={selectedCardIndex === index}

@@ -1,49 +1,50 @@
 :root {
-    @include variables;
+  @include variables;
 }
 
 html,
 body {
-    width: 100%;
-    height: auto;
-    margin: 0;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  overflow: hidden;
 }
 
 .canvas {
-    height: 100vh !important;
+  height: 100vh !important;
 }
 
 html {
-    height: 100%;
-    overflow: visible;
-    position: relative;
-    font-family: $satoshi-font;
-    min-height: 100%;
-    font-size: var(--rem);
+  height: 100%;
+  overflow: visible;
+  position: relative;
+  font-family: $satoshi-font;
+  min-height: 100%;
+  font-size: var(--rem);
 }
 
 body {
-    position: relative;
-    min-height: 100%;
-    max-width: 100%;
-    font-size: var(--rem);
-    background: var(--color-background);
-    color: var(--color-main);
+  position: relative;
+  min-height: 100%;
+  max-width: 100%;
+  font-size: var(--rem);
+  background: var(--color-background);
+  color: var(--color-main);
 
-    @include tablet-portrait {
-        font-size: rem(14);
-    }
+  @include tablet-portrait {
+    font-size: rem(14);
+  }
 }
 
 * {
-    text-rendering: optimizelegibility;
-    text-rendering: geometricprecision;
-    -moz-osx-font-smoothing: grayscale;
-    -moz-font-smoothing: antialiased;
-    -webkit-font-smoothing: antialiased;
-    -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
-    -webkit-touch-callout: none;
-    box-sizing: border-box;
+  text-rendering: optimizelegibility;
+  text-rendering: geometricprecision;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+  -webkit-touch-callout: none;
+  box-sizing: border-box;
 }
 
 h1,
@@ -52,82 +53,82 @@ h3,
 h4,
 h5,
 h6 {
-    font-size: inherit;
-    letter-spacing: inherit;
-    font-weight: inherit;
-    margin: 0;
-    br {
-        margin: 0 !important;
-    }
+  font-size: inherit;
+  letter-spacing: inherit;
+  font-weight: inherit;
+  margin: 0;
+  br {
+    margin: 0 !important;
+  }
 }
 
 button,
 a {
-    cursor: pointer;
-    font-weight: inherit;
-    text-decoration: none;
-    color: inherit;
-    letter-spacing: inherit;
+  cursor: pointer;
+  font-weight: inherit;
+  text-decoration: none;
+  color: inherit;
+  letter-spacing: inherit;
 }
 
 button {
-    margin-top: 0;
-    margin-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 input,
 button,
 a {
-    &:focus,
-    &:active {
-        outline: none;
-    }
+  &:focus,
+  &:active {
+    outline: none;
+  }
 }
 
 strong {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 ul {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 
-    li {
-        list-style-type: none;
-    }
+  li {
+    list-style-type: none;
+  }
 }
 
 img {
-    display: block;
+  display: block;
 }
 
 button,
 input[type='submit'] {
-    appearance: none;
-    border: none;
-    display: block;
-    cursor: pointer;
-    background: transparent;
-    padding: 0;
-    letter-spacing: inherit;
-    text-transform: inherit;
-    font-size: inherit;
-    color: inherit;
+  appearance: none;
+  border: none;
+  display: block;
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  font-size: inherit;
+  color: inherit;
 }
 
 button,
 input,
 textarea {
-    font-family: inherit;
-    text-transform: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    letter-spacing: inherit;
-    line-height: inherit;
-    text-align: inherit;
-    appearance: none;
-    border-radius: 0;
-    background: transparent;
+  font-family: inherit;
+  text-transform: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-align: inherit;
+  appearance: none;
+  border-radius: 0;
+  background: transparent;
 }
 
 p,
@@ -139,15 +140,15 @@ iframe,
 form,
 figure,
 dl {
-    margin: 0;
-    font-size: rem(14);
+  margin: 0;
+  font-size: rem(14);
 }
 
 .hidden {
-    position: fixed;
-    left: -100vh;
-    visibility: hidden;
-    pointer-events: none;
+  position: fixed;
+  left: -100vh;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* stylelint-disable import-notation */

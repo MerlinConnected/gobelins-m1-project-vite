@@ -21,19 +21,31 @@ export const PLAYER_PHASE = {
 export const CATEGORY = {
   deuxRoues: '2 roues',
   route: 'Route',
-  moteur: 'Moteur',
+  moteur: 'Motorisé',
   rails: 'Rails',
-  interieur: 'Intérieur',
-  commun: 'Transports en commun',
+  interieur: 'Souterain',
+  commun: 'En commun',
   pied: 'Pied',
 };
 
 export const TRANSPORT = [
-  { name: 'velo', type: 'transport', impact: 2, category: [CATEGORY.deuxRoues] },
-  { name: 'voiture', type: 'transport', impact: 3, category: [CATEGORY.route, CATEGORY.moteur] },
-  { name: 'tramway', type: 'transport', impact: 3, category: [CATEGORY.rails, CATEGORY.commun] },
-  { name: 'metro', type: 'transport', impact: 4, category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur] },
-  { name: 'moto', type: 'transport', impact: 4, category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur] },
+  { name: 'velo', edito: 'vélo', type: 'transport', impact: 2, category: [CATEGORY.deuxRoues] },
+  { name: 'voiture', edito: 'voiture', type: 'transport', impact: 3, category: [CATEGORY.route, CATEGORY.moteur] },
+  { name: 'tramway', edito: 'tram', type: 'transport', impact: 3, category: [CATEGORY.rails, CATEGORY.commun] },
+  {
+    name: 'metro',
+    edito: 'métro',
+    type: 'transport',
+    impact: 4,
+    category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur],
+  },
+  {
+    name: 'moto',
+    edito: 'moto',
+    type: 'transport',
+    impact: 4,
+    category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur],
+  },
 ];
 
 export const TIME_START_GAME = 1;
@@ -66,6 +78,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_MINUS_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length,
     name: 'moins1',
+    edito: 'recuuule',
     type: 'action',
     impact: -1,
     category: Object.values(CATEGORY),
@@ -73,6 +86,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_MINUS_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + AMOUNT_MINUS_CARDS,
     name: 'moins2',
+    edito: 'recuuule',
     type: 'action',
     impact: -2,
     category: Object.values(CATEGORY),
@@ -80,6 +94,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.deuxRoues],
@@ -87,6 +102,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + AMOUNT_PIED_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.route],
@@ -94,6 +110,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 2 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.commun],
@@ -101,6 +118,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 3 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.moteur],
@@ -108,6 +126,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 4 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.rails],
@@ -115,6 +134,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 5 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.interieur],
@@ -124,6 +144,7 @@ export const actionDrawer = [
 export const piedTransportCard = {
   id: transportDrawer.length + actionDrawer.length,
   name: 'pied',
+  edito: 'descends',
   type: 'transport',
   impact: 1,
   category: [CATEGORY.pied],

@@ -1,88 +1,129 @@
 .wrapper {
-  border: 1px solid red;
+    border: 1px solid red;
 }
 
 .card {
-  display: flex;
-  position: relative;
-  width: calc((var(--ivh) * 0.3) * 0.9);
-  height: calc((var(--ivh) * 0.2) * 0.9);
+    display: flex;
+    position: relative;
+    width: calc((var(--ivh) * 0.3) * 0.9);
+    height: calc((var(--ivh) * 0.2) * 0.9);
 }
 
 .background {
-  position: absolute;
-  background-color: white;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 100%;
 
-  clip-path: polygon(
-    2.153% 90.75%,
-    0.245% 23.703%,
-    6.127% 2.934%,
-    22.822% 1.58%,
-    57.482% 0.225%,
-    92.937% 2.483%,
-    98.979% 7.901%,
-    97.389% 88.267%,
-    92.142% 95.717%,
-    78.31% 96.168%,
-    46.511% 97.523%,
-    6.604% 95.265%,
-    2.153% 90.75%
-  );
+    clip-path: polygon(
+        0% 24.13%,
+        1.932% 93.04%,
+        6.441% 97.68%,
+        46.86% 100%,
+        79.066% 98.608%,
+        93.076% 98.144%,
+        98.39% 90.487%,
+        100% 7.889%,
+        93.881% 2.32%,
+        57.971% 0%,
+        22.866% 1.392%,
+        5.958% 2.784%,
+        0% 24.13%
+    );
 }
 
 .layers {
-  position: relative;
-  overflow: hidden;
-  background-color: var(--background);
-  width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--background);
+    width: 100%;
+    // height: 100%;
 
-  clip-path: polygon(
-    0% 10.712%,
-    8.882% 1.435%,
-    56.891% 0%,
-    96.546% 2.827%,
-    100% 26.714%,
-    97.862% 93.043%,
-    70.529% 98.456%,
-    6.25% 100%,
-    0% 88.404%,
-    0% 10.712%
-  );
+    clip-path: polygon(
+        2.992% 13.405%,
+        2.992% 88.754%,
+        8.93% 100%,
+        70.625% 95.36%,
+        95.969% 93.253%,
+        98% 28.925%,
+        94.718% 5.758%,
+        65.794% 3.016%,
+        11.43% 4.408%,
+        2.992% 13.405%
+    );
 
-  & > * {
-    position: absolute;
-  }
+    & > * {
+        position: absolute;
+    }
 }
 
 .layer {
-  mix-blend-mode: overlay;
+    mix-blend-mode: overlay;
+}
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.transportWrapper {
+    position: absolute;
+    top: calc(var(--padding) * -0.8);
+    left: calc(var(--padding) * 1.7);
+    display: flex;
+    gap: rem(1);
+
+    & > * {
+        transform: rotate(-2deg);
+    }
 }
 
 .impactIndicator {
-  position: absolute;
-  top: rem(-20);
-  left: calc(rem(-55) * 0.5);
+    position: absolute;
+    top: rem(-20);
+    left: calc(rem(-55) * 0.5);
 }
 
 .speedIndicator {
-  position: absolute;
-  top: calc(var(--padding) * 2.5);
-  left: calc(rem(-35) * 0.5);
+    position: absolute;
+    top: calc(var(--padding) * 2.2);
+    left: calc(rem(-35) * 0.5);
+}
+
+.editoWrapper {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transform: rotate(-3deg);
+
+    p {
+        text-align: center;
+        color: var(--font-color);
+        font-family: $polaquita-font;
+        font-size: rem(50);
+        transform: translateY(rem(15));
+        text-transform: uppercase;
+
+        &::before {
+            box-shadow: none;
+        }
+    }
 }
 
 .remove {
-  background-color: red;
-  &:hover {
-    background-color: #ff0000;
-  }
+    background-color: red;
+    &:hover {
+        background-color: #ff0000;
+    }
 }
 
 .clicked {
-  background-color: green;
+    background-color: green;
 }
 
 .target {
-  border: 1px solid yellow;
+    border: 1px solid yellow;
 }

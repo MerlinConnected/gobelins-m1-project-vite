@@ -34,9 +34,7 @@ function ImpactIndicator({ className, impact, ...props }) {
         <CardLayers className={styles.arrow} id="impact_layer" />
       </div>
       <div className={styles.impactText}>
-        <StrokeText medium text={impact}>
-          {impact}
-        </StrokeText>
+        <StrokeText medium>{impact}</StrokeText>
       </div>
     </div>
   );

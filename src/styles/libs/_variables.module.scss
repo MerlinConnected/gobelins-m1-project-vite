@@ -33,22 +33,12 @@
     --box-shadow-right: inset -1px 1px 1px 0 var(--color-box-shadow);
     --box-shadow-left: inset 1px 1px 1px 0 var(--color-box-shadow);
 
-    --white-stroke: -3px -3px 0 var(--color-light),
-    0   -3px 0 var(--color-light),
-    3px -3px 0 var(--color-light),
-    3px  0   0 var(--color-light),
-    3px  3px 0 var(--color-light),
-    0    3px 0 var(--color-light),
-    -3px  3px 0 var(--color-light),
-    -3px  0   0 var(--color-light);
-    --white-stroke-regular: -2px -2px 0 var(--color-light),
-    0   -2px 0 var(--color-light),
-    2px -2px 0 var(--color-light),
-    2px  0   0 var(--color-light),
-    2px  2px 0 var(--color-light),
-    0    2px 0 var(--color-light),
-    -2px  2px 0 var(--color-light),
-    -2px  0   0 var(--color-light);
+    --white-stroke: -3px -3px 0 var(--color-light), 0 -3px 0 var(--color-light), 3px -3px 0 var(--color-light),
+        3px 0 0 var(--color-light), 3px 3px 0 var(--color-light), 0 3px 0 var(--color-light),
+        -3px 3px 0 var(--color-light), -3px 0 0 var(--color-light);
+    --white-stroke-regular: -2px -2px 0 var(--color-light), 0 -2px 0 var(--color-light), 2px -2px 0 var(--color-light),
+        2px 0 0 var(--color-light), 2px 2px 0 var(--color-light), 0 2px 0 var(--color-light),
+        -2px 2px 0 var(--color-light), -2px 0 0 var(--color-light);
 
     --text-shadow: 2px 4px 8px 5px rgba(0, 0, 0, 0.8);
     --text-shadow-regular: 2px 4px 6px 6px rgba(0, 0, 0, 0.2);
@@ -70,6 +60,14 @@
     --color-background-action-bg-1: #ffe2e9;
     --color-background-action-bg--minus-1: #fff5e2;
     --color-background-action-bg--minus-2: #ffece2;
+
+    /* CATEGORIES COLORS */
+    --color-background-category-deuxRoues: #176290;
+    --color-background-category-commun: #30b6ce;
+    --color-background-category-interieur: #ab6c5d;
+    --color-background-category-rails: #b2bdc9;
+    --color-background-category-moteur: #3237ab;
+    --color-background-category-route: #3f4767;
 
     /* SHORTCUTS */
     --color-background: var(--color-bg-body);
