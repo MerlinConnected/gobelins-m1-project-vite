@@ -39,7 +39,7 @@ function Cards({ className, cardsDisabled, ...props }) {
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
       <AnimatePresence>
-        {me.state.cards?.map((card, index) => (
+        {me.state.cards?.map((card) => (
           <Card
             {...baseVariants}
             layout="position"
@@ -47,8 +47,8 @@ function Cards({ className, cardsDisabled, ...props }) {
             className={styles.card}
             card={card}
             active={!cardsDisabled}
-            selected={selectedCardIndex === index}
-            onClick={() => handleCardSelection(index)}
+            selected={selectedCardIndex === card.uuid}
+            onClick={() => handleCardSelection(card.uuid)}
           />
         ))}
       </AnimatePresence>

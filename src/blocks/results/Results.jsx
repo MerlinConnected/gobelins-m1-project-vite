@@ -99,6 +99,7 @@ function Results({ className, ...props }) {
             onClick={() => removeRoomHash()}
             icon="replay"
             color="var(--color-background-transport-main-3)"
+            large
           />
         </div>
       </motion.div>
