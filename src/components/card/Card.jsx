@@ -1,27 +1,25 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import classNames from 'classnames';
+import { cardAppear } from '../../core/animation';
 
 import { myPlayer, getState } from 'playroomkit';
 import { usePlayerContext } from '../../provider/PlayerProvider';
 import { useGameStateContext } from '../../provider/GameStateProvider';
-
-import classNames from 'classnames';
+import { useMessageContext } from '../../provider/MessageProvider';
 
 import styles from './Card.module.scss';
 
 import { TURN_PHASE } from '../../utils/constants';
 
-import Button from '../button/Button';
-import { useMessageContext } from '../../provider/MessageProvider';
-import { AnimatePresence } from 'framer-motion';
-import { cardAppear } from '../../core/animation';
 import CardLayers from '../card-layers/CardLayers';
 import SpeedIndicator from '../speed-indicator/SpeedIndicator';
-import { useEffect } from 'react';
-import { useMemo } from 'react';
 import ImpactIndicator from '../value-indicator/ImpactIndicator';
 import StrokeText from '../stroke-text/StrokeText';
 import TransportTag from '../transport-tag/TransportTag';
+import CircleButton from '../circle-button/CircleButton';
+
+import Button from '../button/Button';
 
 function Card({ className, card, active, selected, ...props }) {
   const { playerTurn, players, inGamePlayers } = usePlayerContext();
@@ -163,7 +161,7 @@ function Card({ className, card, active, selected, ...props }) {
         style={{ '--background': `${colors.bg}` }}
         {...props}
       >
-        <div className={styles.card}>
+        <div className={styles.card} onClick={() => selectCard()}>
           <div className={styles.background} />
           <div className={styles.layers}>
             <CardLayers className={styles.layer} id={patternCard} />
@@ -175,8 +173,8 @@ function Card({ className, card, active, selected, ...props }) {
           {card.impact >= 1 && (
             <div className={styles.transportWrapper}>
               {card.impact >= 1 &&
-                card.category.map((transport) => {
-                  return <TransportTag transport={transport} />;
+                card.category.map((el) => {
+                  return <TransportTag key={el} transport={el} />;
                 })}
             </div>
           )}
@@ -189,23 +187,23 @@ function Card({ className, card, active, selected, ...props }) {
             </StrokeText>
           </div>
 
+          {selected && (
+            <div className={styles.actions}>
+              {card.type && card.type === 'transport' && (
+                <CircleButton icon="replay" color="#0D6EFF" onClick={() => selectTarget(currentPlayer)} />
+              )}
+              <CircleButton icon="bin" color="#ff0d47" onClick={() => deleteCard()} />
+            </div>
+          )}
+
           {/* <Button
             className={classNames(styles.card, { [styles.clicked]: active && selected })}
             disabled={!active}
             onClick={() => selectCard()}
           >
-            <div>
-              {card.id} {card.type} {card.name}
-            </div>
 
             {selected && (
               <div className={styles.targets}>
-                {card.type && card.type === 'transport' && (
-                  <Button disabled={!active} onClick={() => selectTarget(currentPlayer)}>
-                    <span>Changer</span>
-                  </Button>
-                )}
-
                 {card.type &&
                   card.type === 'action' &&
                   currentPlayer === me &&
@@ -221,9 +219,6 @@ function Card({ className, card, active, selected, ...props }) {
                       <span>{player?.state.name}</span>
                     </Button>
                   ))}
-                <Button className={styles.remove} disabled={!active} onClick={() => deleteCard()}>
-                  <span>Jeter</span>
-                </Button>
               </div>
             )}
           </Button> */}
