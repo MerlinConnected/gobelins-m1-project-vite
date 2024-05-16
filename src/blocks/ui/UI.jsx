@@ -135,6 +135,7 @@ function UI({ className, ...props }) {
         </div>
 
         <Cards cardsDisabled={cardsDisabled} />
+        <div className={styles.middle} />
 
         <div className={styles.drawers}>
           <Button

@@ -1,12 +1,13 @@
 .wrapper {
     border: 1px solid red;
+    user-select: none;
 }
 
 .card {
     display: flex;
     position: relative;
-    width: calc((var(--ivh) * 0.3) * 0.9);
-    height: calc((var(--ivh) * 0.2) * 0.9);
+    width: rem(250);
+    height: rem(165);
 }
 
 .background {
