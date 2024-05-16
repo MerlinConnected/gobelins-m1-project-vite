@@ -24,6 +24,12 @@
 //     z-index: 9000;
 // }
 
+.topLeftZone {
+    position: absolute;
+    top: rem(16);
+    left: rem(16);
+}
+
 .topCenterZone {
     display: flex;
     flex-direction: column;

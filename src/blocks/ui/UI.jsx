@@ -22,6 +22,7 @@ import Feedback from '../feedback/Feedback';
 import { useMessageContext } from '../../provider/MessageProvider';
 import StrokeText from '../../components/stroke-text/StrokeText';
 import EventRecap from '../event-recap/EventRecap';
+import AudioManager from '../audio-manager/AudioManager';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
@@ -107,6 +108,11 @@ function UI({ className, ...props }) {
   return (
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
+
+        <div className={styles.topLeftZone}>
+          <AudioManager />
+        </div>
+
         <div className={styles.topCenterZone}>
           <Message />
           <EventPanel />

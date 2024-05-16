@@ -7,6 +7,7 @@ import { myPlayer, getState } from 'playroomkit';
 import { usePlayerContext } from '../../provider/PlayerProvider';
 import { useGameStateContext } from '../../provider/GameStateProvider';
 import { useMessageContext } from '../../provider/MessageProvider';
+import { useAudioContext } from '../../provider/AudioProvider';
 
 import styles from './Card.module.scss';
 
@@ -18,19 +19,20 @@ import ImpactIndicator from '../value-indicator/ImpactIndicator';
 import StrokeText from '../stroke-text/StrokeText';
 import TransportTag from '../transport-tag/TransportTag';
 import CircleButton from '../circle-button/CircleButton';
-
-import Button from '../button/Button';
+import playSound from '../../utils/playSound';
 
 function Card({ className, card, active, selected, ...props }) {
   const { playerTurn, players, inGamePlayers } = usePlayerContext();
   const { handlePlayerPhase } = useGameStateContext();
   const { setMessage } = useMessageContext();
+  const { audioEnabled } = useAudioContext();
   const me = myPlayer();
 
   const currentPlayer = players[playerTurn];
 
   const selectCard = () => {
     if (currentPlayer?.id !== me?.id) return;
+    playSound('pop', audioEnabled);
     currentPlayer.setState('selectedCard', card, true);
 
     switch (card.type) {
@@ -53,6 +55,7 @@ function Card({ className, card, active, selected, ...props }) {
 
   const selectTarget = (player) => {
     if (currentPlayer?.id !== me?.id || !active || getState('turnPhase') !== TURN_PHASE.playTurn) return;
+    playSound('good', audioEnabled);
     currentPlayer.setState('target', player, true);
     const cards = currentPlayer.getState('cards');
     const selectedCard = currentPlayer.getState('selectedCard');
@@ -109,6 +112,7 @@ function Card({ className, card, active, selected, ...props }) {
 
   const deleteCard = () => {
     if (currentPlayer?.id !== me?.id || !active) return;
+    playSound('bin', audioEnabled);
     const cards = currentPlayer.getState('cards');
     cards.splice(
       cards.findIndex((c) => c.uuid === card.uuid),

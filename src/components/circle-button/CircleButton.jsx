@@ -6,6 +6,9 @@ import styles from './CircleButton.module.scss';
 import CardLayers from '../card-layers/CardLayers';
 
 function CircleButton({ className, large, icon, color, ...props }) {
+
+  const iconUrl = `/images/icons/buttons/${icon}.svg`;
+
   return (
     <button
       className={classNames(styles.wrapper, className, {
@@ -19,12 +22,12 @@ function CircleButton({ className, large, icon, color, ...props }) {
         <CardLayers className={styles.layer} id="pattern_nbr" />
       </div>
 
-      {icon &&
-        (icon === 'bin' ? (
-          <img src="/images/ui/bin.png" alt="" className={styles.icon} />
-        ) : (
-          <img src="/images/ui/replay.png" alt="" className={styles.icon} />
-        ))}
+      {
+        icon && (
+          <img src={iconUrl} alt="" className={styles.icon} />
+        )
+      }
+
     </button>
   );
 }
