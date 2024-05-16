@@ -97,12 +97,7 @@ function Player({ player, index, className, ...props }) {
           </Html>
         </Billboard>
 
-        <Selection>
-          <EffectComposer multisampling={8} autoClear={false}>
-            <Outline blur visibleEdgeColor="white" edgeStrength={100} width={1000} />
-          </EffectComposer>
-          <Bike color={player.state?.profile?.color} />
-        </Selection>
+        <Bike color={player.state?.profile?.color} />
       </group>
       {myPlayer()?.id === player.id && <PerspectiveCamera ref={camRef} makeDefault />}
     </>
