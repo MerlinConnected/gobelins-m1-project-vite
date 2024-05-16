@@ -149,7 +149,7 @@ function Card({ className, card, active, selected, ...props }) {
     return pattern;
   }, []);
 
-  console.log(card);
+  // console.log(card);
 
   const linkImage = `/images/transports/${card.name}.svg`;
 
@@ -161,7 +161,7 @@ function Card({ className, card, active, selected, ...props }) {
         style={{ '--background': `${colors.bg}` }}
         {...props}
       >
-        <div className={styles.card} onClick={() => selectCard()}>
+        <div className={styles.card} onClick={() => active && selectCard()}>
           <div className={styles.background} />
           <div className={styles.layers}>
             <CardLayers className={styles.layer} id={patternCard} />
