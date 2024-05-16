@@ -1,20 +1,26 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 
-import { PerspectiveCamera } from '@react-three/drei';
+import { Html, PerspectiveCamera } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 import { myPlayer, usePlayerState } from 'playroomkit';
-import Billboard from '../../components/billboard/Billboard';
+
 import Path from '../../utils/paths';
-import { Model } from '../../models/car';
+
+import { Bike } from '../../models/vehicules/Bike';
+
+import Billboard from '../../components/billboard/Billboard';
+import classNames from 'classnames';
+import styles from '../../components/billboard/Billboard.module.scss';
 
 import { EffectComposer, Selection, Outline } from '@react-three/postprocessing';
 
-function Player({ player, index, ...props }) {
+function Player({ player, index, className, ...props }) {
   const { rotationY, position } = props;
   const me = myPlayer();
   const { id } = player;
+  const { state } = player;
   const ref = useRef();
   const camRef = useRef();
   const [currentPoint, setCurrentPoint] = useState(0);
@@ -83,12 +89,19 @@ function Player({ player, index, ...props }) {
   return (
     <>
       <group ref={ref} position={path[0]} rotation-y={rotationY} {...props}>
-        <Billboard player={player} position={[0, 2, 0]} />
+        <Billboard player={player} position={[0, 2, 0]}>
+          <Html wrapperClass={classNames(styles.wrapper, className)} center>
+            <p>{state?.name}</p>
+            <p>{state?.points} Points</p>
+            <p>{state?.status?.name}</p>
+          </Html>
+        </Billboard>
+
         <Selection>
-          <EffectComposer multisampling={0} autoClear={false}>
-            <Outline blur visibleEdgeColor="purple" edgeStrength={100} width={1000} />
+          <EffectComposer multisampling={8} autoClear={false}>
+            <Outline blur visibleEdgeColor="white" edgeStrength={100} width={1000} />
           </EffectComposer>
-          <Model color={player.state?.profile?.color} />
+          <Bike color={player.state?.profile?.color} />
         </Selection>
       </group>
       {myPlayer()?.id === player.id && <PerspectiveCamera ref={camRef} makeDefault />}
