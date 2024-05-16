@@ -118,9 +118,7 @@ function UI({ className, ...props }) {
               getState('playerPhase') === PLAYER_PHASE.lastResult) && <Feedback />}
         </AnimatePresence>
 
-        <AnimatePresence>
-          {(getState('turnPhase') === TURN_PHASE.startTurn) && <EventRecap />}
-        </AnimatePresence>
+        <AnimatePresence>{getState('turnPhase') === TURN_PHASE.startTurn && <EventRecap />}</AnimatePresence>
 
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
         {turnPhase === TURN_PHASE.playTurn && <p className={styles.timer}>{timer}</p>}

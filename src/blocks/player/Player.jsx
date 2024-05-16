@@ -1,38 +1,31 @@
-import React, { useMemo, useRef, useEffect, useState } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
+
 import { PerspectiveCamera } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 import { myPlayer, usePlayerState } from 'playroomkit';
-import { animate } from 'framer-motion';
-
 import Billboard from '../../components/billboard/Billboard';
 import Path from '../../utils/paths';
-import getCurveFromPlayer from '../../utils/getCurveFromPlayer';
-
 import { Model } from '../../models/car';
 
 function Player({ player, index, ...props }) {
-  const { position, rotationY } = props;
-  const { id, state } = player;
-
+  const { rotationY, position } = props;
+  const me = myPlayer();
+  const { id } = player;
   const ref = useRef();
   const camRef = useRef();
-  const progress = useRef(0);
-  const [prevPoints, setPrevPoints] = useState(0);
-  const { scene } = useThree();
-
-  const me = myPlayer();
-  const [points] = usePlayerState(player, 'points');
+  const [currentPoint, setCurrentPoint] = useState(0);
+  const [points, setPoints] = usePlayerState(player, 'points');
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const cameraPos = useMemo(() => {
     const pos = new THREE.Vector3(position[0], position[1], position[2]);
     return pos;
   }, [player]);
 
-  let curve = useRef(null);
+  const path = useMemo(() => Path[index], [index]);
 
-  const newArr = Path[index]?.map((p) => p.clone());
 
   useEffect(() => {
     if (me?.id === id) {
@@ -50,71 +43,49 @@ function Player({ player, index, ...props }) {
     }
   }, [player]);
 
-  useEffect(() => {
-    let currentPoints = points;
-    let tilesToMove = currentPoints - prevPoints;
-    setPrevPoints(currentPoints);
-
-    if (tilesToMove > 0 && currentPoints < Path[index]?.length) {
-      const newPointsArray = newArr.slice(prevPoints, prevPoints + tilesToMove);
-
-      const playerPos = ref.current.position.clone();
-
-      curve.current = getCurveFromPlayer(playerPos, newPointsArray);
-      const geometry = new THREE.TubeGeometry(curve.current, 200, 0.1, 8, false);
-      const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-      scene.add(mesh);
-
-      animate(progress.current, 1, {
-        duration: 2,
-        onUpdate: (value) => {
-          let pos = curve.current.getPointAt(value);
-          ref.current.position.copy(pos);
-          let tangent = curve.current.getTangentAt(value).normalize();
-          pos.add(tangent);
-          // ref.current.lookAt(pos);
-        },
-      });
-    } else if (tilesToMove < 0) {
-      console.log('moins');
-      const newPointsArray = newArr.slice(prevPoints + tilesToMove, prevPoints);
-      newPointsArray.reverse();
-
-      // invert the x and z values of newPointsArray
-      newPointsArray.forEach((point) => {
-        point.x *= -1;
-        point.y *= -1;
-        point.z *= -1;
-      });
-
-      const playerPos = ref.current.position.clone();
-
-      curve.current = getCurveFromPlayer(playerPos, newPointsArray, -1);
-
-      const geometry = new THREE.TubeGeometry(curve.current, 200, 0.1, 8, false);
-      const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00 }));
-      scene.add(mesh);
-
-      animate(progress.current, 1, {
-        duration: 2,
-        onUpdate: (value) => {
-          let pos = curve.current.getPointAt(value);
-          ref.current.position.copy(pos);
-          let tangent = curve.current.getTangentAt(value).normalize();
-          pos.add(tangent);
-          // ref.current.lookAt(pos);
-        },
-      });
+  useFrame(() => {
+    if (!isAnimating && points !== currentPoint) {
+      // Start the movement process
+      movePlayerOneStep();
     }
-  }, [points]);
+  });
+
+  const movePlayerOneStep = () => {
+    setIsAnimating(true);
+    const direction = points > currentPoint ? 1 : -1;
+    const nextPoint = currentPoint + direction;
+    const startPosition = ref.current.position.clone();
+    const endPosition = path[nextPoint].clone();
+
+    const duration = 300; // Duration in ms for each step
+    let startTime = null;
+
+    const animateStep = (time) => {
+      if (!startTime) startTime = time;
+      const elapsedTime = time - startTime;
+      const progress = elapsedTime / duration;
+
+      if (progress < 1) {
+        const currentPos = new THREE.Vector3().lerpVectors(startPosition, endPosition, progress);
+        ref.current.position.copy(currentPos);
+        requestAnimationFrame(animateStep);
+      } else {
+        ref.current.position.copy(endPosition);
+        setCurrentPoint(nextPoint);
+        setIsAnimating(false);
+      }
+    };
+
+    requestAnimationFrame(animateStep);
+  };
 
   return (
     <>
-      <group ref={ref} rotation-y={rotationY} {...props}>
+      <group ref={ref} position={path[0]} rotation-y={rotationY} {...props}>
         <Billboard player={player} position={[0, 2, 0]} />
-        <Model color={state?.profile?.color} />
+        <Model color={player.state?.profile?.color} />
       </group>
-      {me?.id === id && <PerspectiveCamera ref={camRef} makeDefault />}
+      {myPlayer()?.id === player.id && <PerspectiveCamera ref={camRef} makeDefault />}
     </>
   );
 }

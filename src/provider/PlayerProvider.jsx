@@ -111,7 +111,7 @@ export function PlayerProvider({ children }) {
       }
     }
 
-    setBlockedPlayers();
+    // setBlockedPlayers();
 
     currentPlayer.setState('selectedCard', null, true);
     currentPlayer.setState('target', null, true);

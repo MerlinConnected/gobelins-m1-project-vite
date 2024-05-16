@@ -36,7 +36,7 @@ function getCurveFromPlayer(position, points) {
 
   // console.log(p);
 
-  const curve = new CatmullRomCurve3(p);
+  const curve = new CatmullRomCurve3(p, false, 'catmullrom', 0.5);
 
   return curve;
 }
