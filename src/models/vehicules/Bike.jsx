@@ -1,37 +1,51 @@
-import React, { useMemo, forwardRef, useState } from 'react';
+import React, { useEffect, forwardRef, useState } from 'react';
 
-import { Select } from '@react-three/postprocessing';
-import { useGraph } from '@react-three/fiber';
-import { SkeletonUtils } from 'three-stdlib';
+import { motion } from 'framer-motion-3d';
+
 import { Image, useGLTF } from '@react-three/drei';
 import { DoubleSide } from 'three';
+
 import Billboard from '../../components/billboard/Billboard';
 
 export const Bike = forwardRef((props, ref) => {
   const [hovered, hover] = useState(null);
+  const [currentVariant, setCurrentVariant] = useState(1);
 
-  const { scene, materials } = useGLTF('/models/car_low_poly.glb');
+  const bikeImages = ['/images/vehicules/bike/bike-variant-1.png', '/images/vehicules/bike/bike-variant-2.png'];
 
-  const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
-  const { nodes } = useGraph(clone);
+  const bikeImagesOutlined = [
+    '/images/vehicules/bike/bike-variant-1-outlined.png',
+    '/images/vehicules/bike/bike-variant-2-outlined.png',
+  ];
+
+  const bike = hovered ? bikeImages[currentVariant] : bikeImagesOutlined[currentVariant];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentVariant((prevVariant) => (prevVariant + 1) % bikeImages.length);
+    }, 250);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <group
+    <motion.group
       onPointerOver={() => {
-        hover(true), console.log('hovered');
+        hover(true);
       }}
       onPointerOut={() => {
-        hover(false), console.log('not hovered');
+        hover(false);
       }}
       {...props}
       ref={ref}
       dispose={null}
-      position={[0, 0.45, 0]}
+      position={[0, 0.5, 0]}
+      whileHover={{ scale: 1.2, y: 0.6 }}
     >
       <Billboard>
-        <Image url="/images/vehicules/bike/bike.png" side={DoubleSide} transparent />
+        <Image url={bike} side={DoubleSide} transparent />
       </Billboard>
-    </group>
+    </motion.group>
   );
 });
 
