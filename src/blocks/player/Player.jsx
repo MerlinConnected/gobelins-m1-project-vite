@@ -14,8 +14,6 @@ import Billboard from '../../components/billboard/Billboard';
 import classNames from 'classnames';
 import styles from '../../components/billboard/Billboard.module.scss';
 
-import { EffectComposer, Selection, Outline } from '@react-three/postprocessing';
-
 function Player({ player, index, className, ...props }) {
   const { rotationY, position } = props;
   const me = myPlayer();
