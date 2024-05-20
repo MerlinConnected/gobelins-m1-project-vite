@@ -12,7 +12,7 @@
     --color-bg-body: #000;
     --color-bg-display: #f9f9f9;
     --color-bg-floating: rgb(229 229 229 / 50%);
-    --color-bg-overlay: rgba(0, 0, 0, 0.2);
+    --color-bg-overlay: rgba(0, 0, 0, 0.6);
 
     --color-fill-main: #fff;
     --color-fill-secondary: #eee;
@@ -47,6 +47,13 @@
     --text-shadow-regular: 2px 4px 6px 6px rgba(0, 0, 0, 0.2);
     --text-shadow-medium: 2px 4px 8px 10px rgba(0, 0, 0, 0.2);
     --text-shadow-large: 2px 4px 8px 10px rgba(0, 0, 0, 0.2);
+
+    /* DRAWERS COLORS */
+    --color-drawer: #35325E;
+    --color-drawer-transport: #00BDA7;
+    --color-drawer-light-transport: #A8EEE5;
+    --color-drawer-action: #DF5656;
+    --color-drawer-light-action: #FF9F9F;
 
     /* TRANSPORT COLORS */
     --color-background-transport-main-2: #13db7e;

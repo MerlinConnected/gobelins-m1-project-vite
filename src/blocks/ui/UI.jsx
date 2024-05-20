@@ -23,6 +23,7 @@ import { useMessageContext } from '../../provider/MessageProvider';
 import StrokeText from '../../components/stroke-text/StrokeText';
 import EventRecap from '../event-recap/EventRecap';
 import AudioManager from '../audio-manager/AudioManager';
+import Drawers from '../../components/drawers/Drawers';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
@@ -35,17 +36,6 @@ function UI({ className, ...props }) {
 
   const currentPlayer = players[playerTurn];
   const me = myPlayer();
-
-  const handleDrawer = (type) => {
-    if (currentPlayer?.id !== me?.id || getState('playerPhase') !== PLAYER_PHASE.drawCards) return;
-    if (currentPlayer?.getState('cards')?.length < 4) {
-      distributeCard(type, currentPlayer);
-    }
-
-    if (currentPlayer?.getState('cards')?.length == 4) {
-      setPlayerPhase('performFirst', true);
-    }
-  };
 
   // manage disabled states according to the playerPhase
   useEffect(() => {
@@ -143,26 +133,8 @@ function UI({ className, ...props }) {
         <Cards cardsDisabled={cardsDisabled} />
         <div className={styles.middle} />
 
-        <div className={styles.drawers}>
-          <Button
-            disabled={drawersDisabled}
-            className={drawersDisabled ? 'disabled' : ''}
-            onClick={() => {
-              handleDrawer('transport');
-            }}
-          >
-            Piocher carte Transport
-          </Button>
-          <Button
-            disabled={drawersDisabled}
-            className={drawersDisabled ? 'disabled' : ''}
-            onClick={() => {
-              handleDrawer('action');
-            }}
-          >
-            Piocher carte Action
-          </Button>
-        </div>
+        <AnimatePresence>{!drawersDisabled && <Drawers drawersDisabled={drawersDisabled} />}</AnimatePresence>
+
       </div>
     </>
   );

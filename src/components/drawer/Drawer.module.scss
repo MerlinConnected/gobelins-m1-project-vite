@@ -1,0 +1,174 @@
+.wrapper {
+    user-select: none;
+}
+
+.card {
+    display: flex;
+    position: relative;
+    width: rem(250);
+    height: rem(165);
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.transportCard {
+    .backgroundColored {
+        background-color: var(--color-drawer-light-transport);
+        transform: translate(-50%, -50%) rotate(2deg);
+    }
+
+    .layers {
+        transform: rotate(-1deg);
+    }
+
+    .image {
+        width: 105%;
+        top: 55%;
+        left: 50%;
+    }
+}
+
+.actionCard {
+    .backgroundColored {
+        background-color: var(--color-drawer-light-action);
+        transform: translate(-50%, -50%) rotate(-2deg);
+    }
+
+    .layers {
+        transform: rotate(2deg);
+    }
+
+    .image {
+        top: 40%;
+        left: 45%;
+    }
+}
+
+.background {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+
+    clip-path: polygon(
+        0% 24.13%,
+        1.932% 93.04%,
+        6.441% 97.68%,
+        46.86% 100%,
+        79.066% 98.608%,
+        93.076% 98.144%,
+        98.39% 90.487%,
+        100% 7.889%,
+        93.881% 2.32%,
+        57.971% 0%,
+        22.866% 1.392%,
+        5.958% 2.784%,
+        0% 24.13%
+    );
+}
+
+.backgroundColored {
+    width: 98%;
+    height: 98%;
+    top: 50%;
+    left: 50%;
+}
+
+.layers {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--background);
+    width: 100%;
+
+    clip-path: polygon(
+        2.992% 13.405%,
+        2.992% 88.754%,
+        8.93% 100%,
+        70.625% 95.36%,
+        95.969% 93.253%,
+        98% 28.925%,
+        94.718% 5.758%,
+        65.794% 3.016%,
+        11.43% 4.408%,
+        2.992% 13.405%
+    );
+
+    & > * {
+        position: absolute;
+    }
+}
+
+.layer {
+    mix-blend-mode: soft-light;
+    opacity: 0.1;
+    
+}
+
+.image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 115%;
+}
+
+.transportWrapper {
+    position: absolute;
+    top: calc(var(--padding) * -0.8);
+    left: calc(var(--padding) * 1.7);
+    display: flex;
+    gap: rem(1);
+
+    & > * {
+        transform: rotate(-2deg);
+    }
+}
+
+.impactIndicator {
+    position: absolute;
+    top: rem(-20);
+    left: calc(rem(-55) * 0.5);
+}
+
+.speedIndicator {
+    position: absolute;
+    top: calc(var(--padding) * 2.2);
+    left: calc(rem(-35) * 0.5);
+}
+
+.actions {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: calc(var(--padding) * -1);
+
+    display: flex;
+    flex-direction: column;
+    gap: rem(10);
+}
+
+.clicked {
+    background-color: green;
+}
+
+.target {
+    border: 1px solid yellow;
+}
+
+.title {
+    font-family: $polaquita-font;
+    color: var(--color-drawer);
+
+    font-size: rem(50);
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &::before {
+        box-shadow: none;
+    }
+}
