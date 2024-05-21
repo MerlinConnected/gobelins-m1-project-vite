@@ -27,8 +27,7 @@ import AudioManager from '../audio-manager/AudioManager';
 function UI({ className, ...props }) {
   const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
   const { playerPhase, setPlayerPhase, turnPhase, timer } = useGameStateContext();
-  const { setMessage } = useMessageContext();
-  const { message } = useMessageContext();
+  const { message, setMessage } = useMessageContext();
   const [cardsDisabled, setCardsDisabled] = useState(true);
   const [drawersDisabled, setDrawersDisabled] = useState(true);
   const [bin, setBin] = useState(false);
@@ -119,7 +118,7 @@ function UI({ className, ...props }) {
         </div>
 
         <AnimatePresence>
-          {message.type === 'action' &&
+          {message?.type === 'action' &&
             (getState('playerPhase') === PLAYER_PHASE.firstResult ||
               getState('playerPhase') === PLAYER_PHASE.lastResult) && <Feedback />}
         </AnimatePresence>

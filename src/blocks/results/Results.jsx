@@ -11,7 +11,6 @@ import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import styles from './Results.module.scss';
 import removeRoomHash from '../../utils/removeRoomHash';
-import { MAX_POINTS } from '../../utils/constants';
 import CardLayers from '../../components/card-layers/CardLayers';
 import CircleButton from '../../components/circle-button/CircleButton';
 
@@ -63,7 +62,7 @@ function Results({ className, ...props }) {
           <div className={styles.players}>
             <div className={styles.finishers}>
               {finishers.map((finisher, index) => (
-                <div key={index} className={styles.finisher}>
+                <div key={index} className={styles.player}>
                   <StrokeText regular className={styles.name} color={finisher?.state.profile?.color}>
                     {finisher?.state.name}
                   </StrokeText>
@@ -71,28 +70,29 @@ function Results({ className, ...props }) {
                 </div>
               ))}
             </div>
-            <div className={styles.loosers}>
+
+            <div className={styles.looser}>
+              <StrokeText className={styles.looserTitle}>
+                Ce looser a raté le train :
+              </StrokeText>
+
               {players.map((player, index) =>
                 !finishers.includes(player) ? (
-                  <div key={index} className={styles.looserWrapper}>
-                    <div className={styles.looser}>
-                      <img src="/images/ui/marshall.jpg" alt="" className={styles.status} />
-                      <StrokeText regular className={styles.name}>
-                        {player?.state.name}
-                      </StrokeText>
-                      <p className={styles.distanceLeft}>
-                        {MAX_POINTS - player.getState('points') < 0 ? 0 : MAX_POINTS - player.getState('points')} km
-                      </p>
-                    </div>
-                    <div className={styles.bgWrapper}>
-                      <div className={styles.layerWrapper} style={{ backgroundColor: player?.state.profile?.color }}>
-                        <CardLayers className={styles.layer} id="pattern_nbr" />
-                      </div>
-                    </div>
+                  <div key={index} className={styles.player}>
+                    <StrokeText regular className={styles.name} color={player?.state.profile?.color}>
+                      {player?.state.name}
+                    </StrokeText>
+                    <img src="/images/ui/marshall.jpg" alt="" className={styles.status} />
                   </div>
+
                 ) : null
               )}
+
+              <div className={styles.layerWrapper}>
+                <CardLayers className={styles.layer} id="pattern4" />
+              </div>
             </div>
+
           </div>
 
           <CircleButton

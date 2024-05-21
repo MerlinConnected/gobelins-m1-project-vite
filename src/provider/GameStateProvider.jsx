@@ -11,7 +11,7 @@ import {
   TIME_START_TURN,
   TIME_PLAYER_TURN,
   TIME_END_TURN,
-  MAX_POINTS,
+  MAX_WINNERS,
 } from '../utils/constants';
 import { useState } from 'react';
 import { useEventContext } from './EventProvider';
@@ -84,7 +84,7 @@ export function GameStateProvider({ children }) {
     const alreadyQualified = players.filter((player) => player.getState('qualified') === true);
     const finishers = inGamePlayers.filter((player) => player.getState('winner') !== null);
     finishers.sort((a, b) => a.getState('winner') - b.getState('winner'));
-    const newFinishers = finishers.length > 2 ? finishers.slice(0, 2) : finishers;
+    const newFinishers = finishers.length > MAX_WINNERS ? finishers.slice(0, MAX_WINNERS) : finishers;
 
     switch (alreadyQualified.length) {
       case 0:
@@ -97,10 +97,19 @@ export function GameStateProvider({ children }) {
         if (newFinishers.length > 0) {
           newFinishers[0].setState('qualified', true, true);
         }
+        if (newFinishers.length > 1) {
+          newFinishers[1].setState('qualified', true, true);
+        }
         break;
 
       case 2:
-        console.log('fin du game, 2 joueurs déjà qualifiés');
+        if (newFinishers.length > 0) {
+          newFinishers[0].setState('qualified', true, true);
+        }
+        break;
+
+      case MAX_WINNERS:
+        console.log(`Fin du game, ${MAX_WINNERS} joueurs déjà qualifiés`);
         break;
 
       default:
@@ -114,7 +123,7 @@ export function GameStateProvider({ children }) {
   };
 
   const isGameFinished = () => {
-    return getFinishers().length == 2;
+    return getFinishers().length == MAX_WINNERS;
   };
 
   const phaseEnd = () => {
