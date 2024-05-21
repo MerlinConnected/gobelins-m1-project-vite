@@ -10,6 +10,13 @@ import { usePlayerContext } from '../../provider/PlayerProvider';
 
 import Paths from '../paths/Paths';
 
+import { Construction } from '../../models/construction';
+import { Riverside } from '../../models/riverside';
+import { TrainStation } from '../../models/trainstation';
+import { NorthCity } from '../../models/northcity';
+import { Monument } from '../../models/monument';
+import { Garden } from '../../models/garden';
+
 const Game = () => {
   const { players } = usePlayerContext();
 
@@ -28,7 +35,7 @@ const Game = () => {
       <Leva hidden={isDebug} />
       <Loader />
       <Canvas className="canvas" shadows>
-        <color attach="background" args={['#f9efc7']} />
+        <color attach="background" args={['#593C28']} />
         <Suspense fallback={null}>
           <Paths players={players} amount={17} />
 
@@ -43,17 +50,25 @@ const Game = () => {
             args={[5, 5]}
             cellSize={0.5}
             cellThickness={1}
-            cellColor={'#5c5c5c'}
+            cellColor={'#76492b'}
             sectionSize={2}
             sectionThickness={1.5}
-            sectionColor={'#8d4747'}
+            sectionColor={'#523622'}
             fadeDistance={50}
             fadeStrength={0.5}
             followCamera={false}
             infiniteGrid
           />
+
+          <TrainStation />
+          <Construction />
+          <Riverside />
+          <NorthCity />
+          <Monument />
+          <Garden />
+
         </Suspense>
-      </Canvas>
+      </Canvas >
     </>
   );
 };
