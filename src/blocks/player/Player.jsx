@@ -95,7 +95,7 @@ function Player({ player, index, className, ...props }) {
           </Html>
         </Billboard> */}
 
-        <Vehicule color={player.state?.profile?.color} />
+        <Vehicule player={player} color={player.state?.profile?.color} />
       </group>
       {myPlayer()?.id === player.id && <PerspectiveCamera ref={camRef} makeDefault />}
     </>

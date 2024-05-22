@@ -3,13 +3,11 @@ import { motion } from 'framer-motion-3d';
 import { Image, useGLTF } from '@react-three/drei';
 import { DoubleSide } from 'three';
 import Billboard from '../../components/billboard/Billboard';
-import { myPlayer } from 'playroomkit';
+import { myPlayer, usePlayersList } from 'playroomkit';
 
-export const Vehicule = forwardRef((props, ref) => {
+export const Vehicule = forwardRef(({ player, ...props }, ref) => {
   const [hovered, hover] = useState(null);
   const [currentVariant, setCurrentVariant] = useState(0);
-
-  const player = myPlayer();
 
   const vehicleImages = {
     velo: {
@@ -48,10 +46,10 @@ export const Vehicule = forwardRef((props, ref) => {
 
   const getVehicleImages = (vehicleType) => {
     const vehicle = vehicleImages[vehicleType];
-    return hovered ? vehicle.images[currentVariant] : vehicle.imagesOutlined[currentVariant];
+    return hovered ? vehicle.imagesOutlined[currentVariant] : vehicle.images[currentVariant];
   };
 
-  const vehicleType = player.state.status.name;
+  const vehicleType = player?.state?.status?.name;
   const vehicleImage = getVehicleImages(vehicleType);
 
   useEffect(() => {
@@ -82,5 +80,3 @@ export const Vehicule = forwardRef((props, ref) => {
     </motion.group>
   );
 });
-
-useGLTF.preload('/models/car_low_poly.glb');
