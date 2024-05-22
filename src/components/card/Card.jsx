@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from 'react';
-import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import classNames from 'classnames';
 import { baseVariants, cardAppear, cardInactive, cardSelected, conditionalAnimation } from '../../core/animation';
 
@@ -22,6 +22,7 @@ import CircleButton from '../circle-button/CircleButton';
 import Button from '../button/Button';
 
 const LAYER_1 = 10;
+const LAYER_2 = 20;
 const LAYER_IMG = 50;
 const LAYER_TITLE = 64;
 const LAYER_INFOS = 40;
@@ -39,11 +40,8 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const xSpring = useSpring(x);
-  const ySpring = useSpring(y);
-
-  const rotateX = useTransform(ySpring, [-0.5, 0.5], ['10deg', '-10deg']);
-  const rotateY = useTransform(xSpring, [-0.5, 0.5], ['-10deg', '10deg']);
+  const rotateX = useTransform(y, [-0.5, 0.5], ['10deg', '-10deg']);
+  const rotateY = useTransform(x, [-0.5, 0.5], ['-10deg', '10deg']);
 
   // const transform = useMotionTemplate`rotateX(${ySpring}deg) rotateY(${xSpring}deg)`;
 
@@ -212,7 +210,7 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
         style={{ '--background': `${colors.bg}` }}
         {...props}
       >
-        <motion.div {...animationProps}>
+        <motion.div {...animationProps} whileHover={active && { scale: 1.05, transition: { duration: 0.2 } }}>
           <motion.div
             ref={ref}
             className={styles.card}
@@ -223,7 +221,7 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
           >
             <div style={style(LAYER_1)} className={styles.background} />
             <div style={style(LAYER_1)} className={styles.layers}>
-              <CardLayers className={styles.layer} id={patternCard} />
+              <CardLayers style={style(LAYER_2)} className={styles.layer} id={patternCard} />
               <CardLayers className={styles.layer} id="layer1" />
             </div>
 
@@ -246,14 +244,14 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
               </StrokeText>
             </motion.div>
 
-            {/* {selected && (
+            {selected && (
               <motion.div style={style(LAYER_TITLE)} className={styles.actions}>
                 {card.type && card.type === 'transport' && (
                   <CircleButton icon="replay" color="#0D6EFF" onClick={() => selectTarget(currentPlayer)} />
                 )}
                 <CircleButton icon="bin" color="#ff0d47" onClick={() => deleteCard()} />
               </motion.div>
-            )} */}
+            )}
 
             {/* <Button
             className={classNames(styles.card, { [styles.clicked]: active && selected })}

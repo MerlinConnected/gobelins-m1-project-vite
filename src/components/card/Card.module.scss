@@ -8,6 +8,7 @@
     position: relative;
     width: rem(250);
     height: rem(165);
+    transition: transform 0.3s cubic-bezier(0.63, 2.6, 0.48, 0.94);
 }
 
 .background {
@@ -119,7 +120,7 @@
 .actions {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%) translateZ(25px) !important;
+    transform: translateY(-50%) translateZ(51px) !important;
     right: calc(var(--padding) * -1);
 
     display: flex;
