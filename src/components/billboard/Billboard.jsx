@@ -4,12 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 
-import classNames from 'classnames';
-import styles from './Billboard.module.scss';
-
-export default function Billboard({ player, className, ...props }) {
-  const { state } = player;
-
+export default function Billboard({ children, ...props }) {
   const planeRef = useRef(null);
   const direction = new THREE.Vector3();
 
@@ -29,11 +24,7 @@ export default function Billboard({ player, className, ...props }) {
   return (
     <>
       <group ref={planeRef} {...props}>
-        <Html wrapperClass={classNames(styles.wrapper, className)} center zIndexRange={[0, 0]}>
-          <p>{state?.name}</p>
-          <p>{state?.points} Points</p>
-          <p>{state?.status?.name}</p>
-        </Html>
+        {children}
       </group>
     </>
   );

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import { Canvas } from '@react-three/fiber';
 import { Loader, OrbitControls, Grid, GizmoHelper, GizmoViewport } from '@react-three/drei';
-import { Leva } from 'leva';
+import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
 import { Perf } from 'r3f-perf';
+import { Leva } from 'leva';
 
 import { usePlayerContext } from '../../provider/PlayerProvider';
 
-import Paths from '../paths/Paths';
+import Tiles from '../paths/Paths';
 
 import { Construction } from '../../models/construction';
 import { Riverside } from '../../models/riverside';
@@ -39,11 +39,11 @@ const Game = () => {
       <Canvas className="canvas" shadows>
         <color attach="background" args={['#503727']} />
         <Suspense fallback={null}>
-          <Paths players={players} amount={17} />
-
           <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
             <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
           </GizmoHelper>
+
+          <Tiles players={players} amount={17} />
 
           <OrbitControls target={[0, 0, 0]} />
           {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
@@ -77,9 +77,8 @@ const Game = () => {
           <Monument />
           <Garden />
           <Routes />
-
         </Suspense>
-      </Canvas >
+      </Canvas>
     </>
   );
 };

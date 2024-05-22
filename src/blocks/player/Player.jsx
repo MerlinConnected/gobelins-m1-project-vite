@@ -1,18 +1,23 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 
-import { PerspectiveCamera } from '@react-three/drei';
+import { Html, PerspectiveCamera } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 import { myPlayer, usePlayerState } from 'playroomkit';
-import Billboard from '../../components/billboard/Billboard';
-import Path from '../../utils/paths';
-import { Model } from '../../models/car';
 
-function Player({ player, index, ...props }) {
+import Path from '../../utils/paths';
+
+import { Vehicule } from '../../models/vehicules/Vehicule';
+
+import Billboard from '../../components/billboard/Billboard';
+import classNames from 'classnames';
+import styles from '../../components/billboard/Billboard.module.scss';
+
+function Player({ player, index, className, ...props }) {
   const { rotationY, position } = props;
   const me = myPlayer();
-  const { id } = player;
+  const { id, state } = player;
   const ref = useRef(null);
   const camRef = useRef(null);
   const [currentPoint, setCurrentPoint] = useState(0);
@@ -54,7 +59,7 @@ function Player({ player, index, ...props }) {
     const direction = points > currentPoint ? 1 : -1;
     const nextPoint = currentPoint + direction;
     const startPosition = ref.current.position.clone();
-    const endPosition = path[nextPoint].clone();
+    const endPosition = path[nextPoint]?.clone();
 
     const duration = 300; // Duration in ms for each step
     let startTime = null;
@@ -81,8 +86,15 @@ function Player({ player, index, ...props }) {
   return (
     <>
       <group ref={ref} position={path[0]} rotation-y={rotationY} {...props}>
-        <Billboard player={player} position={[0, 2, 0]} />
-        <Model color={player.state?.profile?.color} />
+        {/* <Billboard player={player} position={[0, 2, 0]}>
+          <Html wrapperClass={classNames(styles.wrapper, className)} center>
+            <p>{state?.name}</p>
+            <p>{state?.points} Points</p>
+            <p>{state?.status?.name}</p>
+          </Html>
+        </Billboard> */}
+
+        <Vehicule player={player} color={player.state?.profile?.color} />
       </group>
       {myPlayer()?.id === player.id && <PerspectiveCamera ref={camRef} makeDefault />}
     </>

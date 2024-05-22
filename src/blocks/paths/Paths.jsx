@@ -26,7 +26,7 @@ function calculateRange(dataArray, score) {
 }
 
 function initialisePlayer(index, amount) {
-  // set the position and the roatation of the object according to its index
+  // set the position and the rotation of the object according to its index
   let position = [];
   let rotationY = 0;
   if (index === 0) {
@@ -35,15 +35,15 @@ function initialisePlayer(index, amount) {
   }
   if (index === 1) {
     position = [amount, 0, 0];
-    rotationY = -Math.PI / 2;
+    rotationY = Math.PI;
   }
   if (index === 2) {
     position = [0, 0, -amount];
-    rotationY = 0;
+    rotationY = Math.PI;
   }
   if (index === 3) {
     position = [-amount, 0, 0];
-    rotationY = Math.PI / 2;
+    rotationY = Math.PI;
   }
 
   return { position, rotationY };
@@ -65,7 +65,15 @@ function Tiles({ players, amount, ...props }) {
     <group ref={ref} {...props}>
       {players.map((player, i) => (
         <React.Fragment key={player.id}>
-          <Player key={player.id} player={player} index={i} {...initialisePlayer(i, amount)} />
+          <Player
+            onClick={() => {
+              console.log('clicked', player.state.name);
+            }}
+            key={player.id}
+            player={player}
+            index={i}
+            {...initialisePlayer(i, amount)}
+          />
           <CornerTiles data={tilesPath[`player${i + 1}`].corner} range={cornerRanges[i]} />
           <StraightTiles data={tilesPath[`player${i + 1}`].straight} range={straightRanges[i]} />
         </React.Fragment>
