@@ -86,6 +86,8 @@
     position: absolute;
     top: rem(-20);
     left: calc(rem(-55) * 0.5);
+    // transform: translateZ(25px);
+    // transform-style: preserve-3d;
 }
 
 .speedIndicator {
@@ -117,7 +119,7 @@
 .actions {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%) translateZ(25px) !important;
     right: calc(var(--padding) * -1);
 
     display: flex;

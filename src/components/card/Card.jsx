@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useMemo, useRef } from 'react';
+import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import classNames from 'classnames';
-import { cardAppear } from '../../core/animation';
+import { baseVariants, cardAppear, cardInactive, cardSelected, conditionalAnimation } from '../../core/animation';
 
 import { myPlayer, getState } from 'playroomkit';
 import { usePlayerContext } from '../../provider/PlayerProvider';
@@ -21,13 +21,54 @@ import CircleButton from '../circle-button/CircleButton';
 
 import Button from '../button/Button';
 
-function Card({ className, card, active, selected, ...props }) {
+const LAYER_1 = 1;
+const LAYER_IMG = 25;
+const LAYER_TITLE = 50;
+const LAYER_INFOS = 75;
+
+function Card({ className, card, active, deckEnabled, selected, ...props }) {
   const { playerTurn, players, inGamePlayers } = usePlayerContext();
   const { handlePlayerPhase } = useGameStateContext();
   const { setMessage } = useMessageContext();
   const me = myPlayer();
 
+  const ref = useRef(null);
+
   const currentPlayer = players[playerTurn];
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const xSpring = useSpring(x);
+  const ySpring = useSpring(y);
+
+  const rotateX = useTransform(ySpring, [-0.5, 0.5], ['5deg', '-5deg']);
+  const rotateY = useTransform(xSpring, [-0.5, 0.5], ['-5deg', '5deg']);
+
+  // const transform = useMotionTemplate`rotateX(${ySpring}deg) rotateY(${xSpring}deg)`;
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return [0, 0];
+
+    const rect = ref.current.getBoundingClientRect();
+
+    const width = rect.width;
+    const height = rect.height;
+
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const rX = mouseX / width - 0.5;
+    const rY = mouseY / height - 0.5;
+
+    x.set(rX);
+    y.set(rY);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   const selectCard = () => {
     if (currentPlayer?.id !== me?.id) return;
@@ -149,54 +190,72 @@ function Card({ className, card, active, selected, ...props }) {
     return pattern;
   }, []);
 
-  // console.log(card);
+  // console.log(props);
 
   const linkImage = `/images/transports/${card.name}.svg`;
+
+  const animationProps = conditionalAnimation(!active, cardInactive);
+
+  const style = (layer) => {
+    return {
+      transform: `translateZ(${layer}px)`,
+      transformStyle: 'preserve-3d',
+    };
+  };
 
   return (
     card && (
       <motion.div
+        {...baseVariants}
         {...cardAppear}
         className={classNames(styles.wrapper, className)}
         style={{ '--background': `${colors.bg}` }}
         {...props}
       >
-        <div className={styles.card} onClick={() => active && selectCard()}>
-          <div className={styles.background} />
-          <div className={styles.layers}>
-            <CardLayers className={styles.layer} id={patternCard} />
-            <CardLayers className={styles.layer} id="layer1" />
-          </div>
-
-          <img src={linkImage} className={styles.image} />
-
-          {card.impact >= 1 && (
-            <div className={styles.transportWrapper}>
-              {card.impact >= 1 &&
-                card.category.map((el) => {
-                  return <TransportTag key={el} transport={el} />;
-                })}
+        <motion.div {...animationProps}>
+          <motion.div
+            ref={ref}
+            className={styles.card}
+            style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            onClick={() => active && selectCard()}
+          >
+            <div className={styles.background} />
+            <div className={styles.layers}>
+              <CardLayers className={styles.layer} id={patternCard} />
+              <CardLayers className={styles.layer} id="layer1" />
             </div>
-          )}
-          <ImpactIndicator className={styles.impactIndicator} impact={card.impact} />
-          <SpeedIndicator className={styles.speedIndicator} impact={card.impact} />
 
-          <div className={styles.editoWrapper}>
-            <StrokeText large className={styles.test} style={{ '--font-color': `${colors.font}` }}>
-              {card.edito}
-            </StrokeText>
-          </div>
+            <img style={style(LAYER_IMG)} src={linkImage} className={styles.image} />
 
-          {selected && (
-            <div className={styles.actions}>
-              {card.type && card.type === 'transport' && (
-                <CircleButton icon="replay" color="#0D6EFF" onClick={() => selectTarget(currentPlayer)} />
-              )}
-              <CircleButton icon="bin" color="#ff0d47" onClick={() => deleteCard()} />
-            </div>
-          )}
+            {card.impact >= 1 && (
+              <motion.div style={style(LAYER_INFOS)} className={styles.transportWrapper}>
+                {card.impact >= 1 &&
+                  card.category.map((el) => {
+                    return <TransportTag key={el} transport={el} />;
+                  })}
+              </motion.div>
+            )}
+            <ImpactIndicator style={style(LAYER_INFOS)} className={styles.impactIndicator} impact={card.impact} />
+            <SpeedIndicator style={style(LAYER_INFOS)} className={styles.speedIndicator} impact={card.impact} />
 
-          {/* <Button
+            <motion.div style={style(LAYER_TITLE)} className={styles.editoWrapper}>
+              <StrokeText large className={styles.test} style={{ '--font-color': `${colors.font}` }}>
+                {card.edito}
+              </StrokeText>
+            </motion.div>
+
+            {selected && (
+              <motion.div style={style(LAYER_TITLE)} className={styles.actions}>
+                {card.type && card.type === 'transport' && (
+                  <CircleButton icon="replay" color="#0D6EFF" onClick={() => selectTarget(currentPlayer)} />
+                )}
+                <CircleButton icon="bin" color="#ff0d47" onClick={() => deleteCard()} />
+              </motion.div>
+            )}
+
+            {/* <Button
             className={classNames(styles.card, { [styles.clicked]: active && selected })}
             disabled={!active}
             onClick={() => selectCard()}
@@ -222,7 +281,8 @@ function Card({ className, card, active, selected, ...props }) {
               </div>
             )}
           </Button> */}
-        </div>
+          </motion.div>
+        </motion.div>
       </motion.div>
     )
   );

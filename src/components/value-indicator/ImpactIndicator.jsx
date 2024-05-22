@@ -25,8 +25,8 @@ function ImpactIndicator({ className, impact, ...props }) {
   }, []);
 
   return (
-    <div className={classNames(styles.wrapper, className)} style={{ '--background': `${indicator.color}` }} {...props}>
-      <div className={styles.main}>
+    <div className={classNames(styles.wrapper, className)} {...props}>
+      <div className={styles.main} style={{ '--background': `${indicator.color}` }}>
         <div className={styles.wrapperLayer}>
           <CardLayers className={styles.layer} id="pattern_nbr" />
           <CardLayers className={classNames(styles.layer, styles.indicator)} id={indicator.pattern} />
