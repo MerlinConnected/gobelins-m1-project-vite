@@ -13,6 +13,7 @@ function Message({ className, ...props }) {
 
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
+      <div className={styles.bg}></div>
       <motion.div
         key={message.text}
         initial={{
@@ -28,7 +29,7 @@ function Message({ className, ...props }) {
           scale: 0.6,
         }}
       >
-        <StrokeText large color="var(--color-content-main)">
+        <StrokeText large color="var(--color-content-main)" className={styles.text}>
           {message.text}
         </StrokeText>
       </motion.div>
