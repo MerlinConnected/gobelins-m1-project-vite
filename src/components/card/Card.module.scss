@@ -8,6 +8,7 @@
     position: relative;
     width: rem(250);
     height: rem(165);
+    transition: transform 0.3s cubic-bezier(0.63, 2.6, 0.48, 0.94);
 }
 
 .background {
@@ -86,6 +87,8 @@
     position: absolute;
     top: rem(-20);
     left: calc(rem(-55) * 0.5);
+    // transform: translateZ(25px);
+    // transform-style: preserve-3d;
 }
 
 .speedIndicator {
@@ -117,7 +120,7 @@
 .actions {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%) translateZ(51px) !important;
     right: calc(var(--padding) * -1);
 
     display: flex;

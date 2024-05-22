@@ -1,26 +1,32 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { AnimatePresence, motion, transform } from 'framer-motion';
 import classNames from 'classnames';
 
-import { myPlayer } from 'playroomkit';
+import { myPlayer, getState } from 'playroomkit';
 import { useGameStateContext } from '../../provider/GameStateProvider';
 
 import styles from './Cards.module.scss';
 
-import { baseVariants } from '../../core/animation';
 import { PLAYER_PHASE, TURN_PHASE } from '../../utils/constants';
 
 import Card from '../card/Card';
+import { cardAppear, cardInactive, cardSelected, conditionalAnimation } from '../../core/animation';
+import { set } from 'lodash-es';
+import { usePlayerContext } from '../../provider/PlayerProvider';
 
 function Cards({ className, cardsDisabled, ...props }) {
-  const cardsRef = useRef(null);
   const { turnPhase, playerPhase } = useGameStateContext();
+  const { players, playerTurn } = usePlayerContext();
   const me = myPlayer();
 
+  const cardsRef = React.useRef();
+
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [deckEnabled, setDeckEnabled] = useState(false);
   const [radius, setRadius] = useState(null);
 
   const numCards = me.state.cards?.length || 0;
+  const currentPlayer = players[playerTurn];
 
   const handleCardSelection = (index) => {
     if (cardsDisabled) return;
@@ -34,6 +40,8 @@ function Cards({ className, cardsDisabled, ...props }) {
       turnPhase === TURN_PHASE.endTurn
     )
       setSelectedCardIndex(null);
+
+    if (currentPlayer?.id === me?.id && getState('turnPhase') === TURN_PHASE.playTurn) setDeckEnabled(true);
   }, [turnPhase, playerPhase]);
 
   useEffect(() => {
@@ -64,27 +72,35 @@ function Cards({ className, cardsDisabled, ...props }) {
 
             const calculatedAngle = -(angle * 10 - 16);
 
+            const animationDuration = {
+              duration: 1,
+            };
+
+            const basicStyle = {
+              position: 'absolute',
+              left: `calc(50% + ${x}px)`,
+              bottom: `calc(${y}px - ${isSelected ? -50 : 0}px)`,
+              zIndex: isSelected ? numCards + 1 : numCards - index,
+            };
+
             return (
               <motion.div
-                {...baseVariants}
                 layout="position"
                 key={card.uuid}
-                style={{
-                  position: 'absolute',
-                  left: `calc(50% + ${x}px)`,
-                  bottom: `calc(${y}px - ${isSelected ? -50 : 0}px)`,
-                  zIndex: isSelected ? numCards + 1 : numCards - index,
-                }}
+                style={basicStyle}
                 initial={{ rotate: calculatedAngle }}
                 animate={{ rotate: calculatedAngle }}
+                // exit={cardSelected.exit}
               >
-                <Card
-                  className={styles.card}
-                  card={card}
-                  active={!cardsDisabled}
-                  selected={isSelected}
-                  onClick={() => handleCardSelection(card.uuid)}
-                />
+                <motion.div>
+                  <Card
+                    card={card}
+                    active={!cardsDisabled}
+                    deckEnabled={deckEnabled}
+                    selected={isSelected}
+                    onClick={() => handleCardSelection(card.uuid)}
+                  />
+                </motion.div>
               </motion.div>
             );
           })}
