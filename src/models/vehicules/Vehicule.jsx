@@ -1,9 +1,8 @@
 import React, { useEffect, forwardRef, useState } from 'react';
 import { motion } from 'framer-motion-3d';
-import { Image, useGLTF } from '@react-three/drei';
+import { Image } from '@react-three/drei';
 import { DoubleSide } from 'three';
 import Billboard from '../../components/billboard/Billboard';
-import { myPlayer, usePlayersList } from 'playroomkit';
 
 export const Vehicule = forwardRef(({ player, ...props }, ref) => {
   const [hovered, hover] = useState(null);
@@ -46,7 +45,7 @@ export const Vehicule = forwardRef(({ player, ...props }, ref) => {
 
   const getVehicleImages = (vehicleType) => {
     const vehicle = vehicleImages[vehicleType];
-    return hovered ? vehicle.imagesOutlined[currentVariant] : vehicle.images[currentVariant];
+    return hovered ? vehicle?.imagesOutlined[currentVariant] : vehicle?.images[currentVariant];
   };
 
   const vehicleType = player?.state?.status?.name;

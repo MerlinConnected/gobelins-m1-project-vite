@@ -60,7 +60,7 @@ function Player({ player, index, className, ...props }) {
     const direction = points > currentPoint ? 1 : -1;
     const nextPoint = currentPoint + direction;
     const startPosition = ref.current.position.clone();
-    const endPosition = path[nextPoint].clone();
+    const endPosition = path[nextPoint]?.clone();
 
     const duration = 300; // Duration in ms for each step
     let startTime = null;
