@@ -30,10 +30,10 @@ export const CATEGORY = {
 
 export const TRANSPORT = [
   { name: 'velo', type: 'transport', impact: 1, category: [CATEGORY.deuxRoues] },
-  { name: 'voiture', type: 'transport', impact: 1, category: [CATEGORY.route, CATEGORY.moteur] },
-  { name: 'tramway', type: 'transport', impact: 1, category: [CATEGORY.rails, CATEGORY.commun] },
-  { name: 'metro', type: 'transport', impact: 1, category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur] },
-  { name: 'moto', type: 'transport', impact: 1, category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur] },
+  { name: 'voiture', type: 'transport', impact: 2, category: [CATEGORY.route, CATEGORY.moteur] },
+  { name: 'tramway', type: 'transport', impact: 2, category: [CATEGORY.rails, CATEGORY.commun] },
+  { name: 'metro', type: 'transport', impact: 3, category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur] },
+  { name: 'moto', type: 'transport', impact: 4, category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur] },
 ];
 
 export const TIME_START_GAME = 1;

@@ -8,7 +8,7 @@ import { myPlayer, usePlayerState } from 'playroomkit';
 
 import Path from '../../utils/paths';
 
-import { Bike } from '../../models/vehicules/Bike';
+import { Vehicule } from '../../models/vehicules/Vehicule';
 
 import Billboard from '../../components/billboard/Billboard';
 import classNames from 'classnames';
@@ -87,15 +87,15 @@ function Player({ player, index, className, ...props }) {
   return (
     <>
       <group ref={ref} position={path[0]} rotation-y={rotationY} {...props}>
-        <Billboard player={player} position={[0, 2, 0]}>
+        {/* <Billboard player={player} position={[0, 2, 0]}>
           <Html wrapperClass={classNames(styles.wrapper, className)} center>
             <p>{state?.name}</p>
             <p>{state?.points} Points</p>
             <p>{state?.status?.name}</p>
           </Html>
-        </Billboard>
+        </Billboard> */}
 
-        <Bike color={player.state?.profile?.color} />
+        <Vehicule color={player.state?.profile?.color} />
       </group>
       {myPlayer()?.id === player.id && <PerspectiveCamera ref={camRef} makeDefault />}
     </>
