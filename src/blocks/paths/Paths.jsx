@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import Player from '../player/Player';
 import { CornerTiles, StraightTiles } from '../tiles/Tiles';
 
@@ -50,7 +50,7 @@ function initialisePlayer(index, amount) {
 }
 
 function Tiles({ players, amount, ...props }) {
-  const ref = useRef();
+  const ref = useRef(null);
   const playerPoints = [];
 
   players.forEach((player) => {

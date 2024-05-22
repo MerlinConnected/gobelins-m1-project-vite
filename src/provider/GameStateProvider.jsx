@@ -172,7 +172,7 @@ export function GameStateProvider({ children }) {
   //   paused: false,
   // });
 
-  const timerInterval = useRef();
+  const timerInterval = useRef(null);
 
   const runTimer = () => {
     timerInterval.current = setInterval(() => {

@@ -10,7 +10,7 @@ import styles from './Billboard.module.scss';
 export default function Billboard({ player, className, ...props }) {
   const { state } = player;
 
-  const planeRef = useRef();
+  const planeRef = useRef(null);
   const direction = new THREE.Vector3();
 
   useFrame(({ camera }) => {

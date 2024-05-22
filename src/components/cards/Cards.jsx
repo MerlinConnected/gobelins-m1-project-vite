@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import classNames from 'classnames';
 
@@ -13,7 +13,7 @@ import { PLAYER_PHASE, TURN_PHASE } from '../../utils/constants';
 import Card from '../card/Card';
 
 function Cards({ className, cardsDisabled, ...props }) {
-  const cardsRef = React.useRef();
+  const cardsRef = useRef(null);
   const { turnPhase, playerPhase } = useGameStateContext();
   const me = myPlayer();
 

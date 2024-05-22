@@ -13,8 +13,8 @@ function Player({ player, index, ...props }) {
   const { rotationY, position } = props;
   const me = myPlayer();
   const { id } = player;
-  const ref = useRef();
-  const camRef = useRef();
+  const ref = useRef(null);
+  const camRef = useRef(null);
   const [currentPoint, setCurrentPoint] = useState(0);
   const [points, setPoints] = usePlayerState(player, 'points');
   const [isAnimating, setIsAnimating] = useState(false);
@@ -25,7 +25,6 @@ function Player({ player, index, ...props }) {
   }, [player]);
 
   const path = useMemo(() => Path[index], [index]);
-
 
   useEffect(() => {
     if (me?.id === id) {
