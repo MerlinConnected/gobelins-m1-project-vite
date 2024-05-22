@@ -243,7 +243,7 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
             <SpeedIndicator style={style(LAYER_INFOS)} className={styles.speedIndicator} impact={card.impact} />
 
             <motion.div style={style(LAYER_TITLE)} className={styles.editoWrapper}>
-              <StrokeText large className={styles.test} style={{ '--font-color': `${colors.font}` }}>
+              <StrokeText large style={{ '--font-color': `${colors.font}` }}>
                 {card.edito}
               </StrokeText>
             </motion.div>

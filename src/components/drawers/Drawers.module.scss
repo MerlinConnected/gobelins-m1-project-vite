@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: rem(32);
+    gap: rem(80);
 
     position: absolute;
     top: 0;
@@ -19,6 +19,10 @@
     display: flex;
     align-items: center;
     gap: rem(16);
+
+    p {
+        font-size: rem(50);
+    }
 }
 
 .checkpoints {
@@ -29,6 +33,6 @@
 
 .drawers {
     display: flex;
-    gap: rem(16);
-    margin-bottom: 10vh;
+    gap: rem(80);
+    margin-bottom: 15vh;
 }
