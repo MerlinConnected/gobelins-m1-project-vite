@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Canvas } from '@react-three/fiber';
-import { Loader, OrbitControls, Environment, Grid, GizmoHelper, GizmoViewport } from '@react-three/drei';
+import { Loader, OrbitControls, Grid, GizmoHelper, GizmoViewport } from '@react-three/drei';
 import { Leva } from 'leva';
 import { Suspense } from 'react';
 import { Perf } from 'r3f-perf';
@@ -16,6 +16,8 @@ import { TrainStation } from '../../models/trainstation';
 import { NorthCity } from '../../models/northcity';
 import { Monument } from '../../models/monument';
 import { Garden } from '../../models/garden';
+import { Routes } from '../../models/routes';
+import Environment from '../environment/Environment';
 
 const Game = () => {
   const { players } = usePlayerContext();
@@ -35,7 +37,7 @@ const Game = () => {
       <Leva hidden={isDebug} />
       <Loader />
       <Canvas className="canvas" shadows>
-        <color attach="background" args={['#593C28']} />
+        <color attach="background" args={['#503727']} />
         <Suspense fallback={null}>
           <Paths players={players} amount={17} />
 
@@ -44,8 +46,8 @@ const Game = () => {
           </GizmoHelper>
 
           <OrbitControls target={[0, 0, 0]} />
-          <Environment preset="city" />
           {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
+
           <Grid
             args={[5, 5]}
             cellSize={0.5}
@@ -60,12 +62,21 @@ const Game = () => {
             infiniteGrid
           />
 
+          <Environment />
+
+          {/* Floor */}
+          {/* <mesh position-y={0} rotation-x={- Math.PI * 0.5} scale={100}>
+            <planeGeometry />
+            <meshStandardMaterial color="#7e614b" />
+          </mesh> */}
+
           <TrainStation />
           <Construction />
           <Riverside />
           <NorthCity />
           <Monument />
           <Garden />
+          <Routes />
 
         </Suspense>
       </Canvas >
