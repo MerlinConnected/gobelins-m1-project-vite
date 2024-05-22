@@ -11,7 +11,6 @@ import { PLAYER_PHASE, TURN_PHASE } from '../../utils/constants';
 
 import Card from '../card/Card';
 import { cardAppear, cardInactive, cardSelected, conditionalAnimation } from '../../core/animation';
-import { set } from 'lodash-es';
 import { usePlayerContext } from '../../provider/PlayerProvider';
 
 function Cards({ className, cardsDisabled, ...props }) {
