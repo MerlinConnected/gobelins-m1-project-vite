@@ -68,7 +68,7 @@ export function EventProvider({ children }) {
     removeEvent();
     addEvent();
     handleEventDrawer();
-    // setBlockedPlayers();
+    setBlockedPlayers(); // FOR DEV: comment this line if you don't want the players to be blocked
   };
 
   context = {
