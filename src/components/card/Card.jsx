@@ -21,10 +21,10 @@ import CircleButton from '../circle-button/CircleButton';
 
 import Button from '../button/Button';
 
-const LAYER_1 = 1;
-const LAYER_IMG = 25;
-const LAYER_TITLE = 50;
-const LAYER_INFOS = 75;
+const LAYER_1 = 10;
+const LAYER_IMG = 50;
+const LAYER_TITLE = 64;
+const LAYER_INFOS = 40;
 
 function Card({ className, card, active, deckEnabled, selected, ...props }) {
   const { playerTurn, players, inGamePlayers } = usePlayerContext();
@@ -42,8 +42,8 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
   const xSpring = useSpring(x);
   const ySpring = useSpring(y);
 
-  const rotateX = useTransform(ySpring, [-0.5, 0.5], ['5deg', '-5deg']);
-  const rotateY = useTransform(xSpring, [-0.5, 0.5], ['-5deg', '5deg']);
+  const rotateX = useTransform(ySpring, [-0.5, 0.5], ['10deg', '-10deg']);
+  const rotateY = useTransform(xSpring, [-0.5, 0.5], ['-10deg', '10deg']);
 
   // const transform = useMotionTemplate`rotateX(${ySpring}deg) rotateY(${xSpring}deg)`;
 
@@ -221,8 +221,8 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
             onMouseLeave={handleMouseLeave}
             onClick={() => active && selectCard()}
           >
-            <div className={styles.background} />
-            <div className={styles.layers}>
+            <div style={style(LAYER_1)} className={styles.background} />
+            <div style={style(LAYER_1)} className={styles.layers}>
               <CardLayers className={styles.layer} id={patternCard} />
               <CardLayers className={styles.layer} id="layer1" />
             </div>
@@ -246,14 +246,14 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
               </StrokeText>
             </motion.div>
 
-            {selected && (
+            {/* {selected && (
               <motion.div style={style(LAYER_TITLE)} className={styles.actions}>
                 {card.type && card.type === 'transport' && (
                   <CircleButton icon="replay" color="#0D6EFF" onClick={() => selectTarget(currentPlayer)} />
                 )}
                 <CircleButton icon="bin" color="#ff0d47" onClick={() => deleteCard()} />
               </motion.div>
-            )}
+            )} */}
 
             {/* <Button
             className={classNames(styles.card, { [styles.clicked]: active && selected })}
