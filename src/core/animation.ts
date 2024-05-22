@@ -1,7 +1,5 @@
 import { Variant, Variants } from 'framer-motion';
 import { bezier } from '../helpers/easing';
-import { initial } from 'lodash-es';
-import { rotate } from 'three/examples/jsm/nodes/Nodes.js';
 
 type DirectonalTransform = {
   x?: string | number;
