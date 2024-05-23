@@ -84,9 +84,10 @@ function Player({ player, index, className, ...props }) {
   };
 
   return (
-    <>
-      <group ref={ref} position={path[0]} rotation-y={rotationY} {...props}>
-        {/* <Billboard player={player} position={[0, 2, 0]}>
+    player && (
+      <>
+        <group ref={ref} position={path[0]} rotation-y={rotationY} {...props}>
+          {/* <Billboard player={player} position={[0, 2, 0]}>
           <Html wrapperClass={classNames(styles.wrapper, className)} center>
             <p>{state?.name}</p>
             <p>{state?.points} Points</p>
@@ -94,10 +95,11 @@ function Player({ player, index, className, ...props }) {
           </Html>
         </Billboard> */}
 
-        <Vehicule player={player} color={player.state?.profile?.color} />
-      </group>
-      {myPlayer()?.id === player.id && <PerspectiveCamera ref={camRef} makeDefault />}
-    </>
+          <Vehicule player={player} color={player.state?.profile?.color} />
+        </group>
+        {myPlayer()?.id === player.id && <PerspectiveCamera ref={camRef} makeDefault />}
+      </>
+    )
   );
 }
 
