@@ -207,5 +207,10 @@ $LAYER_TITLE: 64px;
         font-family: $polaquita-font;
         font-size: rem(80);
         text-shadow: var(--white-stroke-large);
+
+        &::before {
+            width: 100%;
+            box-shadow: 0px 20px 20px 4px rgba(0, 0, 0, 0.8);
+        }
     }
 }
