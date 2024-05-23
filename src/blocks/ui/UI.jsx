@@ -24,6 +24,7 @@ import StrokeText from '../../components/stroke-text/StrokeText';
 import EventRecap from '../event-recap/EventRecap';
 import AudioManager from '../audio-manager/AudioManager';
 import Drawers from '../../components/drawers/Drawers';
+import Timer from '../timer/Timer';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
@@ -103,6 +104,7 @@ function UI({ className, ...props }) {
         </div>
 
         <div className={styles.topCenterZone}>
+          <Timer />
           <Message />
           <EventPanel />
         </div>
@@ -116,7 +118,6 @@ function UI({ className, ...props }) {
         <AnimatePresence>{getState('turnPhase') === TURN_PHASE.startTurn && <EventRecap />}</AnimatePresence>
 
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
-        {turnPhase === TURN_PHASE.playTurn && <p className={styles.timer}>{timer}</p>}
         <p>Je suis {me?.state.name}</p>
         <div className={styles.board}>
           {players.map((player, index) => (
