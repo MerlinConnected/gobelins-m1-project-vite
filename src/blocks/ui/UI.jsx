@@ -98,7 +98,6 @@ function UI({ className, ...props }) {
   return (
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
-
         <div className={styles.topLeftZone}>
           <AudioManager />
         </div>
@@ -134,7 +133,6 @@ function UI({ className, ...props }) {
         <div className={styles.middle} />
 
         <AnimatePresence>{!drawersDisabled && <Drawers drawersDisabled={drawersDisabled} />}</AnimatePresence>
-
       </div>
     </>
   );

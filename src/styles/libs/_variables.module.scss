@@ -30,11 +30,11 @@
     --color-dark: #000;
     --color-light: #fff;
 
-    --color-button-primary: #0D6EFF;
-    --color-button-secondary: #FF0B37;
+    --color-button-primary: #0d6eff;
+    --color-button-secondary: #ff0b37;
 
-    --color-looser: #FF2828;
-    --color-looser-light: #FFB1B1;
+    --color-looser: #ff2828;
+    --color-looser-light: #ffb1b1;
 
     --color-box-shadow: rgb(0 0 0 / 8%);
     --box-shadow: 2px 4px 1px 0 var(--color-box-shadow);
@@ -47,6 +47,9 @@
     --white-stroke-regular: -2px -2px 0 var(--color-light), 0 -2px 0 var(--color-light), 2px -2px 0 var(--color-light),
         2px 0 0 var(--color-light), 2px 2px 0 var(--color-light), 0 2px 0 var(--color-light),
         -2px 2px 0 var(--color-light), -2px 0 0 var(--color-light);
+    --white-stroke-large: -5px -5px 0 var(--color-light), 0 -5px 0 var(--color-light), 5px -5px 0 var(--color-light),
+        5px 0 0 var(--color-light), 5px 5px 0 var(--color-light), 0 5px 0 var(--color-light),
+        -5px 5px 0 var(--color-light), -5px 0 0 var(--color-light);
 
     --text-shadow: 2px 4px 8px 5px rgba(0, 0, 0, 0.8);
     --text-shadow-regular: 2px 4px 6px 6px rgba(0, 0, 0, 0.2);
@@ -54,11 +57,11 @@
     --text-shadow-large: 2px 4px 8px 10px rgba(0, 0, 0, 0.2);
 
     /* DRAWERS COLORS */
-    --color-drawer: #35325E;
-    --color-drawer-transport: #00BDA7;
-    --color-drawer-light-transport: #A8EEE5;
-    --color-drawer-action: #DF5656;
-    --color-drawer-light-action: #FF9F9F;
+    --color-drawer: #35325e;
+    --color-drawer-transport: #00bda7;
+    --color-drawer-light-transport: #a8eee5;
+    --color-drawer-action: #df5656;
+    --color-drawer-light-action: #ff9f9f;
 
     /* TRANSPORT COLORS */
     --color-background-transport-main-2: #13db7e;

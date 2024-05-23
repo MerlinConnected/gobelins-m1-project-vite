@@ -34,6 +34,11 @@ export const cardSelected = {
   exit: { y: '-200%', x: '0%' },
 };
 
+export const drawerHovered = {
+  initial: { y: 0, rotate: 0 },
+  animate: { y: 20, rotate: 5 },
+};
+
 export const conditionalAnimation = (condition: boolean, animateOverride: Variants) =>
   ({
     initial: baseVariants.initial,
