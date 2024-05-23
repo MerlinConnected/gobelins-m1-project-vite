@@ -244,14 +244,24 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
               </StrokeText>
             </motion.div>
 
-            {selected && (
-              <motion.div style={style(LAYER_TITLE)} className={styles.actions}>
-                {card.type && card.type === 'transport' && (
-                  <CircleButton icon="replay" color="#0D6EFF" onClick={() => selectTarget(currentPlayer)} />
-                )}
-                <CircleButton icon="bin" color="#ff0d47" onClick={() => deleteCard()} />
-              </motion.div>
-            )}
+            {/* {selected && ( */}
+            <div style={style(LAYER_TITLE)} className={styles.actions}>
+              {card.type && card.type === 'transport' && (
+                <CircleButton
+                  className={classNames({ [styles.activeBtn]: selected })}
+                  icon="replay"
+                  color="#0D6EFF"
+                  onClick={() => selectTarget(currentPlayer)}
+                />
+              )}
+              <CircleButton
+                className={classNames({ [styles.activeBtn]: selected })}
+                icon="bin"
+                color="#ff0d47"
+                onClick={() => deleteCard()}
+              />
+            </div>
+            {/* )} */}
 
             {/* <Button
             className={classNames(styles.card, { [styles.clicked]: active && selected })}
