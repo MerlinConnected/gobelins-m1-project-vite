@@ -1,7 +1,19 @@
 .wrapper {
     display: flex;
+    position: relative;
+    z-index: -1;
+    margin-top: rem(8);
+}
+
+.transports {
+    position: relative;
+    right: rem(-16);
+    display: flex;
     justify-content: center;
-    width: grid(4);
+    width: rem(220);
+    height: 100%;
+    clip-path: polygon( 1.814% 1.516%,97.936% 1.516%,99.753% 28.999%,100% 65.09%,93.219% 94.699%,61.484% 100%,25.392% 96.825%,5.985% 89.937%,0.23% 75.794%,0.23% 37.302%,1.814% 1.516% );
+    background-color: white;
 }
 
 .transportContainer {
@@ -15,13 +27,12 @@
         width: 50%;
         transform: translate(-50%, -50%);
         z-index: -1;
-        box-shadow: var(--text-shadow-large);
     }
 
     .transport {
         position: relative;
-        width: rem(50);
-        height: rem(50);
+        width: rem(40);
+        height: rem(40);
 
         &:hover {
             ~ .tooltip {
@@ -36,8 +47,8 @@
         }
 
         .current {
-            width: 100%;
-            height: 100%;
+            width: 80%;
+            height: 80%;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -72,5 +83,22 @@
             border-style: solid;
             border-color: transparent transparent var(--color-light) transparent;
         }
+    }
+}
+
+.trafic {
+    position: relative;
+    left: rem(-16);
+    z-index: -1;
+    clip-path: polygon( 30.613% 0%,98.542% 0%,99.825% 27.906%,100% 64.552%,95.208% 94.617%,72.781% 100%,47.275% 96.776%,4.067% 99.459%,0% 85.098%,8.146% 0%,30.613% 0% );
+    background-color: var(--color-trafic-light);
+    color: var(--color-trafic);
+    font-family: $dotmatrix-font;
+    width: rem(176);
+
+    p {
+        padding: rem(10);
+        font-size: rem(18);
+        white-space: nowrap;
     }
 }

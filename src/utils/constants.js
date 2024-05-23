@@ -36,7 +36,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 2,
     category: [CATEGORY.deuxRoues],
-    icon: '/images/icons/transport/velo.svg',
+    icon: '/images/transports/velo.svg',
   },
   {
     name: 'voiture',
@@ -44,7 +44,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 3,
     category: [CATEGORY.route, CATEGORY.moteur],
-    icon: '/images/icons/transport/voiture.svg',
+    icon: '/images/transports/voiture.svg',
   },
   {
     name: 'tramway',
@@ -52,7 +52,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 3,
     category: [CATEGORY.rails, CATEGORY.commun],
-    icon: '/images/icons/transport/tramway.svg',
+    icon: '/images/transports/tramway.svg',
   },
   {
     name: 'metro',
@@ -60,7 +60,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 4,
     category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur],
-    icon: '/images/icons/transport/metro.svg',
+    icon: '/images/transports/metro.svg',
   },
   {
     name: 'moto',
@@ -68,7 +68,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 4,
     category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur],
-    icon: '/images/icons/transport/moto.svg',
+    icon: '/images/transports/moto.svg',
   },
 ];
 

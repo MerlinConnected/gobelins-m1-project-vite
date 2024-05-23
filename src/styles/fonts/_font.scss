@@ -67,3 +67,11 @@
     font-style: italic;
     font-stretch: normal;
 }
+
+@font-face {
+    font-family: $dotmatrix-fontname;
+    src: url('/fonts/DOTMATRIX.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+    font-stretch: normal;
+}

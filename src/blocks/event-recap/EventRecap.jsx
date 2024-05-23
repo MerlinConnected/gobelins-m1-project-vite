@@ -40,7 +40,6 @@ function EventRecap({ className, ...props }) {
                     ))}</div> :
                         <p>Aucun évènement, trafic fluide 🙏</p>
                     }
-                    <EventPanel />
                 </motion.div>
             </div>
             <motion.div
