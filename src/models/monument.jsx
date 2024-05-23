@@ -8,9 +8,8 @@ export function Monument(props) {
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['MONUMENTS-SIDE'].geometry}
+                geometry={nodes['MONUMENTS-SIDE001'].geometry}
                 material={materials.BAKED_MONUMENT}
-                scale={0.3}
             />
         </group>
     )

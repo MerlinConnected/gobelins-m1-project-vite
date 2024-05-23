@@ -4,580 +4,574 @@ import { useGLTF } from '@react-three/drei'
 export function Routes(props) {
     const { nodes, materials } = useGLTF('./models/routes.glb')
     return (
-        <group {...props} dispose={null} scale={0.3}>
+        <group {...props} dispose={null} scale={0.9}>
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes.Straight701.geometry}
+                geometry={nodes.Straight253.geometry}
                 material={materials['Paths.001']}>
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn400.geometry}
+                    geometry={nodes.L_Turn176.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn401.geometry}
+                    geometry={nodes.L_Turn177.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn402.geometry}
+                    geometry={nodes.L_Turn178.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn403.geometry}
+                    geometry={nodes.L_Turn179.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn404.geometry}
+                    geometry={nodes.L_Turn180.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn405.geometry}
+                    geometry={nodes.L_Turn181.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn406.geometry}
+                    geometry={nodes.L_Turn182.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn407.geometry}
+                    geometry={nodes.L_Turn183.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight688.geometry}
+                    geometry={nodes.Straight240.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight689.geometry}
+                    geometry={nodes.Straight241.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight690.geometry}
+                    geometry={nodes.Straight242.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight691.geometry}
+                    geometry={nodes.Straight243.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight692.geometry}
+                    geometry={nodes.Straight244.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight693.geometry}
+                    geometry={nodes.Straight245.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight694.geometry}
+                    geometry={nodes.Straight246.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight695.geometry}
+                    geometry={nodes.Straight247.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight696.geometry}
+                    geometry={nodes.Straight248.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight697.geometry}
+                    geometry={nodes.Straight249.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight698.geometry}
+                    geometry={nodes.Straight250.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight699.geometry}
+                    geometry={nodes.Straight252.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight700.geometry}
+                    geometry={nodes.Straight254.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight702.geometry}
-                    material={materials['Paths.001']}
-                />
-                <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Straight703.geometry}
+                    geometry={nodes.Straight255.geometry}
                     material={materials['Paths.001']}
                 />
             </mesh>
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes.Straight706.geometry}
+                geometry={nodes.Straight258.geometry}
                 material={materials['Paths.001']}>
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn408.geometry}
+                    geometry={nodes.L_Turn184.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn409.geometry}
+                    geometry={nodes.L_Turn185.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn410.geometry}
+                    geometry={nodes.L_Turn186.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn411.geometry}
+                    geometry={nodes.L_Turn187.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn412.geometry}
+                    geometry={nodes.L_Turn188.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn413.geometry}
+                    geometry={nodes.L_Turn189.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn414.geometry}
+                    geometry={nodes.L_Turn190.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn415.geometry}
+                    geometry={nodes.L_Turn191.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight704.geometry}
+                    geometry={nodes.Straight256.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight705.geometry}
+                    geometry={nodes.Straight257.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight707.geometry}
+                    geometry={nodes.Straight259.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight708.geometry}
+                    geometry={nodes.Straight260.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight709.geometry}
+                    geometry={nodes.Straight261.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight710.geometry}
+                    geometry={nodes.Straight262.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight711.geometry}
+                    geometry={nodes.Straight263.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight712.geometry}
+                    geometry={nodes.Straight264.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight713.geometry}
+                    geometry={nodes.Straight265.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight714.geometry}
+                    geometry={nodes.Straight266.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight715.geometry}
+                    geometry={nodes.Straight267.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight716.geometry}
+                    geometry={nodes.Straight268.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight717.geometry}
+                    geometry={nodes.Straight269.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight718.geometry}
+                    geometry={nodes.Straight270.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight719.geometry}
+                    geometry={nodes.Straight271.geometry}
                     material={materials['Paths.001']}
                 />
             </mesh>
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes.Straight721.geometry}
+                geometry={nodes.Straight273.geometry}
                 material={materials['Paths.001']}>
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn416.geometry}
+                    geometry={nodes.L_Turn192.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn417.geometry}
+                    geometry={nodes.L_Turn193.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn418.geometry}
+                    geometry={nodes.L_Turn194.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn419.geometry}
+                    geometry={nodes.L_Turn195.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn420.geometry}
+                    geometry={nodes.L_Turn196.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn421.geometry}
+                    geometry={nodes.L_Turn197.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn422.geometry}
+                    geometry={nodes.L_Turn198.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn423.geometry}
+                    geometry={nodes.L_Turn199.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight720.geometry}
+                    geometry={nodes.Straight272.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight722.geometry}
+                    geometry={nodes.Straight274.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight723.geometry}
+                    geometry={nodes.Straight275.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight724.geometry}
+                    geometry={nodes.Straight276.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight725.geometry}
+                    geometry={nodes.Straight277.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight726.geometry}
+                    geometry={nodes.Straight278.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight727.geometry}
+                    geometry={nodes.Straight279.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight728.geometry}
+                    geometry={nodes.Straight280.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight729.geometry}
+                    geometry={nodes.Straight281.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight730.geometry}
+                    geometry={nodes.Straight282.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight731.geometry}
+                    geometry={nodes.Straight283.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight732.geometry}
+                    geometry={nodes.Straight284.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight733.geometry}
+                    geometry={nodes.Straight285.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight734.geometry}
+                    geometry={nodes.Straight286.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight735.geometry}
+                    geometry={nodes.Straight287.geometry}
                     material={materials['Paths.001']}
                 />
             </mesh>
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes.Straight737.geometry}
+                geometry={nodes.Straight289.geometry}
                 material={materials['Paths.001']}>
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn424.geometry}
+                    geometry={nodes.L_Turn200.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn425.geometry}
+                    geometry={nodes.L_Turn201.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn426.geometry}
+                    geometry={nodes.L_Turn202.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn427.geometry}
+                    geometry={nodes.L_Turn203.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn428.geometry}
+                    geometry={nodes.L_Turn204.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn429.geometry}
+                    geometry={nodes.L_Turn205.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn430.geometry}
+                    geometry={nodes.L_Turn206.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.L_Turn431.geometry}
+                    geometry={nodes.L_Turn207.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight736.geometry}
+                    geometry={nodes.Straight288.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight738.geometry}
+                    geometry={nodes.Straight290.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight739.geometry}
+                    geometry={nodes.Straight291.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight740.geometry}
+                    geometry={nodes.Straight292.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight741.geometry}
+                    geometry={nodes.Straight293.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight742.geometry}
+                    geometry={nodes.Straight294.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight743.geometry}
+                    geometry={nodes.Straight295.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight744.geometry}
+                    geometry={nodes.Straight296.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight745.geometry}
+                    geometry={nodes.Straight297.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight746.geometry}
+                    geometry={nodes.Straight298.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight747.geometry}
+                    geometry={nodes.Straight299.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight748.geometry}
+                    geometry={nodes.Straight300.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight749.geometry}
+                    geometry={nodes.Straight301.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight750.geometry}
+                    geometry={nodes.Straight302.geometry}
                     material={materials['Paths.001']}
                 />
                 <mesh
                     castShadow
                     receiveShadow
-                    geometry={nodes.Straight751.geometry}
+                    geometry={nodes.Straight303.geometry}
                     material={materials['Paths.001']}
                 />
             </mesh>

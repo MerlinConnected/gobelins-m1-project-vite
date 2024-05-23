@@ -10,8 +10,8 @@ const Environment = () => {
 
     return (
         <>
-            <directionalLight position={[10, 10, 0]} intensity={0.9} ref={directionalLight} />
-            <ambientLight intensity={0.5} />
+            {/* <directionalLight position={[10, 10, 0]} intensity={0.9} ref={directionalLight} /> */}
+            <ambientLight intensity={2} />
         </>
     );
 }

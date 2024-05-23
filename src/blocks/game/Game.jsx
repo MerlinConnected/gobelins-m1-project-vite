@@ -18,6 +18,7 @@ import { Monument } from '../../models/monument';
 import { Garden } from '../../models/garden';
 import { Routes } from '../../models/routes';
 import Environment from '../environment/Environment';
+import { Floor } from '../../models/floor';
 
 const Game = () => {
   const { players } = usePlayerContext();
@@ -64,12 +65,7 @@ const Game = () => {
 
           <Environment />
 
-          {/* Floor */}
-          {/* <mesh position-y={0} rotation-x={- Math.PI * 0.5} scale={100}>
-            <planeGeometry />
-            <meshStandardMaterial color="#7e614b" />
-          </mesh> */}
-
+          <Floor />
           <TrainStation />
           <Construction />
           <Riverside />
@@ -77,6 +73,7 @@ const Game = () => {
           <Monument />
           <Garden />
           <Routes />
+
         </Suspense>
       </Canvas>
     </>

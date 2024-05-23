@@ -8,9 +8,8 @@ export function Construction(props) {
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes['Red-Panel011'].geometry}
+        geometry={nodes['Red-Panel004'].geometry}
         material={materials.BAKED_CONSTRUCTION}
-        scale={0.3}
       />
     </group>
   )

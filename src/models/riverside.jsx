@@ -8,9 +8,8 @@ export function Riverside(props) {
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes.RIVERSIDE.geometry}
+                geometry={nodes.RIVERSIDE001.geometry}
                 material={materials['BAKED-RIVERSIDE']}
-                scale={0.3}
             />
         </group>
     )

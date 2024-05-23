@@ -8,9 +8,8 @@ export function NorthCity(props) {
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes.NORTHCITY.geometry}
+                geometry={nodes.NORTHCITY001.geometry}
                 material={materials['BAKED-NORTHCITY']}
-                scale={0.3}
             />
         </group>
     )

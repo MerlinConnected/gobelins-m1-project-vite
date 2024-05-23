@@ -4,17 +4,17 @@ import { useGLTF } from '@react-three/drei'
 export function Garden(props) {
     const { nodes, materials } = useGLTF('./models/garden.glb')
     return (
-        <group {...props} dispose={null} scale={0.3}>
+        <group {...props} dispose={null}>
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes.Mesh063.geometry}
+                geometry={nodes.Mesh003.geometry}
                 material={materials['BAKED-GARDEN']}
             />
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes.Mesh063_1.geometry}
+                geometry={nodes.Mesh003_1.geometry}
                 material={materials.Grass}
             />
         </group>

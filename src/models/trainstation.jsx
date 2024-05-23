@@ -8,9 +8,8 @@ export function TrainStation(props) {
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes['GARE-FINAL_BAKED'].geometry}
+        geometry={nodes['GARE-FINAL_BAKED001'].geometry}
         material={materials['GARE-BAKED']}
-        scale={0.3}
       />
     </group>
   )
