@@ -113,7 +113,7 @@ function UI({ className, ...props }) {
         </div>
 
         <AnimatePresence>
-          {message.type === 'action' &&
+          {message?.type === 'action' &&
             (getState('playerPhase') === PLAYER_PHASE.firstResult ||
               getState('playerPhase') === PLAYER_PHASE.lastResult) && <Feedback />}
         </AnimatePresence>

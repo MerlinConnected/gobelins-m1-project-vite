@@ -210,7 +210,8 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
         style={{ '--background': `${colors.bg}` }}
         {...props}
       >
-        <motion.div {...animationProps} whileHover={active && { scale: 1.05, transition: { duration: 0.2 } }}>
+        {/* <motion.div {...animationProps} whileHover={active && { scale: 1.05, transition: { duration: 0.2 } }}> */}
+        <motion.div whileHover={active && { scale: 1.05, transition: { duration: 0.2 } }}>
           <motion.div
             ref={ref}
             className={styles.card}
