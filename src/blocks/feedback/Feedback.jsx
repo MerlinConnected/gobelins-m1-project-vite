@@ -18,7 +18,9 @@ function Feedback({ className, ...props }) {
     const selectedCard = currentPlayer.getState('selectedCard');
     const selectedTarget = currentPlayer.getState('target');
 
-    playSound(selectedCard?.sound, audioEnabled);
+    useEffect(() => {
+        playSound(selectedCard?.sound, audioEnabled);
+    }, []);
 
     return (
         selectedCard && selectedTarget &&
