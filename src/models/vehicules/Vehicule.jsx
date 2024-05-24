@@ -60,22 +60,24 @@ export const Vehicule = forwardRef(({ player, ...props }, ref) => {
   }, []);
 
   return (
-    <motion.group
-      onPointerOver={() => {
-        hover(true);
-      }}
-      onPointerOut={() => {
-        hover(false);
-      }}
-      {...props}
-      ref={ref}
-      dispose={null}
-      position={[0, 0.5, 0]}
-      whileHover={{ scale: 1.2, y: 0.6 }}
-    >
-      <Billboard>
-        <Image url={vehicleImage} side={DoubleSide} transparent />
-      </Billboard>
-    </motion.group>
+    vehicleImage && (
+      <motion.group
+        onPointerOver={() => {
+          hover(true);
+        }}
+        onPointerOut={() => {
+          hover(false);
+        }}
+        {...props}
+        ref={ref}
+        dispose={null}
+        position={[0, 0.5, 0]}
+        whileHover={{ scale: 1.2, y: 0.6 }}
+      >
+        <Billboard>
+          <Image url={vehicleImage} side={DoubleSide} transparent />
+        </Billboard>
+      </motion.group>
+    )
   );
 });
