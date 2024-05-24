@@ -12,7 +12,9 @@
     --color-bg-body: #000;
     --color-bg-display: #f9f9f9;
     --color-bg-floating: rgb(229 229 229 / 50%);
-    --color-bg-overylay: rgba(#255, 255, 255, 40%);
+    --color-bg-overlay: rgba(0, 0, 0, 0.2);
+    --color-bg-content: #D9D9D9;
+    --color-bg-content-2: #E3D8D8;
 
     --color-fill-main: #fff;
     --color-fill-secondary: #eee;
@@ -25,10 +27,68 @@
     --color-divider: #ebebeb;
     --color-symbol: #f0f0f0;
 
-    --color-box-shadow: rgb(0 0 0 / 10%);
-    --box-shadow: inset 0px 1px 1px 0 var(--color-box-shadow);
+    --color-dark: #000;
+    --color-light: #fff;
+
+    --color-button-primary: #0d6eff;
+    --color-button-secondary: #ff0b37;
+
+    --color-looser: #ff2828;
+    --color-looser-light: #ffb1b1;
+
+    --color-trafic: #FF6A16;
+    --color-trafic-light: #FFCDBD;
+
+    --color-box-shadow: rgb(0 0 0 / 8%);
+    --box-shadow: 2px 4px 1px 0 var(--color-box-shadow);
     --box-shadow-right: inset -1px 1px 1px 0 var(--color-box-shadow);
     --box-shadow-left: inset 1px 1px 1px 0 var(--color-box-shadow);
+
+    --white-stroke: -3px -3px 0 var(--color-light), 0 -3px 0 var(--color-light), 3px -3px 0 var(--color-light),
+        3px 0 0 var(--color-light), 3px 3px 0 var(--color-light), 0 3px 0 var(--color-light),
+        -3px 3px 0 var(--color-light), -3px 0 0 var(--color-light);
+    --white-stroke-regular: -2px -2px 0 var(--color-light), 0 -2px 0 var(--color-light), 2px -2px 0 var(--color-light),
+        2px 0 0 var(--color-light), 2px 2px 0 var(--color-light), 0 2px 0 var(--color-light),
+        -2px 2px 0 var(--color-light), -2px 0 0 var(--color-light);
+    --white-stroke-large: -5px -5px 0 var(--color-light), 0 -5px 0 var(--color-light), 5px -5px 0 var(--color-light),
+        5px 0 0 var(--color-light), 5px 5px 0 var(--color-light), 0 5px 0 var(--color-light),
+        -5px 5px 0 var(--color-light), -5px 0 0 var(--color-light);
+
+    --text-shadow: 2px 4px 8px 5px rgba(0, 0, 0, 0.8);
+    --text-shadow-regular: 2px 4px 6px 6px rgba(0, 0, 0, 0.2);
+    --text-shadow-medium: 2px 4px 8px 10px rgba(0, 0, 0, 0.2);
+    --text-shadow-large: 2px 4px 8px 10px rgba(0, 0, 0, 0.2);
+
+    /* DRAWERS COLORS */
+    --color-drawer: #35325e;
+    --color-drawer-transport: #00bda7;
+    --color-drawer-light-transport: #a8eee5;
+    --color-drawer-action: #df5656;
+    --color-drawer-light-action: #ff9f9f;
+
+    /* TRANSPORT COLORS */
+    --color-background-transport-main-2: #13db7e;
+    --color-background-transport-main-3: #0d6eff;
+    --color-background-transport-main-4: #c70dff;
+    --color-background-transport-bg-2: #d4fce9;
+    --color-background-transport-bg-3: #e3eeff;
+    --color-background-transport-bg-4: #f8e3ff;
+
+    /* ACTION COLORS */
+    --color-background-action-main-1: #ff0d47;
+    --color-background-action-main--minus-1: #ffae0d;
+    --color-background-action-main--minus-2: #ff5e0d;
+    --color-background-action-bg-1: #ffe2e9;
+    --color-background-action-bg--minus-1: #fff5e2;
+    --color-background-action-bg--minus-2: #ffece2;
+
+    /* CATEGORIES COLORS */
+    --color-background-category-deuxRoues: #176290;
+    --color-background-category-commun: #30b6ce;
+    --color-background-category-interieur: #ab6c5d;
+    --color-background-category-rails: #8ea0b6;
+    --color-background-category-moteur: #3237ab;
+    --color-background-category-route: #3f4767;
 
     /* SHORTCUTS */
     --color-background: var(--color-bg-body);

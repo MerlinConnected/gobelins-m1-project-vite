@@ -1,0 +1,38 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: rem(80);
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+
+    color: var(--color-light);
+    background-color: var(--color-bg-overlay);
+}
+
+.drawersHelper {
+    display: flex;
+    align-items: center;
+    gap: rem(16);
+
+    p {
+        font-size: rem(50);
+    }
+}
+
+.checkpoints {
+    display: flex;
+    align-items: center;
+    gap: rem(4);
+}
+
+.drawers {
+    display: flex;
+    gap: rem(80);
+    margin-bottom: 15vh;
+}

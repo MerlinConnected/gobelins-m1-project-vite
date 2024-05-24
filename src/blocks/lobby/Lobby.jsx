@@ -6,12 +6,13 @@ import classNames from 'classnames';
 import styles from './Lobby.module.scss';
 
 import Button from '../../components/button/Button';
-import PlayerCards from '../../components/cards/PlayerCards';
+import PlayerCards from '../../components/player-cards/PlayerCards';
 
 import { Toaster, toast } from 'sonner';
 
 import { useGameStateContext } from '../../provider/GameStateProvider';
 import { GAME_PHASE } from '../../utils/constants';
+import removeRoomHash from '../../utils/removeRoomHash';
 
 function Lobby({ className, ...props }) {
   const { setLobby, setGlobalPhase } = useGameStateContext();
@@ -20,18 +21,13 @@ function Lobby({ className, ...props }) {
     navigator.clipboard.writeText(getRoomCode());
   }
 
-  function removeRoomHash() {
-    window.location.hash = '';
-    window.location.reload();
-  }
-
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
       <div>
         <div>
-          <h1>Lobby</h1>
+          <h1>Code de la room : {getRoomCode()}</h1>
           <div>
-            <Toaster theme="dark" />
+            {/* <Toaster theme="dark" /> */}
             <Button
               onClick={() => {
                 toast('Code copied to clipboard!', {

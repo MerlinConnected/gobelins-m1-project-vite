@@ -1,0 +1,64 @@
+.wrapper {
+    position: relative;
+    bottom: rem(-58);
+}
+
+.bar {
+    position: relative;
+    width: rem(396);
+    height: rem(30);
+
+    .stroke {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        clip-path: polygon( 0% 5.032%,8.88% 0%,57.29% 9.072%,79.628% 4.192%,100% 4.192%,100% 88.093%,76.057% 100%,51.194% 94.408%,22.83% 82.567%,0% 95.274%,0% 5.032%,22.822% 62.557%,51.231% 74.416%,76.042% 79.996%,98.485% 68.835%,98.485% 24.189%,79.64% 24.189%,57.292% 29.072%,8.902% 20.004%,1.515% 24.189%,1.515% 74.416%,22.822% 62.557% );
+        background-color: white;
+        
+        padding: rem(8);
+    }
+
+    .dynamicBar {
+        position: absolute;
+        width: calc(100% - rem(6)*2);
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .fill {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            transform: translate(-50%, -50%);
+        }
+
+        .empty {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: calc(100% - rem(10));
+            background-color: var(--color-bg-content);
+        }
+    }
+}
+
+.seconds {
+    position: absolute;
+    top: rem(-10);
+    right: rem(-6);
+    z-index: 20;
+    font-size: rem(20);
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: -2px -2px 0 var(--color-light), 0 -2px 0 var(--color-light), 2px -2px 0 var(--color-light),
+    2px 0 0 var(--color-light), 2px 2px 0 var(--color-light), 0 2px 0 var(--color-light),
+    -2px 2px 0 var(--color-light), -2px 0 0 var(--color-light);
+
+    &::before {
+        left: 20%;
+        width: 20%;
+      }
+}

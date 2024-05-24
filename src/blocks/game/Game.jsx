@@ -1,27 +1,27 @@
-import React, { useRef, useEffect, createRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { Loader, OrbitControls, Grid, GizmoHelper, GizmoViewport } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Loader, OrbitControls, Environment, Grid, GizmoHelper, GizmoViewport } from '@react-three/drei';
-import { Leva, useControls } from 'leva';
 import { Suspense } from 'react';
 import { Perf } from 'r3f-perf';
-
-import Player from '../player/Player';
+import { Leva } from 'leva';
 
 import { usePlayerContext } from '../../provider/PlayerProvider';
-import { myPlayer } from 'playroomkit';
+
+import Tiles from '../paths/Paths';
+
+import { Construction } from '../../models/construction';
+import { Riverside } from '../../models/riverside';
+import { Gare } from '../../models/gare';
+import { NorthCity } from '../../models/northcity';
+import { Monument } from '../../models/monument';
+import { Garden } from '../../models/garden';
+import { Routes } from '../../models/routes';
+import Environment from '../environment/Environment';
+import { Plateau } from '../../models/plateau';
 
 const Game = () => {
   const { players } = usePlayerContext();
-  const me = myPlayer();
-
-  const modelRefs = useRef([]);
-
-  useEffect(() => {
-    modelRefs.current = Array(players.length)
-      .fill()
-      .map((_, i) => modelRefs.current[i] || createRef());
-  }, [players.length, modelRefs.current]);
 
   const [isDebug, setisDebug] = useState(true);
 
@@ -38,34 +38,47 @@ const Game = () => {
       <Leva hidden={isDebug} />
       <Loader />
       <Canvas className="canvas" shadows>
-        <color attach="background" args={['#0A090F']} />
+        <color attach="background" args={['#2d190d']} />
         <Suspense fallback={null}>
-          <group>
-            {players.map((player, i) => (
-              <Player key={player.id} player={player} index={i} ref={modelRefs.current[player.id]} />
-            ))}
-          </group>
-
           <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
             <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
           </GizmoHelper>
 
+          <Tiles players={players} amount={19.35} />
+
           <OrbitControls target={[0, 0, 0]} />
-          <Environment preset="city" />
           {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
-          <Grid
-            args={[10, 10]}
+
+          {/* <Grid
+            args={[5, 5]}
             cellSize={0.5}
             cellThickness={1}
-            cellColor={'#5c5c5c'}
+            cellColor={'#76492b'}
             sectionSize={2}
             sectionThickness={1.5}
-            sectionColor={'#8d4747'}
-            fadeDistance={30}
-            fadeStrength={1}
+            sectionColor={'#523622'}
+            fadeDistance={50}
+            fadeStrength={0.5}
             followCamera={false}
             infiniteGrid
-          />
+          /> */}
+
+          {/* fog */}
+          {/* <fog attach="fog" args={['#2d190d', 10, 100]} /> */}
+
+          <Environment />
+
+          <group scale={0.5}>
+            <Plateau />
+            <Gare />
+            <Construction />
+            <Riverside />
+            <NorthCity />
+            <Monument />
+            <Garden />
+            <Routes />
+          </group>
+
         </Suspense>
       </Canvas>
     </>

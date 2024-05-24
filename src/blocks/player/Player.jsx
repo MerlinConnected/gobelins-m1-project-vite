@@ -1,84 +1,106 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
+
+import { Html, PerspectiveCamera } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { PerspectiveCamera, MotionPathControls, useMotion } from '@react-three/drei';
-import { Vector3 } from 'three';
+import * as THREE from 'three';
 
 import { myPlayer, usePlayerState } from 'playroomkit';
 
-import Curves from '../curves/Curves';
-import { useMemo } from 'react';
+import Path from '../../utils/paths';
 
-import { Model } from '../../models/car';
+import { Vehicule } from '../../models/vehicules/Vehicule';
 
 import Billboard from '../../components/billboard/Billboard';
+import classNames from 'classnames';
+import styles from '../../components/billboard/Billboard.module.scss';
 
-function Loop({ poi, points }) {
-  const motion = useMotion();
-
-  useFrame((delta) => {
-    const target = new Vector3().addVectors(poi.current.position, motion.tangent);
-    poi.current.lookAt(target);
-
-    const step = 20;
-    const currentPoints = points / step;
-
-    motion.current = currentPoints;
-  });
-
-  return null;
-}
-
-function Player({ player, index, ...props }) {
-  const { id, state } = player;
+function Player({ player, index, className, ...props }) {
+  const { rotationY, position } = props;
   const me = myPlayer();
-  const poi = useRef();
-
-  const [points] = usePlayerState(player, 'points');
+  const { id, state } = player;
+  const ref = useRef(null);
+  const camRef = useRef(null);
+  const [currentPoint, setCurrentPoint] = useState(0);
+  const [points, setPoints] = usePlayerState(player, 'points');
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const cameraPos = useMemo(() => {
-    const pos = new Vector3(10, 8, 20);
+    const pos = new THREE.Vector3(position[0], position[1], position[2]);
     return pos;
-  }, []);
+  }, [player]);
 
-  const [progress, setProgress] = useState(new Vector3(-index * 1.5, 0, 0));
+  const path = useMemo(() => Path[index], [index]);
 
   useEffect(() => {
-    const newPosition = new Vector3(-index * 1.5, 0, -points);
-    const animationDuration = 0.5;
+    if (me?.id === id) {
+      // set the camera pos next to the player
+      camRef.current.position.copy(cameraPos);
 
-    const animate = () => {
-      const start = progress.clone();
-      const end = newPosition;
-      const startTime = Date.now();
+      let tempVec = new THREE.Vector3();
 
-      const updatePosition = () => {
-        const elapsedTime = (Date.now() - startTime) / (animationDuration * 1000);
-        if (elapsedTime < 1) {
-          setProgress(start.clone().lerp(end, elapsedTime));
-          requestAnimationFrame(updatePosition);
-        } else {
-          setProgress(end);
-        }
-      };
-      updatePosition();
+      ref.current.getWorldDirection(tempVec);
+
+      camRef.current.position.addScaledVector(tempVec, -20);
+      tempVec.cross(new THREE.Vector3(0, 1, 0)).normalize();
+      camRef.current.position.addScaledVector(tempVec, 2);
+      camRef.current.position.y += 3;
+    }
+  }, [player]);
+
+  useFrame(() => {
+    if (!isAnimating && points !== currentPoint) {
+      // Start the movement process
+      movePlayerOneStep();
+    }
+  });
+
+  const movePlayerOneStep = () => {
+    setIsAnimating(true);
+    const direction = points > currentPoint ? 1 : -1;
+    const nextPoint = currentPoint + direction;
+    const startPosition = ref.current.position.clone();
+    const endPosition = path[nextPoint]?.clone();
+
+    const duration = 300; // Duration in ms for each step
+    let startTime = null;
+
+    const animateStep = (time) => {
+      if (!startTime) startTime = time;
+      const elapsedTime = time - startTime;
+      const progress = elapsedTime / duration;
+
+      if (progress < 1) {
+        const currentPos = new THREE.Vector3().lerpVectors(startPosition, endPosition, progress);
+        ref.current.position.copy(currentPos);
+        requestAnimationFrame(animateStep);
+      } else {
+        ref.current.position.copy(endPosition);
+        setCurrentPoint(nextPoint);
+        setIsAnimating(false);
+      }
     };
 
-    animate();
-  }, [points]);
+    requestAnimationFrame(animateStep);
+  };
 
   return (
-    <group>
-      <MotionPathControls object={poi} debug smooth focusObject={poi} damping={0.6}>
-        <Curves index={index} />
-        <Loop poi={poi} points={points} />
-      </MotionPathControls>
-      <group ref={poi}>
-        <Billboard player={player} position={[0, 2, 0]} />
-        <Model color={state?.profile?.color} />
-      </group>
-      {me?.id === id && <PerspectiveCamera makeDefault position={cameraPos} />}
-    </group>
+    player && (
+      <>
+        <group ref={ref} position={path[0]} rotation-y={rotationY} {...props}>
+          {/* <Billboard player={player} position={[0, 2, 0]}>
+          <Html wrapperClass={classNames(styles.wrapper, className)} center>
+            <p>{state?.name}</p>
+            <p>{state?.points} Points</p>
+            <p>{state?.status?.name}</p>
+          </Html>
+        </Billboard> */}
+
+          <Vehicule player={player} color={player.state?.profile?.color} />
+        </group>
+        {myPlayer()?.id === player.id && <PerspectiveCamera ref={camRef} makeDefault />}
+      </>
+    )
   );
 }
 
-export default React.memo(Player);
+export default Player;
