@@ -7,13 +7,18 @@ import { motion } from "framer-motion";
 import styles from './Feedback.module.scss';
 import { usePlayerContext } from '../../provider/PlayerProvider';
 import StrokeText from '../../components/stroke-text/StrokeText';
+import playSound from '../../utils/playSound';
+import { useAudioContext } from '../../provider/AudioProvider';
 
 function Feedback({ className, ...props }) {
     const { playerTurn, players } = usePlayerContext();
+    const { audioEnabled } = useAudioContext();
 
     const currentPlayer = players[playerTurn];
     const selectedCard = currentPlayer.getState('selectedCard');
     const selectedTarget = currentPlayer.getState('target');
+
+    playSound(selectedCard?.sound, audioEnabled);
 
     return (
         selectedCard && selectedTarget &&

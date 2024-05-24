@@ -71,7 +71,7 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
 
   const selectCard = () => {
     if (currentPlayer?.id !== me?.id) return;
-    playSound('pop', audioEnabled);
+    playSound('ui1.mp3', audioEnabled);
     currentPlayer.setState('selectedCard', card, true);
 
     switch (card.type) {
@@ -92,9 +92,10 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
     }
   };
 
-  const selectTarget = (player) => {
+  const selectTarget = (event, player) => {
+    event.stopPropagation();
     if (currentPlayer?.id !== me?.id || !active || getState('turnPhase') !== TURN_PHASE.playTurn) return;
-    playSound('good', audioEnabled);
+    playSound('ui2.mp3', audioEnabled);
     currentPlayer.setState('target', player, true);
     const cards = currentPlayer.getState('cards');
     const selectedCard = currentPlayer.getState('selectedCard');
@@ -149,9 +150,11 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
     handlePlayerPhase();
   };
 
-  const deleteCard = () => {
+  const deleteCard = (event) => {
+    event.stopPropagation();
     if (currentPlayer?.id !== me?.id || !active) return;
-    playSound('bin', audioEnabled);
+
+    playSound('paperFlip.wav', audioEnabled, 1);
     const cards = currentPlayer.getState('cards');
     cards.splice(
       cards.findIndex((c) => c.uuid === card.uuid),
@@ -256,14 +259,14 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
                   className={classNames({ [styles.activeBtn]: selected })}
                   icon="replay"
                   color="#0D6EFF"
-                  onClick={() => selectTarget(currentPlayer)}
+                  onClick={(event) => selectTarget(event, currentPlayer)}
                 />
               )}
               <CircleButton
                 className={classNames({ [styles.activeBtn]: selected })}
                 icon="bin"
                 color="#ff0d47"
-                onClick={() => deleteCard()}
+                onClick={deleteCard}
               />
             </div>
             {/* )} */}

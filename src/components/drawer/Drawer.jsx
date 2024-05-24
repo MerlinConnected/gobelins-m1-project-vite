@@ -15,6 +15,7 @@ import { PLAYER_PHASE, TURN_PHASE } from '../../utils/constants';
 import CardLayers from '../card-layers/CardLayers';
 import StrokeText from '../stroke-text/StrokeText';
 import { drawerHovered } from '../../core/animation';
+import playSound from '../../utils/playSound';
 
 const LAYER_1 = 10;
 
@@ -64,6 +65,7 @@ function Drawer({ className, type, handleDrawnCards, ...props }) {
 
   const handleDrawer = (type) => {
     if (currentPlayer?.id !== me?.id || getState('playerPhase') !== PLAYER_PHASE.drawCards) return;
+    playSound('ui4.mp3', audioEnabled);
     handleDrawnCards();
 
     if (currentPlayer?.getState('cards')?.length < 4) {
