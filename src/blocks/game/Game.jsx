@@ -12,12 +12,13 @@ import Tiles from '../paths/Paths';
 
 import { Construction } from '../../models/construction';
 import { Riverside } from '../../models/riverside';
-import { TrainStation } from '../../models/trainstation';
+import { Gare } from '../../models/gare';
 import { NorthCity } from '../../models/northcity';
 import { Monument } from '../../models/monument';
 import { Garden } from '../../models/garden';
 import { Routes } from '../../models/routes';
 import Environment from '../environment/Environment';
+import { Plateau } from '../../models/plateau';
 
 const Game = () => {
   const { players } = usePlayerContext();
@@ -37,18 +38,18 @@ const Game = () => {
       <Leva hidden={isDebug} />
       <Loader />
       <Canvas className="canvas" shadows>
-        <color attach="background" args={['#503727']} />
+        <color attach="background" args={['#2d190d']} />
         <Suspense fallback={null}>
           <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
             <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
           </GizmoHelper>
 
-          <Tiles players={players} amount={17} />
+          <Tiles players={players} amount={19.35} />
 
           <OrbitControls target={[0, 0, 0]} />
           {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
 
-          <Grid
+          {/* <Grid
             args={[5, 5]}
             cellSize={0.5}
             cellThickness={1}
@@ -60,23 +61,24 @@ const Game = () => {
             fadeStrength={0.5}
             followCamera={false}
             infiniteGrid
-          />
+          /> */}
+
+          {/* fog */}
+          {/* <fog attach="fog" args={['#2d190d', 10, 100]} /> */}
 
           <Environment />
 
-          {/* Floor */}
-          {/* <mesh position-y={0} rotation-x={- Math.PI * 0.5} scale={100}>
-            <planeGeometry />
-            <meshStandardMaterial color="#7e614b" />
-          </mesh> */}
+          <group scale={0.5}>
+            <Plateau />
+            <Gare />
+            <Construction />
+            <Riverside />
+            <NorthCity />
+            <Monument />
+            <Garden />
+            <Routes />
+          </group>
 
-          <TrainStation />
-          <Construction />
-          <Riverside />
-          <NorthCity />
-          <Monument />
-          <Garden />
-          <Routes />
         </Suspense>
       </Canvas>
     </>
