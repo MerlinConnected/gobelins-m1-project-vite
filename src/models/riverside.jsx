@@ -2,18 +2,17 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export function Riverside(props) {
-    const { nodes, materials } = useGLTF('./models/riverside.glb')
+    const { nodes, materials } = useGLTF('./models/riverside_noalpha.glb')
     return (
         <group {...props} dispose={null}>
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes.RIVERSIDE.geometry}
+                geometry={nodes.RIVERSIDE001.geometry}
                 material={materials['BAKED-RIVERSIDE']}
-                scale={0.3}
             />
         </group>
     )
 }
 
-useGLTF.preload('./models/riverside.glb')
+useGLTF.preload('./models/riverside_noalpha.glb')
