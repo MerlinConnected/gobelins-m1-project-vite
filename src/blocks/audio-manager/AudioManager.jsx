@@ -9,11 +9,11 @@ import { useEffect } from 'react';
 import CircleButton from '../../components/circle-button/CircleButton';
 import { useAudioContext } from '../../provider/AudioProvider';
 
-function AudioManager({ className, ...props }) {
+function AudioManager({ musicPhase, className, ...props }) {
 
     const { audioEnabled, setAudioEnabled } = useAudioContext();
 
-    const music = new Audio('/audios/mariah.mp3');
+    const music = new Audio(`/audios/${musicPhase}.mp3`);
 
     const toggleAudio = () => {
         setAudioEnabled((prev) => !prev);

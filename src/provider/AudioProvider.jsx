@@ -5,7 +5,7 @@ export const AudioContext = createContext();
 
 export function AudioProvider({ children }) {
 
-    const [audioEnabled, setAudioEnabled] = useState(false); // FOR PROD: set to 'true'
+    const [audioEnabled, setAudioEnabled] = useState(true); // FOR PROD: set to 'true'
 
     const gameState = {
         audioEnabled,
