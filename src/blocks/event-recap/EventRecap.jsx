@@ -11,7 +11,7 @@ import { useEventContext } from '../../provider/EventProvider';
 import EventPanel from '../event-panel/EventPanel';
 
 function EventRecap({ className, ...props }) {
-    const { events } = useEventContext();
+    const { event } = useEventContext();
 
     return (
         <>
@@ -32,12 +32,12 @@ function EventRecap({ className, ...props }) {
                     <StrokeText medium className={styles.eventTitle}>
                         Évènements
                     </StrokeText>
-                    {events.length != 0 ? <div className={styles.events}>{events.map((event, index) => (
-                        <div key={index} className={styles.event}>
-                            <p>{event.name}</p>
-                            <p>{event.category}</p>
+                    {event ? <div className={styles.events}>
+                        <div className={styles.event}>
+                            <p>{event?.name}</p>
+                            <p>{event?.category}</p>
                         </div>
-                    ))}</div> :
+                    </div> :
                         <p>Aucun évènement, trafic fluide 🙏</p>
                     }
                 </motion.div>
