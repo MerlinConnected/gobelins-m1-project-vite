@@ -7,7 +7,7 @@ import { TRANSPORT } from '../../utils/constants';
 import { useEventContext } from '../../provider/EventProvider';
 
 function EventPanel({ className, ...props }) {
-    const { events } = useEventContext();
+    const { event } = useEventContext();
 
     return (
         <div className={classNames(styles.wrapper, className)} {...props}>
@@ -16,8 +16,8 @@ function EventPanel({ className, ...props }) {
                     <div key={index} className={styles.transportContainer}>
                         <div className={styles.transport}>
                             <img src={transport.icon} className={styles.icon} alt="" />
-                            {events?.some(event => transport.category.includes(event.category)) &&
-                                <img src="/images/icons/transport/blocked.svg" alt="" className={styles.current} />
+                            {event && transport.category.includes(event.category) ?
+                                <img src="/images/icons/transport/blocked.svg" alt="" className={styles.current} /> : null
                             }
                         </div>
                         <div className={styles.tooltip}>
@@ -31,7 +31,7 @@ function EventPanel({ className, ...props }) {
                 ))}
             </div>
             <div className={styles.trafic}>
-                <p>CAMION POUBELLE ATTENTION ATTENTION AHHHHHH RETARD</p>
+                <p>{event && event.name}</p>
             </div>
         </div>
     );

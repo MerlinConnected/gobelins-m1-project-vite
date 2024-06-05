@@ -13,7 +13,7 @@ export const InitContext = createContext();
 export function InitProvider({ children }) {
   const { globalPhase, setTurnPhase, setTimer } = useGameStateContext();
   const { players, setPlayerTurn, drawCard, distributeCard } = usePlayerContext();
-  const { handleEvent, setEvents } = useEventContext();
+  const { setEvent } = useEventContext();
 
   const startGame = () => {
     if (isHost()) {
@@ -39,8 +39,7 @@ export function InitProvider({ children }) {
 
       setTurnPhase(TURN_PHASE.startTurn, true);
       setTimer(TIME_START_TURN, true);
-      setEvents([], true);
-      handleEvent();
+      setEvent(null, true);
     }
   };
 

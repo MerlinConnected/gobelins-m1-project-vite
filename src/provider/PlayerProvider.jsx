@@ -59,12 +59,12 @@ export function PlayerProvider({ children }) {
   };
 
   const setBlockedPlayers = () => {
-    const currentEvents = getState('events');
+    const event = getState('event');
 
-    if (currentEvents.length > 0) {
+    if (event) {
       inGamePlayers.forEach((player) => {
         const playerCategories = player.getState('status').category;
-        if (currentEvents.some((event) => playerCategories.includes(event.category))) {
+        if (playerCategories.includes(event.category)) {
           player.setState('blocked', true, true);
         } else {
           player.setState('blocked', false, true);
