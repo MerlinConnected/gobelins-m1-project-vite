@@ -4,7 +4,7 @@ import { Image } from '@react-three/drei';
 import { DoubleSide } from 'three';
 import Billboard from '../../components/billboard/Billboard';
 
-export const Vehicule = forwardRef(({ player, ...props }, ref) => {
+export const Vehicule = forwardRef(({ player, targetable, ...props }, ref) => {
   const [hovered, hover] = useState(null);
   const [currentVariant, setCurrentVariant] = useState(0);
 
@@ -45,7 +45,7 @@ export const Vehicule = forwardRef(({ player, ...props }, ref) => {
 
   const getVehicleImages = (vehicleType) => {
     const vehicle = vehicleImages[vehicleType];
-    return hovered ? vehicle?.imagesOutlined[currentVariant] : vehicle?.images[currentVariant];
+    return targetable ? vehicle?.imagesOutlined[currentVariant] : vehicle?.images[currentVariant];
   };
 
   const vehicleType = player?.state?.status?.name;
@@ -72,7 +72,7 @@ export const Vehicule = forwardRef(({ player, ...props }, ref) => {
         ref={ref}
         dispose={null}
         position={[0, 0.5, 0]}
-        whileHover={{ scale: 1.2, y: 0.6 }}
+        whileHover={{ scale: 1.4, y: 0.6 }}
       >
         <Billboard>
           <Image url={vehicleImage} side={DoubleSide} transparent />
