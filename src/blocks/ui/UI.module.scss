@@ -26,22 +26,6 @@
     transform: translateX(-50%);
 }
 
-.board {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-
-    &__player {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        gap: rem(16);
-    }
-}
-
 .targets {
     display: flex;
 
