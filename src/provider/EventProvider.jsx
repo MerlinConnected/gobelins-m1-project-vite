@@ -76,6 +76,10 @@ export function EventProvider({ children }) {
 
   };
 
+  const isNewEvent = () => {
+    return event !== null && impactedTurns === 1;
+  };
+
   const handleEvent = () => {
     removeLastEvent();
     addEvent();
@@ -87,6 +91,7 @@ export function EventProvider({ children }) {
   context = {
     ...gameState,
     handleEvent,
+    isNewEvent,
   };
 
   return <EventContext.Provider value={context}>{children}</EventContext.Provider>;

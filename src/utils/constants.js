@@ -79,7 +79,7 @@ export const TRANSPORT = [
 
 export const TIME_START_GAME = 1;
 export const TIME_START_TURN = 1;
-export const TIME_PLAYER_TURN = 10;
+export const TIME_PLAYER_TURN = 5; // FOR PROD: 10 ou 15 jsp
 export const TIME_END_TURN = 2;
 
 export const MAX_POINTS = 400; // FOR PROD: 20
