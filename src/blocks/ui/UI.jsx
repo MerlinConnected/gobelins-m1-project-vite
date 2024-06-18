@@ -11,7 +11,6 @@ import { PLAYER_PHASE, TURN_PHASE } from '../../utils/constants';
 import { myPlayer, getState } from 'playroomkit';
 
 import classNames from 'classnames';
-import Button from '../../components/button/Button';
 import styles from './UI.module.scss';
 
 import EventPanel from '../event-panel/EventPanel';
@@ -21,16 +20,15 @@ import Feedback from '../feedback/Feedback';
 
 import { useMessageContext } from '../../provider/MessageProvider';
 import StrokeText from '../../components/stroke-text/StrokeText';
-import EventRecap from '../event-recap/EventRecap';
-import AudioManager from '../audio-manager/AudioManager';
 import Drawers from '../../components/drawers/Drawers';
 import Timer from '../timer/Timer';
+import { useCardContext } from '../../provider/CardProvider';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
   const { playerPhase, setPlayerPhase, turnPhase, timer } = useGameStateContext();
   const { message, setMessage } = useMessageContext();
-  const [cardsDisabled, setCardsDisabled] = useState(true);
+  const { cardsDisabled, setCardsDisabled } = useCardContext();
   const [drawersDisabled, setDrawersDisabled] = useState(true);
   const [bin, setBin] = useState(false);
 
@@ -60,6 +58,9 @@ function UI({ className, ...props }) {
         setDrawersDisabled(true);
         setBin(false);
         setTimeout(() => {
+          currentPlayer.setState('selectedCard', null, true);
+          currentPlayer.setState('target', null, true);
+          currentPlayer.setState('availableTargets', [], true);
           setPlayerPhase(PLAYER_PHASE.performLast, true);
         }, 1000);
         break;

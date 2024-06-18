@@ -92,53 +92,22 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
     }
   };
 
-  const selectTarget = (event, player) => {
+  const changeTransport = (event) => {
     event.stopPropagation();
     if (currentPlayer?.id !== me?.id || !active || getState('turnPhase') !== TURN_PHASE.playTurn) return;
     playSound('ui2.mp3', audioEnabled);
-    currentPlayer.setState('target', player, true);
+    currentPlayer.setState('target', currentPlayer, true);
     const cards = currentPlayer.getState('cards');
     const selectedCard = currentPlayer.getState('selectedCard');
     const decisions = currentPlayer.getState('decisions');
-    decisions.push({ card: selectedCard, target: player });
+    decisions.push({ card: selectedCard, target: currentPlayer });
     currentPlayer.setState('decisions', decisions, true);
 
-    if (selectedCard) {
-      switch (selectedCard.type) {
-        case 'transport':
-          setMessage({
-            type: 'action',
-            text: currentPlayer?.state.name + ' décide de prendre le ' + selectedCard.name + ' !',
-          });
-          break;
-
-        case 'action':
-          if (selectedCard.name === 'pied') {
-            setMessage({
-              type: 'action',
-              text:
-                currentPlayer?.getState('target').state.name +
-                ' retourne à pied à cause de ' +
-                currentPlayer?.state.name +
-                ' !',
-            });
-          } else if (selectedCard.name === 'moins') {
-            setMessage({
-              type: 'action',
-              text:
-                currentPlayer?.getState('target').state.name +
-                ' recule de ' +
-                selectedCard.name +
-                '  à cause de ' +
-                currentPlayer?.state.name +
-                ' !',
-            });
-          }
-
-        default:
-          break;
-      }
-
+    if (selectedCard && selectedCard.type === 'transport') {
+      setMessage({
+        type: 'action',
+        text: currentPlayer?.state.name + ' décide de prendre le ' + selectedCard.name + ' !',
+      });
       // remove the selected card from the deck
       cards.splice(
         cards.findIndex((card) => card.uuid === selectedCard.uuid),
@@ -194,8 +163,6 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
 
     return pattern;
   }, []);
-
-  // console.log(props);
 
   const linkImage = `/images/transports/${card.name}.svg`;
 
@@ -259,7 +226,7 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
                   className={classNames({ [styles.activeBtn]: selected })}
                   icon="replay"
                   color="#0D6EFF"
-                  onClick={(event) => selectTarget(event, currentPlayer)}
+                  onClick={(event) => changeTransport(event)}
                 />
               )}
               <CircleButton

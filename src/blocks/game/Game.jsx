@@ -46,7 +46,7 @@ const Game = () => {
 
           <Tiles players={players} amount={19.35} />
 
-          <OrbitControls target={[0, 0, 0]} />
+          <OrbitControls target={[0, -4, 0]} />
           {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
 
           {/* <Grid
