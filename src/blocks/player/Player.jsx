@@ -17,6 +17,7 @@ import playSound from '../../utils/playSound';
 import { useAudioContext } from '../../provider/AudioProvider';
 import { useGameStateContext } from '../../provider/GameStateProvider';
 import { useMessageContext } from '../../provider/MessageProvider';
+import CameraPositions from '../../utils/cameraPositions';
 
 function Player({ player, index, className, ...props }) {
   const { playerTurn, players } = usePlayerContext();
@@ -109,23 +110,7 @@ function Player({ player, index, className, ...props }) {
   }, [player]);
 
   const path = useMemo(() => Path[index], [index]);
-
-  useEffect(() => {
-    if (me?.id === id) {
-      // set the camera pos next to the player
-      // TODO: décaler la caméra a droite du joueur pour avoir le joueur dans l'angle bas gauche de l'écran
-      camRef.current.position.copy(cameraPos);
-
-      let tempVec = new THREE.Vector3();
-
-      ref.current.getWorldDirection(tempVec);
-
-      // camRef.current.position.addScaledVector(tempVec, -20);
-      // tempVec.cross(new THREE.Vector3(0, 1, 0)).normalize();
-      // camRef.current.position.addScaledVector(tempVec, 2);
-      camRef.current.position.y += 10;
-    }
-  }, [player]);
+  const cameraPosition = useMemo(() => CameraPositions[index], [index]);
 
   useFrame(() => {
     if (!isAnimating && points !== currentPoint) {
@@ -184,7 +169,14 @@ function Player({ player, index, className, ...props }) {
 
           <Vehicule player={player} targetable={targetable} color={player.state?.profile?.color} />
         </group>
-        {myPlayer()?.id === player.id && <PerspectiveCamera ref={camRef} makeDefault />}
+        {me?.id === player.id && <PerspectiveCamera ref={camRef} position={cameraPosition} makeDefault />}
+        {me?.id === player.id && (
+          <mesh position={position}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="red" />
+          </mesh>
+        )}
+
       </>
     )
   );
