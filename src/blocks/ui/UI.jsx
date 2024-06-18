@@ -98,7 +98,6 @@ function UI({ className, ...props }) {
   return (
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
-
         <div className={styles.topCenterZone}>
           <Timer />
           <Message />

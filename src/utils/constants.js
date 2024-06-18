@@ -37,7 +37,7 @@ export const TRANSPORT = [
     impact: 2,
     category: [CATEGORY.deuxRoues],
     icon: '/images/icons/transport/velo.svg',
-    sound: 'transport/velo.mp3'
+    sound: 'transport/velo.mp3',
   },
   {
     name: 'voiture',
@@ -46,7 +46,7 @@ export const TRANSPORT = [
     impact: 3,
     category: [CATEGORY.route, CATEGORY.moteur],
     icon: '/images/icons/transport/voiture.svg',
-    sound: 'transport/voiture.mp3'
+    sound: 'transport/voiture.mp3',
   },
   {
     name: 'tramway',
@@ -55,7 +55,7 @@ export const TRANSPORT = [
     impact: 3,
     category: [CATEGORY.rails, CATEGORY.commun],
     icon: '/images/icons/transport/tramway.svg',
-    sound: 'transport/tramway.mp3'
+    sound: 'transport/tramway.mp3',
   },
   {
     name: 'metro',
@@ -64,7 +64,7 @@ export const TRANSPORT = [
     impact: 4,
     category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur],
     icon: '/images/icons/transport/metro.svg',
-    sound: 'transport/metro.mp3'
+    sound: 'transport/metro.mp3',
   },
   {
     name: 'moto',
@@ -73,13 +73,13 @@ export const TRANSPORT = [
     impact: 4,
     category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur],
     icon: '/images/icons/transport/moto.svg',
-    sound: 'transport/moto.mp3'
+    sound: 'transport/moto.mp3',
   },
 ];
 
 export const TIME_START_GAME = 1;
 export const TIME_START_TURN = 1;
-export const TIME_PLAYER_TURN = 10;
+export const TIME_PLAYER_TURN = 100;
 export const TIME_END_TURN = 2;
 
 export const MAX_POINTS = 400; // FOR PROD: 20

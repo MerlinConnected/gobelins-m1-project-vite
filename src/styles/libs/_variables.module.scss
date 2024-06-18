@@ -13,8 +13,8 @@
     --color-bg-display: #f9f9f9;
     --color-bg-floating: rgb(229 229 229 / 50%);
     --color-bg-overlay: rgba(0, 0, 0, 0.2);
-    --color-bg-content: #D9D9D9;
-    --color-bg-content-2: #E3D8D8;
+    --color-bg-content: #d9d9d9;
+    --color-bg-content-2: #e3d8d8;
 
     --color-fill-main: #fff;
     --color-fill-secondary: #eee;
@@ -24,20 +24,29 @@
     --color-content-third: #c6c6c6;
     --color-content-fourth: #8f8f8f;
 
+    --color-neutral-0: #100301;
+    --color-neutral-20: #605856;
+    --color-neutral-40: #ae9e9c;
+    --color-neutral-60: #dfd7d6;
+    --color-neutral-80: #f4f1f0;
+    --color-neutral-100: #ffffff;
+
     --color-divider: #ebebeb;
     --color-symbol: #f0f0f0;
 
     --color-dark: #000;
     --color-light: #fff;
 
-    --color-button-primary: #0d6eff;
+    --color-button-primary: #0f6efd;
     --color-button-secondary: #ff0b37;
+    --color-button-primary-dark: #134692;
+    --color-button-secondary-dark: #921320;
 
     --color-looser: #ff2828;
     --color-looser-light: #ffb1b1;
 
-    --color-trafic: #FF6A16;
-    --color-trafic-light: #FFCDBD;
+    --color-trafic: #ff5e0d;
+    --color-trafic-light: #ffcdbd;
 
     --color-box-shadow: rgb(0 0 0 / 8%);
     --box-shadow: 2px 4px 1px 0 var(--color-box-shadow);
@@ -89,6 +98,12 @@
     --color-background-category-rails: #8ea0b6;
     --color-background-category-moteur: #3237ab;
     --color-background-category-route: #3f4767;
+
+    /* HOME COLORS */
+    --color-home-bg: #fef4e6;
+    --color-home-play-bg: #7ce89a;
+    --color-home-code-bg: #7ad0f5;
+    --color-home-code-btn: #7eaef6;
 
     /* SHORTCUTS */
     --color-background: var(--color-bg-body);
