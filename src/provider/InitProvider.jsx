@@ -50,7 +50,6 @@ export function InitProvider({ children }) {
         // Assign color to player
         assignPlayerColor(player, index);
       });
-      console.log(players);
 
       setTurnPhase(TURN_PHASE.startTurn, true);
       setTimer(TIME_START_TURN, true);
