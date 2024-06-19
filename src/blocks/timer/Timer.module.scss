@@ -7,6 +7,16 @@
     position: relative;
     width: rem(396);
     height: rem(30);
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 80%;
+        transform: translate(-50%, -50%);
+        box-shadow: var(--text-shadow);
+      }
 
     .stroke {
         position: relative;

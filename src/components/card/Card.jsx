@@ -106,7 +106,7 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
     if (selectedCard && selectedCard.type === 'transport') {
       setMessage({
         type: 'action',
-        text: currentPlayer?.state.name + ' décide de prendre le ' + selectedCard.name + ' !',
+        text: currentPlayer?.state.name + ' prend ' + selectedCard.edito + ' !',
       });
       // remove the selected card from the deck
       cards.splice(
@@ -130,7 +130,7 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
       1
     );
     currentPlayer.setState('cards', cards, true);
-    setMessage({ type: 'info', text: currentPlayer?.state.name + 'a jeté une carte' });
+    setMessage({ type: 'info', text: currentPlayer?.state.name + ' a jeté une carte' });
 
     handlePlayerPhase();
   };

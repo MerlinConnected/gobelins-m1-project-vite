@@ -49,11 +49,10 @@ export function EventProvider({ children }) {
       const randomEventIndex = randInt(0, eventDrawer.length - 1);
       const newEventCard = eventDrawer[randomEventIndex];
 
-      setEvent(newEventCard, true);
+      setEvent({ card: newEventCard, isNew: true }, true);
       setConcernedTurns(turnsProbability());
 
     }
-
   };
 
   const handleEventDrawer = () => {
@@ -61,7 +60,7 @@ export function EventProvider({ children }) {
 
     if (currentEvent !== null) {
       const filteredDrawer = initialEventDrawer.filter(
-        (event) => event.id !== currentEvent.id
+        (event) => event.id !== currentEvent.card.id
       );
       setEventDrawer(filteredDrawer);
     } else {
@@ -72,9 +71,13 @@ export function EventProvider({ children }) {
   const handleCurrentEvent = () => {
     if (getState('event') === null) return;
 
-    setImpactedTurns(impactedTurns + 1);
+    if (event !== null && impactedTurns !== 0) {
+      setEvent({ ...event, isNew: false }, true);
+    }
 
+    setImpactedTurns(impactedTurns + 1);
   };
+
 
   const handleEvent = () => {
     removeLastEvent();

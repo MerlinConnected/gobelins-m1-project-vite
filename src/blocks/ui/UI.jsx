@@ -23,6 +23,7 @@ import StrokeText from '../../components/stroke-text/StrokeText';
 import Drawers from '../../components/drawers/Drawers';
 import Timer from '../timer/Timer';
 import { useCardContext } from '../../provider/CardProvider';
+import EventRecap from '../event-recap/EventRecap';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
@@ -112,7 +113,7 @@ function UI({ className, ...props }) {
               getState('playerPhase') === PLAYER_PHASE.lastResult) && <Feedback />}
         </AnimatePresence>
 
-        {/* <AnimatePresence>{getState('turnPhase') === TURN_PHASE.startTurn && <EventRecap />}</AnimatePresence> */}
+        <AnimatePresence>{getState('turnPhase') === TURN_PHASE.startTurn && getState('event')?.isNew && <EventRecap />}</AnimatePresence>
 
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
         <p>Je suis {me?.state.name}</p>
