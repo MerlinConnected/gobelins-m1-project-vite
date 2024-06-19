@@ -59,20 +59,14 @@ function Player({ player, index, className, ...props }) {
           type: 'action',
           text:
             currentPlayer?.getState('target').state.name +
-            ' retourne à pied à cause de ' +
-            currentPlayer?.state.name +
-            ' !',
+            ' descend !',
         });
       } else if (selectedCard.name === 'moins') {
         setMessage({
           type: 'action',
           text:
             currentPlayer?.getState('target').state.name +
-            ' recule de ' +
-            selectedCard.name +
-            '  à cause de ' +
-            currentPlayer?.state.name +
-            ' !',
+            ' recule !',
         });
       }
 

@@ -75,7 +75,7 @@ function EventRecap({ className, ...props }) {
                             duration: 0.5,
                         }}
                     >
-                        <TransportTag transport={event.category} className={styles.transportTag} />
+                        <TransportTag transport={event.card.category} className={styles.transportTag} />
                     </motion.div>
                 </motion.div>
 

@@ -23,14 +23,12 @@ import StrokeText from '../../components/stroke-text/StrokeText';
 import Drawers from '../../components/drawers/Drawers';
 import Timer from '../timer/Timer';
 import { useCardContext } from '../../provider/CardProvider';
-import { useEventContext } from '../../provider/EventProvider';
 import EventRecap from '../event-recap/EventRecap';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
   const { playerPhase, setPlayerPhase, turnPhase, timer } = useGameStateContext();
   const { message, setMessage } = useMessageContext();
-  const { isNewEvent } = useEventContext();
   const { cardsDisabled, setCardsDisabled } = useCardContext();
   const [drawersDisabled, setDrawersDisabled] = useState(true);
   const [bin, setBin] = useState(false);
@@ -115,7 +113,7 @@ function UI({ className, ...props }) {
               getState('playerPhase') === PLAYER_PHASE.lastResult) && <Feedback />}
         </AnimatePresence>
 
-        <AnimatePresence>{getState('turnPhase') === TURN_PHASE.startTurn && isNewEvent() && <EventRecap />}</AnimatePresence>
+        <AnimatePresence>{getState('turnPhase') === TURN_PHASE.startTurn && getState('event')?.isNew && <EventRecap />}</AnimatePresence>
 
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
         <p>Je suis {me?.state.name}</p>

@@ -36,7 +36,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 2,
     category: [CATEGORY.deuxRoues],
-    icon: '/images/icons/transport/velo.svg',
+    icon: '/images/vehicules/bicycle/bicycle-var1.png',
     sound: 'transport/velo.mp3'
   },
   {
@@ -45,7 +45,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 3,
     category: [CATEGORY.route, CATEGORY.moteur],
-    icon: '/images/icons/transport/voiture.svg',
+    icon: '/images/vehicules/car/car-var1.png',
     sound: 'transport/voiture.mp3'
   },
   {
@@ -54,7 +54,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 3,
     category: [CATEGORY.rails, CATEGORY.commun],
-    icon: '/images/icons/transport/tramway.svg',
+    icon: '/images/vehicules/tram/tram-var1.png',
     sound: 'transport/tramway.mp3'
   },
   {
@@ -63,7 +63,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 4,
     category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur],
-    icon: '/images/icons/transport/metro.svg',
+    icon: '/images/vehicules/metro/metro-var1.png',
     sound: 'transport/metro.mp3'
   },
   {
@@ -72,14 +72,14 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 4,
     category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur],
-    icon: '/images/icons/transport/moto.svg',
+    icon: '/images/vehicules/bike/bike-var1.png',
     sound: 'transport/moto.mp3'
   },
 ];
 
 export const TIME_START_GAME = 1;
 export const TIME_START_TURN = 1;
-export const TIME_PLAYER_TURN = 5; // FOR PROD: 10 ou 15 jsp
+export const TIME_PLAYER_TURN = 10; // FOR PROD: 10 ou 15 jsp
 export const TIME_END_TURN = 2;
 
 export const MAX_POINTS = 400; // FOR PROD: 20
@@ -183,42 +183,42 @@ export const piedTransportCard = {
 export const initialEventDrawer = [
   {
     id: transportDrawer.length + actionDrawer.length + 1,
-    name: 'Averses',
+    name: 'MANIFESTION CONTRE LES SECRET SANTAS FORCES AU TRAVAIL',
     type: 'event',
     impact: 0,
     category: CATEGORY.deuxRoues,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 2,
-    name: 'Grève',
+    name: 'GILETS JAUNES EN PLEIN BARBECUE, CHIPO SAVOUREUSE',
     type: 'event',
     impact: 0,
     category: CATEGORY.route,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 3,
-    name: 'Panne de moteur',
+    name: 'CAMION POUBELLE EN SERVICE, BELLE VUE SUR LES RATS',
     type: 'event',
     impact: 0,
     category: CATEGORY.moteur,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 4,
-    name: 'Travaux sur les rails',
+    name: 'UN DÉGÉNÉRÉ DANSE SUR LES RAILS, SERVICE INTERROMPU',
     type: 'event',
     impact: 0,
     category: CATEGORY.rails,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 5,
-    name: 'Inondation',
+    name: "PANNE D'ÉLECTRICITÉ, SERVICE MOMENTANEMMENT INTERROMPU",
     type: 'event',
     impact: 0,
     category: CATEGORY.interieur,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 6,
-    name: 'Retards dans les transports',
+    name: "MALAISE VOYAGEUR, INTERVENTION DES SECOURS EN COURS",
     type: 'event',
     impact: 0,
     category: CATEGORY.commun,
