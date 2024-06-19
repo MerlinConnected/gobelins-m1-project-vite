@@ -1,8 +1,50 @@
+import { useState, useEffect } from 'react';
+
 import classNames from 'classnames';
 import styles from './Scoreboard.module.scss';
 
 import StrokeText from '../stroke-text/StrokeText';
 import CardLayers from '../card-layers/CardLayers';
+
+function VehiculeIcons({ player, className }) {
+  const [currentVariant, setCurrentVariant] = useState(0);
+
+  const vehicleImages = {
+    velo: {
+      images: ['/images/vehicules/bicycle/bicycle-var1.png', '/images/vehicules/bicycle/bicycle-var2.png'],
+    },
+    moto: {
+      images: ['/images/vehicules/bike/bike-var1.png', '/images/vehicules/bike/bike-var2.png'],
+    },
+    voiture: {
+      images: ['/images/vehicules/car/car-var1.png', '/images/vehicules/car/car-var2.png'],
+    },
+    metro: {
+      images: ['/images/vehicules/metro/metro-var1.png', '/images/vehicules/metro/metro-var2.png'],
+    },
+    tramway: {
+      images: ['/images/vehicules/tram/tram-var1.png', '/images/vehicules/tram/tram-var2.png'],
+    },
+  };
+
+  const getVehicleImages = (vehicleType) => {
+    const vehicle = vehicleImages[vehicleType];
+    return vehicle?.images[currentVariant];
+  };
+
+  const vehicleType = player?.state?.status?.name;
+  const vehicleImage = getVehicleImages(vehicleType);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentVariant((prevVariant) => (prevVariant + 1) % 2);
+    }, 250);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return vehicleImage && <img src={vehicleImage} alt="Vehicule Icon of the current player" className={className} />;
+}
 
 function Scoreboard({ players, className, ...props }) {
   // Logic goes here
@@ -11,11 +53,13 @@ function Scoreboard({ players, className, ...props }) {
       <div className={styles.board}>
         {players.map((player, index) => (
           <div key={index} className={styles.board__player}>
-            <StrokeText regular color={player.state?.profile?.color}>
-              {player?.state.name}
-            </StrokeText>
             <div className={styles.background}>
-              <div className={styles.mask}>
+              <StrokeText regular color={player.getState('color')} className={styles.name}>
+                {player?.state.name}
+              </StrokeText>
+              <p className={styles.score}>{player.getState('points')} cases</p>
+              <VehiculeIcons player={player} className={styles.vehicule} />
+              <div className={styles.mask} style={{ backgroundColor: player.getState('colorLight') }}>
                 <CardLayers className={styles.layer} id="pattern3" />
               </div>
               <svg
@@ -32,7 +76,6 @@ function Scoreboard({ players, className, ...props }) {
                 />
               </svg>
             </div>
-            <p>{player.getState('points')} points</p>
           </div>
         ))}
       </div>

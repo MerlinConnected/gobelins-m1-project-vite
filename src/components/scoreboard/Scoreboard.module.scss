@@ -2,8 +2,9 @@
     .board {
         display: flex;
         flex-direction: column;
+        gap: rem(64);
         position: absolute;
-        right: 0;
+        right: rem(32);
         top: 50%;
         transform: translateY(-50%);
 
@@ -12,13 +13,52 @@
             flex-direction: row;
             justify-content: flex-end;
             gap: rem(16);
+            height: rem(50);
+
+            transform: scale(0.6);
 
             .background {
                 position: relative;
                 width: rem(200);
 
+                .name {
+                    position: absolute;
+                    top: -50%;
+                    left: rem(30);
+                    z-index: 2;
+                }
+
+                .score {
+                    position: absolute;
+                    top: 15px;
+                    left: 2.875rem;
+                    z-index: 2;
+                    color: black;
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    letter-spacing: -0.8px;
+                }
+
+                .vehicule {
+                    position: absolute;
+                    top: rem(-25);
+                    left: rem(-60);
+                    z-index: 1;
+                    width: auto;
+                    height: rem(100);
+                }
+
                 .mask {
+                    position: absolute;
+
+                    top: 0;
+                    left: 0;
+
+                    z-index: 0;
+
+                    width: 100%;
                     height: rem(50);
+
                     clip-path: polygon(
                         6.68% 16.027%,
                         12.804% 10.148%,
@@ -44,7 +84,7 @@
                         2.813% 28.017%,
                         6.68% 16.027%
                     );
-                    background-color: #fac9ed;
+
                     .layer {
                         opacity: 0.2;
                         position: absolute;
