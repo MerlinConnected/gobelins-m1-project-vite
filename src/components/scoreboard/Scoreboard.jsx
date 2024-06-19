@@ -6,6 +6,10 @@ import styles from './Scoreboard.module.scss';
 import StrokeText from '../stroke-text/StrokeText';
 import CardLayers from '../card-layers/CardLayers';
 
+import { usePlayerContext } from '../../provider/PlayerProvider';
+
+import { motion } from 'framer-motion';
+
 function VehiculeIcons({ player, className }) {
   const [currentVariant, setCurrentVariant] = useState(0);
 
@@ -47,12 +51,19 @@ function VehiculeIcons({ player, className }) {
 }
 
 function Scoreboard({ players, className, ...props }) {
-  // Logic goes here
+  const { playerTurn } = usePlayerContext();
+  const currentPlayer = players[playerTurn];
+
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
       <div className={styles.board}>
         {players.map((player, index) => (
-          <div key={index} className={styles.board__player}>
+          <motion.div
+            key={index}
+            className={styles.board__player}
+            animate={{ scale: currentPlayer?.id === player?.id ? 1 : 0.6 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
             <div className={styles.background}>
               <StrokeText regular color={player.getState('color')} className={styles.name}>
                 {player?.state.name}
@@ -75,8 +86,19 @@ function Scoreboard({ players, className, ...props }) {
                   fill="white"
                 />
               </svg>
+              <motion.svg
+                className={styles['speed-indicator']}
+                animate={{ x: currentPlayer?.id === player?.id ? 0 : '130px' }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 40 37"
+              >
+                <path fill="#fff" d="M0 5.5 17.8 0l19.1 17.9-12.3 12.7-24.6.8 14.1-13.5L0 5.5Z" />
+                <path fill="#FF0D47" d="m5.5 7 13.8-4 13.5 14.3-9.4 10.1-18 .7L17 17.3 5.5 6.9Z" />
+              </motion.svg>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
