@@ -25,6 +25,8 @@ import Timer from '../timer/Timer';
 import { useCardContext } from '../../provider/CardProvider';
 import EventRecap from '../event-recap/EventRecap';
 
+import Scoreboard from '../../components/scoreboard/Scoreboard';
+
 function UI({ className, ...props }) {
   const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
   const { playerPhase, setPlayerPhase, turnPhase, timer } = useGameStateContext();
@@ -100,7 +102,6 @@ function UI({ className, ...props }) {
   return (
     <>
       <div className={classNames(styles.wrapper, className)} {...props}>
-
         <div className={styles.topCenterZone}>
           <Timer />
           <Message />
@@ -117,16 +118,7 @@ function UI({ className, ...props }) {
 
         {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
         <p>Je suis {me?.state.name}</p>
-        <div className={styles.board}>
-          {players.map((player, index) => (
-            <div key={index} className={styles.board__player}>
-              <StrokeText regular color={player.state?.profile?.color}>
-                {player?.state.name}
-              </StrokeText>
-              <p>{player.getState('points')} points</p>
-            </div>
-          ))}
-        </div>
+        <Scoreboard players={inGamePlayers} />
 
         <Cards cardsDisabled={cardsDisabled} />
         <div className={styles.middle} />
