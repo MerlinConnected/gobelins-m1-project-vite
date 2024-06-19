@@ -52,8 +52,6 @@ const ActionButton = ({ className, color, pattern, text, size, children, ...prop
     };
   };
 
-  console.log(children);
-
   return (
     <motion.div whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}>
       <motion.div
@@ -92,7 +90,7 @@ const ActionButton = ({ className, color, pattern, text, size, children, ...prop
           </StrokeText>
         )}
 
-        <div className={styles.children}>{children}</div>
+        {children && <div className={styles.children}>{children}</div>}
       </motion.div>
     </motion.div>
   );

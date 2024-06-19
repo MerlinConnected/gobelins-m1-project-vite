@@ -7,6 +7,7 @@ import styles from './Onboarding.module.scss';
 
 import LogoLayers from '../../components/logo-layers/LogoLayers';
 import ActionButton from '../../components/action-button/ActionButton';
+import Logo from '../../components/logo/Logo';
 
 function Onboarding({ className, ...props }) {
   const { handleInsertCoin } = useGameStateContext();
@@ -79,19 +80,7 @@ function Onboarding({ className, ...props }) {
 
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
-      <div className={styles.logo}>
-        <LogoLayers id="on_n" />
-        <LogoLayers id="on_o" />
-        <LogoLayers id="flash_1" />
-        <LogoLayers id="flash_2" />
-        <LogoLayers id="banner" />
-        <LogoLayers id="time_t" />
-        <LogoLayers id="time_i" />
-        <LogoLayers id="time_m" />
-        <LogoLayers id="time_e" />
-        <LogoLayers id="bush_1" />
-        <LogoLayers id="bush_2" />
-      </div>
+      <Logo size="large" className={styles.logo} />
 
       <div className={styles.rulesWrapper}>
         <h3 className={styles.title}>comment jouer ?</h3>
@@ -108,6 +97,7 @@ function Onboarding({ className, ...props }) {
           <span>5-10 min</span>
         </div>
       </div>
+
       <div className={styles.cardsWrapper}>
         <div className={classNames(styles.playWrapper)}>
           <ActionButton

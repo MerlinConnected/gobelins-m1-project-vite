@@ -9,6 +9,8 @@ import classNames from 'classnames';
 import styles from './InfoLobby.module.scss';
 
 import Button from '../../components/button/Button';
+import ActionButton from '../../components/action-button/ActionButton';
+import Logo from '../../components/logo/Logo';
 
 function InfoLobby({ className, ...props }) {
   const { setNameEditing } = usePlayerContext();
@@ -23,9 +25,11 @@ function InfoLobby({ className, ...props }) {
     setLobby(true);
   };
   return (
-    <div className={classNames(styles.wrapper, className)} {...props}>
-      <div>
+    <>
+      <Logo className={styles.logo} />
+      <div className={classNames(styles.wrapper, className)} {...props}>
         <form
+          className={styles.form}
           onSubmit={(e) => {
             e.preventDefault();
             me?.setState('name', nameInput);
@@ -33,18 +37,34 @@ function InfoLobby({ className, ...props }) {
             goToLobby();
           }}
         >
-          <input
-            type="text"
-            value={nameInput}
-            placeholder="Enter your name"
-            onChange={(e) => {
-              setNameInput(e.target.value);
-            }}
-          />
-          <Button type="submit">Join game</Button>
+          <div className={styles.background} />
+          <div className={styles.inputWrapper}>
+            <input
+              type="text"
+              value={nameInput}
+              placeholder="Ton pseudo"
+              maxLength={12}
+              className={styles.input}
+              onChange={(e) => {
+                setNameInput(e.target.value);
+              }}
+            />
+            <span />
+          </div>
         </form>
+
+        <div className={styles.btnWrapper}>
+          <ActionButton
+            className={styles.button}
+            text="Rejoindre"
+            color="#71AFF7"
+            pattern="pattern3"
+            size="xlarge"
+            onClick={goToLobby}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
