@@ -1,5 +1,67 @@
 .wrapper {
-    > h1 {
-        // css code goes here
+    .board {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &__player {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            gap: rem(16);
+
+            .background {
+                position: relative;
+                width: rem(200);
+
+                .mask {
+                    height: rem(50);
+                    clip-path: polygon(
+                        6.68% 16.027%,
+                        12.804% 10.148%,
+                        40.164% 3.932%,
+                        68.095% 0.706%,
+                        89.679% 6.44%,
+                        98.868% 16.661%,
+                        93.868% 24.068%,
+                        98.09% 29.902%,
+                        96.081% 40.725%,
+                        100% 44.583%,
+                        96.533% 57.854%,
+                        99.212% 72.527%,
+                        95.649% 84.261%,
+                        81.898% 90.315%,
+                        38.754% 100%,
+                        19.694% 97.5%,
+                        7.222% 94.475%,
+                        0.47% 76.562%,
+                        7.244% 64.724%,
+                        3.947% 51.528%,
+                        6.661% 41.206%,
+                        2.813% 28.017%,
+                        6.68% 16.027%
+                    );
+                    background-color: #fac9ed;
+                    .layer {
+                        opacity: 0.2;
+                        position: absolute;
+                        mix-blend-mode: overlay;
+                    }
+                }
+
+                &__pattern {
+                    position: absolute;
+                    top: -3px;
+                    left: 0;
+                    z-index: -1;
+
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
     }
 }
