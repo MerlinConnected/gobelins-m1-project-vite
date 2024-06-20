@@ -11,7 +11,7 @@ const LAYER_PATTERN = 20;
 const LAYER_TEXT = 50;
 
 const ActionButton = ({ className, color, pattern, text, size, children, ...props }) => {
-  const { headText, subText, primary } = props;
+  const { headText, subText, gigaColor } = props;
 
   const ref = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -77,8 +77,8 @@ const ActionButton = ({ className, color, pattern, text, size, children, ...prop
           <div
             className={styles.gigaWrapper}
             style={{
-              '--headText-color': `var(--color-button${primary ? '-primary' : '-secondary'})`,
-              '--subText-color': `var(--color-button${primary ? '-primary' : '-secondary'}-dark)`,
+              '--headText-color': `var(--color-button-${gigaColor})`,
+              '--subText-color': `var(--color-button-${gigaColor}-dark)`,
             }}
           >
             <StrokeText className={styles.text}>{headText}</StrokeText>

@@ -8,7 +8,6 @@ import { useGameStateContext } from '../../provider/GameStateProvider';
 import classNames from 'classnames';
 import styles from './InfoLobby.module.scss';
 
-import Button from '../../components/button/Button';
 import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
 
@@ -24,10 +23,18 @@ function InfoLobby({ className, ...props }) {
     setInfoLobby(false);
     setLobby(true);
   };
+
+  const playerColor = 'hotpink';
+  const playerColorLight = 'lightpink';
+
   return (
     <>
       <Logo className={styles.logo} />
-      <div className={classNames(styles.wrapper, className)} {...props}>
+      <div
+        style={{ '--player-color': playerColor, '--player-color-light': playerColorLight }}
+        className={classNames(styles.wrapper, className)}
+        {...props}
+      >
         <form
           className={styles.form}
           onSubmit={(e) => {

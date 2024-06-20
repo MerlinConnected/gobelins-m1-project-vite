@@ -8,23 +8,25 @@ import { useEventContext } from './EventProvider';
 let context = {};
 export const InitContext = createContext();
 
-const COLORS = [
-  { regular: '#F736C3', light: '#FAC9ED' },
-  { regular: '#84C203', light: '#E6F9BE' },
-  { regular: '#00C4EF', light: '#BCE8F1' },
-  { regular: '#FF7E0D', light: '#F9D9BD' },
-];
+// const COLORS = [
+//   { regular: '#F736C3', light: '#FAC9ED' },
+//   { regular: '#84C203', light: '#E6F9BE' },
+//   { regular: '#00C4EF', light: '#BCE8F1' },
+//   { regular: '#FF7E0D', light: '#F9D9BD' },
+// ];
 
 export function InitProvider({ children }) {
   const { globalPhase, setTurnPhase, setTimer } = useGameStateContext();
   const { players, setPlayerTurn, drawCard, distributeCard } = usePlayerContext();
   const { setEvent } = useEventContext();
 
-  const assignPlayerColor = (player, index) => {
-    const assignedColor = COLORS[index % COLORS.length];
-    player.setState('color', assignedColor.regular, true);
-    player.setState('colorLight', assignedColor.light, true);
-  };
+  // const assignPlayerColor = (player, index) => {
+  //   const assignedColor = COLORS[index % COLORS.length];
+
+  //   console.log(player);
+  //   player.setState('color', assignedColor.regular, true);
+  //   player.setState('colorLight', assignedColor.light, true);
+  // };
 
   const startGame = () => {
     if (isHost()) {
@@ -48,7 +50,7 @@ export function InitProvider({ children }) {
         player.setState('status', statusCard, true);
 
         // Assign color to player
-        assignPlayerColor(player, index);
+        // assignPlayerColor(player, index);
       });
 
       setTurnPhase(TURN_PHASE.startTurn, true);

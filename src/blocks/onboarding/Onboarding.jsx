@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
+import classNames from 'classnames';
+
+import styles from './Onboarding.module.scss';
 
 import { useGameStateContext } from '../../provider/GameStateProvider';
 
-import classNames from 'classnames';
-import styles from './Onboarding.module.scss';
-
-import LogoLayers from '../../components/logo-layers/LogoLayers';
 import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
 
@@ -105,8 +104,8 @@ function Onboarding({ className, ...props }) {
             subText="une partie"
             color="#71AFF7"
             pattern="pattern3"
-            primary
             size="giga"
+            gigaColor="blue"
           >
             {
               <form className={styles.form} onSubmit={handleSubmit} onPaste={handlePaste}>
@@ -135,6 +134,7 @@ function Onboarding({ className, ...props }) {
             color="#FD9FB6"
             pattern="pattern3"
             size="giga"
+            gigaColor="red"
             onClick={() => {
               handleInsertCoin();
             }}

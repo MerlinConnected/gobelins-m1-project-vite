@@ -1,65 +1,109 @@
-import React from 'react';
-
-import { getRoomCode, isHost } from 'playroomkit';
-
+import React, { useEffect, useState } from 'react';
+import { getRoomCode } from 'playroomkit';
 import classNames from 'classnames';
+
 import styles from './Lobby.module.scss';
 
-import Button from '../../components/button/Button';
-import PlayerCards from '../../components/player-cards/PlayerCards';
+import { usePlayerContext } from '../../provider/PlayerProvider';
 
-import { Toaster, toast } from 'sonner';
+import ActionButton from '../../components/action-button/ActionButton';
+import Logo from '../../components/logo/Logo';
+import PlayerCards from '../../components/player-cards/PlayerCard';
+import StrokeText from '../../components/stroke-text/StrokeText';
 
-import { useGameStateContext } from '../../provider/GameStateProvider';
-import { GAME_PHASE } from '../../utils/constants';
-import removeRoomHash from '../../utils/removeRoomHash';
+const COLORS = [
+  { regular: '#F736C3', light: '#FAC9ED' },
+  { regular: '#84C203', light: '#E6F9BE' },
+  { regular: '#00C4EF', light: '#BCE8F1' },
+  { regular: '#FF7E0D', light: '#F9D9BD' },
+];
 
 function Lobby({ className, ...props }) {
-  const { setLobby, setGlobalPhase } = useGameStateContext();
+  const { players } = usePlayerContext();
+  const [assignedColors, setAssignedColors] = useState(new Map());
 
   function copyRoomCode() {
     navigator.clipboard.writeText(getRoomCode());
   }
 
+  useEffect(() => {
+    const updatedColors = new Map(assignedColors);
+
+    players.forEach((player, index) => {
+      if (!player.getState('color') && !player.getState('colorLight')) {
+        const assignedColor = COLORS[index % COLORS.length];
+        player.setState('color', assignedColor.regular, true);
+        player.setState('colorLight', assignedColor.light, true);
+        updatedColors.set(player.id, assignedColor);
+      }
+      if (!player.getState('joinedAt')) {
+        player.setState('joinedAt', Date.now());
+      }
+      if (!player.getState('avatar')) {
+        player.setState('avatar', player.avatarList[index]);
+      }
+    });
+
+    setAssignedColors(updatedColors);
+  }, [players]);
+
+  players.sort((a, b) => a.getState('joinedAt') - b.getState('joinedAt'));
+
   return (
-    <div className={classNames(styles.wrapper, className)} {...props}>
-      <div>
-        <div>
-          <h1>Code de la room : {getRoomCode()}</h1>
-          <div>
-            {/* <Toaster theme="dark" /> */}
-            <Button
-              onClick={() => {
-                toast('Code copied to clipboard!', {
-                  position: 'top-center',
-                });
-                copyRoomCode();
-              }}
-            >
-              Invite friends
-            </Button>
+    <>
+      <Logo className={styles.logo} />
+      <div className={classNames(styles.wrapper, className)} {...props}>
+        <div className={styles.content}>
+          <StrokeText className={styles.title}>en attente de maître lucien...</StrokeText>
+          <div className={styles.lobbyWrapper}>
+            <PlayerCards player={players[0]} />
+            <PlayerCards player={players[1]} />
+            <PlayerCards player={players[2]} />
+            <PlayerCards player={players[3]} />
           </div>
         </div>
-        <div>
-          <PlayerCards />
+
+        <div className={styles.cardsWrapper}>
+          <div className={classNames(styles.first)}>
+            <ActionButton
+              headText="Partager"
+              subText="le code"
+              color="#71AFF7"
+              pattern="pattern3"
+              size="giga"
+              gigaColor="blue"
+              onClick={copyRoomCode}
+            >
+              {<img className={styles.svgPicto} src="/images/icons/ui/card-copy-picto.svg" alt="copy the code" />}
+            </ActionButton>
+          </div>
+          {/* <div className={classNames(styles.second)}>
+            <ActionButton
+              headText="Règles"
+              subText="du jeu"
+              color="#DE9FFD"
+              pattern="pattern3"
+              size="giga"
+              gigaColor="purple"
+            >
+              {<img className={styles.svgPicto} src="/images/icons/ui/card-rules-picto.svg" alt="play" />}
+            </ActionButton>
+          </div> */}
+          <div className={classNames(styles.second)}>
+            <ActionButton
+              headText="Lancer"
+              subText="la partie"
+              color="#FD9FB6"
+              pattern="pattern3"
+              size="giga"
+              gigaColor="red"
+            >
+              {<img className={styles.svgPicto} src="/images/icons/ui/play-picto.svg" alt="play" />}
+            </ActionButton>
+          </div>
         </div>
-        {isHost() && (
-          <Button
-            className={styles.white}
-            onClick={() => {
-              setLobby(false);
-              setGlobalPhase(GAME_PHASE.startGame, true);
-            }}
-          >
-            Start game
-          </Button>
-        )}
-        {!isHost() && <em>Waiting for host to start</em>}
       </div>
-      <Button className={styles.leave} onClick={() => removeRoomHash()}>
-        Leave room
-      </Button>
-    </div>
+    </>
   );
 }
 

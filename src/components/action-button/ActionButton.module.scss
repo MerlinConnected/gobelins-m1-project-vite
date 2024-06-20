@@ -9,6 +9,10 @@
 
     transition: transform 0.3s cubic-bezier(0.63, 2.6, 0.48, 0.94);
 
+    & > * {
+        user-select: none;
+    }
+
     &.hovered {
         transform: scale(1.05);
     }

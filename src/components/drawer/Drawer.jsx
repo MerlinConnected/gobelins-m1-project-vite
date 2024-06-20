@@ -54,8 +54,6 @@ function Drawer({ className, type, handleDrawnCards, ...props }) {
 
     x.set(rX);
     y.set(rY);
-
-    console.log('rX', rX, 'rY', rY);
   };
 
   const handleMouseLeave = () => {

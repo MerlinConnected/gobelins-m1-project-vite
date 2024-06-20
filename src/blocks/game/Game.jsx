@@ -78,7 +78,6 @@ const Game = () => {
             <Garden />
             <Routes />
           </group>
-
         </Suspense>
       </Canvas>
     </>
