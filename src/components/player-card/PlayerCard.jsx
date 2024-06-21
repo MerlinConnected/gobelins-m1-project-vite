@@ -1,10 +1,11 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import classNames from 'classnames';
 import styles from './PlayerCard.module.scss';
 
 import StrokeText from '../stroke-text/StrokeText';
 import PlayerEyes from '../player-eyes/PlayerEyes';
+import CardLayers from '../card-layers/CardLayers';
 
 function PlayerCard({ className, player, ...props }) {
   const playerName = player?.state?.name || player?.state?.profile?.name;
@@ -26,6 +27,11 @@ function PlayerCard({ className, player, ...props }) {
     return colors;
   }, [player?.state?.color, player?.state?.colorLight]);
 
+  // Récupération sécurisée de l'ID de l'avatar
+  const playerEyesId = useMemo(() => {
+    return player?.state?.avatar ?? 0;
+  }, [player?.state?.avatar]);
+
   return (
     <div
       style={{ '--lobby-card-color': cardColor.normal, '--lobby-card-color-light': cardColor.light }}
@@ -34,12 +40,13 @@ function PlayerCard({ className, player, ...props }) {
     >
       {player ? (
         <div className={styles.player}>
-          <PlayerEyes className={styles.eyes} />
-          <StrokeText className={classNames(styles.text, styles.title)}>{playerName}</StrokeText>
+          <CardLayers className={styles.pattern} id="patternPlayer" />
+          <PlayerEyes className={styles.eyes} id={playerEyesId} />
           <StrokeText className={classNames(styles.text, styles.title)}>{playerName}</StrokeText>
         </div>
       ) : (
         <div className={styles.noPlayer}>
+          <CardLayers className={styles.pattern} id="patternPlayerEmpty" fill="#F1EBE3" />
           <StrokeText className={styles.text}>?</StrokeText>
           <StrokeText className={styles.text}>?</StrokeText>
         </div>

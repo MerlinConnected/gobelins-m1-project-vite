@@ -8,8 +8,9 @@ import { usePlayerContext } from '../../provider/PlayerProvider';
 
 import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
-import PlayerCards from '../../components/player-cards/PlayerCard';
+import PlayerCards from '../../components/player-card/PlayerCard';
 import StrokeText from '../../components/stroke-text/StrokeText';
+import { useGameStateContext } from '../../provider/GameStateProvider';
 
 const COLORS = [
   { regular: '#F736C3', light: '#FAC9ED' },
@@ -19,6 +20,7 @@ const COLORS = [
 ];
 
 function Lobby({ className, ...props }) {
+  const { setLobby, setGlobalPhase } = useGameStateContext();
   const { players } = usePlayerContext();
   const [assignedColors, setAssignedColors] = useState(new Map());
 
@@ -54,7 +56,7 @@ function Lobby({ className, ...props }) {
       <Logo className={styles.logo} />
       <div className={classNames(styles.wrapper, className)} {...props}>
         <div className={styles.content}>
-          <StrokeText className={styles.title}>en attente de maître lucien...</StrokeText>
+          <h3 className={styles.title}>en attente de maître lucien</h3>
           <div className={styles.lobbyWrapper}>
             <PlayerCards player={players[0]} />
             <PlayerCards player={players[1]} />
@@ -69,7 +71,7 @@ function Lobby({ className, ...props }) {
               headText="Partager"
               subText="le code"
               color="#71AFF7"
-              pattern="pattern3"
+              pattern="patternCopy"
               size="giga"
               gigaColor="blue"
               onClick={copyRoomCode}
@@ -77,26 +79,30 @@ function Lobby({ className, ...props }) {
               {<img className={styles.svgPicto} src="/images/icons/ui/card-copy-picto.svg" alt="copy the code" />}
             </ActionButton>
           </div>
-          {/* <div className={classNames(styles.second)}>
+          <div className={classNames(styles.second)}>
             <ActionButton
               headText="Règles"
               subText="du jeu"
               color="#DE9FFD"
-              pattern="pattern3"
+              pattern="patternRules"
               size="giga"
               gigaColor="purple"
             >
               {<img className={styles.svgPicto} src="/images/icons/ui/card-rules-picto.svg" alt="play" />}
             </ActionButton>
-          </div> */}
+          </div>
           <div className={classNames(styles.second)}>
             <ActionButton
               headText="Lancer"
               subText="la partie"
               color="#FD9FB6"
-              pattern="pattern3"
+              pattern="patternPlay"
               size="giga"
               gigaColor="red"
+              onClick={() => {
+                setLobby(false);
+                setGlobalPhase(GAME_PHASE.startGame, true);
+              }}
             >
               {<img className={styles.svgPicto} src="/images/icons/ui/play-picto.svg" alt="play" />}
             </ActionButton>

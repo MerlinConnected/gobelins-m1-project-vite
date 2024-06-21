@@ -9,7 +9,7 @@
 }
 
 .logo {
-    margin-top: rem(80);
+    margin-top: rem(40);
 }
 
 .content {
@@ -18,10 +18,36 @@
     align-items: center;
 
     .title {
+        position: relative;
         margin-top: rem(90);
         color: var(--color-neutral-20);
         font-size: rem(40);
         font-family: $polaquita-font;
+
+        @keyframes dots {
+            0% {
+                content: '';
+            }
+            25% {
+                content: '.';
+            }
+            50% {
+                content: '..';
+            }
+            75% {
+                content: '...';
+            }
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: calc(100% + rem(4));
+            transform: translateY(-50%);
+            display: inline-block;
+            animation: dots 2s steps(1, end) infinite;
+        }
     }
 
     .lobbyWrapper {

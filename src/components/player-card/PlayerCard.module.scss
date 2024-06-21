@@ -22,16 +22,29 @@
 }
 
 .player {
+    position: relative;
     height: 100%;
     width: 100%;
     display: flex;
+    align-items: center;
     flex-direction: column;
     justify-content: space-between;
+
+    .pattern {
+        position: absolute;
+        mix-blend-mode: overlay;
+        opacity: 0.16;
+    }
 }
 
 .noPlayer {
+    position: relative;
     height: 100%;
     width: 100%;
+
+    .pattern {
+        opacity: 0.5;
+    }
 
     p {
         position: absolute;
@@ -52,4 +65,9 @@
             transform: translate(-50%, -50%) rotate(14deg);
         }
     }
+}
+
+.pattern {
+    height: 100%;
+    width: 100%;
 }

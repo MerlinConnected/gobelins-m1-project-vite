@@ -103,7 +103,7 @@ function Onboarding({ className, ...props }) {
             headText="Rejoindre"
             subText="une partie"
             color="#71AFF7"
-            pattern="pattern3"
+            pattern="patternCopy"
             size="giga"
             gigaColor="blue"
           >
@@ -132,7 +132,7 @@ function Onboarding({ className, ...props }) {
             headText="Créer"
             subText="une partie"
             color="#FD9FB6"
-            pattern="pattern3"
+            pattern="patternPlay"
             size="giga"
             gigaColor="red"
             onClick={() => {
