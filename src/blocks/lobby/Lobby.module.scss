@@ -52,8 +52,8 @@
 
     .lobbyWrapper {
         display: flex;
-        width: rem(870);
-        height: rem(270);
+        width: grid(7);
+        height: auto;
         margin-top: rem(20);
         padding: rem(20);
         background-color: var(--color-neutral-100);

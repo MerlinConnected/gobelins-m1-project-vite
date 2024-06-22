@@ -20,11 +20,13 @@ function Scene() {
 
   return (
     <>
-      <div className={styles.wrapper}>
-        {globalPhase === GAME_PHASE.lobby && onboarding && <Onboarding />}
-        {globalPhase === GAME_PHASE.lobby && infoLobby && <InfoLobby />}
-        {globalPhase === GAME_PHASE.lobby && lobby && <Lobby />}
-      </div>
+      {globalPhase === GAME_PHASE.lobby && (
+        <div className={styles.wrapper}>
+          {globalPhase === GAME_PHASE.lobby && onboarding && <Onboarding />}
+          {globalPhase === GAME_PHASE.lobby && infoLobby && <InfoLobby />}
+          {globalPhase === GAME_PHASE.lobby && lobby && <Lobby />}
+        </div>
+      )}
       {globalPhase === GAME_PHASE.lobby && !onboarding && <AudioManager musicPhase={'home'} />}
       {globalPhase === GAME_PHASE.startGame && <AudioManager musicPhase={'game'} />}
       {globalPhase !== GAME_PHASE.lobby && <Game />}

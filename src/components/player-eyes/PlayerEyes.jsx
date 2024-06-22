@@ -1,33 +1,29 @@
 import React, { useMemo } from 'react';
-
 import classNames from 'classnames';
-
 import styles from './PlayerEyes.module.scss';
 
 const PlayerEyes = ({ className, id, ...props }) => {
-  const eyesId = useMemo(() => {
-    if (id === 0) {
-      return 'eyes1';
-    } else if (id === 1) {
-      return 'eyes2';
-    } else if (id === 2) {
-      return 'eyes3';
-    } else if (id === 3) {
-      return 'eyes4';
-    }
-  }, [id]);
+  const isValidId = id >= 0 && id <= 3;
 
-  const renderSvg = (type) => {
-    const svgPath = `/images/profiles/eyes/${id + 1}/${type}.svg`;
-    return <img src={svgPath} alt={`${type}`} className={styles[type]} />;
-  };
+  const svgPaths = useMemo(() => {
+    if (!isValidId) return {};
+
+    return {
+      background: `/images/profiles/eyes/${id + 1}/background.svg`,
+      leftEye: `/images/profiles/eyes/${id + 1}/left-eye.svg`,
+      rightEye: `/images/profiles/eyes/${id + 1}/right-eye.svg`,
+      border: `/images/profiles/eyes/${id + 1}/border.svg`,
+    };
+  }, [id, isValidId]);
+
+  const renderSvg = (type) => <img src={svgPaths[type]} alt={type} className={styles[type]} />;
 
   return (
-    eyesId && (
+    isValidId && (
       <div className={classNames(styles.wrapper, className)} {...props}>
         {renderSvg('background')}
-        {renderSvg('left-eye')}
-        {renderSvg('right-eye')}
+        {renderSvg('leftEye')}
+        {renderSvg('rightEye')}
         {renderSvg('border')}
       </div>
     )

@@ -5,12 +5,12 @@ import classNames from 'classnames';
 import styles from './Lobby.module.scss';
 
 import { usePlayerContext } from '../../provider/PlayerProvider';
+import { useGameStateContext } from '../../provider/GameStateProvider';
 
 import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
 import PlayerCards from '../../components/player-card/PlayerCard';
-import StrokeText from '../../components/stroke-text/StrokeText';
-import { useGameStateContext } from '../../provider/GameStateProvider';
+import { GAME_PHASE } from '../../utils/constants';
 
 const COLORS = [
   { regular: '#F736C3', light: '#FAC9ED' },
