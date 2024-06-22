@@ -6,6 +6,8 @@ import styles from './ActionButton.module.scss';
 
 import CardLayers from '../card-layers/CardLayers';
 import StrokeText from '../stroke-text/StrokeText';
+import { AnimatePresence } from 'framer-motion';
+import { homeCardAppear } from '../../core/animation';
 
 const LAYER_PATTERN = 20;
 const LAYER_TEXT = 50;
@@ -53,7 +55,7 @@ const ActionButton = ({ className, color, pattern, text, size, children, ...prop
   };
 
   return (
-    <motion.div whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}>
+    <motion.div {...homeCardAppear} whileHover={{ scale: 1.05, transition: { duration: 0.2 } }} {...props}>
       <motion.div
         ref={ref}
         className={classNames(styles.wrapper, className, {
@@ -66,7 +68,6 @@ const ActionButton = ({ className, color, pattern, text, size, children, ...prop
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d', '--btn-bg-color': color }}
-        {...props}
       >
         <div className={styles.background} />
         <motion.div style={style(LAYER_PATTERN)} className={styles.layerWrapper}>

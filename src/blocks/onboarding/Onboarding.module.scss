@@ -24,21 +24,26 @@
         font-size: rem(26);
     }
 
-    .textWrapper {
+    .tuto {
         font-family: $astounder-lc-font;
         text-transform: uppercase;
         color: var(--color-neutral-20);
+        list-style: none;
+        counter-reset: ol;
 
-        & > * {
-            &:nth-child(1) {
+        & > ol {
+            padding-left: 0;
+            font-size: rem(16);
+
+            &:nth-of-type(1) {
                 margin-bottom: rem(4);
             }
-        }
 
-        .text {
-            font-size: rem(16);
-            span {
+            &::before {
+                content: counter(ol) '/ ';
+                counter-increment: ol;
                 color: var(--color-neutral-40);
+                margin-right: rem(5);
             }
         }
     }
@@ -145,8 +150,10 @@
     cursor: pointer;
 
     .playImg {
-        height: rem(90);
-        width: rem(90);
+        height: 100%;
+        width: 100%;
+        max-width: rem(140);
+        max-height: rem(100);
         transform: translateY(rem(20));
     }
 }

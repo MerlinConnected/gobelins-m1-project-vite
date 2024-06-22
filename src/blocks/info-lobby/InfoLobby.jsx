@@ -10,6 +10,7 @@ import styles from './InfoLobby.module.scss';
 
 import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
+import { AnimatePresence } from 'framer-motion';
 
 function InfoLobby({ className, ...props }) {
   const { setNameEditing } = usePlayerContext();

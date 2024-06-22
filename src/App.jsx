@@ -14,6 +14,7 @@ import UI from './blocks/ui/UI';
 import Results from './blocks/results/Results';
 import { useEffect } from 'react';
 import AudioManager from './blocks/audio-manager/AudioManager';
+import { AnimatePresence } from 'framer-motion';
 
 function Scene() {
   const { onboarding, infoLobby, lobby, globalPhase } = useGameStateContext();
@@ -27,11 +28,11 @@ function Scene() {
           {globalPhase === GAME_PHASE.lobby && lobby && <Lobby />}
         </div>
       )}
-      {globalPhase === GAME_PHASE.lobby && !onboarding && <AudioManager musicPhase={'home'} />}
+      {/* {globalPhase === GAME_PHASE.lobby && !onboarding && <AudioManager musicPhase={'home'} />}
       {globalPhase === GAME_PHASE.startGame && <AudioManager musicPhase={'game'} />}
       {globalPhase !== GAME_PHASE.lobby && <Game />}
       {globalPhase === GAME_PHASE.startGame && <UI />}
-      {globalPhase === GAME_PHASE.endGame && <Results />}
+      {globalPhase === GAME_PHASE.endGame && <Results />} */}
     </>
   );
 }

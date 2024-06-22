@@ -132,8 +132,27 @@
     }
 
     .svgPicto {
-        height: rem(100);
-        width: rem(100);
+        height: 100%;
+        width: 100%;
+        max-height: rem(100);
+        max-width: rem(140);
         transform: translateY(rem(20));
+    }
+}
+
+.copy {
+    position: absolute;
+    z-index: 1;
+    transform-origin: center center;
+
+    & p {
+        font-size: rem(60);
+        text-transform: uppercase;
+        transform: translateY(rem(20));
+        text-shadow: var(--white-stroke-large);
+
+        &::before {
+            box-shadow: none;
+        }
     }
 }

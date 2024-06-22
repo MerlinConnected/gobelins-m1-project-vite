@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { getRoomCode } from 'playroomkit';
 import classNames from 'classnames';
+import { motion, AnimatePresence } from 'framer-motion';
+
+import { GAME_PHASE } from '../../utils/constants';
+import { baseVariants, orchestrate, textAppearRotate } from '../../core/animation';
 
 import styles from './Lobby.module.scss';
 
@@ -10,7 +14,7 @@ import { useGameStateContext } from '../../provider/GameStateProvider';
 import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
 import PlayerCards from '../../components/player-card/PlayerCard';
-import { GAME_PHASE } from '../../utils/constants';
+import StrokeText from '../../components/stroke-text/StrokeText';
 
 const COLORS = [
   { regular: '#F736C3', light: '#FAC9ED' },
@@ -23,9 +27,12 @@ function Lobby({ className, ...props }) {
   const { setLobby, setGlobalPhase } = useGameStateContext();
   const { players } = usePlayerContext();
   const [assignedColors, setAssignedColors] = useState(new Map());
+  const [isCopied, setIsCopied] = useState(false);
 
   function copyRoomCode() {
     navigator.clipboard.writeText(getRoomCode());
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000); // Reset the copied state after 2 seconds
   }
 
   useEffect(() => {
@@ -65,7 +72,7 @@ function Lobby({ className, ...props }) {
           </div>
         </div>
 
-        <div className={styles.cardsWrapper}>
+        <motion.div className={styles.cardsWrapper} {...orchestrate({ stagger: 0.1 })}>
           <div className={classNames(styles.first)}>
             <ActionButton
               headText="Partager"
@@ -76,7 +83,14 @@ function Lobby({ className, ...props }) {
               gigaColor="blue"
               onClick={copyRoomCode}
             >
-              {<img className={styles.svgPicto} src="/images/icons/ui/card-copy-picto.svg" alt="copy the code" />}
+              <AnimatePresence>
+                {isCopied && (
+                  <motion.div {...baseVariants} {...textAppearRotate} className={styles.copy}>
+                    <StrokeText className={styles.text}>copié</StrokeText>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <img className={styles.svgPicto} src="/images/icons/ui/card-copy-picto.svg" alt="copy the code" />
             </ActionButton>
           </div>
           <div className={classNames(styles.second)}>
@@ -88,7 +102,7 @@ function Lobby({ className, ...props }) {
               size="giga"
               gigaColor="purple"
             >
-              {<img className={styles.svgPicto} src="/images/icons/ui/card-rules-picto.svg" alt="play" />}
+              <img className={styles.svgPicto} src="/images/icons/ui/card-rules-picto.svg" alt="rules" />
             </ActionButton>
           </div>
           <div className={classNames(styles.second)}>
@@ -104,10 +118,10 @@ function Lobby({ className, ...props }) {
                 setGlobalPhase(GAME_PHASE.startGame, true);
               }}
             >
-              {<img className={styles.svgPicto} src="/images/icons/ui/play-picto.svg" alt="play" />}
+              <img className={styles.svgPicto} src="/images/icons/ui/play-picto.svg" alt="play" />
             </ActionButton>
           </div>
-        </div>
+        </motion.div>
       </div>
     </>
   );

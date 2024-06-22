@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 import classNames from 'classnames';
 
 import styles from './Logo.module.scss';
@@ -5,10 +7,11 @@ import LogoLayers from '../logo-layers/LogoLayers';
 
 const Logo = ({ className, size, ...props }) => {
   return (
-    <div
+    <motion.div
       className={classNames(styles.wrapper, className, {
         [styles.large]: size === 'large',
       })}
+      whileHover={size ? {} : { scale: 0.95, rotate: 5, transition: { duration: 0.2 } }}
       {...props}
     >
       <LogoLayers id="on_n" />
@@ -22,7 +25,7 @@ const Logo = ({ className, size, ...props }) => {
       <LogoLayers id="time_e" />
       <LogoLayers id="bush_1" />
       <LogoLayers id="bush_2" />
-    </div>
+    </motion.div>
   );
 };
 
