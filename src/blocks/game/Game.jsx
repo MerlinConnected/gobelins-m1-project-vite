@@ -10,15 +10,15 @@ import { usePlayerContext } from '../../provider/PlayerProvider';
 
 import Tiles from '../paths/Paths';
 
-import { Construction } from '../../models/construction';
-import { Riverside } from '../../models/riverside';
-import { Gare } from '../../models/gare';
-import { NorthCity } from '../../models/northcity';
-import { Monument } from '../../models/monument';
-import { Garden } from '../../models/garden';
-import { Routes } from '../../models/routes';
+import Construction from '../../models/construction';
+import Riverside from '../../models/riverside';
+import Gare from '../../models/gare';
+import NorthCity from '../../models/northcity';
+import Monument from '../../models/monument';
+import Garden from '../../models/garden';
+import Routes from '../../models/routes';
 import Environment from '../environment/Environment';
-import { Plateau } from '../../models/plateau';
+import Plateau from '../../models/plateau';
 
 const Game = () => {
   const { players } = usePlayerContext();

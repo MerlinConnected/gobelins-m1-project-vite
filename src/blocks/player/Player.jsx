@@ -8,7 +8,7 @@ import { myPlayer, usePlayerState, getState } from 'playroomkit';
 
 import Path from '../../utils/paths';
 
-import { Vehicule } from '../../models/vehicules/Vehicule';
+import Vehicule from '../../models/vehicules/Vehicule';
 
 import { usePlayerContext } from '../../provider/PlayerProvider';
 import { useCardContext } from '../../provider/CardProvider';
@@ -43,14 +43,12 @@ function Player({ player, index, className, ...props }) {
 
   const selectTarget = (event, player) => {
     event.stopPropagation();
+
     if (currentPlayer?.id !== me?.id || cardsDisabled || getState('turnPhase') !== TURN_PHASE.playTurn) return;
     playSound('ui2.mp3', audioEnabled);
     currentPlayer.setState('target', player, true);
     const cards = currentPlayer.getState('cards');
     const selectedCard = currentPlayer.getState('selectedCard');
-    const decisions = currentPlayer.getState('decisions');
-    decisions.push({ card: selectedCard, target: player });
-    currentPlayer.setState('decisions', decisions, true);
 
     if (selectedCard && selectedCard.type === 'action') {
 
@@ -61,7 +59,7 @@ function Player({ player, index, className, ...props }) {
             currentPlayer?.getState('target').state.name +
             ' descend !',
         });
-      } else if (selectedCard.name === 'moins') {
+      } else if (selectedCard.name === 'moins1' || selectedCard.name === 'moins2') {
         setMessage({
           type: 'action',
           text:
@@ -153,15 +151,8 @@ function Player({ player, index, className, ...props }) {
           {...props}
           onClick={(event) => selectTarget(event, player)}
         >
-          {/* <Billboard player={player} position={[0, 2, 0]}>
-          <Html wrapperClass={classNames(styles.wrapper, className)} center>
-            <p>{state?.name}</p>
-            <p>{state?.points} Points</p>
-            <p>{state?.status?.name}</p>
-          </Html>
-        </Billboard> */}
 
-          <Vehicule player={player} targetable={targetable} color={player.state?.profile?.color} />
+          <Vehicule player={player} targetable={targetable} />
         </group>
         {me?.id === player.id && <PerspectiveCamera ref={camRef} position={cameraPosition} makeDefault />}
         {me?.id === player.id && (

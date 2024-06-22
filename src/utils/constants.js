@@ -32,6 +32,7 @@ export const CATEGORY = {
 export const TRANSPORT = [
   {
     name: 'velo',
+    img: 'velo',
     edito: 'vélo',
     type: 'transport',
     impact: 2,
@@ -41,6 +42,7 @@ export const TRANSPORT = [
   },
   {
     name: 'voiture',
+    img: 'voiture',
     edito: 'voiture',
     type: 'transport',
     impact: 3,
@@ -50,6 +52,7 @@ export const TRANSPORT = [
   },
   {
     name: 'tramway',
+    img: 'tramway',
     edito: 'tram',
     type: 'transport',
     impact: 3,
@@ -59,6 +62,7 @@ export const TRANSPORT = [
   },
   {
     name: 'metro',
+    img: 'metro',
     edito: 'métro',
     type: 'transport',
     impact: 4,
@@ -68,6 +72,7 @@ export const TRANSPORT = [
   },
   {
     name: 'moto',
+    img: 'moto',
     edito: 'moto',
     type: 'transport',
     impact: 4,
@@ -79,8 +84,9 @@ export const TRANSPORT = [
 
 export const TIME_START_GAME = 1;
 export const TIME_START_TURN = 1;
-export const TIME_PLAYER_TURN = 10; // FOR PROD: 10 ou 15 jsp
-export const TIME_END_TURN = 2;
+export const TIME_PLAYER_TURN = 15; // FOR PROD: 10 ou 15 jsp
+export const TIME_END_TURN = 4;
+export const TIME_RESULT = 1;
 
 export const MAX_POINTS = 400; // FOR PROD: 20
 export const MAX_WINNERS = 3; // FOR PROD: 3
@@ -108,6 +114,7 @@ export const actionDrawer = [
   ...new Array(AMOUNT_MINUS_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length,
     name: 'moins1',
+    img: 'moins1',
     edito: 'recuuule',
     type: 'action',
     impact: -1,
@@ -116,64 +123,73 @@ export const actionDrawer = [
   ...new Array(AMOUNT_MINUS_CARDS).fill().map((_, index) => ({
     id: index + transportDrawer.length + AMOUNT_MINUS_CARDS,
     name: 'moins2',
+    img: 'moins2',
     edito: 'recuuule',
     type: 'action',
     impact: -2,
     category: Object.values(CATEGORY),
   })),
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
-    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS,
+    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + AMOUNT_PIED_CARDS,
     name: 'pied',
+    img: 'pied1',
     edito: 'descends',
     type: 'action',
     impact: 1,
-    category: [CATEGORY.deuxRoues],
+    category: [CATEGORY.interieur],
   })),
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
-    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + AMOUNT_PIED_CARDS,
+    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 2 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    img: 'pied2',
+    detailName: 'pied2',
     edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.route],
   })),
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
-    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 2 * AMOUNT_PIED_CARDS,
+    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 3 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    img: 'pied3',
     edito: 'descends',
     type: 'action',
     impact: 1,
-    category: [CATEGORY.commun],
+    category: [CATEGORY.deuxRoues],
   })),
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
-    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 3 * AMOUNT_PIED_CARDS,
+    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 4 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    img: 'pied4',
     edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.moteur],
   })),
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
-    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 4 * AMOUNT_PIED_CARDS,
+    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 5 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    img: 'pied5',
     edito: 'descends',
     type: 'action',
     impact: 1,
     category: [CATEGORY.rails],
   })),
   ...new Array(AMOUNT_PIED_CARDS).fill().map((_, index) => ({
-    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 5 * AMOUNT_PIED_CARDS,
+    id: index + transportDrawer.length + 2 * AMOUNT_MINUS_CARDS + 6 * AMOUNT_PIED_CARDS,
     name: 'pied',
+    img: 'pied6',
     edito: 'descends',
     type: 'action',
     impact: 1,
-    category: [CATEGORY.interieur],
+    category: [CATEGORY.commun],
   })),
 ];
 
 export const piedTransportCard = {
   id: transportDrawer.length + actionDrawer.length,
   name: 'pied',
+  img: 'pied7',
   edito: 'descends',
   type: 'transport',
   impact: 1,
@@ -204,14 +220,14 @@ export const initialEventDrawer = [
   },
   {
     id: transportDrawer.length + actionDrawer.length + 4,
-    name: 'UN DÉGÉNÉRÉ DANSE SUR LES RAILS, SERVICE INTERROMPU',
+    name: 'UN DEGENERE DANSE SUR LES RAILS, SERVICE INTERROMPU',
     type: 'event',
     impact: 0,
     category: CATEGORY.rails,
   },
   {
     id: transportDrawer.length + actionDrawer.length + 5,
-    name: "PANNE D'ÉLECTRICITÉ, SERVICE MOMENTANEMMENT INTERROMPU",
+    name: "PANNE D'ELECTRICITE, SERVICE MOMENTANEMMENT INTERROMPU",
     type: 'event',
     impact: 0,
     category: CATEGORY.interieur,

@@ -6,7 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useGameStateContext } from '../../provider/GameStateProvider';
 import { usePlayerContext } from '../../provider/PlayerProvider';
 
-import { PLAYER_PHASE, TURN_PHASE } from '../../utils/constants';
+import { PLAYER_PHASE, TIME_RESULT, TURN_PHASE } from '../../utils/constants';
 
 import { myPlayer, getState } from 'playroomkit';
 
@@ -26,8 +26,8 @@ import { useCardContext } from '../../provider/CardProvider';
 import EventRecap from '../event-recap/EventRecap';
 
 function UI({ className, ...props }) {
-  const { playerTurn, players, inGamePlayers, distributeCard } = usePlayerContext();
-  const { playerPhase, setPlayerPhase, turnPhase, timer } = useGameStateContext();
+  const { playerTurn, players, performPlayerAction } = usePlayerContext();
+  const { playerPhase, setPlayerPhase } = useGameStateContext();
   const { message, setMessage } = useMessageContext();
   const { cardsDisabled, setCardsDisabled } = useCardContext();
   const [drawersDisabled, setDrawersDisabled] = useState(true);
@@ -58,12 +58,10 @@ function UI({ className, ...props }) {
         setCardsDisabled(true);
         setDrawersDisabled(true);
         setBin(false);
+        performPlayerAction();
         setTimeout(() => {
-          currentPlayer.setState('selectedCard', null, true);
-          currentPlayer.setState('target', null, true);
-          currentPlayer.setState('availableTargets', [], true);
           setPlayerPhase(PLAYER_PHASE.performLast, true);
-        }, 1000);
+        }, TIME_RESULT * 1000);
         break;
 
       case PLAYER_PHASE.performLast:
@@ -77,12 +75,10 @@ function UI({ className, ...props }) {
         setCardsDisabled(true);
         setDrawersDisabled(true);
         setBin(false);
+        performPlayerAction();
         setTimeout(() => {
           setPlayerPhase(null, true);
-          currentPlayer.setState('selectedCard', null, true);
-          currentPlayer.setState('target', null, true);
-          currentPlayer.setState('availableTargets', [], true);
-        }, 1000);
+        }, TIME_RESULT * 1000);
         break;
 
       case null:

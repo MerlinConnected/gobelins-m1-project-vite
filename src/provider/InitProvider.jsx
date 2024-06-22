@@ -26,7 +26,6 @@ export function InitProvider({ children }) {
         player.setState('selectedCard', null, true);
         player.setState('target', null, true);
         player.setState('availableTargets', [], true);
-        player.setState('decisions', [], true);
         player.setState('minus', 0, true);
         player.setState('blocked', false, true);
         player.setState('winner', null, true);
