@@ -29,7 +29,7 @@ import FeedbackForTarget from '../feedback-for-target/FeedbackForTarget';
 import Scoreboard from '../../components/scoreboard/Scoreboard';
 
 function UI({ className, ...props }) {
-  const { playerTurn, players, performPlayerAction } = usePlayerContext();
+  const { playerTurn, players, inGamePlayers, performPlayerAction } = usePlayerContext();
   const { playerPhase, setPlayerPhase } = useGameStateContext();
   const { message, setMessage } = useMessageContext();
   const { cardsDisabled, setCardsDisabled } = useCardContext();
