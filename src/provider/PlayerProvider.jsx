@@ -15,7 +15,7 @@ export function PlayerProvider({ children }) {
   const [playerTurn, setPlayerTurn] = useMultiplayerState('playerTurn', 0);
 
   const players = usePlayersList(true);
-  players.sort((a, b) => a.id.localeCompare(b.id));
+  players.sort((a, b) => a.getState('joinedAt') - b.getState('joinedAt'));
   const inGamePlayers = players.filter((player) => player.getState('qualified') === false);
 
   const gameState = {

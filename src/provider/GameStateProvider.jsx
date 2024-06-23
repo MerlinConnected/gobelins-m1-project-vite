@@ -32,14 +32,7 @@ export function GameStateProvider({ children }) {
   const [turnPhase, setTurnPhase] = useMultiplayerState('turnPhase', null);
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
 
-  const avatars = [
-    'images/profiles/pp1.webp',
-    'images/profiles/pp2.webp',
-    'images/profiles/pp3.webp',
-    'images/profiles/pp4.webp',
-    'images/profiles/pp5.webp',
-    'images/profiles/pp6.webp',
-  ];
+  const avatars = [0, 1, 2, 3];
 
   function handleInsertCoin(roomCode) {
     try {
