@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-export function Construction(props) {
+function Construction(props) {
   const { nodes, materials } = useGLTF('./models/constructions_noalpha.glb')
   return (
     <group {...props} dispose={null}>
@@ -16,3 +16,5 @@ export function Construction(props) {
 }
 
 useGLTF.preload('./models/constructions_noalpha.glb')
+
+export default React.memo(Construction);

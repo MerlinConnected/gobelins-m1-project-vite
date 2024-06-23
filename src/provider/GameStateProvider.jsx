@@ -20,7 +20,7 @@ let context = {};
 const GameStateContext = React.createContext();
 
 export function GameStateProvider({ children }) {
-  const { setPlayerTurn, performPlayerAction, move, players, inGamePlayers } = usePlayerContext();
+  const { setPlayerTurn, handleEndOfPlayTurn, move, players, inGamePlayers } = usePlayerContext();
   const { handleEvent } = useEventContext();
 
   const [onboarding, setOnboarding] = useState(true);
@@ -141,7 +141,7 @@ export function GameStateProvider({ children }) {
         break;
 
       case TURN_PHASE.playTurn:
-        performPlayerAction();
+        handleEndOfPlayTurn();
         move();
         players.forEach((player) => {
           player.setState('selectedCard', null, true);
