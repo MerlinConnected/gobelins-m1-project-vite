@@ -1,19 +1,19 @@
 .wrapper {
-    display: flex;
     position: relative;
     z-index: -1;
     margin-top: rem(8);
+    width: 100%;
 }
 
 .transports {
     position: relative;
-    right: rem(-16);
     display: flex;
     justify-content: center;
-    width: rem(220);
     height: 100%;
     clip-path: polygon( 1.814% 1.516%,97.936% 1.516%,99.753% 28.999%,100% 65.09%,93.219% 94.699%,61.484% 100%,25.392% 96.825%,5.985% 89.937%,0.23% 75.794%,0.23% 37.302%,1.814% 1.516% );
     background-color: white;
+    padding: rem(4) rem(16);
+    width: rem(240);
 }
 
 .transportContainer {
@@ -86,19 +86,43 @@
     }
 }
 
-.trafic {
-    position: relative;
-    left: rem(-16);
+.marquee {
+    text-transform: uppercase;
+    position: absolute;
+    top: 0;
+    right: 0;
     z-index: -1;
     clip-path: polygon( 30.613% 0%,98.542% 0%,99.825% 27.906%,100% 64.552%,95.208% 94.617%,72.781% 100%,47.275% 96.776%,4.067% 99.459%,0% 85.098%,8.146% 0%,30.613% 0% );
     background-color: var(--color-trafic-light);
     color: var(--color-trafic);
     font-family: $dotmatrix-font;
     width: rem(176);
-
-    p {
-        padding: rem(10);
-        font-size: rem(18);
-        white-space: nowrap;
-    }
-}
+    height: 100%;
+  
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+  
+  .marquee div {
+    display: flex;
+    width: fit-content;
+  
+    position: absolute;
+    overflow: hidden;
+  
+    animation: marquee 10s linear infinite;
+  }
+  
+  .marquee span {
+    float: left;
+    width: fit-content;
+    padding: rem(12) rem(4);
+    font-size: rem(18);
+    white-space: nowrap;
+  }
+  
+  @keyframes marquee {
+    0% { left: 100%; }
+    100% { left: -400%; }
+  }

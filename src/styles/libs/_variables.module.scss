@@ -13,8 +13,8 @@
     --color-bg-display: #f9f9f9;
     --color-bg-floating: rgb(229 229 229 / 50%);
     --color-bg-overlay: rgba(0, 0, 0, 0.2);
-    --color-bg-content: #D9D9D9;
-    --color-bg-content-2: #E3D8D8;
+    --color-bg-content: #d9d9d9;
+    --color-bg-content-2: #e3d8d8;
 
     --color-fill-main: #fff;
     --color-fill-secondary: #eee;
@@ -24,20 +24,32 @@
     --color-content-third: #c6c6c6;
     --color-content-fourth: #8f8f8f;
 
+    --color-neutral-0: #100301;
+    --color-neutral-20: #605856;
+    --color-neutral-40: #ae9e9c;
+    --color-neutral-50: #d1c6c5;
+    --color-neutral-60: #dfd7d6;
+    --color-neutral-80: #f4f1f0;
+    --color-neutral-100: #ffffff;
+
     --color-divider: #ebebeb;
     --color-symbol: #f0f0f0;
 
     --color-dark: #000;
     --color-light: #fff;
 
-    --color-button-primary: #0d6eff;
-    --color-button-secondary: #ff0b37;
+    --color-button-blue: #0f6efd;
+    --color-button-red: #ff0b37;
+    --color-button-purple: #ac14f8;
+    --color-button-blue-dark: #134692;
+    --color-button-red-dark: #921320;
+    --color-button-purple-dark: #681392;
 
     --color-looser: #ff2828;
     --color-looser-light: #ffb1b1;
 
-    --color-trafic: #FF6A16;
-    --color-trafic-light: #FFCDBD;
+    --color-trafic: #ff5e0d;
+    --color-trafic-light: #ffcdbd;
 
     --color-box-shadow: rgb(0 0 0 / 8%);
     --box-shadow: 2px 4px 1px 0 var(--color-box-shadow);
@@ -59,6 +71,58 @@
     --text-shadow-medium: 2px 4px 8px 10px rgba(0, 0, 0, 0.2);
     --text-shadow-large: 2px 4px 8px 10px rgba(0, 0, 0, 0.2);
 
+    /* CLIP PATH */
+
+    /** LOBBY CARD **/
+    --cp-lobby-p1: polygon(
+        4.028% 5.481%,
+        12.673% 0.435%,
+        67.029% 1.264%,
+        95.866% 3.757%,
+        98.597% 17.509%,
+        93.8% 98.157%,
+        68.425% 98.63%,
+        6.667% 99.492%,
+        1% 92.684%,
+        4.028% 5.481%
+    );
+    --cp-lobby-p2: polygon(
+        3% 7.392%,
+        11.187% 2.052%,
+        64.588% 0.435%,
+        93.041% 1.592%,
+        96.535% 14.968%,
+        96.597% 94.342%,
+        71.719% 95.941%,
+        11.152% 99.55%,
+        5.186% 93.121%,
+        3% 7.392%
+    );
+    --cp-lobby-p3: polygon(
+        3.913% 5.481%,
+        12.558% 0.435%,
+        66.913% 1.264%,
+        95.751% 3.757%,
+        98.482% 17.509%,
+        93.684% 98.157%,
+        68.31% 98.63%,
+        6.552% 99.492%,
+        0.885% 92.684%,
+        3.913% 5.481%
+    );
+    --cp-lobby-p4: polygon(
+        5.241% 94.349%,
+        13.984% 99.227%,
+        68.314% 97.567%,
+        97.098% 94.647%,
+        99.558% 80.951%,
+        93.177% 0.949%,
+        67.797% 0.87%,
+        6.033% 0.963%,
+        0.5% 7.81%,
+        5.241% 94.349%
+    );
+
     /* DRAWERS COLORS */
     --color-drawer: #35325e;
     --color-drawer-transport: #00bda7;
@@ -75,6 +139,7 @@
     --color-background-transport-bg-4: #f8e3ff;
 
     /* ACTION COLORS */
+    --color-action-out: #ff122a;
     --color-background-action-main-1: #ff0d47;
     --color-background-action-main--minus-1: #ffae0d;
     --color-background-action-main--minus-2: #ff5e0d;
@@ -89,6 +154,12 @@
     --color-background-category-rails: #8ea0b6;
     --color-background-category-moteur: #3237ab;
     --color-background-category-route: #3f4767;
+
+    /* HOME COLORS */
+    --color-home-bg: #fef4e6;
+    --color-home-play-bg: #7ce89a;
+    --color-home-code-bg: #7ad0f5;
+    --color-home-code-btn: #7eaef6;
 
     /* SHORTCUTS */
     --color-background: var(--color-bg-body);

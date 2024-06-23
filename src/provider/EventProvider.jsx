@@ -12,62 +12,78 @@ export const EventContext = createContext();
 export function EventProvider({ children }) {
   const { setBlockedPlayers } = usePlayerContext();
 
-  const [events, setEvents] = useMultiplayerState('events', []);
+  const [event, setEvent] = useMultiplayerState('event', null);
+  const [impactedTurns, setImpactedTurns] = useState(0);
+  const [concernedTurns, setConcernedTurns] = useState(null);
+  const [eventDrawer, setEventDrawer] = useState([...initialEventDrawer]);
 
   const gameState = {
-    events,
-    setEvents,
+    event,
+    setEvent,
   };
 
-  const probability = () => {
-    const number = Math.floor(Math.random() * 5) + 1;
-    return !!(number % 2);
+  const appearProbability = () => {
+    const number = Math.floor(Math.random() * 4) + 1;
+    return number === 1;
   };
 
-  const removeEvent = () => {
-    if (events.length > 0) {
-      events.forEach((event) => {
-        const isEventRemoved = probability();
-        if (isEventRemoved) {
-          events.splice(events.indexOf(event), 1);
-          setEvents([...events], true);
-        }
-      });
+  const turnsProbability = () => {
+    const number = Math.floor(Math.random() * 4) + 2;
+    return number;
+  };
+
+  const removeLastEvent = () => {
+    if (concernedTurns && concernedTurns === impactedTurns) {
+      setEvent(null, true);
+      setImpactedTurns(0);
+      return;
     }
   };
 
   const addEvent = () => {
-    const isEventAdded = probability();
-    const newEventDrawer = handleEventDrawer();
+    if (getState('event') !== null) return;
 
-    if (isEventAdded) {
-      const randomEventIndex = randInt(0, newEventDrawer.length - 1);
-      const newEventCard = newEventDrawer[randomEventIndex];
+    const isEventAdded = appearProbability();
 
-      setEvents([...events, newEventCard], true);
+    if (isEventAdded && impactedTurns === 0) {
+      const randomEventIndex = randInt(0, eventDrawer.length - 1);
+      const newEventCard = eventDrawer[randomEventIndex];
+
+      setEvent({ card: newEventCard, isNew: true }, true);
+      setConcernedTurns(turnsProbability());
+
     }
   };
 
   const handleEventDrawer = () => {
-    let eventDrawer = [...initialEventDrawer];
-    const currentEvents = getState('events');
+    const currentEvent = getState('event');
 
-    if (currentEvents.length > 0) {
-      // eventDrawer = initialEventDrawer.filter((event) => !currentEvents.includes(event.id));
-      eventDrawer = initialEventDrawer.filter(
-        (event) => !currentEvents.some((currentEvent) => currentEvent.id === event.id)
+    if (currentEvent !== null) {
+      const filteredDrawer = initialEventDrawer.filter(
+        (event) => event.id !== currentEvent.card.id
       );
+      setEventDrawer(filteredDrawer);
     } else {
-      eventDrawer = [...initialEventDrawer];
+      setEventDrawer([...initialEventDrawer]);
     }
-
-    return eventDrawer;
   };
 
+  const handleCurrentEvent = () => {
+    if (getState('event') === null) return;
+
+    if (event !== null && impactedTurns !== 0) {
+      setEvent({ ...event, isNew: false }, true);
+    }
+
+    setImpactedTurns(impactedTurns + 1);
+  };
+
+
   const handleEvent = () => {
-    removeEvent();
+    removeLastEvent();
     addEvent();
     handleEventDrawer();
+    handleCurrentEvent();
     setBlockedPlayers(); // FOR DEV: comment this line if you don't want the players to be blocked
   };
 

@@ -20,7 +20,7 @@ let context = {};
 const GameStateContext = React.createContext();
 
 export function GameStateProvider({ children }) {
-  const { setPlayerTurn, performPlayerAction, move, players, inGamePlayers } = usePlayerContext();
+  const { setPlayerTurn, handleEndOfPlayTurn, move, players, inGamePlayers } = usePlayerContext();
   const { handleEvent } = useEventContext();
 
   const [onboarding, setOnboarding] = useState(true);
@@ -32,14 +32,7 @@ export function GameStateProvider({ children }) {
   const [turnPhase, setTurnPhase] = useMultiplayerState('turnPhase', null);
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
 
-  const avatars = [
-    'images/profiles/pp1.webp',
-    'images/profiles/pp2.webp',
-    'images/profiles/pp3.webp',
-    'images/profiles/pp4.webp',
-    'images/profiles/pp5.webp',
-    'images/profiles/pp6.webp',
-  ];
+  const avatars = [0, 1, 2, 3];
 
   function handleInsertCoin(roomCode) {
     try {
@@ -141,7 +134,7 @@ export function GameStateProvider({ children }) {
         break;
 
       case TURN_PHASE.playTurn:
-        performPlayerAction();
+        handleEndOfPlayTurn();
         move();
         players.forEach((player) => {
           player.setState('selectedCard', null, true);

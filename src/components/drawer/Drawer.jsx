@@ -99,44 +99,44 @@ function Drawer({ className, type, handleDrawnCards, ...props }) {
   };
 
   return (
-    type && (
-      <motion.div whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}>
-        <motion.div
-          ref={ref}
-          className={classNames(styles.card, {
-            [styles.transportCard]: type === 'transport',
-            [styles.actionCard]: type === 'action',
+    // type && (
+    <motion.div whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}>
+      <motion.div
+        ref={ref}
+        className={classNames(styles.card, {
+          [styles.transportCard]: type === 'transport',
+          [styles.actionCard]: type === 'action',
+        })}
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => handleDrawer(type)}
+        {...props}
+      >
+        <div className={styles.background} />
+        <div
+          className={classNames(styles.background, styles.backgroundColored, {
+            [styles.hovered]: isHovered,
           })}
-          style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={handleMouseLeave}
-          onClick={() => handleDrawer(type)}
-          {...props}
+        />
+        <motion.div
+          className={classNames(styles.layers, {
+            [styles.hovered]: isHovered,
+          })}
         >
-          <div className={styles.background} />
-          <div
-            className={classNames(styles.background, styles.backgroundColored, {
-              [styles.hovered]: isHovered,
-            })}
-          />
-          <motion.div
-            className={classNames(styles.layers, {
-              [styles.hovered]: isHovered,
-            })}
-          >
-            <CardLayers className={styles.layer} id={patternCard} />
-            <CardLayers className={styles.layer} id="layer1" />
-          </motion.div>
-
-          <img src={linkImage} className={styles.image} />
-
-          <div className={styles.title}>
-            <StrokeText large>{type}</StrokeText>
-          </div>
+          <CardLayers className={styles.layer} id={patternCard} />
+          <CardLayers className={styles.layer} id="layer1" />
         </motion.div>
+
+        <img src={linkImage} className={styles.image} />
+
+        <div className={styles.title}>
+          <StrokeText large>{type}</StrokeText>
+        </div>
       </motion.div>
-    )
+    </motion.div>
+    // )
   );
 }
 

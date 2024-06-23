@@ -137,11 +137,12 @@
         transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     }
 
-    & button.activeBtn {
+    button.activeBtn {
         transform: scale(1);
+        transition-duration: 0.3s;
 
         &:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(15deg);
         }
     }
 }

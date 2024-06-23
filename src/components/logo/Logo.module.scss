@@ -1,0 +1,14 @@
+.wrapper {
+    position: relative;
+    width: rem(120);
+    height: rem(80);
+
+    svg {
+        position: absolute;
+    }
+
+    &.large {
+        width: rem(375);
+        height: rem(250);
+    }
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { AnimatePresence, motion, transform } from 'framer-motion';
 import classNames from 'classnames';
 
@@ -59,15 +59,35 @@ function Cards({ className, cardsDisabled, ...props }) {
 
   const angleGap = Math.PI / (numCards + 1);
 
+
+  const isSelectedArray = useMemo(() => {
+    return me.state.cards?.map((card) => ({
+      ...card,
+      isSelected: selectedCardIndex === card.uuid,
+    }));
+  }, [selectedCardIndex, me.state.cards]);
+
+  useEffect(() => {
+    const selectedCard = isSelectedArray?.find((card) => card.isSelected);
+
+    const isSelecting = selectedCard && selectedCard.type === 'action';
+
+    if (isSelecting) {
+      currentPlayer?.setState('isSelecting', true, true);
+    } else {
+      currentPlayer?.setState('isSelecting', false, true);
+    }
+  }, [isSelectedArray, currentPlayer]);
+
   return (
     <div ref={cardsRef} className={classNames(styles.wrapper, className)} {...props}>
       {radius && (
         <AnimatePresence>
-          {me.state.cards?.map((card, index) => {
+          {isSelectedArray?.map((card, index) => {
             const angle = angleGap * (index + 1);
             const x = Math.cos(angle) * radius - 100;
             const y = Math.sin(angle) * radius * 0.1;
-            const isSelected = selectedCardIndex === card.uuid;
+            // const isSelected = selectedCardIndex === card.uuid;
 
             const calculatedAngle = -(angle * 10 - 16);
 
@@ -78,8 +98,8 @@ function Cards({ className, cardsDisabled, ...props }) {
             const basicStyle = {
               position: 'absolute',
               left: `calc(50% + ${x}px)`,
-              bottom: `calc(${y}px - ${isSelected ? -50 : 0}px)`,
-              zIndex: isSelected ? numCards + 1 : numCards - index,
+              bottom: `calc(${y}px - ${card.isSelected ? -50 : 0}px)`,
+              zIndex: card.isSelected ? numCards + 1 : numCards - index,
             };
 
             return (
@@ -89,14 +109,14 @@ function Cards({ className, cardsDisabled, ...props }) {
                 style={basicStyle}
                 initial={{ rotate: calculatedAngle }}
                 animate={{ rotate: calculatedAngle }}
-                // exit={cardSelected.exit}
+              // exit={cardSelected.exit}
               >
                 <motion.div>
                   <Card
                     card={card}
                     active={!cardsDisabled}
                     deckEnabled={deckEnabled}
-                    selected={isSelected}
+                    selected={card.isSelected}
                     onClick={() => handleCardSelection(card.uuid)}
                   />
                 </motion.div>

@@ -1,0 +1,156 @@
+.wrapper {
+    // cursor: pointer;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: transform 0.3s cubic-bezier(0.63, 2.6, 0.48, 0.94);
+
+    & > * {
+        user-select: none;
+    }
+
+    &.hovered {
+        transform: scale(1.05);
+    }
+
+    &.medium {
+        font-size: rem(25);
+
+        .text {
+            margin: rem(4) rem(15) rem(10);
+        }
+    }
+
+    &.large {
+        font-size: rem(45);
+
+        .text {
+            margin: rem(12) rem(30) rem(20);
+        }
+    }
+
+    &.xlarge {
+        font-size: rem(60);
+
+        .text {
+            margin: rem(16) rem(35) rem(25);
+        }
+    }
+}
+
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-neutral-100);
+    clip-path: polygon(
+        0% 24.13%,
+        1.932% 93.04%,
+        6.441% 97.68%,
+        46.86% 100%,
+        79.066% 98.608%,
+        93.076% 98.144%,
+        98.39% 90.487%,
+        100% 7.889%,
+        93.881% 2.32%,
+        57.971% 0%,
+        22.866% 1.392%,
+        5.958% 2.784%,
+        0% 24.13%
+    );
+}
+
+.layerWrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--btn-bg-color);
+    clip-path: polygon(
+        2.051% 14.939%,
+        13.682% 6.405%,
+        83.595% 5.085%,
+        93.349% 7.685%,
+        97.872% 20.612%,
+        95.072% 81.628%,
+        66.984% 83.627%,
+        10.236% 88.029%,
+        2.051% 77.362%,
+        2.051% 14.939%
+    );
+}
+
+.layer {
+    mix-blend-mode: overlay;
+    opacity: 0.2;
+    transform: translateY(-50%) translateZ(10px);
+}
+
+.text {
+    width: fit-content;
+    // margin: rem(8) rem(20) rem(15);
+
+    &::before {
+        box-shadow: none !important;
+    }
+}
+
+.giga {
+    .layer {
+        transform: translateZ(10px);
+    }
+
+    .layerWrapper {
+        clip-path: polygon(
+            2.992% 13.405%,
+            2.992% 88.754%,
+            8.93% 100%,
+            70.625% 95.36%,
+            95.969% 93.253%,
+            98% 28.925%,
+            94.718% 5.758%,
+            65.794% 3.016%,
+            11.43% 4.408%,
+            2.992% 13.405%
+        );
+    }
+
+    .gigaWrapper {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        left: 50%;
+        transform: translate(-50%, -40%) translateZ(40px);
+        transform-style: preserve-3d;
+        text-transform: uppercase;
+
+        & > * {
+            font-family: $polaquita-font;
+        }
+
+        .text {
+            &:nth-child(1) {
+                font-size: rem(64);
+                color: var(--headText-color);
+            }
+
+            &:nth-child(2) {
+                font-size: rem(32);
+                color: var(--subText-color);
+                transform: translateY(rem(-20));
+            }
+        }
+    }
+}
+
+.children {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    transform: translateZ(55px);
+    transform-style: preserve-3d;
+}
