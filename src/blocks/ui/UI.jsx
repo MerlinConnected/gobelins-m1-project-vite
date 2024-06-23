@@ -38,6 +38,10 @@ function UI({ className, ...props }) {
   const currentPlayer = players[playerTurn];
   const me = myPlayer();
 
+  players.forEach((element) => {
+    console.log(element.id);
+  });
+
   // manage disabled states according to the playerPhase
   useEffect(() => {
     switch (playerPhase) {

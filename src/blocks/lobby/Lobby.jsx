@@ -56,7 +56,7 @@ function Lobby({ className, ...props }) {
     setAssignedColors(updatedColors);
   }, [players]);
 
-  players.sort((a, b) => a.getState('joinedAt') - b.getState('joinedAt'));
+  // players.sort((a, b) => a.getState('joinedAt') - b.getState('joinedAt'));
 
   return (
     <>
