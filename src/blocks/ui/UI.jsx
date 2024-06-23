@@ -24,6 +24,7 @@ import Drawers from '../../components/drawers/Drawers';
 import Timer from '../timer/Timer';
 import { useCardContext } from '../../provider/CardProvider';
 import EventRecap from '../event-recap/EventRecap';
+import FeedbackForTarget from '../feedback-for-target/FeedbackForTarget';
 
 function UI({ className, ...props }) {
   const { playerTurn, players, performPlayerAction } = usePlayerContext();
@@ -109,9 +110,12 @@ function UI({ className, ...props }) {
               getState('playerPhase') === PLAYER_PHASE.lastResult) && <Feedback />}
         </AnimatePresence>
 
+        {(getState('turnPhase') !== TURN_PHASE.startTurn) &&
+          <FeedbackForTarget />}
+
         <AnimatePresence>{getState('turnPhase') === TURN_PHASE.startTurn && getState('event')?.isNew && <EventRecap />}</AnimatePresence>
 
-        {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>}
+        {/* {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>} */}
         <p>Je suis {me?.state.name}</p>
         <div className={styles.board}>
           {players.map((player, index) => (

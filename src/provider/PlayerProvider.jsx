@@ -109,6 +109,7 @@ export function PlayerProvider({ children }) {
           break;
 
         case 'action':
+          targetPlayer.setState('flashGekko', true, true);
 
           if (selectedCard.name === 'pied') {
             targetPlayer.setState('status', piedTransportCard, true);

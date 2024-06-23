@@ -34,6 +34,7 @@ export function InitProvider({ children }) {
         distributeCard('action', player);
         const statusCard = drawCard('transport');
         player.setState('status', statusCard, true);
+        player.setState('flashGekko', false, true);
       });
 
       setTurnPhase(TURN_PHASE.startTurn, true);
