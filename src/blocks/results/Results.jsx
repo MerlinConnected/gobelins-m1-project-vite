@@ -98,7 +98,7 @@ function Results({ className, ...props }) {
           <CircleButton
             onClick={() => removeRoomHash()}
             icon="replay"
-            color="var(--color-button-primary)"
+            color="var(--color-button-blue)"
             large
           />
         </div>

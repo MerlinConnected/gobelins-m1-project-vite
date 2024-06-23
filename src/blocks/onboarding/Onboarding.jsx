@@ -90,7 +90,7 @@ function Onboarding({ className, ...props }) {
         </motion.h3>
         <motion.ul className={styles.tuto} {...orchestrate({ stagger: 0.2 })}>
           <motion.ol {...textLineAppear}>Arrive au plus vite, ne sois pas dernier</motion.ol>
-          <motion.ol {...textLineAppear}>Ralenti les autres et assure ta place</motion.ol>
+          <motion.ol {...textLineAppear}>Ralentis les autres et assure ta place</motion.ol>
         </motion.ul>
         <motion.div className={styles.infos} {...orchestrate({ stagger: 0.2, delay: 0.8 })}>
           <motion.span {...textLineAppear}>4 Joueurs</motion.span>

@@ -34,7 +34,7 @@ function AudioManager({ musicPhase, className, ...props }) {
 
     return (
         <div className={classNames(styles.wrapper, className)}>
-            <CircleButton onClick={toggleAudio} icon={audioEnabled ? "soundOn" : "soundOff"} color="var(--color-button-primary)" />
+            <CircleButton onClick={toggleAudio} icon={audioEnabled ? "soundOn" : "soundOff"} color="var(--color-button-blue)" />
         </div>
     );
 }
