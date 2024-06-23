@@ -39,7 +39,6 @@ export function InitProvider({ children }) {
         player.setState('selectedCard', null, true);
         player.setState('target', null, true);
         player.setState('availableTargets', [], true);
-        player.setState('decisions', [], true);
         player.setState('minus', 0, true);
         player.setState('blocked', false, true);
         player.setState('winner', null, true);
@@ -48,9 +47,7 @@ export function InitProvider({ children }) {
         distributeCard('action', player);
         const statusCard = drawCard('transport');
         player.setState('status', statusCard, true);
-
-        // Assign color to player
-        // assignPlayerColor(player, index);
+        player.setState('flashGekko', false, true);
       });
 
       setTurnPhase(TURN_PHASE.startTurn, true);

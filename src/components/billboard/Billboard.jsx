@@ -1,10 +1,10 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 
-export default function Billboard({ children, ...props }) {
+function Billboard({ children, ...props }) {
   const planeRef = useRef(null);
   const direction = new THREE.Vector3();
 
@@ -29,3 +29,5 @@ export default function Billboard({ children, ...props }) {
     </>
   );
 }
+
+export default React.memo(Billboard);

@@ -27,7 +27,7 @@ const LAYER_IMG = 50;
 const LAYER_TITLE = 64;
 const LAYER_INFOS = 40;
 
-function Card({ className, card, active, deckEnabled, selected, ...props }) {
+function Card({ className, card, active, deckEnabled, selected, isFeedback, ...props }) {
   const { playerTurn, players, inGamePlayers } = usePlayerContext();
   const { handlePlayerPhase } = useGameStateContext();
   const { setMessage } = useMessageContext();
@@ -92,53 +92,19 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
     }
   };
 
-  const selectTarget = (event, player) => {
+  const changeTransport = (event) => {
     event.stopPropagation();
     if (currentPlayer?.id !== me?.id || !active || getState('turnPhase') !== TURN_PHASE.playTurn) return;
     playSound('ui2.mp3', audioEnabled);
-    currentPlayer.setState('target', player, true);
+    currentPlayer.setState('target', currentPlayer, true);
     const cards = currentPlayer.getState('cards');
     const selectedCard = currentPlayer.getState('selectedCard');
-    const decisions = currentPlayer.getState('decisions');
-    decisions.push({ card: selectedCard, target: player });
-    currentPlayer.setState('decisions', decisions, true);
 
-    if (selectedCard) {
-      switch (selectedCard.type) {
-        case 'transport':
-          setMessage({
-            type: 'action',
-            text: currentPlayer?.state.name + ' décide de prendre le ' + selectedCard.name + ' !',
-          });
-          break;
-
-        case 'action':
-          if (selectedCard.name === 'pied') {
-            setMessage({
-              type: 'action',
-              text:
-                currentPlayer?.getState('target').state.name +
-                ' retourne à pied à cause de ' +
-                currentPlayer?.state.name +
-                ' !',
-            });
-          } else if (selectedCard.name === 'moins') {
-            setMessage({
-              type: 'action',
-              text:
-                currentPlayer?.getState('target').state.name +
-                ' recule de ' +
-                selectedCard.name +
-                '  à cause de ' +
-                currentPlayer?.state.name +
-                ' !',
-            });
-          }
-
-        default:
-          break;
-      }
-
+    if (selectedCard && selectedCard.type === 'transport') {
+      setMessage({
+        type: 'action',
+        text: currentPlayer?.state.name + ' prend ' + selectedCard.edito + ' !',
+      });
       // remove the selected card from the deck
       cards.splice(
         cards.findIndex((card) => card.uuid === selectedCard.uuid),
@@ -161,7 +127,7 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
       1
     );
     currentPlayer.setState('cards', cards, true);
-    setMessage({ type: 'info', text: currentPlayer?.state.name + 'a jeté une carte' });
+    setMessage({ type: 'info', text: currentPlayer?.state.name + ' a jeté une carte' });
 
     handlePlayerPhase();
   };
@@ -195,9 +161,7 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
     return pattern;
   }, []);
 
-  // console.log(props);
-
-  const linkImage = `/images/transports/${card.name}.svg`;
+  const linkImage = `/images/cards/${card.img}.svg`;
 
   const animationProps = conditionalAnimation(!active, cardInactive);
 
@@ -252,24 +216,24 @@ function Card({ className, card, active, deckEnabled, selected, ...props }) {
               </StrokeText>
             </motion.div>
 
-            {/* {selected && ( */}
-            <div style={style(LAYER_TITLE)} className={styles.actions}>
-              {card.type && card.type === 'transport' && (
+            {!isFeedback && (
+              <div style={style(LAYER_TITLE)} className={styles.actions}>
+                {card.type && card.type === 'transport' && (
+                  <CircleButton
+                    className={classNames({ [styles.activeBtn]: selected })}
+                    icon="replay"
+                    color="#0D6EFF"
+                    onClick={(event) => changeTransport(event)}
+                  />
+                )}
                 <CircleButton
                   className={classNames({ [styles.activeBtn]: selected })}
-                  icon="replay"
-                  color="#0D6EFF"
-                  onClick={(event) => selectTarget(event, currentPlayer)}
+                  icon="bin"
+                  color="#ff0d47"
+                  onClick={deleteCard}
                 />
-              )}
-              <CircleButton
-                className={classNames({ [styles.activeBtn]: selected })}
-                icon="bin"
-                color="#ff0d47"
-                onClick={deleteCard}
-              />
-            </div>
-            {/* )} */}
+              </div>
+            )}
 
             {/* <Button
             className={classNames(styles.card, { [styles.clicked]: active && selected })}

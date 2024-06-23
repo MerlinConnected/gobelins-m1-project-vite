@@ -58,8 +58,8 @@ function Tiles({ players, amount, ...props }) {
     playerPoints.push(points);
   });
 
-  const cornerRanges = playerPoints.map((points, i) => calculateRange(tilesPath[`player${i + 1}`].corner, points));
-  const straightRanges = playerPoints.map((points, i) => calculateRange(tilesPath[`player${i + 1}`].straight, points));
+  // const cornerRanges = playerPoints.map((points, i) => calculateRange(tilesPath[`player${i + 1}`].corner, points));
+  // const straightRanges = playerPoints.map((points, i) => calculateRange(tilesPath[`player${i + 1}`].straight, points));
 
   return (
     <group ref={ref} {...props}>
@@ -74,12 +74,12 @@ function Tiles({ players, amount, ...props }) {
             index={i}
             {...initialisePlayer(i, amount)}
           />
-          <CornerTiles data={tilesPath[`player${i + 1}`].corner} range={cornerRanges[i]} />
-          <StraightTiles data={tilesPath[`player${i + 1}`].straight} range={straightRanges[i]} />
+          {/* <CornerTiles data={tilesPath[`player${i + 1}`].corner} range={cornerRanges[i]} /> */}
+          {/* <StraightTiles data={tilesPath[`player${i + 1}`].straight} range={straightRanges[i]} /> */}
         </React.Fragment>
       ))}
     </group>
   );
 }
 
-export default Tiles;
+export default React.memo(Tiles);

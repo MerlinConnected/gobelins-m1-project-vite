@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-export function Gare(props) {
+function Gare(props) {
   const { nodes, materials } = useGLTF('./models/gare_noalpha.glb')
   return (
     <group {...props} dispose={null}>
@@ -16,3 +16,5 @@ export function Gare(props) {
 }
 
 useGLTF.preload('./models/gare_noalpha.glb')
+
+export default React.memo(Gare);

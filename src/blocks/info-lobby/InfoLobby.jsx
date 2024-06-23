@@ -25,6 +25,13 @@ function InfoLobby({ className, ...props }) {
     setLobby(true);
   };
 
+  function goToLobby4Real(e) {
+    e.preventDefault();
+    me?.setState('name', nameInput);
+    setNameEditing(false);
+    goToLobby();
+  }
+
   const playerColor = 'hotpink';
   const playerColorLight = 'lightpink';
 
@@ -38,12 +45,7 @@ function InfoLobby({ className, ...props }) {
       >
         <form
           className={styles.form}
-          onSubmit={(e) => {
-            e.preventDefault();
-            me?.setState('name', nameInput);
-            setNameEditing(false);
-            goToLobby();
-          }}
+          onSubmit={(e) => goToLobby4Real(e)}
         >
           <div className={styles.background} />
           <div className={styles.inputWrapper}>
@@ -68,7 +70,7 @@ function InfoLobby({ className, ...props }) {
             color="#71AFF7"
             pattern="pattern3"
             size="xlarge"
-            onClick={goToLobby}
+            onClick={(e) => goToLobby4Real(e)}
           />
         </div>
       </div>

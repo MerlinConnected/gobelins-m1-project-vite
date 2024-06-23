@@ -33,11 +33,9 @@ export function EventProvider({ children }) {
   };
 
   const removeLastEvent = () => {
-    // console.log('impactedTurns', impactedTurns);
     if (concernedTurns && concernedTurns === impactedTurns) {
       setEvent(null, true);
       setImpactedTurns(0);
-      // console.log('removed Last Event because end of concernedTurns, this should be empty ->', getState('event'), 'this impactedTurns should not be null yet ->', impactedTurns, 'and then we should have appearProbability after this');
       return;
     }
   };
@@ -51,12 +49,10 @@ export function EventProvider({ children }) {
       const randomEventIndex = randInt(0, eventDrawer.length - 1);
       const newEventCard = eventDrawer[randomEventIndex];
 
-      setEvent(newEventCard, true);
+      setEvent({ card: newEventCard, isNew: true }, true);
       setConcernedTurns(turnsProbability());
 
-      // console.log('added the event ', newEventCard.category, getState('event').category, 'new concernedTurns (not be changed yet):', concernedTurns);
     }
-
   };
 
   const handleEventDrawer = () => {
@@ -64,7 +60,7 @@ export function EventProvider({ children }) {
 
     if (currentEvent !== null) {
       const filteredDrawer = initialEventDrawer.filter(
-        (event) => event.id !== currentEvent.id
+        (event) => event.id !== currentEvent.card.id
       );
       setEventDrawer(filteredDrawer);
     } else {
@@ -75,13 +71,15 @@ export function EventProvider({ children }) {
   const handleCurrentEvent = () => {
     if (getState('event') === null) return;
 
-    setImpactedTurns(impactedTurns + 1);
-    // console.log('added 1 to impactedTurns but the value here is not updated yet', impactedTurns);
+    if (event !== null && impactedTurns !== 0) {
+      setEvent({ ...event, isNew: false }, true);
+    }
 
+    setImpactedTurns(impactedTurns + 1);
   };
 
+
   const handleEvent = () => {
-    // console.log('BEGINNING HANDLEEVENT WITH THIS EVENTDRAWER:', eventDrawer, 'AND THIS IMPACTEDTURNS:', impactedTurns, 'AND THIS CONCERNEDTURNS:', concernedTurns);
     removeLastEvent();
     addEvent();
     handleEventDrawer();

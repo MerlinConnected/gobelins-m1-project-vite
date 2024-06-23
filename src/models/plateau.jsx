@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-export function Plateau(props) {
+function Plateau(props) {
     const { nodes, materials } = useGLTF('./models/plateau.glb')
     return (
         <group {...props} dispose={null}>
@@ -17,3 +17,5 @@ export function Plateau(props) {
 }
 
 useGLTF.preload('./models/plateau.glb')
+
+export default React.memo(Plateau);

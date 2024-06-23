@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-export function NorthCity(props) {
+function NorthCity(props) {
     const { nodes, materials } = useGLTF('./models/northcity_noalpha.glb')
     return (
         <group {...props} dispose={null}>
@@ -16,3 +16,5 @@ export function NorthCity(props) {
 }
 
 useGLTF.preload('./models/northcity_noalpha.glb')
+
+export default React.memo(NorthCity);

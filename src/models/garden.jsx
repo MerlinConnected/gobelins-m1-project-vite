@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-export function Garden(props) {
+function Garden(props) {
     const { nodes, materials } = useGLTF('./models/gardens_noalpha.glb')
     return (
         <group {...props} dispose={null}>
@@ -28,3 +28,5 @@ export function Garden(props) {
 }
 
 useGLTF.preload('./models/gardens_noalpha.glb')
+
+export default React.memo(Garden);

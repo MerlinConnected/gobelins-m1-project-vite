@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 import { useMultiplayerState, usePlayersList, getState } from 'playroomkit';
 import { randInt } from 'three/src/math/MathUtils';
-import { transportDrawer, actionDrawer, piedTransportCard, MAX_POINTS } from '../utils/constants';
+import { transportDrawer, actionDrawer, piedTransportCard, MAX_POINTS, TIME_RESULT } from '../utils/constants';
+import { isHost } from 'playroomkit';
 
 let context = {};
 const PlayerContext = React.createContext(context);
@@ -64,7 +65,7 @@ export function PlayerProvider({ children }) {
     if (event) {
       inGamePlayers.forEach((player) => {
         const playerCategories = player.getState('status').category;
-        if (playerCategories.includes(event.category)) {
+        if (playerCategories.includes(event.card.category)) {
           player.setState('blocked', true, true);
         } else {
           player.setState('blocked', false, true);
@@ -77,33 +78,43 @@ export function PlayerProvider({ children }) {
     }
   };
 
-  const performPlayerAction = () => {
+  const handleEndOfPlayTurn = () => {
     const currentPlayer = players[playerTurn];
 
     if (currentPlayer.getState('cards').length > 2) {
       removeCardsAuto(currentPlayer);
     }
+  };
+
+  const performPlayerAction = () => {
+    if (!isHost()) return;
+
+    const currentPlayer = players[playerTurn];
 
     // set status
-    for (let i = 0; i < currentPlayer.getState('decisions').length; i++) {
-      const decision = currentPlayer.getState('decisions')[i];
-      let target = decision.target;
-      switch (decision.card.type) {
+    const target = currentPlayer.getState('target');
+    const selectedCard = currentPlayer.getState('selectedCard');
+    const availableTargets = currentPlayer.getState('availableTargets');
+    const isATarget = availableTargets.some(availableTarget => availableTarget.id === target.id);
+
+    if (!isATarget) return;
+    const targetPlayer = players.find((player) => player.id === target.id);
+
+    if (targetPlayer && selectedCard) {
+      switch (selectedCard.type) {
         case 'transport':
-          if (target.id == currentPlayer.id) {
-            currentPlayer.setState('status', decision.card, true);
+          if (targetPlayer.id === currentPlayer.id) {
+            currentPlayer.setState('status', selectedCard, true);
           }
           break;
-        case 'action':
-          const availableTargets = inGamePlayers.filter((p) => p.id !== currentPlayer.id); // todo: essayer de remplacer par 'availableTargets' à récupérer dans le state du currentPlayer
-          if (target !== null && target !== undefined) {
-            let targetPlayer = availableTargets.find((p) => p.id === target.id);
 
-            if (decision.card.name === 'pied') {
-              targetPlayer.setState('status', piedTransportCard, true);
-            } else {
-              targetPlayer.setState('minus', targetPlayer.getState('minus') + decision.card.impact, true);
-            }
+        case 'action':
+          targetPlayer.setState('flashGekko', true, true);
+
+          if (selectedCard.name === 'pied') {
+            targetPlayer.setState('status', piedTransportCard, true);
+          } else if (selectedCard.name === 'moins1' || selectedCard.name === 'moins2') {
+            targetPlayer.setState('minus', targetPlayer.getState('minus') + selectedCard.impact, true);
           }
           break;
         default:
@@ -112,11 +123,6 @@ export function PlayerProvider({ children }) {
     }
 
     setBlockedPlayers();
-
-    currentPlayer.setState('selectedCard', null, true);
-    currentPlayer.setState('target', null, true);
-    currentPlayer.setState('availableTargets', [], true);
-    currentPlayer.setState('decisions', [], true);
   };
 
   // verifier toutes les conditions de chaque player et faire les avancées en fonction de l'état de chaque player
@@ -145,7 +151,7 @@ export function PlayerProvider({ children }) {
         if (p.getState('points') >= MAX_POINTS) {
           p.setState('winner', 10 * turnNumber + i, true);
         }
-      }, 500 * i);
+      }, 1000 * i);
 
       newTimeouts.push(timeout);
     }
@@ -172,6 +178,7 @@ export function PlayerProvider({ children }) {
     move,
     useScoreboard,
     setBlockedPlayers,
+    handleEndOfPlayTurn,
   };
 
   return <PlayerContext.Provider value={context}>{children}</PlayerContext.Provider>;

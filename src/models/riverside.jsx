@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-export function Riverside(props) {
+function Riverside(props) {
     const { nodes, materials } = useGLTF('./models/riverside_noalpha.glb')
     return (
         <group {...props} dispose={null}>
@@ -16,3 +16,5 @@ export function Riverside(props) {
 }
 
 useGLTF.preload('./models/riverside_noalpha.glb')
+
+export default React.memo(Riverside);

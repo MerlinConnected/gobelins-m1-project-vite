@@ -1,21 +1,79 @@
+import { useState, useEffect } from 'react';
+
 import classNames from 'classnames';
 import styles from './Scoreboard.module.scss';
 
 import StrokeText from '../stroke-text/StrokeText';
 import CardLayers from '../card-layers/CardLayers';
 
+import { usePlayerContext } from '../../provider/PlayerProvider';
+
+import { motion } from 'framer-motion';
+
+function VehiculeIcons({ player, className }) {
+  const [currentVariant, setCurrentVariant] = useState(0);
+
+  const vehicleImages = {
+    velo: {
+      images: ['/images/vehicules/bicycle/bicycle-var1.png', '/images/vehicules/bicycle/bicycle-var2.png'],
+    },
+    moto: {
+      images: ['/images/vehicules/bike/bike-var1.png', '/images/vehicules/bike/bike-var2.png'],
+    },
+    voiture: {
+      images: ['/images/vehicules/car/car-var1.png', '/images/vehicules/car/car-var2.png'],
+    },
+    metro: {
+      images: ['/images/vehicules/metro/metro-var1.png', '/images/vehicules/metro/metro-var2.png'],
+    },
+    tramway: {
+      images: ['/images/vehicules/tram/tram-var1.png', '/images/vehicules/tram/tram-var2.png'],
+    },
+  };
+
+  const getVehicleImages = (vehicleType) => {
+    const vehicle = vehicleImages[vehicleType];
+    return vehicle?.images[currentVariant];
+  };
+
+  const vehicleType = player?.state?.status?.name;
+  const vehicleImage = getVehicleImages(vehicleType);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentVariant((prevVariant) => (prevVariant + 1) % 2);
+    }, 250);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return vehicleImage && <img src={vehicleImage} alt="Vehicule Icon of the current player" className={className} />;
+}
+
 function Scoreboard({ players, className, ...props }) {
-  // Logic goes here
+  const { playerTurn } = usePlayerContext();
+  const currentPlayer = players[playerTurn];
+
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
       <div className={styles.board}>
         {players.map((player, index) => (
-          <div key={index} className={styles.board__player}>
-            <StrokeText regular color={player.state?.profile?.color}>
-              {player?.state.name}
-            </StrokeText>
+          <motion.div
+            key={index}
+            className={styles.board__player}
+            animate={{
+              scale: currentPlayer?.id === player?.id ? 1 : 0.6,
+              filter: currentPlayer?.id === player?.id ? 'brightness(1)' : 'brightness(0.8)',
+            }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
             <div className={styles.background}>
-              <div className={styles.mask}>
+              <StrokeText regular color={player.getState('color')} className={styles.name}>
+                {player?.state.name}
+              </StrokeText>
+              <p className={styles.score}>{player.getState('points')} cases</p>
+              <VehiculeIcons player={player} className={styles.vehicule} />
+              <div className={styles.mask} style={{ backgroundColor: player.getState('colorLight') }}>
                 <CardLayers className={styles.layer} id="pattern3" />
               </div>
               <svg
@@ -31,9 +89,19 @@ function Scoreboard({ players, className, ...props }) {
                   fill="white"
                 />
               </svg>
+              <motion.svg
+                className={styles['speed-indicator']}
+                animate={{ x: currentPlayer?.id === player?.id ? 0 : '130px' }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 40 37"
+              >
+                <path fill="#fff" d="M0 5.5 17.8 0l19.1 17.9-12.3 12.7-24.6.8 14.1-13.5L0 5.5Z" />
+                <path fill="#FF0D47" d="m5.5 7 13.8-4 13.5 14.3-9.4 10.1-18 .7L17 17.3 5.5 6.9Z" />
+              </motion.svg>
             </div>
-            <p>{player.getState('points')} points</p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

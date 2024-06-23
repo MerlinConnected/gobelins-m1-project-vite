@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-export function Routes(props) {
+function Routes(props) {
     const { nodes, materials } = useGLTF('./models/route.glb')
     return (
         <group {...props} dispose={null}>
@@ -788,3 +788,5 @@ export function Routes(props) {
 }
 
 useGLTF.preload('./models/route.glb')
+
+export default React.memo(Routes);
