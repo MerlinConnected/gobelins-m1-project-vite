@@ -1,3 +1,19 @@
+.speed, .billboardName {
+    user-select: none;
+    text-align: center;
+    &::before {
+        box-shadow: none;
+    }
+}
+
 .billboardName {
     font-size: rem(28);
+}
+
+.notSelectable {
+    opacity: 0.5;
+}
+
+.selectable {
+    opacity: 1;
 }

@@ -1,11 +1,12 @@
-import React, { useEffect, forwardRef, useState } from 'react';
+import React, { useEffect, forwardRef, useState, useMemo } from 'react';
 import { motion } from 'framer-motion-3d';
 import { Html, Image } from '@react-three/drei';
 import { DoubleSide } from 'three';
 import Billboard from '../../components/billboard/Billboard';
-import { useMemo } from 'react';
 import StrokeText from '../../components/stroke-text/StrokeText';
 import styles from './Vehicule.module.scss';
+import { usePlayerContext } from '../../provider/PlayerProvider';
+import { myPlayer } from 'playroomkit';
 
 const vehicleImages = {
   velo: {
@@ -48,8 +49,12 @@ const vehicleImages = {
 
 const Vehicule = forwardRef(({ player, targetable, ...props }, ref) => {
   // const [hovered, hover] = useState(null);
+  const { playerTurn, players } = usePlayerContext();
   const [currentVariant, setCurrentVariant] = useState(0);
   const [currentSpeed, setCurrentSpeed] = useState('');
+  const [opacityDown, setOpacityDown] = useState(false);
+  const currentPlayer = players[playerTurn];
+  const me = myPlayer();
 
   // const getVehicleImages = (vehicleType) => {
   //   const vehicle = vehicleImages[vehicleType];
@@ -86,6 +91,12 @@ const Vehicule = forwardRef(({ player, targetable, ...props }, ref) => {
   }
     , [player.getState('status'), player.getState('blocked'), player.getState('minus')]);
 
+  useEffect(() => {
+    const selectable = (currentPlayer?.getState('isSelecting') && currentPlayer?.id === me?.id && !targetable);
+    setOpacityDown(selectable);
+
+  }, [targetable, currentPlayer?.getState('isSelecting')]);
+
   return (
     vehicleImage && (
       <motion.group
@@ -102,13 +113,14 @@ const Vehicule = forwardRef(({ player, targetable, ...props }, ref) => {
         whileHover={{ scale: 1.4, y: 0.6 }}
       >
         <Billboard>
-          <Html center distanceFactor={20} zIndexRange={[0, -1]} position={[0, 1.2, 0]}>
+          <Html center distanceFactor={20} zIndexRange={[0, -1]} position={[0, 1.2, 0]} className={opacityDown ? styles.notSelectable : styles.selectable}>
             <StrokeText className={styles.speed}>{currentSpeed}</StrokeText>
           </Html>
-          <Html center distanceFactor={20} zIndexRange={[0, -1]}>
+          <Html center distanceFactor={20} zIndexRange={[0, -1]} className={opacityDown ? styles.notSelectable : styles.selectable}>
             <StrokeText className={styles.billboardName}>{player.state?.name}</StrokeText>
           </Html>
-          <Image url={vehicleImage} side={DoubleSide} transparent position={[0, 0.5, 0]} />
+
+          <Image url={vehicleImage} side={DoubleSide} transparent position={[0, 0.5, 0]} opacity={opacityDown ? 0.6 : 1} />
         </Billboard>
       </motion.group>
     )

@@ -1,18 +1,25 @@
-import React from "react";
-import * as THREE from "three";
-import { useHelper } from "@react-three/drei";
-import { useRef } from "react";
+import React, { useEffect, useState } from "react";
+import { myPlayer } from "playroomkit";
+import { usePlayerContext } from "../../provider/PlayerProvider";
 
 const Environment = () => {
 
-    const directionalLight = useRef();
-    // useHelper(directionalLight, THREE.DirectionalLightHelper, 'cyan')
+    const { playerTurn, players } = usePlayerContext();
+    const currentPlayer = players[playerTurn];
+    const [intensity, setIntensity] = useState(1);
+    const isSelecting = currentPlayer?.getState('isSelecting');
+    const me = myPlayer();
+
+    useEffect(() => {
+        if (isSelecting && currentPlayer?.id === me?.id) {
+            setIntensity(0.4);
+        } else {
+            setIntensity(1);
+        }
+    }, [isSelecting]);
 
     return (
-        <>
-            {/* <directionalLight position={[-10, 10, 10]} intensity={2} ref={directionalLight} /> */}
-            <ambientLight />
-        </>
+        <ambientLight intensity={intensity} />
     );
 }
 
