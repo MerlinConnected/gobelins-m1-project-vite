@@ -61,7 +61,10 @@ function Scoreboard({ players, className, ...props }) {
           <motion.div
             key={index}
             className={styles.board__player}
-            animate={{ scale: currentPlayer?.id === player?.id ? 1 : 0.6 }}
+            animate={{
+              scale: currentPlayer?.id === player?.id ? 1 : 0.6,
+              filter: currentPlayer?.id === player?.id ? 'brightness(1)' : 'brightness(0.8)',
+            }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
             <div className={styles.background}>
