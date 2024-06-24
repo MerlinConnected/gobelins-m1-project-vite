@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import classNames from 'classnames';
 import styles from './Scoreboard.module.scss';
@@ -29,15 +29,15 @@ function VehiculeIcons({ player, className }) {
     tramway: {
       images: ['/images/vehicules/tram/tram-var1.png', '/images/vehicules/tram/tram-var2.png'],
     },
+    pied: {
+      images: ['/images/vehicules/shoe/shoe-var1.png', '/images/vehicules/shoe/shoe-var2.png'],
+    },
   };
 
-  const getVehicleImages = (vehicleType) => {
-    const vehicle = vehicleImages[vehicleType];
+  const vehicleImage = useMemo(() => {
+    const vehicle = vehicleImages[player.state?.status?.name];
     return vehicle?.images[currentVariant];
-  };
-
-  const vehicleType = player?.state?.status?.name;
-  const vehicleImage = getVehicleImages(vehicleType);
+  }, [player.state?.status?.name, currentVariant]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -108,4 +108,4 @@ function Scoreboard({ players, className, ...props }) {
   );
 }
 
-export default Scoreboard;
+export default React.memo(Scoreboard);
