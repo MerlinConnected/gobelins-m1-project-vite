@@ -71,7 +71,7 @@ function Card({ className, card, active, deckEnabled, selected, isFeedback, ...p
 
   const selectCard = () => {
     if (currentPlayer?.id !== me?.id) return;
-    playSound('ui1.mp3', audioEnabled);
+    playSound('ui1.mp3', audioEnabled, 0.3);
     currentPlayer.setState('selectedCard', card, true);
 
     switch (card.type) {
@@ -95,7 +95,7 @@ function Card({ className, card, active, deckEnabled, selected, isFeedback, ...p
   const changeTransport = (event) => {
     event.stopPropagation();
     if (currentPlayer?.id !== me?.id || !active || getState('turnPhase') !== TURN_PHASE.playTurn) return;
-    playSound('ui2.mp3', audioEnabled);
+    playSound('ui2.mp3', audioEnabled, 0.3);
     currentPlayer.setState('target', currentPlayer, true);
     const cards = currentPlayer.getState('cards');
     const selectedCard = currentPlayer.getState('selectedCard');
@@ -120,7 +120,7 @@ function Card({ className, card, active, deckEnabled, selected, isFeedback, ...p
     event.stopPropagation();
     if (currentPlayer?.id !== me?.id || !active) return;
 
-    playSound('paperFlip.wav', audioEnabled, 1);
+    playSound('paperFlip.wav', audioEnabled, 0.3);
     const cards = currentPlayer.getState('cards');
     cards.splice(
       cards.findIndex((c) => c.uuid === card.uuid),

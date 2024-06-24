@@ -1,4 +1,6 @@
 .wrapper {
+    user-select: none;
+    pointer-events: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -48,7 +50,13 @@
     width: 100%;
 }
 
-.flash1, .flash2, .flash3, .flash4, .flash5, .flash6, .flash7 {
+.flash1,
+.flash2,
+.flash3,
+.flash4,
+.flash5,
+.flash6,
+.flash7 {
     height: rem(200);
 }
 

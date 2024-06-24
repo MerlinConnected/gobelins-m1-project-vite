@@ -65,7 +65,7 @@ function Drawer({ className, type, handleDrawnCards, ...props }) {
 
   const handleDrawer = (type) => {
     if (currentPlayer?.id !== me?.id || getState('playerPhase') !== PLAYER_PHASE.drawCards) return;
-    playSound('ui4.mp3', audioEnabled);
+    playSound('ui4.mp3', audioEnabled, 0.4);
     handleDrawnCards();
 
     if (currentPlayer?.getState('cards')?.length < 4) {

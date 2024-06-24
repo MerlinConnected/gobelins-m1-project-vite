@@ -1,4 +1,5 @@
 .wrapper {
+    user-select: none;
     .board {
         display: flex;
         flex-direction: column;
@@ -42,6 +43,7 @@
                 }
 
                 .vehicule {
+                    pointer-events: none;
                     position: absolute;
                     top: rem(-25);
                     left: rem(-60);

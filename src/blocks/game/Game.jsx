@@ -19,6 +19,7 @@ import Garden from '../../models/garden';
 import Routes from '../../models/routes';
 import Environment from '../environment/Environment';
 import Plateau from '../../models/plateau';
+import { isHost } from 'playroomkit';
 
 const Game = () => {
   const { players } = usePlayerContext();
@@ -26,9 +27,9 @@ const Game = () => {
   const [isDebug, setisDebug] = useState(true);
 
   useEffect(() => {
-    const url = new URL(window.location.href);
+    // const url = new URL(window.location.href);
 
-    const isDebugMode = url.searchParams.has('debug');
+    const isDebugMode = isHost();
 
     setisDebug(!isDebugMode);
   }, []);
