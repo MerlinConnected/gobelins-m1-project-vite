@@ -82,7 +82,7 @@ export const TRANSPORT = [
   },
 ];
 
-export const TIME_START_GAME = 1;
+export const TIME_START_GAME = 5;
 export const TIME_START_TURN = 2;
 export const TIME_PLAYER_TURN = 25; // FOR PROD: 10 ou 15 jsp - FOR DEMO: 25
 export const TIME_END_TURN = 4;

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect } from 'react';
 import { isHost } from 'playroomkit';
 import { usePlayerContext } from './PlayerProvider';
 import { useGameStateContext } from './GameStateProvider';
-import { GAME_PHASE, TIME_START_TURN, TURN_PHASE } from '../utils/constants';
+import { GAME_PHASE, TIME_START_GAME, TIME_START_TURN, TURN_PHASE } from '../utils/constants';
 import { useEventContext } from './EventProvider';
 
 let context = {};
@@ -16,7 +16,7 @@ export const InitContext = createContext();
 // ];
 
 export function InitProvider({ children }) {
-  const { globalPhase, setTurnPhase, setTimer } = useGameStateContext();
+  const { globalPhase, setGlobalPhase, setTurnPhase, setTimer } = useGameStateContext();
   const { players, setPlayerTurn, drawCard, distributeCard } = usePlayerContext();
   const { setEvent } = useEventContext();
 
@@ -50,9 +50,12 @@ export function InitProvider({ children }) {
         player.setState('flashGekko', false, true);
       });
 
-      setTurnPhase(TURN_PHASE.startTurn, true);
-      setTimer(TIME_START_TURN, true);
-      setEvent(null, true);
+      setTimeout(() => {
+        setGlobalPhase(GAME_PHASE.playGame, true);
+        setTurnPhase(TURN_PHASE.startTurn, true);
+        setTimer(TIME_START_TURN, true);
+        setEvent(null, true);
+      }, TIME_START_GAME * 1000);
     }
   };
 
