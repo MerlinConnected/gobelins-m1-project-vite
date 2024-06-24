@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { myPlayer } from "playroomkit";
 import { usePlayerContext } from "../../provider/PlayerProvider";
-
 const Environment = () => {
 
     const { playerTurn, players } = usePlayerContext();
@@ -12,9 +11,9 @@ const Environment = () => {
 
     useEffect(() => {
         if (isSelecting && currentPlayer?.id === me?.id) {
-            setIntensity(0.4);
-        } else {
             setIntensity(1);
+        } else {
+            setIntensity(3);
         }
     }, [isSelecting]);
 
