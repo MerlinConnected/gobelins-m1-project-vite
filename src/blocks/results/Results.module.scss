@@ -23,22 +23,27 @@
     gap: rem(32);
     padding: 0 rem(64);
     width: 100%;
-    max-width: rem(560);
+    max-width: rem(680);
     color: var(--color-content-main);
-    background-image: url('/images/ui/results-bg.png');
+    background-image: url('/images/ui/results-bg-victoire.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 95%;
 }
 
+.resultsDefeat {
+    background-image: url('/images/ui/results-bg-defaite.png');
+}
+
 .resultsTitle {
     font-family: $polaquita-font;
-    font-size: rem(48);
+    font-size: rem(82);
     color: var(--color-background-transport-main-2);
+    margin-top: rem(-16);
     transform: rotate(-2deg);
 
         &::before {
-            box-shadow: 2px 16px 8px 4px rgba(113, 113, 113, 0.592);
+            box-shadow: none;
         }
 }
 
@@ -67,11 +72,36 @@
     .status {
         width: 100%;
     }
+
+    .perdantTag {
+        position: absolute;
+        width: rem(100);
+        top: rem(-30);
+        left: rem(-20);
+    }
 }
 
 .finishers {
+    position: relative;
     display: flex;
     justify-content: space-around;
+    padding: rem(24) rem(36);
+    background-image: url('/images/ui/finishers-bg.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.finishersBg {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/ui/finishers-bg-victoire.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
 }
 
 .looser {
@@ -81,7 +111,7 @@
     align-items: center;
     justify-content: center;
     gap: rem(20);
-    padding: rem(24);
+    padding: rem(24) rem(24) 0 rem(24);
 
     .looserTitle {
         position: absolute;
@@ -91,20 +121,6 @@
         transform: rotate(-2deg);
         font-family: $astounder-font;
         font-size: rem(24);
-    }
-}
-
-.layerWrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    clip-path: polygon( 0% 0%,7.994% 5.227%,98.837% 0%,100% 26.136%,96.439% 90%,86.773% 96.818%,11.919% 100%,0.509% 95.227%,1.235% 30%,0% 0% );
-    background-color: var(--color-looser-light);
-
-    .layer {
-        opacity: 0.2;
-        position: absolute;
-        mix-blend-mode: overlay;
     }
 }
 
