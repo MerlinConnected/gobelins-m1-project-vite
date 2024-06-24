@@ -76,6 +76,16 @@ export const textLineAppear = {
   },
 };
 
+export const pageTransition = {
+  variants: {
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+  },
+  transition: {
+    duration: 1.5,
+  },
+};
+
 export const conditionalAnimation = (condition: boolean, animateOverride: Variants) =>
   ({
     initial: baseVariants.initial,

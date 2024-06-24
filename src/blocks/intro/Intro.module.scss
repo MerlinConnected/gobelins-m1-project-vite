@@ -1,0 +1,54 @@
+.wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: var(--vw);
+    height: var(--ivh);
+    background-color: var(--color-home-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &::before {
+        content: '';
+        position: absolute;
+        z-index: 1000;
+        height: 100%;
+        width: 100%;
+        background-image: url('/images/ui/home-pattern.svg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        mix-blend-mode: overlay;
+        user-select: none;
+    }
+}
+
+.content {
+    width: fit-content;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    align-items: center;
+
+    p {
+        text-align: center;
+        font-family: $polaquita-font;
+        font-size: rem(42);
+            &::before {
+                box-shadow: none;
+            }
+    }
+}
+
+.zebardi {
+    text-align: center;
+    width: 100%;
+    grid-area: 2 / 1 / 3 / 4;
+
+    p {
+    font-size: rem(96);
+    }
+}

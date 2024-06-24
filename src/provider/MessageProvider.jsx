@@ -6,7 +6,9 @@ let context = {};
 const MessageContext = React.createContext();
 
 export function MessageProvider({ children }) {
-    const [message, setMessage] = useMultiplayerState('message', { type: 'info', text: '' });
+    const [message, setMessage] = useMultiplayerState('message', {
+        type: 'info', text: "C'est parti !"
+    });
 
     const gameState = {
         message,
