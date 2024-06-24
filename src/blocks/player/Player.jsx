@@ -45,26 +45,21 @@ function Player({ player, index, className, ...props }) {
     event.stopPropagation();
 
     if (currentPlayer?.id !== me?.id || cardsDisabled || getState('turnPhase') !== TURN_PHASE.playTurn) return;
-    playSound('ui2.mp3', audioEnabled);
+    playSound('ui2.mp3', audioEnabled, 0.4);
     currentPlayer.setState('target', player, true);
     const cards = currentPlayer.getState('cards');
     const selectedCard = currentPlayer.getState('selectedCard');
 
     if (selectedCard && selectedCard.type === 'action') {
-
       if (selectedCard.name === 'pied') {
         setMessage({
           type: 'action',
-          text:
-            currentPlayer?.getState('target').state.name +
-            ' descend !',
+          text: currentPlayer?.getState('target').state.name + ' descend !',
         });
       } else if (selectedCard.name === 'moins1' || selectedCard.name === 'moins2') {
         setMessage({
           type: 'action',
-          text:
-            currentPlayer?.getState('target').state.name +
-            ' recule !',
+          text: currentPlayer?.getState('target').state.name + ' recule !',
         });
       }
 
@@ -81,7 +76,8 @@ function Player({ player, index, className, ...props }) {
 
   useEffect(() => {
     if (currentPlayer === me && selectedCard) {
-      const isTargetable = selectedCard?.type === 'action' && availableTargets.some(target => target.id === player.id);
+      const isTargetable =
+        selectedCard?.type === 'action' && availableTargets.some((target) => target.id === player.id);
 
       // const isTargetable = selectedCard?.type === 'action' && currentPlayer?.getState('availableTargets')?.includes(player);
 
@@ -93,7 +89,6 @@ function Player({ player, index, className, ...props }) {
     } else {
       setTargetable(false);
     }
-
   }, [availableTargets, selectedCard]);
 
   const cameraPos = useMemo(() => {
@@ -151,7 +146,6 @@ function Player({ player, index, className, ...props }) {
           {...props}
           onClick={(event) => selectTarget(event, player)}
         >
-
           <Vehicule player={player} targetable={targetable} />
         </group>
         {me?.id === player.id && <PerspectiveCamera ref={camRef} position={cameraPosition} makeDefault />}
@@ -161,7 +155,6 @@ function Player({ player, index, className, ...props }) {
             <meshStandardMaterial color="red" />
           </mesh>
         )}
-
       </>
     )
   );

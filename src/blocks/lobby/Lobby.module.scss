@@ -23,6 +23,7 @@
         color: var(--color-neutral-20);
         font-size: rem(40);
         font-family: $polaquita-font;
+        user-select: none;
 
         @keyframes dots {
             0% {

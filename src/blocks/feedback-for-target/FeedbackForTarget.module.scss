@@ -1,4 +1,5 @@
 .wrapper {
+    user-select: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -38,7 +39,8 @@
             margin: rem(-36) 0;
         }
 
-        .impact, .transportTag {
+        .impact,
+        .transportTag {
             position: absolute;
             top: rem(-20);
             rotate: 6deg;
@@ -54,17 +56,17 @@
             > :first-child {
                 position: absolute;
             }
-        
+
             > :nth-child(2) {
                 transform: translateY(0);
-        
+
                 > span {
                     font-size: rem(18);
                     line-height: rem(24);
                 }
             }
         }
-    
+
         .edito {
             user-select: none;
             text-align: center;
@@ -72,12 +74,12 @@
             font-family: $polaquita-font;
             font-size: rem(50);
             text-transform: uppercase;
-        
+
             &::before {
                 box-shadow: none;
             }
         }
-    
+
         .editoText {
             font-family: $astounder-lc-font;
             font-style: italic;

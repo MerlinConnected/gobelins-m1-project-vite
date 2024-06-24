@@ -3,6 +3,8 @@
     width: 100%;
     height: rem(100);
     margin-top: rem(50);
+    pointer-events: none;
+    user-select: none;
 
     & > img {
         position: absolute;

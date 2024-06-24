@@ -15,6 +15,7 @@ import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
 import PlayerCards from '../../components/player-card/PlayerCard';
 import StrokeText from '../../components/stroke-text/StrokeText';
+import { isHost } from 'playroomkit';
 
 const COLORS = [
   { regular: '#F736C3', light: '#FAC9ED' },
@@ -63,7 +64,11 @@ function Lobby({ className, ...props }) {
       <Logo className={styles.logo} />
       <div className={classNames(styles.wrapper, className)} {...props}>
         <div className={styles.content}>
-          <h3 className={styles.title}>en attente de maître lucien</h3>
+          {isHost() ? (
+            <h3 className={styles.title}>en attente des autres joueurs</h3>
+          ) : (
+            <h3 className={styles.title}>en attente du boss</h3>
+          )}
           <div className={styles.lobbyWrapper}>
             <PlayerCards player={players[0]} />
             <PlayerCards player={players[1]} />
@@ -93,34 +98,37 @@ function Lobby({ className, ...props }) {
               <img className={styles.svgPicto} src="/images/icons/ui/card-copy-picto.svg" alt="copy the code" />
             </ActionButton>
           </div>
-          <div className={classNames(styles.second)}>
-            <ActionButton
-              headText="Règles"
-              subText="du jeu"
-              color="#DE9FFD"
-              pattern="patternRules"
-              size="giga"
-              gigaColor="purple"
-            >
-              <img className={styles.svgPicto} src="/images/icons/ui/card-rules-picto.svg" alt="rules" />
-            </ActionButton>
-          </div>
-          <div className={classNames(styles.second)}>
-            <ActionButton
-              headText="Lancer"
-              subText="la partie"
-              color="#FD9FB6"
-              pattern="patternPlay"
-              size="giga"
-              gigaColor="red"
-              onClick={() => {
-                setLobby(false);
-                setGlobalPhase(GAME_PHASE.startGame, true);
-              }}
-            >
-              <img className={styles.svgPicto} src="/images/icons/ui/play-picto.svg" alt="play" />
-            </ActionButton>
-          </div>
+          {isHost() ? (
+            <div className={classNames(styles.second)}>
+              <ActionButton
+                headText="Lancer"
+                subText="la partie"
+                color="#FD9FB6"
+                pattern="patternPlay"
+                size="giga"
+                gigaColor="red"
+                onClick={() => {
+                  setLobby(false);
+                  setGlobalPhase(GAME_PHASE.startGame, true);
+                }}
+              >
+                <img className={styles.svgPicto} src="/images/icons/ui/play-picto.svg" alt="play" />
+              </ActionButton>
+            </div>
+          ) : (
+            <div className={classNames(styles.second)}>
+              <ActionButton
+                headText="Règles"
+                subText="du jeu"
+                color="#DE9FFD"
+                pattern="patternRules"
+                size="giga"
+                gigaColor="purple"
+              >
+                <img className={styles.svgPicto} src="/images/icons/ui/card-rules-picto.svg" alt="rules" />
+              </ActionButton>
+            </div>
+          )}
         </motion.div>
       </div>
     </>
