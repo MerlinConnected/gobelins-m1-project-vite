@@ -144,6 +144,8 @@ $LAYER_TITLE: 64px;
     width: 115%;
     transform: translate(-50%, -50%) translateZ($LAYER_IMG);
     transform-style: preserve-3d;
+    pointer-events: none;
+    user-select: none;
 }
 
 .transportWrapper {
@@ -198,6 +200,7 @@ $LAYER_TITLE: 64px;
     left: 50%;
     transform: translate(-50%, -50%) translateZ($LAYER_TITLE);
     transform-style: preserve-3d;
+    user-select: none;
 
     &::before {
         box-shadow: none;

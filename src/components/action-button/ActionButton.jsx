@@ -12,8 +12,7 @@ import { homeCardAppear } from '../../core/animation';
 const LAYER_PATTERN = 20;
 const LAYER_TEXT = 50;
 
-const ActionButton = ({ className, color, pattern, text, size, children, ...props }) => {
-  const { headText, subText, gigaColor } = props;
+const ActionButton = ({ className, color, pattern, text, size, children, headText, subText, gigaColor, ...props }) => {
 
   const ref = useRef(null);
   const [isHovered, setIsHovered] = useState(false);

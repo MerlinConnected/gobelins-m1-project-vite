@@ -1,14 +1,18 @@
 .wrapper {
     position: relative;
-    width: rem(120);
-    height: rem(80);
+    // width: rem(120);
+    // height: rem(80);
+    width: clamp(rem(80), 50vw, rem(120));
+    height: clamp(rem(53), 50vh, rem(80));
 
     svg {
         position: absolute;
     }
 
     &.large {
-        width: rem(375);
-        height: rem(250);
+        // width: rem(375);
+        // height: rem(250);
+        width: clamp(rem(250), 50vw, rem(375));
+        height: clamp(rem(167), 50vh, rem(250));
     }
 }

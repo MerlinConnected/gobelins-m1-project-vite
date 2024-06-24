@@ -20,7 +20,7 @@ export const PLAYER_PHASE = {
 };
 
 export const CATEGORY = {
-  deuxRoues: '2 roues',
+  deuxRoues: 'deux roues',
   route: 'Route',
   moteur: 'Motorisé',
   rails: 'Rails',
@@ -38,7 +38,7 @@ export const TRANSPORT = [
     impact: 2,
     category: [CATEGORY.deuxRoues],
     icon: '/images/vehicules/bicycle/bicycle-var1.png',
-    sound: 'transport/velo.mp3'
+    sound: 'transport/velo.mp3',
   },
   {
     name: 'voiture',
@@ -48,7 +48,7 @@ export const TRANSPORT = [
     impact: 3,
     category: [CATEGORY.route, CATEGORY.moteur],
     icon: '/images/vehicules/car/car-var1.png',
-    sound: 'transport/voiture.mp3'
+    sound: 'transport/voiture.mp3',
   },
   {
     name: 'tramway',
@@ -58,7 +58,7 @@ export const TRANSPORT = [
     impact: 3,
     category: [CATEGORY.rails, CATEGORY.commun],
     icon: '/images/vehicules/tram/tram-var1.png',
-    sound: 'transport/tramway.mp3'
+    sound: 'transport/tramway.mp3',
   },
   {
     name: 'metro',
@@ -68,7 +68,7 @@ export const TRANSPORT = [
     impact: 4,
     category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur],
     icon: '/images/vehicules/metro/metro-var1.png',
-    sound: 'transport/metro.mp3'
+    sound: 'transport/metro.mp3',
   },
   {
     name: 'moto',
@@ -78,17 +78,17 @@ export const TRANSPORT = [
     impact: 4,
     category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur],
     icon: '/images/vehicules/bike/bike-var1.png',
-    sound: 'transport/moto.mp3'
+    sound: 'transport/moto.mp3',
   },
 ];
 
 export const TIME_START_GAME = 1;
-export const TIME_START_TURN = 1;
-export const TIME_PLAYER_TURN = 15; // FOR PROD: 10 ou 15 jsp
+export const TIME_START_TURN = 2;
+export const TIME_PLAYER_TURN = 25; // FOR PROD: 10 ou 15 jsp
 export const TIME_END_TURN = 4;
 export const TIME_RESULT = 1;
 
-export const MAX_POINTS = 400; // FOR PROD: 20
+export const MAX_POINTS = 18; // FOR PROD: 20
 export const MAX_WINNERS = 3; // FOR PROD: 3
 export const AMOUNT_TRANSPORT_CARDS = 1;
 export const AMOUNT_PIED_CARDS = 1;
@@ -116,7 +116,7 @@ export const actionDrawer = [
     name: 'moins1',
     img: 'moins1',
     edito: 'recule !',
-    editoText: "Un mal de ventre immonde te terrasse INSTANT, gros détour à la pharmacie",
+    editoText: 'Un mal de ventre immonde te terrasse INSTANT, gros détour à la pharmacie',
     type: 'action',
     impact: -1,
     category: Object.values(CATEGORY),
@@ -136,7 +136,7 @@ export const actionDrawer = [
     name: 'pied',
     img: 'pied1',
     edito: 'descends !',
-    editoText: "Innondation du métro suite au nettoyage de la Seine pour les JO 🛀",
+    editoText: 'Innondation du métro suite au nettoyage de la Seine pour les JO 🛀',
     type: 'action',
     impact: 1,
     category: [CATEGORY.interieur],
@@ -167,7 +167,8 @@ export const actionDrawer = [
     name: 'pied',
     img: 'pied4',
     edito: 'descends !',
-    editoText: "Embrouille avec le chauffeur, tu voulais mettre du Djul à la place de France Radio mais il a pas trop kiffé 😕",
+    editoText:
+      'Embrouille avec le chauffeur, tu voulais mettre du Djul à la place de France Radio mais il a pas trop kiffé 😕',
     type: 'action',
     impact: 1,
     category: [CATEGORY.moteur],
@@ -187,7 +188,7 @@ export const actionDrawer = [
     name: 'pied',
     img: 'pied6',
     edito: 'descends !',
-    editoText: "Un sac à main a été oublié dans ta rame. Les démineurs interviennent 🚨🚨🚨",
+    editoText: 'Un sac à main a été oublié dans ta rame. Les démineurs interviennent 🚨🚨🚨',
     type: 'action',
     impact: 1,
     category: [CATEGORY.commun],
@@ -242,7 +243,7 @@ export const initialEventDrawer = [
   },
   {
     id: transportDrawer.length + actionDrawer.length + 6,
-    name: "MALAISE VOYAGEUR, INTERVENTION DES SECOURS EN COURS",
+    name: 'MALAISE VOYAGEUR, INTERVENTION DES SECOURS EN COURS',
     type: 'event',
     impact: 0,
     category: CATEGORY.commun,

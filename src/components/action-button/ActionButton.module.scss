@@ -134,12 +134,12 @@
 
         .text {
             &:nth-child(1) {
-                font-size: rem(64);
+                font-size: clamp(rem(40), 10vw, rem(60));
                 color: var(--headText-color);
             }
 
             &:nth-child(2) {
-                font-size: rem(32);
+                font-size: clamp(rem(20), 5vw, rem(30));
                 color: var(--subText-color);
                 transform: translateY(rem(-20));
             }

@@ -100,8 +100,12 @@
 
 .playWrapper,
 .createWrapper {
-    width: rem(320);
-    height: rem(200);
+    width: grid(3);
+    height: grid(2);
+    min-width: calc(rem(320) * 0.9);
+    min-height: calc(rem(200) * 0.9);
+    max-width: rem(320);
+    max-height: rem(200);
 
     & div {
         height: 100%;
