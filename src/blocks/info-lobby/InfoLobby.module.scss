@@ -8,6 +8,7 @@
 }
 
 .form {
+    aspect-ratio: 1 / 1.16;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -34,8 +35,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        // min-height: rem(470);
-        background-color: var(--player-color-light);
+        background-color: var(--color-neutral-80);
         clip-path: polygon(
             3.099% 16.65%,
             9.765% 5.483%,
@@ -50,12 +50,16 @@
         );
     }
 
+    .eyes {
+        height: rem(350);
+    }
+
     .inputWrapper {
         display: flex;
         flex-direction: column;
         width: 80%;
         margin: auto;
-        margin-bottom: rem(100);
+        margin-bottom: rem(120);
         padding: rem(20) rem(24) rem(12) rem(24);
         background-color: var(--color-neutral-100);
         clip-path: polygon(
@@ -76,7 +80,7 @@
 
         span {
             width: 100%;
-            height: rem(8);
+            height: rem(10);
             background-image: url('/images/icons/ui/player-input-underline.svg');
             background-size: cover;
             background-repeat: no-repeat;
@@ -89,7 +93,7 @@
         width: 100%;
 
         font-size: rem(52);
-        color: var(--player-color);
+        color: var(--color-neutral-0);
         font-family: $astounder-lc-font;
         text-align: center;
         text-transform: uppercase;
@@ -101,17 +105,27 @@
 }
 
 .btnWrapper {
-    transform: translateY(rem(-50)) rotate(-2deg);
+    transform: translateY(rem(-80)) rotate(-2deg);
 }
 
 .button {
     cursor: pointer;
-    width: grid(2, 2);
+    width: 70%;
+    height: rem(120);
     margin: auto;
 
     p {
+        font-size: rem(60);
         text-transform: uppercase;
         font-family: $polaquita-font;
         color: var(--color-button-blue);
     }
+}
+
+.pattern {
+    position: absolute;
+    mix-blend-mode: overlay;
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
 }

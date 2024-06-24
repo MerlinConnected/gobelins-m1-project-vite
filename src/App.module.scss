@@ -1,5 +1,6 @@
 .wrapper {
     position: relative;
+    overflow: hidden;
     width: var(--vw);
     height: var(--ivh);
     background-color: var(--color-home-bg);
@@ -19,5 +20,6 @@
         background-repeat: no-repeat;
         mix-blend-mode: overlay;
         user-select: none;
+        opacity: 0.5;
     }
 }

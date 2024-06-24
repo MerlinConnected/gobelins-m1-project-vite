@@ -1,5 +1,5 @@
 .wrapper {
-    position: relative;
+    // position: relative;
     width: 100%;
     height: 100%;
     display: flex;
@@ -13,15 +13,20 @@
 }
 
 .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-bottom: 8vh;
+
     display: flex;
     flex-direction: column;
     align-items: center;
 
     .title {
         position: relative;
-        margin-top: rem(90);
         color: var(--color-neutral-20);
-        font-size: rem(40);
+        font-size: 3vw;
         font-family: $polaquita-font;
         user-select: none;
 
@@ -53,7 +58,6 @@
 
     .lobbyWrapper {
         display: flex;
-        width: grid(7);
         height: auto;
         margin-top: rem(20);
         padding: rem(20);
@@ -83,7 +87,8 @@
         );
 
         & > * {
-            flex-basis: 25%;
+            width: 16vw;
+            aspect-ratio: 1 / 1.2;
 
             &:nth-child(1) {
                 clip-path: var(--cp-lobby-p1);
@@ -106,6 +111,7 @@
 
 .cardsWrapper {
     display: flex;
+    margin-top: auto;
     transform: translateY(rem(20));
 
     & > *:nth-child(1) {

@@ -47,7 +47,7 @@ export const textAppearRotate = {
     exit: { opacity: 0, scale: 0.25, rotate: -6 },
   },
   transition: {
-    duration: 0.8,
+    duration: 0.4,
     ease: bezier.backEaseInOut,
   },
 };

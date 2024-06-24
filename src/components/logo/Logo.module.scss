@@ -1,4 +1,5 @@
 .wrapper {
+    cursor: pointer;
     position: relative;
     // width: rem(120);
     // height: rem(80);
@@ -10,9 +11,10 @@
     }
 
     &.large {
+        cursor: default;
         // width: rem(375);
         // height: rem(250);
-        width: clamp(rem(250), 50vw, rem(375));
-        height: clamp(rem(167), 50vh, rem(250));
+        width: clamp(rem(250), 60vw, rem(375));
+        height: clamp(rem(167), 60vh, rem(250));
     }
 }

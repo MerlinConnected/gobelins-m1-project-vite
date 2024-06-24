@@ -95,7 +95,7 @@ export function PlayerProvider({ children }) {
     const target = currentPlayer.getState('target');
     const selectedCard = currentPlayer.getState('selectedCard');
     const availableTargets = currentPlayer.getState('availableTargets');
-    const isATarget = availableTargets.some(availableTarget => availableTarget.id === target.id);
+    const isATarget = availableTargets.some((availableTarget) => availableTarget?.id === target?.id);
 
     if (!isATarget) return;
     const targetPlayer = players.find((player) => player.id === target.id);

@@ -7,13 +7,25 @@ import styles from './ActionButton.module.scss';
 import CardLayers from '../card-layers/CardLayers';
 import StrokeText from '../stroke-text/StrokeText';
 import { AnimatePresence } from 'framer-motion';
-import { homeCardAppear } from '../../core/animation';
+import { cardInactive, homeCardAppear, conditionalAnimation } from '../../core/animation';
 
 const LAYER_PATTERN = 20;
 const LAYER_TEXT = 50;
 
-const ActionButton = ({ className, color, pattern, text, size, children, headText, subText, gigaColor, ...props }) => {
-
+const ActionButton = ({
+  className,
+  color,
+  pattern,
+  text,
+  size,
+  children,
+  headText,
+  subText,
+  gigaColor,
+  active = true,
+  onClick,
+  ...props
+}) => {
   const ref = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -53,10 +65,19 @@ const ActionButton = ({ className, color, pattern, text, size, children, headTex
     };
   };
 
+  const animationProps = conditionalAnimation(!active, cardInactive);
+
   return (
-    <motion.div {...homeCardAppear} whileHover={{ scale: 1.05, transition: { duration: 0.2 } }} {...props}>
+    <motion.div
+      {...homeCardAppear}
+      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+      style={{ '--btn-bg-color': color }}
+      onClick={active && onClick}
+      {...props}
+    >
       <motion.div
         ref={ref}
+        {...animationProps}
         className={classNames(styles.wrapper, className, {
           [styles.medium]: size === 'medium',
           [styles.large]: size === 'large',
@@ -66,7 +87,7 @@ const ActionButton = ({ className, color, pattern, text, size, children, headTex
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
-        style={{ rotateX, rotateY, transformStyle: 'preserve-3d', '--btn-bg-color': color }}
+        style={active && { rotateX, rotateY, transformStyle: 'preserve-3d' }}
       >
         <div className={styles.background} />
         <motion.div style={style(LAYER_PATTERN)} className={styles.layerWrapper}>

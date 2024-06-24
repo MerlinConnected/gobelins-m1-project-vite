@@ -6,12 +6,19 @@ import styles from './Logo.module.scss';
 import LogoLayers from '../logo-layers/LogoLayers';
 
 const Logo = ({ className, size, ...props }) => {
+  // set a on click function that set the url back to localhost:5173 without opening a new tab
+
+  const handleClick = () => {
+    window.location.href = 'http://localhost:5173';
+  };
+
   return (
     <motion.div
       className={classNames(styles.wrapper, className, {
         [styles.large]: size === 'large',
       })}
       whileHover={size ? {} : { scale: 0.95, rotate: 5, transition: { duration: 0.2 } }}
+      onClick={size != 'large' ? handleClick : null}
       {...props}
     >
       <LogoLayers id="on_n" />
