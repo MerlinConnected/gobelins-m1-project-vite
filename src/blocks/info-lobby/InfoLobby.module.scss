@@ -109,7 +109,7 @@
 }
 
 .button {
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     width: 70%;
     height: rem(120);
     margin: auto;
