@@ -1,41 +1,131 @@
 .wrapper {
-    position: absolute;
+    position: relative;
+    margin: auto;
+}
 
-    width: 100vw;
-    height: 100vh;
+.logo {
+    margin-top: rem(40);
+}
 
-    display: grid;
-    place-items: center;
+.form {
+    aspect-ratio: 1 / 1.16;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: grid(4);
+    min-height: rem(470);
+    background-color: var(--color-neutral-100);
+    clip-path: polygon(
+        11.326% 1.731%,
+        76.494% 3.56%,
+        97.062% 5.842%,
+        98.12% 10.135%,
+        98.75% 21.098%,
+        98.693% 87.682%,
+        96.025% 95.469%,
+        11.326% 98.269%,
+        1.405% 91.239%,
+        1.25% 87.682%,
+        1.951% 16.996%,
+        4.193% 10.135%,
+        11.326% 1.731%
+    );
 
-    color: white;
+    .background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-neutral-80);
+        clip-path: polygon(
+            3.099% 16.65%,
+            9.765% 5.483%,
+            63.876% 4.231%,
+            91.847% 6.696%,
+            97.292% 27.529%,
+            95.109% 91.679%,
+            68.682% 94.622%,
+            10.009% 95.962%,
+            2.708% 85.849%,
+            3.099% 16.65%
+        );
+    }
 
-    form {
+    .eyes {
+        height: rem(350);
+    }
+
+    .inputWrapper {
         display: flex;
-        gap: rem(4);
-        input {
-            border: 1.5px solid #222222;
-            border-radius: rem(6);
+        flex-direction: column;
+        width: 80%;
+        margin: auto;
+        margin-bottom: rem(120);
+        padding: rem(20) rem(24) rem(12) rem(24);
+        background-color: var(--color-neutral-100);
+        clip-path: polygon(
+            0% 24.13%,
+            1.932% 93.04%,
+            6.441% 97.68%,
+            46.86% 100%,
+            79.066% 98.608%,
+            93.076% 98.144%,
+            98.39% 90.487%,
+            100% 7.889%,
+            93.881% 2.32%,
+            57.971% 0%,
+            22.866% 1.392%,
+            5.958% 2.784%,
+            0% 24.13%
+        );
 
-            padding: rem(8) rem(12);
-
-            background-color: #0e0e0e;
-
-            color: white;
-            &:focus {
-                outline: none;
-                border-color: white;
-            }
-        }
-        button {
-            border: none;
-
-            background-color: white;
-            color: black;
-
-            font-weight: 500;
-            &:hover {
-                background-color: #ebebeb;
-            }
+        span {
+            width: 100%;
+            height: rem(10);
+            background-image: url('/images/icons/ui/player-input-underline.svg');
+            background-size: cover;
+            background-repeat: no-repeat;
         }
     }
+
+    .input {
+        position: relative;
+        all: unset;
+        width: 100%;
+
+        font-size: rem(52);
+        color: var(--color-neutral-0);
+        font-family: $astounder-lc-font;
+        text-align: center;
+        text-transform: uppercase;
+
+        &::placeholder {
+            color: var(--color-neutral-50);
+        }
+    }
+}
+
+.btnWrapper {
+    transform: translateY(rem(-80)) rotate(-2deg);
+}
+
+.button {
+    cursor: pointer;
+    width: 70%;
+    height: rem(120);
+    margin: auto;
+
+    p {
+        font-size: rem(60);
+        text-transform: uppercase;
+        font-family: $polaquita-font;
+        color: var(--color-button-blue);
+    }
+}
+
+.pattern {
+    position: absolute;
+    mix-blend-mode: overlay;
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
 }

@@ -1,84 +1,173 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
+
+import { Html, PerspectiveCamera } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { PerspectiveCamera, MotionPathControls, useMotion } from '@react-three/drei';
-import { Vector3 } from 'three';
+import * as THREE from 'three';
 
-import { myPlayer, usePlayerState } from 'playroomkit';
+import { myPlayer, usePlayerState, getState } from 'playroomkit';
 
-import Curves from '../curves/Curves';
-import { useMemo } from 'react';
+import Path from '../../utils/paths';
 
-import { Model } from '../../models/car';
+import Vehicule from '../../models/vehicules/Vehicule';
 
-import Billboard from '../../components/billboard/Billboard';
+import { usePlayerContext } from '../../provider/PlayerProvider';
+import { useCardContext } from '../../provider/CardProvider';
+import { TURN_PHASE } from '../../utils/constants';
+import playSound from '../../utils/playSound';
+import { useAudioContext } from '../../provider/AudioProvider';
+import { useGameStateContext } from '../../provider/GameStateProvider';
+import { useMessageContext } from '../../provider/MessageProvider';
+import CameraPositions from '../../utils/cameraPositions';
 
-function Loop({ poi, points }) {
-  const motion = useMotion();
+function Player({ player, index, className, ...props }) {
+  const { playerTurn, players } = usePlayerContext();
+  const { handlePlayerPhase } = useGameStateContext();
+  const { cardsDisabled } = useCardContext();
+  const { audioEnabled } = useAudioContext();
+  const { setMessage } = useMessageContext();
 
-  useFrame((delta) => {
-    const target = new Vector3().addVectors(poi.current.position, motion.tangent);
-    poi.current.lookAt(target);
+  const currentPlayer = players[playerTurn];
 
-    const step = 20;
-    const currentPoints = points / step;
-
-    motion.current = currentPoints;
-  });
-
-  return null;
-}
-
-function Player({ player, index, ...props }) {
-  const { id, state } = player;
+  const { rotationY, position } = props;
   const me = myPlayer();
-  const poi = useRef();
+  const { id, state } = player;
+  const ref = useRef(null);
+  const camRef = useRef(null);
+  const [currentPoint, setCurrentPoint] = useState(0);
+  const [points, setPoints] = usePlayerState(player, 'points');
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [opacityDown, setOpacityDown] = useState(false);
+  const isSelecting = currentPlayer?.getState('isSelecting');
 
-  const [points] = usePlayerState(player, 'points');
-
-  const cameraPos = useMemo(() => {
-    const pos = new Vector3(10, 8, 20);
-    return pos;
-  }, []);
-
-  const [progress, setProgress] = useState(new Vector3(-index * 1.5, 0, 0));
+  const [targetable, setTargetable] = useState(false);
+  const selectedCard = currentPlayer?.getState('selectedCard');
+  const availableTargets = currentPlayer?.getState('availableTargets');
 
   useEffect(() => {
-    const newPosition = new Vector3(-index * 1.5, 0, -points);
-    const animationDuration = 0.5;
+    const selectable = (currentPlayer?.getState('isSelecting') && currentPlayer?.id === me?.id && !targetable);
+    setOpacityDown(selectable);
 
-    const animate = () => {
-      const start = progress.clone();
-      const end = newPosition;
-      const startTime = Date.now();
+  }, [targetable, currentPlayer?.getState('isSelecting')]);
 
-      const updatePosition = () => {
-        const elapsedTime = (Date.now() - startTime) / (animationDuration * 1000);
-        if (elapsedTime < 1) {
-          setProgress(start.clone().lerp(end, elapsedTime));
-          requestAnimationFrame(updatePosition);
-        } else {
-          setProgress(end);
-        }
-      };
-      updatePosition();
+  const selectTarget = (event, player) => {
+    event.stopPropagation();
+
+    if (currentPlayer?.id !== me?.id || cardsDisabled || getState('turnPhase') !== TURN_PHASE.playTurn) return;
+    playSound('ui2.mp3', audioEnabled, 0.4);
+    currentPlayer.setState('target', player, true);
+    const cards = currentPlayer.getState('cards');
+    const selectedCard = currentPlayer.getState('selectedCard');
+
+    if (selectedCard && selectedCard.type === 'action') {
+      if (selectedCard.name === 'pied') {
+        setMessage({
+          type: 'action',
+          text: currentPlayer?.getState('target').state.name + ' descend !',
+        });
+      } else if (selectedCard.name === 'moins1' || selectedCard.name === 'moins2') {
+        setMessage({
+          type: 'action',
+          text: currentPlayer?.getState('target').state.name + ' recule !',
+        });
+      }
+
+      // remove the selected card from the deck
+      cards.splice(
+        cards.findIndex((card) => card.uuid === selectedCard.uuid),
+        1
+      );
+      currentPlayer.setState('cards', cards, true);
+    }
+
+    handlePlayerPhase();
+  };
+
+  useEffect(() => {
+    if (currentPlayer === me && selectedCard) {
+      const isTargetable =
+        selectedCard?.type === 'action' && availableTargets.some((target) => target.id === player.id);
+
+      // const isTargetable = selectedCard?.type === 'action' && currentPlayer?.getState('availableTargets')?.includes(player);
+
+      if (isTargetable && isSelecting) {
+        setTargetable(true);
+      } else {
+        setTargetable(false);
+      }
+    } else {
+      setTargetable(false);
+    }
+
+  }, [availableTargets, selectedCard, isSelecting]);
+
+  const cameraPos = useMemo(() => {
+    const pos = new THREE.Vector3(position[0], position[1], position[2]);
+    return pos;
+  }, [player]);
+
+  const path = useMemo(() => Path[index], [index]);
+  const cameraPosition = useMemo(() => CameraPositions[index], [index]);
+
+  useFrame(() => {
+    if (!isAnimating && points !== currentPoint) {
+      // Start the movement process
+      movePlayerOneStep();
+    }
+  });
+
+  const movePlayerOneStep = () => {
+    setIsAnimating(true);
+    const direction = points > currentPoint ? 1 : -1;
+    const nextPoint = currentPoint + direction;
+    const startPosition = ref.current.position.clone();
+    const endPosition = path[nextPoint]?.clone();
+
+    const duration = 300; // Duration in ms for each step
+    let startTime = null;
+
+    const animateStep = (time) => {
+      if (!startTime) startTime = time;
+      const elapsedTime = time - startTime;
+      const progress = elapsedTime / duration;
+
+      if (progress < 1) {
+        const currentPos = new THREE.Vector3().lerpVectors(startPosition, endPosition, progress);
+        ref.current.position.copy(currentPos);
+        requestAnimationFrame(animateStep);
+      } else {
+        ref.current.position.copy(endPosition);
+        setCurrentPoint(nextPoint);
+        setIsAnimating(false);
+      }
     };
 
-    animate();
-  }, [points]);
+    requestAnimationFrame(animateStep);
+  };
 
   return (
-    <group>
-      <MotionPathControls object={poi} debug smooth focusObject={poi} damping={0.6}>
-        <Curves index={index} />
-        <Loop poi={poi} points={points} />
-      </MotionPathControls>
-      <group ref={poi}>
-        <Billboard player={player} position={[0, 2, 0]} />
-        <Model color={state?.profile?.color} />
-      </group>
-      {me?.id === id && <PerspectiveCamera makeDefault position={cameraPos} />}
-    </group>
+    player && (
+      <>
+        <group
+          ref={ref}
+          position={path[0]}
+          rotation-y={rotationY}
+          scale={2}
+          {...props}
+          onClick={(event) => selectTarget(event, player)}
+        >
+
+          <Vehicule player={player} targetable={targetable} opacityDown={opacityDown} />
+        </group>
+        {me?.id === player.id && <PerspectiveCamera ref={camRef} position={cameraPosition} makeDefault fov={34} />}
+        {me?.id === player.id && (
+          <mesh position={position}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="red" />
+          </mesh>
+        )}
+      </>
+    )
   );
 }
 
-export default React.memo(Player);
+export default Player;

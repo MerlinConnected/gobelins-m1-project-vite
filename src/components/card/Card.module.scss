@@ -1,0 +1,163 @@
+.wrapper {
+    // border: 1px solid red; // remove ONLY when game is finished SVP 🙏
+    user-select: none;
+}
+
+.card {
+    display: flex;
+    position: relative;
+    width: rem(250);
+    height: rem(165);
+    transition: transform 0.3s cubic-bezier(0.63, 2.6, 0.48, 0.94);
+}
+
+.background {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+
+    clip-path: polygon(
+        0% 24.13%,
+        1.932% 93.04%,
+        6.441% 97.68%,
+        46.86% 100%,
+        79.066% 98.608%,
+        93.076% 98.144%,
+        98.39% 90.487%,
+        100% 7.889%,
+        93.881% 2.32%,
+        57.971% 0%,
+        22.866% 1.392%,
+        5.958% 2.784%,
+        0% 24.13%
+    );
+}
+
+.layers {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--background);
+    width: 100%;
+    // height: 100%;
+
+    clip-path: polygon(
+        2.992% 13.405%,
+        2.992% 88.754%,
+        8.93% 100%,
+        70.625% 95.36%,
+        95.969% 93.253%,
+        98% 28.925%,
+        94.718% 5.758%,
+        65.794% 3.016%,
+        11.43% 4.408%,
+        2.992% 13.405%
+    );
+
+    & > * {
+        position: absolute;
+    }
+}
+
+.layer {
+    mix-blend-mode: overlay;
+}
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.transportWrapper {
+    position: absolute;
+    top: calc(var(--padding) * -0.8);
+    left: calc(var(--padding) * 1.7);
+    display: flex;
+    gap: rem(1);
+
+    & > * {
+        transform: rotate(-2deg);
+    }
+}
+
+.impactIndicator {
+    position: absolute;
+    top: rem(-20);
+    left: calc(rem(-55) * 0.5);
+    // transform: translateZ(25px);
+    // transform-style: preserve-3d;
+}
+
+.speedIndicator {
+    position: absolute;
+    top: calc(var(--padding) * 2.2);
+    left: calc(rem(-35) * 0.5);
+}
+
+.editoWrapper {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transform: rotate(-3deg);
+
+    p {
+        user-select: none;
+        text-align: center;
+        color: var(--font-color);
+        font-family: $polaquita-font;
+        font-size: rem(50);
+        transform: translateY(rem(15));
+        text-transform: uppercase;
+
+        &::before {
+            box-shadow: none;
+        }
+    }
+}
+
+.actions {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateZ(65px) !important;
+    right: calc(var(--padding) * -1);
+
+    display: flex;
+    flex-direction: column;
+    gap: rem(10);
+
+    & > * {
+        cursor: pointer;
+    }
+
+    button {
+        transform: scale(0);
+        transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+
+    button.activeBtn {
+        transform: scale(1);
+        transition-duration: 0.3s;
+
+        &:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+    }
+}
+
+.remove {
+    background-color: red;
+    &:hover {
+        background-color: #ff0000;
+    }
+}
+
+.clicked {
+    background-color: green;
+}
+
+.target {
+    border: 1px solid yellow;
+}

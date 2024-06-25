@@ -1,0 +1,81 @@
+.wrapper {
+    position: relative;
+
+    // &:hover {
+    //     .icon {
+    //         transform: translate(-50%, -50%) rotate(15deg);
+    //     }
+    // }
+}
+
+.layerWrapper {
+    width: rem(45);
+    height: rem(45);
+    clip-path: polygon(
+        0% 50%,
+        6.667% 81.098%,
+        17.618% 89.048%,
+        53.333% 100%,
+        90% 85.278%,
+        100% 53.333%,
+        98.333% 28.333%,
+        98.333% 28.333%,
+        98.09% 27.997%,
+        97.417% 27.071%,
+        96.399% 25.679%,
+        95.119% 23.945%,
+        93.661% 21.995%,
+        92.111% 19.952%,
+        90.553% 17.939%,
+        89.069% 16.083%,
+        87.746% 14.506%,
+        86.667% 13.333%,
+        86.667% 13.333%,
+        85.913% 12.673%,
+        84.878% 11.892%,
+        83.647% 11.034%,
+        82.305% 10.145%,
+        80.936% 9.269%,
+        79.626% 8.452%,
+        78.458% 7.738%,
+        77.52% 7.173%,
+        76.894% 6.801%,
+        76.667% 6.667%,
+        50% 0%,
+        16.667% 8.364%,
+        0% 50%
+    );
+
+    .large {
+        width: rem(75);
+        height: rem(75);
+    }
+}
+
+.layer {
+    mix-blend-mode: overlay;
+    opacity: 0.2;
+}
+
+.bg {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 130%;
+    height: 130%;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    width: 50%;
+}
+
+.disabled {
+    cursor: not-allowed;
+    color: #222222;
+}

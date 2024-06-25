@@ -1,0 +1,82 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: var(--lobby-card-color-light);
+}
+
+.text {
+    user-select: none;
+    color: var(--lobby-card-color);
+
+    &::before {
+        box-shadow: none;
+    }
+}
+
+.title {
+    margin-bottom: rem(10);
+    font-size: rem(48);
+    font-family: $polaquita-font;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: var(--white-stroke-large);
+}
+
+.player {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .pattern {
+        position: absolute;
+        mix-blend-mode: overlay;
+        opacity: 0.16;
+    }
+
+    .eyes {
+        height: rem(150);
+    }
+}
+
+.noPlayer {
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    .pattern {
+        background-image: url('/images/ui/pattern/pattern_playerEmpty.svg');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.02;
+    }
+
+    span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: $polaquita-font;
+
+        &:nth-child(2) {
+            font-size: rem(64);
+            left: 45%;
+            transform: translate(-50%, -50%) rotate(-10deg);
+        }
+
+        &:nth-child(3) {
+            font-size: rem(40);
+            left: 55%;
+            transform: translate(-50%, -50%) rotate(14deg);
+        }
+    }
+}
+
+.pattern {
+    height: 100%;
+    width: 100%;
+}

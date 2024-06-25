@@ -1,63 +1,163 @@
 .wrapper {
-    position: absolute;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    width: 100vw;
-    height: 100vh;
+.logo {
+    margin-top: rem(80);
+}
 
-    display: grid;
-    place-items: center;
+.rulesWrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 
-    color: white;
-    > div {
-        h1 {
+    .title {
+        margin-bottom: rem(16);
+        font-family: $polaquita-font;
+        color: var(--color-trafic);
+        font-size: rem(26);
+    }
+
+    .tuto {
+        font-family: $astounder-lc-font;
+        text-transform: uppercase;
+        color: var(--color-neutral-20);
+        list-style: none;
+        counter-reset: ol;
+
+        & > ol {
+            padding-left: 0;
             font-size: rem(16);
-            margin-bottom: rem(12);
-            text-align: center;
-        }
-        > div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: rem(32);
 
-            > div {
-                display: flex;
-                flex-direction: column;
-                gap: rem(12);
-                align-items: center;
+            &:nth-of-type(1) {
+                margin-bottom: rem(4);
             }
-            form {
-                display: flex;
-                gap: rem(4);
-                input {
-                    border: 1.5px solid #222222;
-                    border-radius: rem(6);
 
-                    padding: rem(8) rem(12);
+            &::before {
+                content: counter(ol) '/ ';
+                counter-increment: ol;
+                color: var(--color-neutral-40);
+                margin-right: rem(5);
+            }
+        }
+    }
 
-                    background-color: #0e0e0e;
+    .infos {
+        display: inline-flex;
+        justify-content: center;
+        gap: rem(28);
+        margin-top: rem(20);
+        font-size: rem(14);
+        font-family: $astounder-lc-font;
+        color: var(--color-neutral-40);
+        text-transform: uppercase;
 
-                    color: white;
-                    &:focus {
-                        outline: none;
-                        border-color: white;
-                    }
-                }
+        & > * {
+            position: relative;
+            display: flex;
+        }
+
+        & span:nth-child(1) {
+            &::before {
+                content: url('/images/icons/ui/players-picto.svg');
+                height: rem(10);
+                width: rem(10);
+                margin-right: rem(4);
+            }
+        }
+
+        & span:nth-child(2) {
+            &::before {
+                content: url('/images/icons/ui/time-picto.svg');
+                height: rem(10);
+                width: rem(10);
+                margin-right: rem(4);
             }
         }
     }
 }
 
-button {
-    &.white {
-        border: none;
+.cardsWrapper {
+    display: flex;
+    transform: translateY(rem(20));
 
-        background-color: white;
-        color: black;
+    & > *:nth-child(1) {
+        margin-right: rem(-10);
+        transform: rotate(-5deg);
+    }
 
-        font-weight: 500;
-        &:hover {
-            background-color: #ebebeb;
-        }
+    & > *:nth-child(2) {
+        margin-left: rem(-10);
+        transform: rotate(5deg);
+    }
+}
+
+.playWrapper,
+.createWrapper {
+    width: grid(3);
+    height: grid(2);
+    min-width: calc(rem(320) * 0.9);
+    min-height: calc(rem(200) * 0.9);
+    max-width: rem(320);
+    max-height: rem(200);
+
+    & div {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form {
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--color-neutral-100);
+        padding: rem(5) rem(10);
+        clip-path: polygon(
+            0% 24.13%,
+            1.932% 93.04%,
+            6.441% 97.68%,
+            46.86% 100%,
+            79.066% 98.608%,
+            93.076% 98.144%,
+            98.39% 90.487%,
+            100% 7.889%,
+            93.881% 2.32%,
+            57.971% 0%,
+            22.866% 1.392%,
+            5.958% 2.784%,
+            0% 24.13%
+        );
+    }
+
+    .input {
+        all: unset;
+        max-width: rem(40);
+        color: var(--color-neutral-0);
+        background-color: var(--color-neutral-10);
+        font-size: rem(40);
+        font-family: $astounder-lc-font;
+        text-transform: uppercase;
+        text-align: center;
+    }
+}
+
+.createWrapper {
+    cursor: pointer;
+
+    .playImg {
+        height: 100%;
+        width: 100%;
+        max-width: rem(140);
+        max-height: rem(100);
+        transform: translateY(rem(20));
     }
 }

@@ -1,0 +1,25 @@
+.wrapper {
+    position: relative;
+    overflow: hidden;
+    width: var(--vw);
+    height: var(--ivh);
+    background-color: var(--color-home-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    &::before {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-image: url('/images/ui/home-pattern.svg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        mix-blend-mode: overlay;
+        user-select: none;
+        opacity: 0.5;
+    }
+}

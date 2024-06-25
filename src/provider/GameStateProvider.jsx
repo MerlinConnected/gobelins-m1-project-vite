@@ -4,33 +4,35 @@ import { useMultiplayerState, getState, isHost, insertCoin } from 'playroomkit';
 import { useControls } from 'leva';
 import { usePlayerContext } from './PlayerProvider';
 
-import { TURN_PHASE, PLAYER_PHASE, TIME_START_TURN, TIME_PLAYER_TURN, TIME_END_TURN } from '../utils/constants';
+import {
+  GAME_PHASE,
+  TURN_PHASE,
+  PLAYER_PHASE,
+  TIME_START_TURN,
+  TIME_PLAYER_TURN,
+  TIME_END_TURN,
+  MAX_WINNERS,
+} from '../utils/constants';
 import { useState } from 'react';
+import { useEventContext } from './EventProvider';
 
 let context = {};
 const GameStateContext = React.createContext();
 
 export function GameStateProvider({ children }) {
-  const { setPlayerTurn, performPlayerAction, move, players } = usePlayerContext();
+  const { setPlayerTurn, handleEndOfPlayTurn, move, players, inGamePlayers } = usePlayerContext();
+  const { handleEvent } = useEventContext();
 
   const [onboarding, setOnboarding] = useState(true);
   const [infoLobby, setInfoLobby] = useState(false);
   const [lobby, setLobby] = useState(false);
 
   const [timer, setTimer] = useMultiplayerState('timer', 0);
-  const [globalPhase, setGlobalPhase] = useMultiplayerState('globalPhase', null);
+  const [globalPhase, setGlobalPhase] = useMultiplayerState('globalPhase', GAME_PHASE.lobby);
   const [turnPhase, setTurnPhase] = useMultiplayerState('turnPhase', null);
   const [playerPhase, setPlayerPhase] = useMultiplayerState('playerPhase', null);
-  const [toastMessage, setToastMessage] = useMultiplayerState('toastMessage', null);
 
-  const avatars = [
-    'images/profiles/pp1.webp',
-    'images/profiles/pp2.webp',
-    'images/profiles/pp3.webp',
-    'images/profiles/pp4.webp',
-    'images/profiles/pp5.webp',
-    'images/profiles/pp6.webp',
-  ];
+  const avatars = [0, 1, 2, 3];
 
   function handleInsertCoin(roomCode) {
     try {
@@ -69,22 +71,70 @@ export function GameStateProvider({ children }) {
     playerPhase,
     setPlayerPhase,
     handleInsertCoin,
-    toastMessage,
-    setToastMessage,
+  };
+
+  const setFinishers = () => {
+    const alreadyQualified = players.filter((player) => player.getState('qualified') === true);
+    const finishers = inGamePlayers.filter((player) => player.getState('winner') !== null);
+    finishers.sort((a, b) => a.getState('winner') - b.getState('winner'));
+    const newFinishers = finishers.length > MAX_WINNERS ? finishers.slice(0, MAX_WINNERS) : finishers;
+
+    switch (alreadyQualified.length) {
+      case 0:
+        newFinishers.forEach((player) => {
+          player.setState('qualified', true, true);
+        });
+        break;
+
+      case 1:
+        if (newFinishers.length > 0) {
+          newFinishers[0].setState('qualified', true, true);
+        }
+        if (newFinishers.length > 1) {
+          newFinishers[1].setState('qualified', true, true);
+        }
+        break;
+
+      case 2:
+        if (newFinishers.length > 0) {
+          newFinishers[0].setState('qualified', true, true);
+        }
+        break;
+
+      case MAX_WINNERS:
+        console.log(`Fin du game, ${MAX_WINNERS} joueurs déjà qualifiés`);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const getFinishers = () => {
+    const finishers = players.filter((player) => player.getState('qualified') === true);
+    return finishers;
+  };
+
+  const isGameFinished = () => {
+    return getFinishers().length == MAX_WINNERS;
   };
 
   const phaseEnd = () => {
     let newTime = 0;
     switch (getState('turnPhase')) {
       case TURN_PHASE.startTurn:
-        const newPlayerTurn = (getState('playerTurn') + 1) % players.length;
+        let newPlayerTurn = (getState('playerTurn') + 1) % players.length;
+        while (!inGamePlayers.includes(players[newPlayerTurn])) {
+          newPlayerTurn = (newPlayerTurn + 1) % players.length;
+        }
         setPlayerTurn(newPlayerTurn, true);
         setTurnPhase(TURN_PHASE.playTurn, true);
         setPlayerPhase(PLAYER_PHASE.drawCards, true);
         newTime = TIME_PLAYER_TURN;
         break;
+
       case TURN_PHASE.playTurn:
-        performPlayerAction();
+        handleEndOfPlayTurn();
         move();
         players.forEach((player) => {
           player.setState('selectedCard', null, true);
@@ -95,9 +145,17 @@ export function GameStateProvider({ children }) {
         setPlayerPhase(null, true);
         newTime = TIME_END_TURN;
         break;
+
       case TURN_PHASE.endTurn:
-        setTurnPhase(TURN_PHASE.startTurn, true);
-        newTime = TIME_START_TURN;
+        setFinishers();
+        if (isGameFinished()) {
+          setTurnPhase(null, true);
+          setGlobalPhase(GAME_PHASE.endGame, true);
+        } else {
+          setTurnPhase(TURN_PHASE.startTurn, true);
+          newTime = TIME_START_TURN;
+          handleEvent();
+        }
         break;
     }
     setTimer(newTime, true);
@@ -107,7 +165,7 @@ export function GameStateProvider({ children }) {
   //   paused: false,
   // });
 
-  const timerInterval = useRef();
+  const timerInterval = useRef(null);
 
   const runTimer = () => {
     timerInterval.current = setInterval(() => {
@@ -127,15 +185,32 @@ export function GameStateProvider({ children }) {
     clearInterval(timerInterval.current);
   };
 
+  const handlePlayerPhase = () => {
+    switch (playerPhase) {
+      case PLAYER_PHASE.performFirst:
+        setPlayerPhase(PLAYER_PHASE.firstResult, true);
+        break;
+
+      case PLAYER_PHASE.performLast:
+        setPlayerPhase(PLAYER_PHASE.lastResult, true);
+        break;
+
+      default:
+        break;
+    }
+  };
+
   // is fired when phase or paused changes
   useEffect(() => {
-    console.log('phase', turnPhase);
+    // console.log('phase', turnPhase);
     runTimer();
     return clearTimer;
   }, [turnPhase]);
 
   context = {
     ...gameState,
+    getFinishers,
+    handlePlayerPhase,
   };
 
   return <GameStateContext.Provider value={context}>{children}</GameStateContext.Provider>;

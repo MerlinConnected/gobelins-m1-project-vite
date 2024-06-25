@@ -1,0 +1,49 @@
+.wrapper {
+}
+
+.main {
+    width: rem(35);
+    height: rem(35);
+    position: absolute;
+    clip-path: polygon(
+        89.002% 31.562%,
+        89.002% 94.823%,
+        46.165% 64.239%,
+        8.313% 92.865%,
+        13.076% 38.04%,
+        49.308% 3.766%,
+        89.002% 31.562%
+    );
+
+    background-color: var(--color-background-transport-main);
+
+    &:nth-child(2) {
+        transform: translateY(calc(rem(35) * 0.5));
+    }
+    &:nth-child(3) {
+        transform: translateY(calc(rem(35) * 1));
+    }
+    &:nth-child(4) {
+        transform: translateY(calc(rem(35) * 1.5));
+    }
+}
+
+.wrapperLayer {
+    position: absolute;
+    height: inherit;
+
+    .layer {
+        --size: 150%;
+        height: var(--size);
+        width: var(--size);
+        transform: translate(-15%, -15%);
+        opacity: 0.4;
+        mix-blend-mode: overlay;
+    }
+}
+
+.arrow {
+    box-shadow: var(--box-shadow);
+    // height: rem(50);
+    // width: rem(50);
+}

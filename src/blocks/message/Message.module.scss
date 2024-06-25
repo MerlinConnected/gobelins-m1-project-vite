@@ -1,0 +1,19 @@
+.wrapper {
+    position: relative;
+}
+
+.bg {
+    position: absolute;
+    left: 50%;
+    bottom:0;
+    transform: translateX(-50%);
+    clip-path: polygon( 6.433% 43.543%,21.957% 43.543%,52.158% 38.462%,91.956% 43.26%,100% 58.786%,97.036% 100%,6.433% 96.895%,8.267% 70.642%,6.433% 43.543% );
+    width: 120%;
+    height: 130%;
+    background-color: var(--color-bg-content-2);
+    z-index: -10;
+}
+
+.text {
+    z-index: 30;
+}

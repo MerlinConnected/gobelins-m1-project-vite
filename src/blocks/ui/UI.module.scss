@@ -1,19 +1,39 @@
 .wrapper {
+    font-size: rem(20);
+    color: white;
+}
+
+// .middle {
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     height: 100%;
+//     width: 2px;
+//     background-color: rgb(225, 0, 255);
+//     z-index: 9000;
+// }
+
+.topCenterZone {
     display: flex;
     flex-direction: column;
-    gap: rem(1);
+    align-items: center;
+    justify-content: center;
+    user-select: none;
 
     position: absolute;
-    top: grid(0, 1);
-    left: grid(0, 1);
-    font-size: rem(20);
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
-    color: white;
-    > div {
-        display: flex;
-        flex-direction: row;
-        gap: rem(0.5);
-    }
+.targets {
+    display: flex;
+
+    position: absolute;
+    bottom: rem(60);
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .remove {
