@@ -223,20 +223,20 @@ function Card({ className, card, active, deckEnabled, selected, isFeedback, ...p
 
             {!isFeedback && (
               <div style={style(LAYER_TITLE)} className={styles.actions}>
-                {card.type && card.type === 'transport' && (
-                  <CircleButton
-                    className={classNames({ [styles.activeBtn]: selected })}
-                    icon="replay"
-                    color="#0D6EFF"
-                    onClick={(event) => changeTransport(event)}
-                  />
-                )}
                 <CircleButton
                   className={classNames({ [styles.activeBtn]: selected })}
                   icon="bin"
                   color="#ff0d47"
                   onClick={deleteCard}
                 />
+                {card.type && card.type === 'transport' && (
+                  <CircleButton
+                    className={classNames({ [styles.activeBtn]: selected })}
+                    icon="check"
+                    color="#0D6EFF"
+                    onClick={(event) => changeTransport(event)}
+                  />
+                )}
               </div>
             )}
 
