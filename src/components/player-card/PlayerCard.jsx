@@ -8,7 +8,7 @@ import PlayerEyes from '../player-eyes/PlayerEyes';
 import CardLayers from '../card-layers/CardLayers';
 
 function PlayerCard({ className, player, ...props }) {
-  const playerName = player?.state?.name || player?.state?.profile?.name;
+  const playerName = player?.state?.name || '';
 
   const cardColor = useMemo(() => {
     let colors = {};

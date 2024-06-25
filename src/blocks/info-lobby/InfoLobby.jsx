@@ -21,7 +21,7 @@ function InfoLobby({ className, ...props }) {
 
   const me = myPlayer();
 
-  const [nameInput, setNameInput] = useState(me?.getState('name') || me?.state?.profile?.name || '');
+  const [nameInput, setNameInput] = useState(me?.getState('name') || '');
 
   const goToLobby = () => {
     setInfoLobby(false);
