@@ -108,6 +108,7 @@
     max-height: rem(200);
 
     & div {
+        width: 100%;
         height: 100%;
         display: flex;
         align-items: center;
@@ -153,7 +154,7 @@
 .createWrapper {
     cursor: pointer;
 
-    .playImg {
+    .switchImage {
         height: 100%;
         width: 100%;
         max-width: rem(140);

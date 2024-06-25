@@ -1,0 +1,15 @@
+.wrapper {
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    position: relative;
+
+    .image {
+        height: 100%;
+        width: 100%;
+        background-image: var(--link1);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+}

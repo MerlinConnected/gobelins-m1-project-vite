@@ -15,6 +15,7 @@ import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
 import PlayerCards from '../../components/player-card/PlayerCard';
 import StrokeText from '../../components/stroke-text/StrokeText';
+import SwitchImage from '../../components/switch-image/SwitchImage';
 
 const COLORS = [
   { regular: '#F736C3', light: '#FAC9ED' },
@@ -94,7 +95,13 @@ function Lobby({ className, ...props }) {
                   </motion.div>
                 )}
               </AnimatePresence>
-              <img className={styles.svgPicto} src="/images/icons/ui/card-copy-picto.svg" alt="copy the code" />
+              <SwitchImage
+                className={styles.switchImage}
+                link1="/images/icons/ui/card-copy-picto-1.svg"
+                link2="/images/icons/ui/card-copy-picto-2.svg"
+                // active={isHovered}
+              />
+              {/* <img className={styles.svgPicto} src="/images/icons/ui/card-copy-picto.svg" alt="copy the code" /> */}
             </ActionButton>
           </div>
           {isHost() ? (
@@ -106,13 +113,21 @@ function Lobby({ className, ...props }) {
                 pattern="patternPlay"
                 size="giga"
                 gigaColor="red"
-                active={isFull}
+                active={true}
                 onClick={() => {
                   setLobby(false);
                   setGlobalPhase(GAME_PHASE.startGame, true);
                 }}
               >
-                <img className={styles.svgPicto} src="/images/icons/ui/play-picto.svg" alt="play" />
+                {
+                  <SwitchImage
+                    className={styles.switchImage}
+                    link1="/images/icons/ui/play-picto-1.svg"
+                    link2="/images/icons/ui/play-picto-2.svg"
+                    // active={isHovered}
+                  />
+                }
+                {/* <img className={styles.svgPicto} src="/images/icons/ui/play-picto.svg" alt="play" /> */}
               </ActionButton>
             </div>
           ) : (

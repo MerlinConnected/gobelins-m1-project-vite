@@ -10,6 +10,7 @@ import Logo from '../../components/logo/Logo';
 import { motion } from 'framer-motion';
 import { orchestrate, textLineAppear } from '../../core/animation';
 import { AnimatePresence } from 'framer-motion';
+import SwitchImage from '../../components/switch-image/SwitchImage';
 
 function Onboarding({ className, ...props }) {
   const { handleInsertCoin } = useGameStateContext();
@@ -143,7 +144,13 @@ function Onboarding({ className, ...props }) {
                 handleInsertCoin();
               }}
             >
-              {<img className={styles.playImg} src="/images/icons/ui/play-picto.svg" alt="play" />}
+              {
+                <SwitchImage
+                  className={styles.switchImage}
+                  link1="/images/icons/ui/play-picto-1.svg"
+                  link2="/images/icons/ui/play-picto-2.svg"
+                />
+              }
             </ActionButton>
           </AnimatePresence>
         </div>
