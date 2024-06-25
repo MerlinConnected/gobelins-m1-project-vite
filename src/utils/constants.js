@@ -37,7 +37,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 2,
     category: [CATEGORY.deuxRoues],
-    icon: '/images/vehicules/bicycle/bicycle-var1.png',
+    icon: '/images/vehicules/bicycle/velo-1.png',
     sound: 'transport/velo.mp3',
   },
   {
@@ -47,7 +47,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 3,
     category: [CATEGORY.route, CATEGORY.moteur],
-    icon: '/images/vehicules/car/car-var1.png',
+    icon: '/images/vehicules/car/voiture-1.png',
     sound: 'transport/voiture.mp3',
   },
   {
@@ -57,7 +57,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 3,
     category: [CATEGORY.rails, CATEGORY.commun],
-    icon: '/images/vehicules/tram/tram-var1.png',
+    icon: '/images/vehicules/tram/tramway-1.png',
     sound: 'transport/tramway.mp3',
   },
   {
@@ -67,7 +67,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 4,
     category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur],
-    icon: '/images/vehicules/metro/metro-var1.png',
+    icon: '/images/vehicules/metro/metro-1.png',
     sound: 'transport/metro.mp3',
   },
   {
@@ -77,7 +77,7 @@ export const TRANSPORT = [
     type: 'transport',
     impact: 4,
     category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur],
-    icon: '/images/vehicules/bike/bike-var1.png',
+    icon: '/images/vehicules/bike/moto-1.png',
     sound: 'transport/moto.mp3',
   },
 ];
