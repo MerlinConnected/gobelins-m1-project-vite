@@ -204,6 +204,7 @@ export const piedTransportCard = {
   type: 'transport',
   impact: 1,
   category: [CATEGORY.pied],
+  icon: '/images/vehicules/shoe/shoe-var1.png',
 };
 
 export const initialEventDrawer = [

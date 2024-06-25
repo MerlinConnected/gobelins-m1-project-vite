@@ -48,7 +48,7 @@ function Results({ className, ...props }) {
           opacity: 0,
         }}
       >
-        <div className={styles.results}>
+        <div className={classNames(styles.results, { [styles.resultsDefeat]: !finishers.includes(me) })}>
           {finishers.includes(me) ? (
             <StrokeText large className={styles.resultsTitle}>
               Victoire
@@ -61,36 +61,33 @@ function Results({ className, ...props }) {
 
           <div className={styles.players}>
             <div className={styles.finishers}>
+              {finishers.includes(me) && (
+                <div className={styles.finishersBg}></div>
+              )}
               {finishers.map((finisher, index) => (
                 <div key={index} className={styles.player}>
-                  <StrokeText regular className={styles.name} color={finisher?.state.profile?.color}>
+                  <StrokeText regular className={styles.name} color={finisher.getState('color')}>
                     {finisher?.state.name}
                   </StrokeText>
-                  <img src="/images/ui/marshall.jpg" alt="" className={styles.status} />
+                  <img src={finisher.getState('status')?.icon} alt="" className={styles.status} />
                 </div>
               ))}
             </div>
 
             <div className={styles.looser}>
-              <StrokeText className={styles.looserTitle}>
-                Ce looser a raté le train :
-              </StrokeText>
 
               {players.map((player, index) =>
                 !finishers.includes(player) ? (
                   <div key={index} className={styles.player}>
-                    <StrokeText regular className={styles.name} color={player?.state.profile?.color}>
+                    <img src="/images/ui/perdantTag.svg" alt="" className={styles.perdantTag} />
+                    <StrokeText regular className={styles.name} color={player.getState('color')}>
                       {player?.state.name}
                     </StrokeText>
-                    <img src="/images/ui/marshall.jpg" alt="" className={styles.status} />
+                    <img src={player.getState('status')?.icon} alt="" className={styles.status} />
                   </div>
 
                 ) : null
               )}
-
-              <div className={styles.layerWrapper}>
-                <CardLayers className={styles.layer} id="pattern4" />
-              </div>
             </div>
 
           </div>
