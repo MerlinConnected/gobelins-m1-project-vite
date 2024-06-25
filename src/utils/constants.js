@@ -37,7 +37,7 @@ export const TRANSPORT = [
     impact: 2,
     category: [CATEGORY.deuxRoues],
     icon: '/images/vehicules/bicycle/bicycle-var1.png',
-    sound: 'transport/velo.mp3'
+    sound: 'transport/velo.mp3',
   },
   {
     name: 'voiture',
@@ -46,7 +46,7 @@ export const TRANSPORT = [
     impact: 3,
     category: [CATEGORY.route, CATEGORY.moteur],
     icon: '/images/vehicules/car/car-var1.png',
-    sound: 'transport/voiture.mp3'
+    sound: 'transport/voiture.mp3',
   },
   {
     name: 'tramway',
@@ -55,7 +55,7 @@ export const TRANSPORT = [
     impact: 3,
     category: [CATEGORY.rails, CATEGORY.commun],
     icon: '/images/vehicules/tram/tram-var1.png',
-    sound: 'transport/tramway.mp3'
+    sound: 'transport/tramway.mp3',
   },
   {
     name: 'metro',
@@ -64,7 +64,7 @@ export const TRANSPORT = [
     impact: 4,
     category: [CATEGORY.rails, CATEGORY.commun, CATEGORY.interieur],
     icon: '/images/vehicules/metro/metro-var1.png',
-    sound: 'transport/metro.mp3'
+    sound: 'transport/metro.mp3',
   },
   {
     name: 'moto',
@@ -73,7 +73,7 @@ export const TRANSPORT = [
     impact: 4,
     category: [CATEGORY.deuxRoues, CATEGORY.route, CATEGORY.moteur],
     icon: '/images/vehicules/bike/bike-var1.png',
-    sound: 'transport/moto.mp3'
+    sound: 'transport/moto.mp3',
   },
 ];
 
@@ -82,7 +82,7 @@ export const TIME_START_TURN = 1;
 export const TIME_PLAYER_TURN = 10; // FOR PROD: 10 ou 15 jsp
 export const TIME_END_TURN = 2;
 
-export const MAX_POINTS = 400; // FOR PROD: 20
+export const MAX_POINTS = 10; // FOR PROD: 20
 export const MAX_WINNERS = 3; // FOR PROD: 3
 export const AMOUNT_TRANSPORT_CARDS = 1;
 export const AMOUNT_PIED_CARDS = 2;
@@ -218,7 +218,7 @@ export const initialEventDrawer = [
   },
   {
     id: transportDrawer.length + actionDrawer.length + 6,
-    name: "MALAISE VOYAGEUR, INTERVENTION DES SECOURS EN COURS",
+    name: 'MALAISE VOYAGEUR, INTERVENTION DES SECOURS EN COURS',
     type: 'event',
     impact: 0,
     category: CATEGORY.commun,
