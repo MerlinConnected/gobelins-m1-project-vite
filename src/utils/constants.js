@@ -88,7 +88,7 @@ export const TIME_PLAYER_TURN = 25; // FOR PROD: 10 ou 15 jsp - FOR DEMO: 25
 export const TIME_END_TURN = 4;
 export const TIME_RESULT = 1;
 
-export const MAX_POINTS = 400; // FOR PROD: 20 - FOR DEV: 400
+export const MAX_POINTS = 400; // FOR PROD: 16 - FOR DEV: 400
 export const MAX_WINNERS = 3; // FOR PROD: 3
 
 export const AMOUNT_TRANSPORT_CARDS = 1;

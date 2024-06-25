@@ -118,7 +118,7 @@ function UI({ className, ...props }) {
 
         {/* {currentPlayer?.id === me?.id && <p>C'est mon tour !!</p>} */}
         <p>Je suis {me?.state.name}</p>
-        <Scoreboard players={inGamePlayers} />
+        <Scoreboard />
 
         <Cards cardsDisabled={cardsDisabled} />
         <div className={styles.middle} />
