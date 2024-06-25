@@ -72,7 +72,7 @@ const ActionButton = ({
       {...homeCardAppear}
       whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
       style={{ '--btn-bg-color': color }}
-      onClick={active && onClick}
+      onClick={active ? onClick : undefined}
       {...props}
     >
       <motion.div

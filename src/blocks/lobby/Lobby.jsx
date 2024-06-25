@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { getRoomCode } from 'playroomkit';
+import React, { useEffect, useState, useMemo } from 'react';
+import { getRoomCode, isHost } from 'playroomkit';
 import classNames from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -15,8 +15,6 @@ import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
 import PlayerCards from '../../components/player-card/PlayerCard';
 import StrokeText from '../../components/stroke-text/StrokeText';
-import { isHost } from 'playroomkit';
-import { useMemo } from 'react';
 
 const COLORS = [
   { regular: '#F736C3', light: '#FAC9ED' },
