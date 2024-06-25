@@ -23,7 +23,7 @@
     gap: rem(32);
     padding: 0 rem(64);
     width: 100%;
-    max-width: rem(680);
+    max-width: rem(700);
     color: var(--color-content-main);
     background-image: url('/images/ui/results-bg-victoire.png');
     background-position: center;
@@ -65,7 +65,8 @@
 
     .name {
         position: absolute;
-        bottom: 0;
+        font-size: rem(28);
+        bottom: rem(-10);
         left: 0;
     }
 
@@ -85,7 +86,7 @@
     position: relative;
     display: flex;
     justify-content: space-around;
-    padding: rem(24) rem(36);
+    padding: rem(20) rem(36) rem(36) rem(36);
     background-image: url('/images/ui/finishers-bg.png');
     background-position: center;
     background-repeat: no-repeat;
