@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import classNames from 'classnames';
 import { baseVariants, cardAppear, cardInactive, cardSelected, conditionalAnimation } from '../../core/animation';
@@ -20,6 +20,8 @@ import StrokeText from '../stroke-text/StrokeText';
 import TransportTag from '../transport-tag/TransportTag';
 import CircleButton from '../circle-button/CircleButton';
 import playSound from '../../utils/playSound';
+import SwitchImage from '../switch-image/SwitchImage';
+import HoverContext from '../../provider/HoverProvider';
 
 const LAYER_1 = 10;
 const LAYER_2 = 20;
@@ -35,6 +37,7 @@ function Card({ className, card, active, deckEnabled, selected, isFeedback, ...p
   const me = myPlayer();
 
   const ref = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const currentPlayer = players[playerTurn];
 
@@ -179,6 +182,8 @@ function Card({ className, card, active, deckEnabled, selected, isFeedback, ...p
         {...cardAppear}
         className={classNames(styles.wrapper, className)}
         style={{ '--background': `${colors.bg}` }}
+        onHoverStart={() => setIsHovered(true)}
+        onHoverEnd={() => setIsHovered(false)}
         {...props}
       >
         <motion.div {...animationProps} whileHover={active && { scale: 1.05, transition: { duration: 0.2 } }}>
@@ -218,20 +223,20 @@ function Card({ className, card, active, deckEnabled, selected, isFeedback, ...p
 
             {!isFeedback && (
               <div style={style(LAYER_TITLE)} className={styles.actions}>
-                {card.type && card.type === 'transport' && (
-                  <CircleButton
-                    className={classNames({ [styles.activeBtn]: selected })}
-                    icon="replay"
-                    color="#0D6EFF"
-                    onClick={(event) => changeTransport(event)}
-                  />
-                )}
                 <CircleButton
                   className={classNames({ [styles.activeBtn]: selected })}
                   icon="bin"
                   color="#ff0d47"
                   onClick={deleteCard}
                 />
+                {card.type && card.type === 'transport' && (
+                  <CircleButton
+                    className={classNames({ [styles.activeBtn]: selected })}
+                    icon="check"
+                    color="#0D6EFF"
+                    onClick={(event) => changeTransport(event)}
+                  />
+                )}
               </div>
             )}
 

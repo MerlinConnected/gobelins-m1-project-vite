@@ -120,13 +120,12 @@
 
 .actions {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%) translateZ(65px) !important;
-    right: calc(var(--padding) * -1);
+    left: 50%;
+    bottom: calc(var(--padding) * -3);
+    transform: translateX(-50%) translateZ(65px) !important;
 
     display: flex;
-    flex-direction: column;
-    gap: rem(10);
+    gap: rem(15);
 
     & > * {
         cursor: var(--cursor-pointer);
@@ -134,7 +133,7 @@
 
     button {
         transform: scale(0);
-        transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     }
 
     button.activeBtn {
@@ -144,6 +143,10 @@
         &:hover {
             transform: scale(1.1) rotate(15deg);
         }
+    }
+
+    button:nth-child(2) {
+        transition-delay: 0.1s;
     }
 }
 

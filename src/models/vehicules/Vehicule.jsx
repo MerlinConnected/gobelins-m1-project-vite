@@ -9,36 +9,24 @@ import { myPlayer } from 'playroomkit';
 
 const vehicleImages = {
   velo: {
-    images: ['/images/vehicules/bicycle/bicycle-var1.png', '/images/vehicules/bicycle/bicycle-var2.png'],
-    imagesOutlined: [
-      '/images/vehicules/bicycle/bicycle-var1-outlined.png',
-      '/images/vehicules/bicycle/bicycle-var2-outlined.png',
-    ],
+    images: ['/images/vehicules/bicycle/velo-1.png', '/images/vehicules/bicycle/velo-2.png'],
+    imagesOutlined: ['/images/vehicules/bicycle/velo-1-outlined.png', '/images/vehicules/bicycle/velo-2-outlined.png'],
   },
   moto: {
-    images: ['/images/vehicules/bike/bike-var1.png', '/images/vehicules/bike/bike-var2.png'],
-    imagesOutlined: [
-      '/images/vehicules/bike/bike-var1-outlined.png',
-      '/images/vehicules/bike/bike-var2-outlined.png',
-    ],
+    images: ['/images/vehicules/bike/moto-1.png', '/images/vehicules/bike/moto-2.png'],
+    imagesOutlined: ['/images/vehicules/bike/moto-1-outlined.png', '/images/vehicules/bike/moto-2-outlined.png'],
   },
   voiture: {
-    images: ['/images/vehicules/car/car-var1.png', '/images/vehicules/car/car-var2.png'],
-    imagesOutlined: ['/images/vehicules/car/car-var1-outlined.png', '/images/vehicules/car/car-var2-outlined.png'],
+    images: ['/images/vehicules/car/voiture-1.png', '/images/vehicules/car/voiture-2.png'],
+    imagesOutlined: ['/images/vehicules/car/voiture-1-outlined.png', '/images/vehicules/car/voiture-2-outlined.png'],
   },
   metro: {
-    images: ['/images/vehicules/metro/metro-var1.png', '/images/vehicules/metro/metro-var2.png'],
-    imagesOutlined: [
-      '/images/vehicules/metro/metro-var1-outlined.png',
-      '/images/vehicules/metro/metro-var2-outlined.png',
-    ],
+    images: ['/images/vehicules/metro/metro-1.png', '/images/vehicules/metro/metro-2.png'],
+    imagesOutlined: ['/images/vehicules/metro/metro-1-outlined.png', '/images/vehicules/metro/metro-2-outlined.png'],
   },
   tramway: {
-    images: ['/images/vehicules/tram/tram-var1.png', '/images/vehicules/tram/tram-var2.png'],
-    imagesOutlined: [
-      '/images/vehicules/tram/tram-var1-outlined.png',
-      '/images/vehicules/tram/tram-var2-outlined.png',
-    ],
+    images: ['/images/vehicules/tram/tramway-1.png', '/images/vehicules/tram/tramway-2.png'],
+    imagesOutlined: ['/images/vehicules/tram/tramway-1-outlined.png', '/images/vehicules/tram/tramway-2-outlined.png'],
   },
   pied: {
     images: ['/images/vehicules/shoe/shoe-var1.png', '/images/vehicules/shoe/shoe-var2.png'],
@@ -74,8 +62,7 @@ const Vehicule = forwardRef(({ player, targetable, opacityDown, ...props }, ref)
     } else if (player.getState('minus') === 0 && !player.getState('blocked')) {
       setCurrentSpeed(`+${player.getState('status')?.impact}`);
     }
-  }
-    , [player.getState('status'), player.getState('blocked'), player.getState('minus')]);
+  }, [player.getState('status'), player.getState('blocked'), player.getState('minus')]);
 
   return (
     vehicleImage && (
@@ -92,18 +79,29 @@ const Vehicule = forwardRef(({ player, targetable, opacityDown, ...props }, ref)
         whileHover={{ scale: 1.4 }}
       >
         <Billboard>
-          <Html center distanceFactor={20} zIndexRange={[0, -1]} position={[0, 1.2, 0]}
+          <Html
+            center
+            distanceFactor={20}
+            zIndexRange={[0, -1]}
+            position={[0, 1.2, 0]}
             className={opacityDown ? styles.notSelectable : styles.selectable}
           >
             <StrokeText className={styles.speed}>{currentSpeed}</StrokeText>
           </Html>
-          <Html center distanceFactor={20} zIndexRange={[0, -1]}
+          <Html
+            center
+            distanceFactor={20}
+            zIndexRange={[0, -1]}
             className={opacityDown ? styles.notSelectable : styles.selectable}
           >
             <StrokeText className={styles.billboardName}>{player.state?.name}</StrokeText>
           </Html>
 
-          <Image url={vehicleImage} side={DoubleSide} transparent position={[0, 0.5, 0]}
+          <Image
+            url={vehicleImage}
+            side={DoubleSide}
+            transparent
+            position={[0, 0.5, 0]}
             opacity={opacityDown ? 0.6 : 1}
           />
         </Billboard>

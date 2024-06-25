@@ -17,19 +17,19 @@ function VehiculeIcons({ player, className }) {
 
   const vehicleImages = {
     velo: {
-      images: ['/images/vehicules/bicycle/bicycle-var1.png', '/images/vehicules/bicycle/bicycle-var2.png'],
+      images: ['/images/vehicules/bicycle/velo-1.png', '/images/vehicules/bicycle/velo-2.png'],
     },
     moto: {
-      images: ['/images/vehicules/bike/bike-var1.png', '/images/vehicules/bike/bike-var2.png'],
+      images: ['/images/vehicules/bike/moto-1.png', '/images/vehicules/bike/moto-2.png'],
     },
     voiture: {
-      images: ['/images/vehicules/car/car-var1.png', '/images/vehicules/car/car-var2.png'],
+      images: ['/images/vehicules/car/voiture-1.png', '/images/vehicules/car/voiture-2.png'],
     },
     metro: {
-      images: ['/images/vehicules/metro/metro-var1.png', '/images/vehicules/metro/metro-var2.png'],
+      images: ['/images/vehicules/metro/metro-1.png', '/images/vehicules/metro/metro-2.png'],
     },
     tramway: {
-      images: ['/images/vehicules/tram/tram-var1.png', '/images/vehicules/tram/tram-var2.png'],
+      images: ['/images/vehicules/tram/tramway-1.png', '/images/vehicules/tram/tramway-2.png'],
     },
     pied: {
       images: ['/images/vehicules/shoe/shoe-var1.png', '/images/vehicules/shoe/shoe-var2.png'],

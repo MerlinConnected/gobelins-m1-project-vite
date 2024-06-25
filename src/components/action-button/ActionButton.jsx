@@ -8,6 +8,7 @@ import CardLayers from '../card-layers/CardLayers';
 import StrokeText from '../stroke-text/StrokeText';
 import { AnimatePresence } from 'framer-motion';
 import { cardInactive, homeCardAppear, conditionalAnimation } from '../../core/animation';
+import HoverContext from '../../provider/HoverProvider';
 
 const LAYER_PATTERN = 20;
 const LAYER_TEXT = 50;
@@ -85,8 +86,9 @@ const ActionButton = ({
           [styles.giga]: size === 'giga',
         })}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
+        onHoverStart={() => setIsHovered(true)}
+        onHoverEnd={() => setIsHovered(false)}
         style={active && { rotateX, rotateY, transformStyle: 'preserve-3d' }}
       >
         <div className={styles.background} />
@@ -111,7 +113,9 @@ const ActionButton = ({
           </StrokeText>
         )}
 
-        {children && <div className={styles.children}>{children}</div>}
+        <HoverContext.Provider value={isHovered}>
+          {children && <div className={styles.children}>{children}</div>}
+        </HoverContext.Provider>
       </motion.div>
     </motion.div>
   );
