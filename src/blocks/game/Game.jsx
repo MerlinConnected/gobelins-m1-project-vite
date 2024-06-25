@@ -49,7 +49,7 @@ const Game = () => {
 
           <Tiles players={players} amount={15} />
 
-          <OrbitControls target={[0, -2, 0]} enableZoom={false} minPolarAngle={1} maxPolarAngle={1} />
+          <OrbitControls target={[0, -2, 0]} minDistance={35} maxDistance={35} minPolarAngle={1} maxPolarAngle={1} />
           {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
 
           {/* <Grid

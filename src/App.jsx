@@ -33,10 +33,8 @@ function Scene() {
       {globalPhase === GAME_PHASE.lobby && !onboarding && <AudioManager musicPhase={'home'} />}
       {globalPhase === GAME_PHASE.playGame && <AudioManager musicPhase={'game'} />}
       {globalPhase !== GAME_PHASE.lobby && <Game />}
-      {globalPhase === GAME_PHASE.startGame || globalPhase === GAME_PHASE.playGame && <UI />}
-      <AnimatePresence>
-        {globalPhase === GAME_PHASE.startGame && <Intro />}
-      </AnimatePresence>
+      {globalPhase === GAME_PHASE.startGame || (globalPhase === GAME_PHASE.playGame && <UI />)}
+      <AnimatePresence>{globalPhase === GAME_PHASE.startGame && <Intro />}</AnimatePresence>
 
       {globalPhase === GAME_PHASE.endGame && <Results />}
     </>

@@ -48,6 +48,9 @@ function Lobby({ className, ...props }) {
       if (!player.getState('joinedAt')) {
         player.setState('joinedAt', Date.now());
       }
+      if (!player.getState('avatar')) {
+        player.setState('avatar', player.avatarList[index]);
+      }
     });
 
     setAssignedColors(updatedColors);

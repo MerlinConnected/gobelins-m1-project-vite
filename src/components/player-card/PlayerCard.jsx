@@ -41,7 +41,7 @@ function PlayerCard({ className, player, ...props }) {
       {player ? (
         <div className={styles.player}>
           <CardLayers className={styles.pattern} id="patternPlayer" />
-          <PlayerEyes className={styles.eyes} id={1} />
+          <PlayerEyes className={styles.eyes} id={playerEyesId} />
           <StrokeText className={classNames(styles.text, styles.title)}>{playerName}</StrokeText>
         </div>
       ) : (
