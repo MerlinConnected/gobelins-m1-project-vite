@@ -8,7 +8,7 @@ import StrokeText from '../stroke-text/StrokeText';
 
 function ImpactIndicator({ className, impact, ...props }) {
   const indicator = useMemo(() => {
-    let el = { color: null, pattern: null };
+    let el = { color: null, pattern: null, impact: impact };
 
     if (impact > 1) {
       el.color = `var(--color-background-transport-main-${impact})`;
@@ -34,7 +34,18 @@ function ImpactIndicator({ className, impact, ...props }) {
         <CardLayers className={styles.arrow} id="impact_layer" />
       </div>
       <div className={styles.impactText}>
-        <StrokeText medium>{impact}</StrokeText>
+        {indicator.impact === 1 ? (
+          <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 65">
+            <path
+              d="M31.58 20.95 37.6 15l.22 6.97.02.76.74.13 9.26 1.7-7.77 6.53-.62.53.43.68 7.26 11.65-13.8-8.64-.6-.38-.53.5-10.85 10.3 2.96-12.13.2-.8-.78-.3-12.94-4.8 12.94-1.61 1.26-.16-.53-1.16-5.21-11.3 11.14 7.6.63.43.55-.55Z"
+              fill="#100301"
+              stroke="#fff"
+              strokeWidth="3"
+            />
+          </svg>
+        ) : (
+          <StrokeText medium>{impact}</StrokeText>
+        )}
       </div>
     </div>
   );

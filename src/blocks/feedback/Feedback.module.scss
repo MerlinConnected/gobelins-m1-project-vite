@@ -3,6 +3,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    transform-origin: center bottom;
     z-index: 1000;
     width: calc(var(--ivh) * 0.5);
 }
@@ -16,7 +17,8 @@
     height: 100%;
 }
 
-.selectedCard, .target {
+.selectedCard,
+.target {
     background-color: lightblue;
     color: var(--color-content-main);
     border: 1px solid var(--color-content-main);
