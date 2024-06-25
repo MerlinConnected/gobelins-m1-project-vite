@@ -11,9 +11,12 @@ import styles from './InfoLobby.module.scss';
 import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
 import { AnimatePresence } from 'framer-motion';
+import PlayerEyes from '../../components/player-eyes/PlayerEyes';
+import { useEffect } from 'react';
+import CardLayers from '../../components/card-layers/CardLayers';
 
 function InfoLobby({ className, ...props }) {
-  const { setNameEditing } = usePlayerContext();
+  const { setNameEditing, players } = usePlayerContext();
   const { setInfoLobby, setLobby } = useGameStateContext();
 
   const me = myPlayer();
@@ -32,28 +35,24 @@ function InfoLobby({ className, ...props }) {
     goToLobby();
   }
 
-  const playerColor = 'hotpink';
-  const playerColorLight = 'lightpink';
+  const randomEyeId = Math.floor(Math.random() * 4);
 
   return (
     <>
       <Logo className={styles.logo} />
-      <div
-        style={{ '--player-color': playerColor, '--player-color-light': playerColorLight }}
-        className={classNames(styles.wrapper, className)}
-        {...props}
-      >
-        <form
-          className={styles.form}
-          onSubmit={(e) => goToLobby4Real(e)}
-        >
-          <div className={styles.background} />
+      <div className={classNames(styles.wrapper, className)} {...props}>
+        <form className={styles.form} onSubmit={(e) => goToLobby4Real(e)}>
+          <div className={styles.background}>
+            <CardLayers className={styles.pattern} id="patternPlayer" />
+          </div>
+          <PlayerEyes className={styles.eyes} id={randomEyeId} />
           <div className={styles.inputWrapper}>
             <input
               type="text"
               value={nameInput}
+              autoFocus
               placeholder="Ton pseudo"
-              maxLength={12}
+              maxLength={8}
               className={styles.input}
               onChange={(e) => {
                 setNameInput(e.target.value);

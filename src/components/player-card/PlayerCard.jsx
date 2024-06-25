@@ -46,9 +46,9 @@ function PlayerCard({ className, player, ...props }) {
         </div>
       ) : (
         <div className={styles.noPlayer}>
-          <CardLayers className={styles.pattern} id="patternPlayerEmpty" fill="#F1EBE3" />
-          <StrokeText className={styles.text}>?</StrokeText>
-          <StrokeText className={styles.text}>?</StrokeText>
+          <div className={styles.pattern} />
+          <span className={styles.text}>?</span>
+          <span className={styles.text}>?</span>
         </div>
       )}
     </div>

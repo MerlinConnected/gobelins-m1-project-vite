@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { getRoomCode } from 'playroomkit';
+import React, { useEffect, useState, useMemo } from 'react';
+import { getRoomCode, isHost } from 'playroomkit';
 import classNames from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -15,7 +15,6 @@ import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
 import PlayerCards from '../../components/player-card/PlayerCard';
 import StrokeText from '../../components/stroke-text/StrokeText';
-import { isHost } from 'playroomkit';
 
 const COLORS = [
   { regular: '#F736C3', light: '#FAC9ED' },
@@ -33,7 +32,7 @@ function Lobby({ className, ...props }) {
   function copyRoomCode() {
     navigator.clipboard.writeText(getRoomCode());
     setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000); // Reset the copied state after 2 seconds
+    setTimeout(() => setIsCopied(false), 800); // Reset the copied state after 2 seconds
   }
 
   useEffect(() => {
@@ -57,7 +56,7 @@ function Lobby({ className, ...props }) {
     setAssignedColors(updatedColors);
   }, [players]);
 
-  // players.sort((a, b) => a.getState('joinedAt') - b.getState('joinedAt'));
+  const isFull = useMemo(() => players.length >= 4, [players]);
 
   return (
     <>
@@ -107,6 +106,7 @@ function Lobby({ className, ...props }) {
                 pattern="patternPlay"
                 size="giga"
                 gigaColor="red"
+                active={isFull}
                 onClick={() => {
                   setLobby(false);
                   setGlobalPhase(GAME_PHASE.startGame, true);

@@ -82,14 +82,15 @@ export const TRANSPORT = [
   },
 ];
 
-export const TIME_START_GAME = 1;
+export const TIME_START_GAME = 5;
 export const TIME_START_TURN = 2;
-export const TIME_PLAYER_TURN = 25; // FOR PROD: 10 ou 15 jsp
+export const TIME_PLAYER_TURN = 25; // FOR PROD: 10 ou 15 jsp - FOR DEMO: 25
 export const TIME_END_TURN = 4;
 export const TIME_RESULT = 1;
 
-export const MAX_POINTS = 18; // FOR PROD: 20
+export const MAX_POINTS = 400; // FOR PROD: 20 - FOR DEV: 400
 export const MAX_WINNERS = 3; // FOR PROD: 3
+
 export const AMOUNT_TRANSPORT_CARDS = 1;
 export const AMOUNT_PIED_CARDS = 1;
 export const AMOUNT_MINUS_CARDS = 2;
@@ -203,6 +204,7 @@ export const piedTransportCard = {
   type: 'transport',
   impact: 1,
   category: [CATEGORY.pied],
+  icon: '/images/vehicules/shoe/shoe-var1.png',
 };
 
 export const initialEventDrawer = [

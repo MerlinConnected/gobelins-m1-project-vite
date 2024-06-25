@@ -36,10 +36,18 @@ function Player({ player, index, className, ...props }) {
   const [currentPoint, setCurrentPoint] = useState(0);
   const [points, setPoints] = usePlayerState(player, 'points');
   const [isAnimating, setIsAnimating] = useState(false);
+  const [opacityDown, setOpacityDown] = useState(false);
+  const isSelecting = currentPlayer?.getState('isSelecting');
 
   const [targetable, setTargetable] = useState(false);
   const selectedCard = currentPlayer?.getState('selectedCard');
   const availableTargets = currentPlayer?.getState('availableTargets');
+
+  useEffect(() => {
+    const selectable = (currentPlayer?.getState('isSelecting') && currentPlayer?.id === me?.id && !targetable);
+    setOpacityDown(selectable);
+
+  }, [targetable, currentPlayer?.getState('isSelecting')]);
 
   const selectTarget = (event, player) => {
     event.stopPropagation();
@@ -81,7 +89,7 @@ function Player({ player, index, className, ...props }) {
 
       // const isTargetable = selectedCard?.type === 'action' && currentPlayer?.getState('availableTargets')?.includes(player);
 
-      if (isTargetable) {
+      if (isTargetable && isSelecting) {
         setTargetable(true);
       } else {
         setTargetable(false);
@@ -89,7 +97,8 @@ function Player({ player, index, className, ...props }) {
     } else {
       setTargetable(false);
     }
-  }, [availableTargets, selectedCard]);
+
+  }, [availableTargets, selectedCard, isSelecting]);
 
   const cameraPos = useMemo(() => {
     const pos = new THREE.Vector3(position[0], position[1], position[2]);
@@ -146,9 +155,10 @@ function Player({ player, index, className, ...props }) {
           {...props}
           onClick={(event) => selectTarget(event, player)}
         >
-          <Vehicule player={player} targetable={targetable} />
+
+          <Vehicule player={player} targetable={targetable} opacityDown={opacityDown} />
         </group>
-        {me?.id === player.id && <PerspectiveCamera ref={camRef} position={cameraPosition} makeDefault />}
+        {me?.id === player.id && <PerspectiveCamera ref={camRef} position={cameraPosition} makeDefault fov={34} />}
         {me?.id === player.id && (
           <mesh position={position}>
             <boxGeometry args={[1, 1, 1]} />

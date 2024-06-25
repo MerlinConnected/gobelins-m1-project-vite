@@ -10,14 +10,16 @@ import { usePlayerContext } from '../../provider/PlayerProvider';
 
 import Tiles from '../paths/Paths';
 
-import Construction from '../../models/construction';
-import Riverside from '../../models/riverside';
-import Gare from '../../models/gare';
-import NorthCity from '../../models/northcity';
-import Monument from '../../models/monument';
-import Garden from '../../models/garden';
-import Routes from '../../models/routes';
 import Environment from '../environment/Environment';
+import Sol from '../../models/sol';
+import Jardin from '../../models/jardin';
+import Beige from '../../models/beige';
+import Grey from '../../models/grey';
+import Blue from '../../models/blue';
+import Building from '../../models/building';
+import River from '../../models/river';
+import Place from '../../models/place';
+import Support from '../../models/support';
 import Plateau from '../../models/plateau';
 import { isHost } from 'playroomkit';
 
@@ -39,15 +41,15 @@ const Game = () => {
       <Leva hidden={isDebug} />
       <Loader />
       <Canvas className="canvas" shadows>
-        <color attach="background" args={['#2d190d']} />
+        <color attach="background" args={['#b7a7a1']} />
         <Suspense fallback={null}>
           <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
             <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
           </GizmoHelper>
 
-          <Tiles players={players} amount={19.35} />
+          <Tiles players={players} amount={15} />
 
-          <OrbitControls target={[0, -4, 0]} />
+          <OrbitControls target={[0, -2, 0]} minDistance={35} maxDistance={35} minPolarAngle={1} maxPolarAngle={1} />
           {!isDebug && <Perf position="bottom-left" minimal className="performance-monitor" showGraph={false} />}
 
           {/* <Grid
@@ -65,19 +67,20 @@ const Game = () => {
           /> */}
 
           {/* fog */}
-          {/* <fog attach="fog" args={['#2d190d', 10, 100]} /> */}
+          <fog attach="fog" args={['#b7a7a1', 40, 55]} />
 
           <Environment />
 
           <group scale={0.5}>
-            <Plateau />
-            <Gare />
-            <Construction />
-            <Riverside />
-            <NorthCity />
-            <Monument />
-            <Garden />
-            <Routes />
+            <Sol />
+            <Jardin />
+            <Beige />
+            <Grey />
+            <Blue />
+            <Building />
+            <River />
+            <Place />
+            <Support />
           </group>
         </Suspense>
       </Canvas>

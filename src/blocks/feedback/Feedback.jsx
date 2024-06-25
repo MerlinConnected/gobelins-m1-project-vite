@@ -44,8 +44,8 @@ function Feedback({ className, ...props }) {
             y: 0,
           }}
           exit={{
-            scale: 1,
-            y: '-100%',
+            scale: 2.5,
+            opacity: 0,
           }}
         >
           {/* <div className={styles.selectedCard}>

@@ -47,7 +47,7 @@ export const textAppearRotate = {
     exit: { opacity: 0, scale: 0.25, rotate: -6 },
   },
   transition: {
-    duration: 0.8,
+    duration: 0.4,
     ease: bezier.backEaseInOut,
   },
 };
@@ -73,6 +73,16 @@ export const textLineAppear = {
   transition: {
     duration: 0.2,
     ease: bezier.principleIn,
+  },
+};
+
+export const pageTransition = {
+  variants: {
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+  },
+  transition: {
+    duration: 1.5,
   },
 };
 
