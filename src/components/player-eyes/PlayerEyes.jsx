@@ -29,8 +29,8 @@ const PlayerEyes = ({ className, id, ...props }) => {
     };
   }, [id, isValidId]);
 
-  const calculateEyePosition = (eyeType) => {
-    const maxOffset = 10; // Adjust this value as needed for maximum eye movement
+  const calculateEyePosition = () => {
+    const maxOffset = 10;
     const offsetX = (mousePos.x / window.innerWidth) * maxOffset * 2 - maxOffset;
     const offsetY = (mousePos.y / window.innerHeight) * maxOffset * 2 - maxOffset;
 
@@ -40,12 +40,7 @@ const PlayerEyes = ({ className, id, ...props }) => {
   };
 
   const renderSvg = (type, eyeType) => (
-    <img
-      src={svgPaths[type]}
-      alt={type}
-      className={styles[type]}
-      style={eyeType ? calculateEyePosition(eyeType) : {}}
-    />
+    <img src={svgPaths[type]} alt={type} className={styles[type]} style={eyeType ? calculateEyePosition() : {}} />
   );
 
   return (
