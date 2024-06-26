@@ -105,23 +105,6 @@ function Lobby({ className, ...props }) {
           {isHost() ? (
             <div className={classNames(styles.second)}>
               <ActionButton
-                headText="Règles"
-                subText="du jeu"
-                color="#DE9FFD"
-                pattern="patternRules"
-                size="giga"
-                gigaColor="purple"
-              >
-                <SwitchImage
-                  className={styles.switchImage}
-                  link1="/images/icons/ui/card-rules-picto-1.svg"
-                  link2="/images/icons/ui/card-rules-picto-2.svg"
-                />
-              </ActionButton>
-            </div>
-          ) : (
-            <div className={classNames(styles.second)}>
-              <ActionButton
                 headText="Lancer"
                 subText="la partie"
                 color="#FD9FB6"
@@ -138,6 +121,23 @@ function Lobby({ className, ...props }) {
                   className={styles.switchImage}
                   link1="/images/icons/ui/play-picto-1.svg"
                   link2="/images/icons/ui/play-picto-2.svg"
+                />
+              </ActionButton>
+            </div>
+          ) : (
+            <div className={classNames(styles.second)}>
+              <ActionButton
+                headText="Règles"
+                subText="du jeu"
+                color="#DE9FFD"
+                pattern="patternRules"
+                size="giga"
+                gigaColor="purple"
+              >
+                <SwitchImage
+                  className={styles.switchImage}
+                  link1="/images/icons/ui/card-rules-picto-1.svg"
+                  link2="/images/icons/ui/card-rules-picto-2.svg"
                 />
               </ActionButton>
             </div>

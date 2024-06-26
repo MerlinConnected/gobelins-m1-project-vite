@@ -29,8 +29,8 @@ const vehicleImages = {
     imagesOutlined: ['/images/vehicules/tram/tramway-1-outlined.png', '/images/vehicules/tram/tramway-2-outlined.png'],
   },
   pied: {
-    images: ['/images/vehicules/shoe/shoe-var1.png', '/images/vehicules/shoe/shoe-var2.png'],
-    imagesOutlined: ['/images/vehicules/shoe/shoe-var1-outlined.png', '/images/vehicules/shoe/shoe-var2-outlined.png'],
+    images: ['/images/vehicules/shoe/pied-1.png', '/images/vehicules/shoe/shoe-var2.png'],
+    imagesOutlined: ['/images/vehicules/shoe/pied-1-outlined.png', '/images/vehicules/shoe/pied-2-outlined.png'],
   },
 };
 
