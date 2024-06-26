@@ -20,10 +20,25 @@
     font-size: rem(96);
     color: var(--color-action-out);
     rotate: -2deg;
+
+    &::before {
+        box-shadow: none;
+    }
+}
+
+.eventText {
+    font-size: rem(28);
+    color: var(--color-content-main);
+    rotate: -2deg;
+    font-family: $astounder-font;
+    max-width: rem(400);
+    text-align: center;
 }
 
 .transportTag {
     rotate: -2deg;
+    position: relative;
+    left: rem(100);
 
     > :first-child {
         position: absolute;
@@ -42,60 +57,9 @@
     }
 }
 
-.flashes {
+.eventBg {
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-}
-
-.flash1,
-.flash2,
-.flash3,
-.flash4,
-.flash5,
-.flash6,
-.flash7 {
-    height: rem(200);
-}
-
-.flash1 {
-    position: absolute;
-    top: rem(16);
-    left: rem(16);
-}
-
-.flash2 {
-    position: absolute;
-    top: rem(200);
-    left: rem(16);
-}
-
-.flash3 {
-    position: absolute;
-    bottom: rem(32);
-    left: rem(16);
-}
-
-.flash4 {
-    position: absolute;
-    bottom: rem(60);
-    left: rem(200);
-}
-.flash5 {
-    position: absolute;
-    bottom: rem(140);
-    right: rem(300);
-}
-
-.flash6 {
-    position: absolute;
-    bottom: rem(100);
-    right: rem(16);
-}
-.flash7 {
-    position: absolute;
-    top: rem(16);
-    right: rem(16);
+    z-index: -1;
+    width: 70%;
+    max-width: rem(1100);
 }

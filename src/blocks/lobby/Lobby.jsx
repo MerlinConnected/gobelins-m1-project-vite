@@ -99,9 +99,7 @@ function Lobby({ className, ...props }) {
                 className={styles.switchImage}
                 link1="/images/icons/ui/card-copy-picto-1.svg"
                 link2="/images/icons/ui/card-copy-picto-2.svg"
-                // active={isHovered}
               />
-              {/* <img className={styles.svgPicto} src="/images/icons/ui/card-copy-picto.svg" alt="copy the code" /> */}
             </ActionButton>
           </div>
           {isHost() ? (
@@ -119,15 +117,11 @@ function Lobby({ className, ...props }) {
                   setGlobalPhase(GAME_PHASE.startGame, true);
                 }}
               >
-                {
-                  <SwitchImage
-                    className={styles.switchImage}
-                    link1="/images/icons/ui/play-picto-1.svg"
-                    link2="/images/icons/ui/play-picto-2.svg"
-                    // active={isHovered}
-                  />
-                }
-                {/* <img className={styles.svgPicto} src="/images/icons/ui/play-picto.svg" alt="play" /> */}
+                <SwitchImage
+                  className={styles.switchImage}
+                  link1="/images/icons/ui/play-picto-1.svg"
+                  link2="/images/icons/ui/play-picto-2.svg"
+                />
               </ActionButton>
             </div>
           ) : (
@@ -140,7 +134,11 @@ function Lobby({ className, ...props }) {
                 size="giga"
                 gigaColor="purple"
               >
-                <img className={styles.svgPicto} src="/images/icons/ui/card-rules-picto.svg" alt="rules" />
+                <SwitchImage
+                  className={styles.switchImage}
+                  link1="/images/icons/ui/card-rules-picto-1.svg"
+                  link2="/images/icons/ui/card-rules-picto-2.svg"
+                />
               </ActionButton>
             </div>
           )}

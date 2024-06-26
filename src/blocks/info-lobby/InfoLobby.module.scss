@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     width: grid(4);
+    max-width: rem(550);
     min-height: rem(470);
     background-color: var(--color-neutral-100);
     clip-path: polygon(
@@ -110,12 +111,12 @@
 
 .button {
     cursor: var(--cursor-pointer);
-    width: 70%;
-    height: rem(120);
+    width: 60%;
+    height: rem(100);
     margin: auto;
 
     p {
-        font-size: rem(60);
+        font-size: rem(50);
         text-transform: uppercase;
         font-family: $polaquita-font;
         color: var(--color-button-blue);
@@ -128,4 +129,10 @@
     opacity: 0.5;
     height: 100%;
     width: 100%;
+}
+
+@media screen and (max-width: 1600px) {
+    .form {
+        max-width: rem(400);
+    }
 }

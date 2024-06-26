@@ -71,7 +71,6 @@ const ActionButton = ({
   return (
     <motion.div
       {...homeCardAppear}
-      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
       style={{ '--btn-bg-color': color }}
       onClick={active ? onClick : undefined}
       {...props}
@@ -85,6 +84,7 @@ const ActionButton = ({
           [styles.xlarge]: size === 'xlarge',
           [styles.giga]: size === 'giga',
         })}
+        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onHoverStart={() => setIsHovered(true)}
