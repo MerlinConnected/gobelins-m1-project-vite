@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 import { myPlayer } from 'playroomkit';
 
@@ -10,10 +11,9 @@ import styles from './InfoLobby.module.scss';
 
 import ActionButton from '../../components/action-button/ActionButton';
 import Logo from '../../components/logo/Logo';
-import { AnimatePresence } from 'framer-motion';
 import PlayerEyes from '../../components/player-eyes/PlayerEyes';
-import { useEffect } from 'react';
 import CardLayers from '../../components/card-layers/CardLayers';
+import { baseVariants, orchestrate, scaleRotateAnimation, scaleRotateAnimationInvert } from '../../core/animation';
 
 function InfoLobby({ className, ...props }) {
   const { setNameEditing, players } = usePlayerContext();
@@ -40,8 +40,13 @@ function InfoLobby({ className, ...props }) {
   return (
     <>
       <Logo className={styles.logo} />
-      <div className={classNames(styles.wrapper, className)} {...props}>
-        <form className={styles.form} onSubmit={(e) => goToLobby4Real(e)}>
+      <motion.div
+        {...baseVariants}
+        {...orchestrate({ stagger: 0.5, delay: 0.4 })}
+        className={classNames(styles.wrapper, className)}
+        {...props}
+      >
+        <motion.form {...scaleRotateAnimation} className={styles.form} onSubmit={(e) => goToLobby4Real(e)}>
           <div className={styles.background}>
             <CardLayers className={styles.pattern} id="patternPlayer" />
           </div>
@@ -60,7 +65,7 @@ function InfoLobby({ className, ...props }) {
             />
             <span />
           </div>
-        </form>
+        </motion.form>
 
         <div className={styles.btnWrapper}>
           <ActionButton
@@ -70,9 +75,10 @@ function InfoLobby({ className, ...props }) {
             pattern="pattern3"
             size="xlarge"
             onClick={(e) => goToLobby4Real(e)}
+            {...scaleRotateAnimationInvert}
           />
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

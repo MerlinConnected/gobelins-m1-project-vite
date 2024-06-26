@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { GAME_PHASE } from '../../utils/constants';
-import { baseVariants, orchestrate, textAppearRotate } from '../../core/animation';
+import { baseVariants, orchestrate, textAppearRotate, textLineAppear } from '../../core/animation';
 
 import styles from './Lobby.module.scss';
 
@@ -62,22 +62,26 @@ function Lobby({ className, ...props }) {
   return (
     <>
       <Logo className={styles.logo} />
-      <div className={classNames(styles.wrapper, className)} {...props}>
+      <motion.div {...baseVariants} className={classNames(styles.wrapper, className)} {...props}>
         <div className={styles.content}>
           {isHost() ? (
-            <h3 className={styles.title}>en attente des autres joueurs</h3>
+            <motion.h3 {...textLineAppear} className={styles.title}>
+              en attente des autres joueurs
+            </motion.h3>
           ) : (
-            <h3 className={styles.title}>en attente du boss</h3>
+            <motion.h3 {...textLineAppear} className={styles.title}>
+              en attente du boss
+            </motion.h3>
           )}
-          <div className={styles.lobbyWrapper}>
+          <motion.div {...textLineAppear} {...orchestrate({ stagger: 0.2 })} className={styles.lobbyWrapper}>
             <PlayerCards player={players[0]} />
             <PlayerCards player={players[1]} />
             <PlayerCards player={players[2]} />
             <PlayerCards player={players[3]} />
-          </div>
+          </motion.div>
         </div>
 
-        <motion.div className={styles.cardsWrapper} {...orchestrate({ stagger: 0.1 })}>
+        <motion.div {...orchestrate({ stagger: 0.1, delay: 0.3 })} className={styles.cardsWrapper}>
           <div className={classNames(styles.first)}>
             <ActionButton
               headText="Partager"
@@ -111,7 +115,7 @@ function Lobby({ className, ...props }) {
                 pattern="patternPlay"
                 size="giga"
                 gigaColor="red"
-                active={true}
+                active={isFull}
                 onClick={() => {
                   setLobby(false);
                   setGlobalPhase(GAME_PHASE.startGame, true);
@@ -143,7 +147,7 @@ function Lobby({ className, ...props }) {
             </div>
           )}
         </motion.div>
-      </div>
+      </motion.div>
     </>
   );
 }

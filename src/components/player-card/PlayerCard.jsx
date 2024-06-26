@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { motion } from 'framer-motion';
 
 import classNames from 'classnames';
 import styles from './PlayerCard.module.scss';
@@ -6,6 +7,7 @@ import styles from './PlayerCard.module.scss';
 import StrokeText from '../stroke-text/StrokeText';
 import PlayerEyes from '../player-eyes/PlayerEyes';
 import CardLayers from '../card-layers/CardLayers';
+import { scaleRotateAnimation } from '../../core/animation';
 
 function PlayerCard({ className, player, ...props }) {
   const playerName = player?.state?.name || '';
@@ -33,7 +35,8 @@ function PlayerCard({ className, player, ...props }) {
   }, [player?.state?.avatar]);
 
   return (
-    <div
+    <motion.div
+      {...scaleRotateAnimation}
       style={{ '--lobby-card-color': cardColor.normal, '--lobby-card-color-light': cardColor.light }}
       className={classNames(styles.wrapper, className)}
       {...props}
@@ -51,7 +54,7 @@ function PlayerCard({ className, player, ...props }) {
           <span className={styles.text}>?</span>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 
