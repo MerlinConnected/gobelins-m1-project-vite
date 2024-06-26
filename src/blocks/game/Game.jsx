@@ -20,7 +20,6 @@ import Building from '../../models/building';
 import River from '../../models/river';
 import Place from '../../models/place';
 import Support from '../../models/support';
-import Plateau from '../../models/plateau';
 import { isHost } from 'playroomkit';
 
 const Game = () => {
@@ -29,16 +28,15 @@ const Game = () => {
   const [isDebug, setisDebug] = useState(true);
 
   useEffect(() => {
-    // const url = new URL(window.location.href);
-
-    const isDebugMode = isHost();
+    const url = new URL(window.location.href);
+    const isDebugMode = url.searchParams.has('debug');
 
     setisDebug(!isDebugMode);
   }, []);
 
   return (
     <>
-      <Leva hidden={isDebug} />
+      <Leva hidden={!isHost()} />
       <Loader />
       <Canvas className="canvas" shadows>
         <color attach="background" args={['#b7a7a1']} />

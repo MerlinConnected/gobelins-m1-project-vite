@@ -1,5 +1,5 @@
 .wrapper {
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     position: relative;
     // width: rem(120);
     // height: rem(80);
@@ -11,7 +11,7 @@
     }
 
     &.large {
-        cursor: default;
+        cursor: var(--cursor-default);
         // width: rem(375);
         // height: rem(250);
         width: clamp(rem(250), 60vw, rem(375));

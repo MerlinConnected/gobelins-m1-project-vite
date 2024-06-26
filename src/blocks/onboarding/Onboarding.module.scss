@@ -148,11 +148,18 @@
         font-family: $astounder-lc-font;
         text-transform: uppercase;
         text-align: center;
+
+        &:first-of-type {
+            cursor: var(--cursor-text);
+        }
+        &:not(:first-of-type) {
+            cursor: unset !important;
+        }
     }
 }
 
 .createWrapper {
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
 
     .switchImage {
         height: 100%;

@@ -8,7 +8,9 @@ import CardLayers from '../card-layers/CardLayers';
 
 import { usePlayerContext } from '../../provider/PlayerProvider';
 
-import { motion } from 'framer-motion';
+import { motion, Reorder } from 'framer-motion';
+import { useGameStateContext } from '../../provider/GameStateProvider';
+import { getState } from 'playroomkit';
 
 function VehiculeIcons({ player, className }) {
   const [currentVariant, setCurrentVariant] = useState(0);
@@ -50,20 +52,39 @@ function VehiculeIcons({ player, className }) {
   return vehicleImage && <img src={vehicleImage} alt="Vehicule Icon of the current player" className={className} />;
 }
 
-function Scoreboard({ players, className, ...props }) {
-  const { playerTurn } = usePlayerContext();
+function Scoreboard({ className, ...props }) {
+
+  const { playerTurn, players } = usePlayerContext();
+  const { getFinishers } = useGameStateContext();
   const currentPlayer = players[playerTurn];
+
+  const [sortedPlayers, setSortedPlayers] = useState([...players].sort((a, b) => b.getState('points') - a.getState('points')));
+
+  const finishers = getFinishers();
+
+  useEffect(() => {
+    setSortedPlayers([...players].sort((a, b) => b.getState('points') - a.getState('points')));
+  }, [getState('turnPhase')]);
 
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
-      <div className={styles.board}>
-        {players.map((player, index) => (
-          <motion.div
-            key={index}
+
+      <Reorder.Group
+        axis="y"
+        values={sortedPlayers}
+        onReorder={setSortedPlayers}
+        className={styles.board}
+      >
+
+        {sortedPlayers.map((player, index) => (
+          <Reorder.Item
+            key={player.id}
+            value={player}
+            drag={false}
             className={styles.board__player}
             animate={{
-              scale: currentPlayer?.id === player?.id ? 1 : 0.6,
-              filter: currentPlayer?.id === player?.id ? 'brightness(1)' : 'brightness(0.8)',
+              scale: currentPlayer?.id === player?.id ? 1 : 0.7,
+              filter: finishers.includes(player) ? 'brightness(0.6)' : 'brightness(1)',
             }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
@@ -71,7 +92,7 @@ function Scoreboard({ players, className, ...props }) {
               <StrokeText regular color={player.getState('color')} className={styles.name}>
                 {player?.state.name}
               </StrokeText>
-              <p className={styles.score}>{player.getState('points')} cases</p>
+              <p className={styles.score}>{finishers.includes(player) ? "Arrivé !" : player.getState('points') + " cases"}</p>
               <VehiculeIcons player={player} className={styles.vehicule} />
               <div className={styles.mask} style={{ backgroundColor: player.getState('colorLight') }}>
                 <CardLayers className={styles.layer} id="pattern3" />
@@ -101,9 +122,11 @@ function Scoreboard({ players, className, ...props }) {
                 <path fill="#FF0D47" d="m5.5 7 13.8-4 13.5 14.3-9.4 10.1-18 .7L17 17.3 5.5 6.9Z" />
               </motion.svg>
             </div>
-          </motion.div>
+          </Reorder.Item>
         ))}
-      </div>
+
+      </Reorder.Group>
+
     </div>
   );
 }

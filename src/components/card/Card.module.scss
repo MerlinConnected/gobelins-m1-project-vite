@@ -128,7 +128,7 @@
     gap: rem(15);
 
     & > * {
-        cursor: pointer;
+        cursor: var(--cursor-pointer);
     }
 
     button {
