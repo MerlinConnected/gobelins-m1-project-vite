@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 import classNames from 'classnames';
 
 import styles from './LogoLayers.module.scss';
