@@ -97,7 +97,7 @@ export const TRANSPORT = [
 // FOR PROD / DEMO
 export const TIME_START_GAME = 5;
 export const TIME_START_TURN = 4;
-export const TIME_PLAYER_TURN = 25;
+export const TIME_PLAYER_TURN = 20; // FOR DEMO: 25
 export const TIME_END_TURN = 4;
 export const TIME_RESULT = 4;
 
@@ -218,7 +218,7 @@ export const piedTransportCard = {
   type: 'transport',
   impact: 1,
   category: [CATEGORY.pied],
-  icon: '/images/vehicules/shoe/shoe-var1.png',
+  icon: '/images/vehicules/shoe/pied-1.png',
 };
 
 export const initialEventDrawer = [

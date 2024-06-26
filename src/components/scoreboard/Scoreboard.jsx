@@ -32,7 +32,7 @@ function VehiculeIcons({ player, className }) {
       images: ['/images/vehicules/tram/tramway-1.png', '/images/vehicules/tram/tramway-2.png'],
     },
     pied: {
-      images: ['/images/vehicules/shoe/shoe-var1.png', '/images/vehicules/shoe/shoe-var2.png'],
+      images: ['/images/vehicules/shoe/pied-1.png', '/images/vehicules/shoe/pied-2.png'],
     },
   };
 
@@ -53,12 +53,13 @@ function VehiculeIcons({ player, className }) {
 }
 
 function Scoreboard({ className, ...props }) {
-
   const { playerTurn, players } = usePlayerContext();
   const { getFinishers } = useGameStateContext();
   const currentPlayer = players[playerTurn];
 
-  const [sortedPlayers, setSortedPlayers] = useState([...players].sort((a, b) => b.getState('points') - a.getState('points')));
+  const [sortedPlayers, setSortedPlayers] = useState(
+    [...players].sort((a, b) => b.getState('points') - a.getState('points'))
+  );
 
   const finishers = getFinishers();
 
@@ -68,14 +69,7 @@ function Scoreboard({ className, ...props }) {
 
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
-
-      <Reorder.Group
-        axis="y"
-        values={sortedPlayers}
-        onReorder={setSortedPlayers}
-        className={styles.board}
-      >
-
+      <Reorder.Group axis="y" values={sortedPlayers} onReorder={setSortedPlayers} className={styles.board}>
         {sortedPlayers.map((player, index) => (
           <Reorder.Item
             key={player.id}
@@ -92,7 +86,9 @@ function Scoreboard({ className, ...props }) {
               <StrokeText regular color={player.getState('color')} className={styles.name}>
                 {player?.state.name}
               </StrokeText>
-              <p className={styles.score}>{finishers.includes(player) ? "Arrivé !" : player.getState('points') + " cases"}</p>
+              <p className={styles.score}>
+                {finishers.includes(player) ? 'Arrivé !' : player.getState('points') + ' cases'}
+              </p>
               <VehiculeIcons player={player} className={styles.vehicule} />
               <div className={styles.mask} style={{ backgroundColor: player.getState('colorLight') }}>
                 <CardLayers className={styles.layer} id="pattern3" />
@@ -124,9 +120,7 @@ function Scoreboard({ className, ...props }) {
             </div>
           </Reorder.Item>
         ))}
-
       </Reorder.Group>
-
     </div>
   );
 }
