@@ -99,12 +99,27 @@ function Lobby({ className, ...props }) {
                 className={styles.switchImage}
                 link1="/images/icons/ui/card-copy-picto-1.svg"
                 link2="/images/icons/ui/card-copy-picto-2.svg"
-                // active={isHovered}
               />
-              {/* <img className={styles.svgPicto} src="/images/icons/ui/card-copy-picto.svg" alt="copy the code" /> */}
             </ActionButton>
           </div>
           {isHost() ? (
+            <div className={classNames(styles.second)}>
+              <ActionButton
+                headText="Règles"
+                subText="du jeu"
+                color="#DE9FFD"
+                pattern="patternRules"
+                size="giga"
+                gigaColor="purple"
+              >
+                <SwitchImage
+                  className={styles.switchImage}
+                  link1="/images/icons/ui/card-rules-picto-1.svg"
+                  link2="/images/icons/ui/card-rules-picto-2.svg"
+                />
+              </ActionButton>
+            </div>
+          ) : (
             <div className={classNames(styles.second)}>
               <ActionButton
                 headText="Lancer"
@@ -119,28 +134,11 @@ function Lobby({ className, ...props }) {
                   setGlobalPhase(GAME_PHASE.startGame, true);
                 }}
               >
-                {
-                  <SwitchImage
-                    className={styles.switchImage}
-                    link1="/images/icons/ui/play-picto-1.svg"
-                    link2="/images/icons/ui/play-picto-2.svg"
-                    // active={isHovered}
-                  />
-                }
-                {/* <img className={styles.svgPicto} src="/images/icons/ui/play-picto.svg" alt="play" /> */}
-              </ActionButton>
-            </div>
-          ) : (
-            <div className={classNames(styles.second)}>
-              <ActionButton
-                headText="Règles"
-                subText="du jeu"
-                color="#DE9FFD"
-                pattern="patternRules"
-                size="giga"
-                gigaColor="purple"
-              >
-                <img className={styles.svgPicto} src="/images/icons/ui/card-rules-picto.svg" alt="rules" />
+                <SwitchImage
+                  className={styles.switchImage}
+                  link1="/images/icons/ui/play-picto-1.svg"
+                  link2="/images/icons/ui/play-picto-2.svg"
+                />
               </ActionButton>
             </div>
           )}
