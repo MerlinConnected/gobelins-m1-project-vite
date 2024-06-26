@@ -159,12 +159,12 @@ function Player({ player, index, className, ...props }) {
           <Vehicule player={player} targetable={targetable} opacityDown={opacityDown} />
         </group>
         {me?.id === player.id && <PerspectiveCamera ref={camRef} position={cameraPosition} makeDefault fov={34} />}
-        {me?.id === player.id && (
+        {/* {me?.id === player.id && (
           <mesh position={position}>
             <boxGeometry args={[1, 1, 1]} />
             <meshStandardMaterial color="red" />
           </mesh>
-        )}
+        )} */}
       </>
     )
   );
