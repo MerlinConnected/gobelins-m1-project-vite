@@ -23,7 +23,8 @@ const Logo = ({ className, size, ...props }) => {
   }, []);
 
   const handleClick = () => {
-    window.location.href = 'http://localhost:5173';
+    // window.location.href = 'http://localhost:5173'; // FOR DEV
+    window.location.href = 'https://on-time-game.vercel.app/'; // FOR PROD
   };
 
   const defaultOptions = {
