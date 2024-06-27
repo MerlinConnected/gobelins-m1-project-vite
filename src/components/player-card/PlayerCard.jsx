@@ -21,7 +21,7 @@ function PlayerCard({ className, player, ...props }) {
       };
     } else {
       colors = {
-        normal: '#847A6F',
+        normal: '#847a6fa1',
         light: '#F9F7F5',
       };
     }

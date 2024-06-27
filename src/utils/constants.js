@@ -84,7 +84,7 @@ export const TRANSPORT = [
 
 // FOR DEV
 // export const TIME_START_GAME = 5;
-// export const TIME_START_TURN = 4; 
+// export const TIME_START_TURN = 4;
 // export const TIME_PLAYER_TURN = 15;
 // export const TIME_END_TURN = 4;
 // export const TIME_RESULT = 4;
@@ -93,9 +93,8 @@ export const TRANSPORT = [
 // export const MAX_WINNERS = 3;
 // ---------------
 
-
 // FOR PROD / DEMO
-export const TIME_START_GAME = 5;
+export const TIME_START_GAME = 6.2;
 export const TIME_START_TURN = 4;
 export const TIME_PLAYER_TURN = 20; // FOR DEMO: 25
 export const TIME_END_TURN = 4;
@@ -141,7 +140,7 @@ export const actionDrawer = [
     name: 'moins2',
     img: 'moins2',
     edito: 'recuule !',
-    editoText: "Ça déraille ici ! Ta valise a drifté, va falloir en racheter une...",
+    editoText: 'Ça déraille ici ! Ta valise a drifté, va falloir en racheter une...',
     type: 'action',
     impact: -2,
     category: Object.values(CATEGORY),
@@ -182,8 +181,7 @@ export const actionDrawer = [
     name: 'pied',
     img: 'pied4',
     edito: 'descends !',
-    editoText:
-      'Embrouille avec le chauffeur, il a pas trop kiffé ta playlist drill 😕',
+    editoText: 'Embrouille avec le chauffeur, il a pas trop kiffé ta playlist drill 😕',
     type: 'action',
     impact: 1,
     category: [CATEGORY.moteur],

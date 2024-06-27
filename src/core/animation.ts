@@ -100,13 +100,29 @@ export const textLineAppear = {
   },
 };
 
-export const pageTransition = {
+export const pageTransitionIn = {
+  animate: { opacity: 0, transition: { duration: 1.5 }, ease: bezier.principle },
+};
+
+export const pageTransitionExit = {
   variants: {
+    initial: { opacity: 1 },
     animate: { opacity: 1 },
     exit: { opacity: 0 },
   },
   transition: {
-    duration: 1.5,
+    duration: 1,
+  },
+};
+
+export const pageTransition = {
+  variants: {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+  },
+  transition: {
+    duration: 0.5,
   },
 };
 
@@ -149,6 +165,30 @@ export const timeLogoAnimation = {
         ease: bezier.backEaseInOut,
       },
     },
+  },
+};
+
+export const doubleRotor = {
+  variants: {
+    initial: { opacity: 0.2, scale: 1.8, rotate: -25 },
+    animate: { opacity: 1, scale: 1, rotate: 0 },
+    exit: { opacity: 0, scale: 0, rotate: 25 },
+  },
+  transition: {
+    duration: 0.4,
+    ease: [0.43, 0.13, 0.23, 0.96],
+  },
+};
+
+export const doubleRotorLast = {
+  variants: {
+    initial: { opacity: 0.2, scale: 2, rotate: -15 },
+    animate: { opacity: 1, scale: 1, rotate: 0 },
+    exit: { opacity: 0.2, scale: 0.25, rotate: 25 },
+  },
+  transition: {
+    duration: 0.4,
+    ease: bezier.backEaseInOut,
   },
 };
 

@@ -14,27 +14,37 @@ import UI from './blocks/ui/UI';
 import Results from './blocks/results/Results';
 import { useEffect } from 'react';
 import AudioManager from './blocks/audio-manager/AudioManager';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Intro from './blocks/intro/Intro';
+import { baseVariants, pageTransitionExit } from './core/animation';
+import Logo from './components/logo/Logo';
 
 function Scene() {
   const { onboarding, infoLobby, lobby, globalPhase } = useGameStateContext();
 
   return (
     <>
-      {globalPhase === GAME_PHASE.lobby && (
-        <div className={styles.wrapper}>
-          {globalPhase === GAME_PHASE.lobby && onboarding && <Onboarding />}
-          {globalPhase === GAME_PHASE.lobby && infoLobby && <InfoLobby />}
-          {globalPhase === GAME_PHASE.lobby && lobby && <Lobby />}
-        </div>
-      )}
+      <AnimatePresence>
+        {globalPhase === GAME_PHASE.lobby && (
+          <motion.div className={styles.wrapper} {...baseVariants} {...pageTransitionExit}>
+            {globalPhase === GAME_PHASE.lobby && onboarding && <Onboarding />}
+            {globalPhase === GAME_PHASE.lobby && (infoLobby || lobby) && (
+              <div className={styles.content}>
+                <Logo className={styles.logo} />
+                {globalPhase === GAME_PHASE.lobby && infoLobby && <InfoLobby />}
+                <AnimatePresence>{globalPhase === GAME_PHASE.lobby && lobby && <Lobby />}</AnimatePresence>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>{globalPhase === GAME_PHASE.startGame && <Intro />}</AnimatePresence>
 
       {globalPhase === GAME_PHASE.lobby && !onboarding && <AudioManager musicPhase={'home'} />}
       {globalPhase === GAME_PHASE.playGame && <AudioManager musicPhase={'game'} />}
       {globalPhase !== GAME_PHASE.lobby && <Game />}
       {globalPhase === GAME_PHASE.startGame || (globalPhase === GAME_PHASE.playGame && <UI />)}
-      <AnimatePresence>{globalPhase === GAME_PHASE.startGame && <Intro />}</AnimatePresence>
+      {/* <AnimatePresence>{globalPhase === GAME_PHASE.startGame && <Intro />}</AnimatePresence> */}
 
       {globalPhase === GAME_PHASE.endGame && <Results />}
     </>
