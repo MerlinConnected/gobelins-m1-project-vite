@@ -6,10 +6,10 @@ import classNames from 'classnames';
 
 import styles from './Logo.module.scss';
 
-import { baseVariants } from '../../core/animation';
+import { baseVariants, textLineAppear } from '../../core/animation';
 
 import LogoLayers from '../logo-layers/LogoLayers';
-import animationData from '../../../public/lottie/logoAnimation.json';
+import animationData from '/src/utils/lottie/logoAnimation.json';
 
 const Logo = ({ className, size, ...props }) => {
   const [startAnimation, setStartAnimation] = useState(false);
@@ -48,7 +48,7 @@ const Logo = ({ className, size, ...props }) => {
       {size === 'large' ? (
         <Lottie options={defaultOptions} height="100%" width="100%" />
       ) : (
-        <>
+        <motion.div {...baseVariants} {...textLineAppear}>
           <LogoLayers id="on_n" />
           <LogoLayers id="on_o" />
           <LogoLayers id="flash_1" />
@@ -60,7 +60,7 @@ const Logo = ({ className, size, ...props }) => {
           <LogoLayers id="time_e" />
           <LogoLayers id="bush_1" />
           <LogoLayers id="bush_2" />
-        </>
+        </motion.div>
       )}
     </motion.div>
   );

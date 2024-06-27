@@ -5,6 +5,12 @@
     z-index: 1000;
     width: var(--vw);
     height: var(--ivh);
+}
+
+.background {
+    position: absolute;
+    height: 100%;
+    width: 100%;
     background-color: var(--color-home-bg);
     display: flex;
     flex-direction: column;
@@ -27,28 +33,23 @@
 }
 
 .content {
-    width: fit-content;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, auto);
+    position: absolute;
+    z-index: 1001;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
     align-items: center;
 
     p {
         text-align: center;
         font-family: $polaquita-font;
-        font-size: rem(42);
-            &::before {
-                box-shadow: none;
-            }
-    }
-}
-
-.zebardi {
-    text-align: center;
-    width: 100%;
-    grid-area: 2 / 1 / 3 / 4;
-
-    p {
-    font-size: rem(96);
+        font-size: 14vw;
+        line-height: 14vw;
+        color: var(--color-action-out);
+        text-shadow: var(--white-stroke-large);
+        &::before {
+            box-shadow: none;
+        }
     }
 }

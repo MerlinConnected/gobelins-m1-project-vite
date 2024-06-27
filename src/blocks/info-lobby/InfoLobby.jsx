@@ -17,7 +17,7 @@ import { baseVariants, orchestrate, scaleRotateAnimation, scaleRotateAnimationIn
 
 function InfoLobby({ className, ...props }) {
   const { setNameEditing, players } = usePlayerContext();
-  const { setInfoLobby, setLobby } = useGameStateContext();
+  const { setInfoLobby, setLobby, setGlobalPhase } = useGameStateContext();
 
   const me = myPlayer();
 
@@ -38,48 +38,45 @@ function InfoLobby({ className, ...props }) {
   const randomEyeId = Math.floor(Math.random() * 4);
 
   return (
-    <>
-      <Logo className={styles.logo} />
-      <motion.div
-        {...baseVariants}
-        {...orchestrate({ stagger: 0.5, delay: 0.4 })}
-        className={classNames(styles.wrapper, className)}
-        {...props}
-      >
-        <motion.form {...scaleRotateAnimation} className={styles.form} onSubmit={(e) => goToLobby4Real(e)}>
-          <div className={styles.background}>
-            <CardLayers className={styles.pattern} id="patternPlayer" />
-          </div>
-          <PlayerEyes className={styles.eyes} id={randomEyeId} />
-          <div className={styles.inputWrapper}>
-            <input
-              type="text"
-              value={nameInput}
-              autoFocus
-              placeholder="Ton pseudo"
-              maxLength={8}
-              className={styles.input}
-              onChange={(e) => {
-                setNameInput(e.target.value);
-              }}
-            />
-            <span />
-          </div>
-        </motion.form>
-
-        <div className={styles.btnWrapper}>
-          <ActionButton
-            className={styles.button}
-            text="Rejoindre"
-            color="#71AFF7"
-            pattern="pattern3"
-            size="xlarge"
-            onClick={(e) => goToLobby4Real(e)}
-            {...scaleRotateAnimationInvert}
-          />
+    <motion.div
+      {...baseVariants}
+      {...orchestrate({ stagger: 0.5, delay: 0.4 })}
+      className={classNames(styles.wrapper, className)}
+      {...props}
+    >
+      <motion.form {...scaleRotateAnimation} className={styles.form} onSubmit={(e) => goToLobby4Real(e)}>
+        <div className={styles.background}>
+          <CardLayers className={styles.pattern} id="patternPlayer" />
         </div>
-      </motion.div>
-    </>
+        <PlayerEyes className={styles.eyes} id={randomEyeId} />
+        <div className={styles.inputWrapper}>
+          <input
+            type="text"
+            value={nameInput}
+            autoFocus
+            placeholder="Ton pseudo"
+            maxLength={8}
+            className={styles.input}
+            onChange={(e) => {
+              setNameInput(e.target.value);
+            }}
+          />
+          <span />
+        </div>
+      </motion.form>
+
+      <div className={styles.btnWrapper}>
+        <ActionButton
+          className={styles.button}
+          text="Rejoindre"
+          color="#71AFF7"
+          pattern="pattern3"
+          size="xlarge"
+          onClick={(e) => goToLobby4Real(e)}
+          {...scaleRotateAnimationInvert}
+        />
+      </div>
+    </motion.div>
   );
 }
 
