@@ -41,9 +41,9 @@ const Game = () => {
       <Canvas className="canvas" shadows>
         <color attach="background" args={['#b7a7a1']} />
         <Suspense fallback={null}>
-          <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
+          {/* <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
             <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
-          </GizmoHelper>
+          </GizmoHelper> */}
 
           <Tiles players={players} amount={15} />
 
