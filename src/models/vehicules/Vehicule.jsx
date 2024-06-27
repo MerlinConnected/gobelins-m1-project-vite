@@ -1,11 +1,14 @@
 import React, { useEffect, forwardRef, useState, useMemo } from 'react';
-import { motion } from 'framer-motion-3d';
+import { motion as motion3d } from 'framer-motion-3d';
 import { Html, Image } from '@react-three/drei';
 import { DoubleSide } from 'three';
 import Billboard from '../../components/billboard/Billboard';
 import StrokeText from '../../components/stroke-text/StrokeText';
-import styles from './Vehicule.module.scss';
 import { myPlayer } from 'playroomkit';
+
+import classNames from 'classnames';
+
+import styles from './Vehicule.module.scss';
 
 const vehicleImages = {
   velo: {
@@ -29,7 +32,7 @@ const vehicleImages = {
     imagesOutlined: ['/images/vehicules/tram/tramway-1-outlined.png', '/images/vehicules/tram/tramway-2-outlined.png'],
   },
   pied: {
-    images: ['/images/vehicules/shoe/pied-1.png', '/images/vehicules/shoe/shoe-var2.png'],
+    images: ['/images/vehicules/shoe/pied-1.png', '/images/vehicules/shoe/pied-2.png'],
     imagesOutlined: ['/images/vehicules/shoe/pied-1-outlined.png', '/images/vehicules/shoe/pied-2-outlined.png'],
   },
 };
@@ -64,49 +67,58 @@ const Vehicule = forwardRef(({ player, targetable, opacityDown, ...props }, ref)
     }
   }, [player.getState('status'), player.getState('blocked'), player.getState('minus')]);
 
-  return (
-    vehicleImage && (
-      <motion.group
-        // onPointerOver={() => {
-        //   hover(true);
-        // }}
-        // onPointerOut={() => {
-        //   hover(false);
-        // }}
-        {...props}
-        ref={ref}
-        dispose={null}
-        whileHover={{ scale: 1.4 }}
-      >
-        <Billboard>
-          <Html
-            center
-            distanceFactor={20}
-            zIndexRange={[0, -1]}
-            position={[0, 1.2, 0]}
-            className={opacityDown ? styles.notSelectable : styles.selectable}
-          >
-            <StrokeText className={styles.speed}>{currentSpeed}</StrokeText>
-          </Html>
-          <Html
-            center
-            distanceFactor={20}
-            zIndexRange={[0, -1]}
-            className={opacityDown ? styles.notSelectable : styles.selectable}
-          >
-            <StrokeText className={styles.billboardName}>{player.state?.name}</StrokeText>
-          </Html>
+  const playerColor = player.getState('color');
 
-          <Image
-            url={vehicleImage}
-            side={DoubleSide}
-            transparent
-            position={[0, 0.5, 0]}
-            opacity={opacityDown ? 0.6 : 1}
-          />
-        </Billboard>
-      </motion.group>
-    )
+  return (
+    <motion3d.group
+      // onPointerOver={() => {
+      //   hover(true);
+      // }}
+      // onPointerOut={() => {
+      //   hover(false);
+      // }}
+      ref={ref}
+      dispose={null}
+      whileHover={{ scale: 1.4 }}
+      {...props}
+    >
+      <Billboard>
+        <Html
+          center
+          distanceFactor={20}
+          zIndexRange={[0, -1]}
+          position={[0, 1.4, 0]}
+          className={classNames({
+            [styles.notSelectable]: opacityDown,
+          })}
+        >
+          <StrokeText className={styles.speed} style={{ '--player-color': playerColor }}>
+            {currentSpeed}
+          </StrokeText>
+        </Html>
+        <Html
+          center
+          distanceFactor={20}
+          zIndexRange={[0, -1]}
+          position-y={0.1}
+          className={classNames({
+            [styles.notSelectable]: opacityDown,
+          })}
+        >
+          <StrokeText className={styles.billboardName} style={{ '--player-color': playerColor }}>
+            {player.state?.name}
+          </StrokeText>
+        </Html>
+
+        <Image
+          url={vehicleImage}
+          side={DoubleSide}
+          transparent
+          position={[0, 0.5, 0]}
+          opacity={opacityDown ? 0.6 : 1}
+        />
+      </Billboard>
+    </motion3d.group>
   );
 });
 

@@ -96,9 +96,9 @@ export const TRANSPORT = [
 // FOR PROD / DEMO
 export const TIME_START_GAME = 6.2;
 export const TIME_START_TURN = 4;
-export const TIME_PLAYER_TURN = 20; // FOR DEMO: 25
+export const TIME_PLAYER_TURN = 25;
 export const TIME_END_TURN = 4;
-export const TIME_RESULT = 4;
+export const TIME_RESULT = 2;
 
 export const MAX_POINTS = 16;
 export const MAX_WINNERS = 3;
@@ -106,7 +106,7 @@ export const MAX_WINNERS = 3;
 
 export const AMOUNT_TRANSPORT_CARDS = 1;
 export const AMOUNT_PIED_CARDS = 1;
-export const AMOUNT_MINUS_CARDS = 2;
+export const AMOUNT_MINUS_CARDS = 3;
 
 export const transportDrawer = [
   ...new Array(AMOUNT_TRANSPORT_CARDS).fill().map((_, index) => ({ ...TRANSPORT[0], id: index })),

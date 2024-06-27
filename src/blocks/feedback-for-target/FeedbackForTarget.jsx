@@ -40,7 +40,7 @@ function FeedbackForTarget({ className, ...props }) {
     if (isVisible) {
       const timer = setTimeout(() => {
         targetPlayer.setState('flashGekko', false, true);
-      }, 2000);
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [isVisible]);

@@ -113,7 +113,7 @@ function Lobby({ className, ...props }) {
               pattern="patternPlay"
               size="giga"
               gigaColor="red"
-              active={isFull}
+              active={true}
               onClick={() => {
                 setLobby(false);
                 setGlobalPhase(GAME_PHASE.startGame, true);

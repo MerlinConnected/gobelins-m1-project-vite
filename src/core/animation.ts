@@ -84,6 +84,18 @@ export const cardSelected = {
   exit: { y: '-200%', x: '0%' },
 };
 
+export const vehicule3dAppear = {
+  variants: {
+    initial: { opacity: 0, y: -0.2 },
+    animate: { opacity: 1, y: 0.1 },
+    exit: { opacity: 0, y: -0.2 },
+  },
+  transition: {
+    duration: 0.15,
+    ease: bezier.backEaseInOut,
+  },
+};
+
 export const drawerHovered = {
   initial: { y: 0, rotate: 0 },
   animate: { y: 20, rotate: 5 },

@@ -1,9 +1,18 @@
-.speed, .billboardName {
+.speed,
+.billboardName {
     user-select: none;
     text-align: center;
+    color: var(--player-color);
+
     &::before {
         box-shadow: none;
     }
+}
+
+.speed {
+    font-size: rem(70);
+    font-family: $polaquita-font;
+    letter-spacing: rem(6);
 }
 
 .billboardName {
@@ -12,8 +21,4 @@
 
 .notSelectable {
     opacity: 0.5;
-}
-
-.selectable {
-    opacity: 1;
 }
