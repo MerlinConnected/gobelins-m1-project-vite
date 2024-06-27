@@ -23,8 +23,12 @@ export function EventProvider({ children }) {
   };
 
   const appearProbability = () => {
-    const number = Math.floor(Math.random() * 4) + 1;
-    return number === 1;
+    // probabilité 1/4
+    // const number = Math.floor(Math.random() * 4) + 1;
+    // return number === 1;
+
+    // probabilité 1/2
+    return Math.random() < 0.5;
   };
 
   const turnsProbability = () => {

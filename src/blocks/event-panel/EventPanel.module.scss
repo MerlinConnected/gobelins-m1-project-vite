@@ -93,15 +93,24 @@
     right: 0;
     z-index: -1;
     clip-path: polygon( 30.613% 0%,98.542% 0%,99.825% 27.906%,100% 64.552%,95.208% 94.617%,72.781% 100%,47.275% 96.776%,4.067% 99.459%,0% 85.098%,8.146% 0%,30.613% 0% );
-    background-color: var(--color-trafic-light);
-    color: var(--color-trafic);
     font-family: $dotmatrix-font;
     width: rem(176);
     height: 100%;
+    transition: all 1s ease-in-out;
   
     overflow: hidden;
     display: flex;
     align-items: center;
+
+    &.hasEvent {
+        background-color: var(--color-trafic-light);
+        color: var(--color-trafic);
+    }
+
+    &.noEvent {
+        background-color: var(--color-neutre-light);
+        color: var(--color-neutre);
+    }
   }
   
   .marquee div {

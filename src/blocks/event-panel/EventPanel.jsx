@@ -34,31 +34,33 @@ function EventPanel({ className, ...props }) {
             </div>
 
             <AnimatePresence>
-                {event && (
-                    <motion.div
-                        className={styles.marquee}
-                        initial={{
-                            x: -150,
-                            opacity: 0
-                        }}
-                        animate={{
-                            x: 0,
-                            opacity: 1
-                        }}
-                        exit={{
-                            x: -150,
-                            opacity: 0
-                        }}
-                        transition={{
-                            duration: 0.8,
-                            type: "spring",
-                        }}
-                    >
-                        <div>
-                            <span>{event.card.name}</span>
-                        </div>
-                    </motion.div>
-                )}
+                <motion.div
+                    className={classNames(
+                        styles.marquee, {
+                        [styles.noEvent]: !event,
+                        [styles.hasEvent]: event,
+                    })}
+                    initial={{
+                        x: -150,
+                        opacity: 0
+                    }}
+                    animate={{
+                        x: 0,
+                        opacity: 1
+                    }}
+                    exit={{
+                        x: -150,
+                        opacity: 0
+                    }}
+                    transition={{
+                        duration: 0.8,
+                        type: "spring",
+                    }}
+                >
+                    <div>
+                        <span>{event ? event.card.name : "Aucun evenement en cours, le trafic est fluide :)"}</span>
+                    </div>
+                </motion.div>
             </AnimatePresence>
 
         </div>
