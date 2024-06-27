@@ -72,59 +72,61 @@ const Vehicule = forwardRef(({ player, targetable, opacityDown, ...props }, ref)
   const isQualified = player.getState('qualified');
 
   return (
-    <motion3d.group
-      // onPointerOver={() => {
-      //   hover(true);
-      // }}
-      // onPointerOut={() => {
-      //   hover(false);
-      // }}
-      ref={ref}
-      dispose={null}
-      whileHover={{ scale: 1.4 }}
-      {...props}
-    >
-      <Billboard>
-        <Html
-          center
-          distanceFactor={20}
-          zIndexRange={[0, -1]}
-          position={[0, 1.4, 0]}
-          className={classNames({
-            [styles.notSelectable]: opacityDown,
-          })}
-        >
-          {isQualified ? (
-            <img className={styles.winner} src="/images/icons/ui/crown.svg" alt="qualified" />
-          ) : (
-            <StrokeText className={styles.speed} style={{ '--player-color': playerColor }}>
-              {currentSpeed}
+    vehicleImage && (
+      <motion3d.group
+        // onPointerOver={() => {
+        //   hover(true);
+        // }}
+        // onPointerOut={() => {
+        //   hover(false);
+        // }}
+        ref={ref}
+        dispose={null}
+        whileHover={{ scale: 1.4 }}
+        {...props}
+      >
+        <Billboard>
+          <Html
+            center
+            distanceFactor={20}
+            zIndexRange={[0, -1]}
+            position={[0, 1.4, 0]}
+            className={classNames({
+              [styles.notSelectable]: opacityDown,
+            })}
+          >
+            {isQualified ? (
+              <img className={styles.winner} src="/images/icons/ui/crown.svg" alt="qualified" />
+            ) : (
+              <StrokeText className={styles.speed} style={{ '--player-color': playerColor }}>
+                {currentSpeed}
+              </StrokeText>
+            )}
+          </Html>
+          <Html
+            center
+            distanceFactor={20}
+            zIndexRange={[0, -1]}
+            position-y={0.1}
+            className={classNames({
+              [styles.notSelectable]: opacityDown,
+            })}
+          >
+            <StrokeText className={styles.billboardName} style={{ '--player-color': playerColor }}>
+              {player.state?.name}
             </StrokeText>
-          )}
-        </Html>
-        <Html
-          center
-          distanceFactor={20}
-          zIndexRange={[0, -1]}
-          position-y={0.1}
-          className={classNames({
-            [styles.notSelectable]: opacityDown,
-          })}
-        >
-          <StrokeText className={styles.billboardName} style={{ '--player-color': playerColor }}>
-            {player.state?.name}
-          </StrokeText>
-        </Html>
+          </Html>
 
-        <Image
-          url={vehicleImage}
-          side={DoubleSide}
-          transparent
-          position={[0, 0.5, 0]}
-          opacity={opacityDown ? 0.6 : 1}
-        />
-      </Billboard>
-    </motion3d.group>
+          <Image
+            url={vehicleImage}
+            side={DoubleSide}
+            transparent
+            position={[0, 0.5, 0]}
+            opacity={opacityDown ? 0.6 : 1}
+          />
+        </Billboard>
+      </motion3d.group>
+    )
   );
 });
 
