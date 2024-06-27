@@ -67,6 +67,10 @@ function Scoreboard({ className, ...props }) {
     setSortedPlayers([...players].sort((a, b) => b.getState('points') - a.getState('points')));
   }, [getState('turnPhase')]);
 
+  const getPointsText = (points) => {
+    return points <= 1 ? 'case' : 'cases';
+  };
+
   return (
     <div className={classNames(styles.wrapper, className)} {...props}>
       <Reorder.Group axis="y" values={sortedPlayers} onReorder={setSortedPlayers} className={styles.board}>
@@ -87,7 +91,9 @@ function Scoreboard({ className, ...props }) {
                 {player?.state.name}
               </StrokeText>
               <p className={styles.score}>
-                {finishers.includes(player) ? 'Arrivé !' : player.getState('points') + ' cases'}
+                {finishers.includes(player)
+                  ? 'Arrivé !'
+                  : `${player.getState('points')} ${getPointsText(player.getState('points'))}`}
               </p>
               <VehiculeIcons player={player} className={styles.vehicule} />
               <div className={styles.mask} style={{ backgroundColor: player.getState('colorLight') }}>

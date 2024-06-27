@@ -69,6 +69,8 @@ const Vehicule = forwardRef(({ player, targetable, opacityDown, ...props }, ref)
 
   const playerColor = player.getState('color');
 
+  const isQualified = player.getState('qualified');
+
   return (
     <motion3d.group
       // onPointerOver={() => {
@@ -92,9 +94,13 @@ const Vehicule = forwardRef(({ player, targetable, opacityDown, ...props }, ref)
             [styles.notSelectable]: opacityDown,
           })}
         >
-          <StrokeText className={styles.speed} style={{ '--player-color': playerColor }}>
-            {currentSpeed}
-          </StrokeText>
+          {isQualified ? (
+            <img className={styles.winner} src="/images/icons/ui/crown.svg" alt="qualified" />
+          ) : (
+            <StrokeText className={styles.speed} style={{ '--player-color': playerColor }}>
+              {currentSpeed}
+            </StrokeText>
+          )}
         </Html>
         <Html
           center

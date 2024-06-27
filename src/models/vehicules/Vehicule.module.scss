@@ -9,6 +9,13 @@
     }
 }
 
+.winner {
+    height: rem(70);
+    width: rem(62);
+    pointer-events: none;
+    user-select: none;
+}
+
 .speed {
     font-size: rem(70);
     font-family: $polaquita-font;
