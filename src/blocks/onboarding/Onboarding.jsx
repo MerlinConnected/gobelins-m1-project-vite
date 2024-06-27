@@ -86,20 +86,20 @@ function Onboarding({ className, ...props }) {
       <Logo size="large" className={styles.logo} />
 
       <div className={styles.rulesWrapper}>
-        <motion.h3 className={styles.title} {...textLineAppear}>
+        <motion.h3 className={styles.title} {...textLineAppear} transition={{ duration: 0.4, delay: 1 }}>
           comment jouer ?
         </motion.h3>
-        <motion.ul className={styles.tuto} {...orchestrate({ stagger: 0.2 })}>
+        <motion.ul className={styles.tuto} {...orchestrate({ stagger: 0.2, delay: 1.1 })}>
           <motion.ol {...textLineAppear}>Arrive au plus vite, ne sois pas dernier</motion.ol>
           <motion.ol {...textLineAppear}>Ralentis les autres et assure ta place</motion.ol>
         </motion.ul>
-        <motion.div className={styles.infos} {...orchestrate({ stagger: 0.2, delay: 0.8 })}>
+        <motion.div className={styles.infos} {...orchestrate({ stagger: 0.2, delay: 1.5 })}>
           <motion.span {...textLineAppear}>4 Joueurs</motion.span>
           <motion.span {...textLineAppear}>5-10 min</motion.span>
         </motion.div>
       </div>
 
-      <motion.div className={styles.cardsWrapper} {...orchestrate({ stagger: 0.1 })}>
+      <motion.div className={styles.cardsWrapper} {...orchestrate({ stagger: 0.2, delay: 1.9 })}>
         <div className={classNames(styles.playWrapper)}>
           <AnimatePresence>
             <ActionButton

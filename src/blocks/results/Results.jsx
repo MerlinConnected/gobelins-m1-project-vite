@@ -32,6 +32,8 @@ function Results({ className, ...props }) {
     }
   });
 
+  console.log(players);
+
   return (
     finishers && (
       <motion.div
@@ -48,7 +50,7 @@ function Results({ className, ...props }) {
           opacity: 0,
         }}
       >
-        <div className={classNames(styles.results, { [styles.resultsDefeat]: !finishers.includes(me) })}>
+        <div className={classNames(styles.results)}>
           {finishers.includes(me) ? (
             <StrokeText large className={styles.resultsTitle}>
               Victoire
@@ -61,9 +63,6 @@ function Results({ className, ...props }) {
 
           <div className={styles.players}>
             <div className={styles.finishers}>
-              {finishers.includes(me) && (
-                <div className={styles.finishersBg}></div>
-              )}
               {finishers.map((finisher, index) => (
                 <div key={index} className={styles.player}>
                   <StrokeText regular className={styles.name} color={finisher.getState('color')}>
@@ -75,7 +74,6 @@ function Results({ className, ...props }) {
             </div>
 
             <div className={styles.looser}>
-
               {players.map((player, index) =>
                 !finishers.includes(player) ? (
                   <div key={index} className={styles.player}>
@@ -85,19 +83,15 @@ function Results({ className, ...props }) {
                     </StrokeText>
                     <img src={player.getState('status')?.icon} alt="" className={styles.status} />
                   </div>
-
                 ) : null
               )}
             </div>
-
           </div>
 
-          <CircleButton
-            onClick={() => removeRoomHash()}
-            icon="replay"
-            color="var(--color-button-blue)"
-            large
-          />
+          <div className={styles.buttons}>
+            <CircleButton onClick={() => removeRoomHash()} icon="replay" color="var(--color-button-blue)" large />
+            <CircleButton icon="share" color="#0C0C0F" large />
+          </div>
         </div>
       </motion.div>
     )

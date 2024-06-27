@@ -40,6 +40,30 @@ export const homeCardAppear = {
   transition: { ...homeBaseTransition },
 };
 
+export const scaleRotateAnimation = {
+  variants: {
+    initial: { opacity: 0, scale: 0.5, rotate: -10 },
+    animate: { opacity: 1, scale: 1, rotate: 0 },
+    exit: { opacity: 0, scale: 0.5, rotate: -10 },
+  },
+  transition: {
+    duration: 0.6,
+    ease: bezier.backEaseInOut,
+  },
+};
+
+export const scaleRotateAnimationInvert = {
+  variants: {
+    initial: { opacity: 0, scale: 1.8, rotate: -10 },
+    animate: { opacity: 1, scale: 1, rotate: 0 },
+    exit: { opacity: 0, scale: 1.8, rotate: -10 },
+  },
+  transition: {
+    duration: 0.6,
+    ease: bezier.backEaseInOut,
+  },
+};
+
 export const textAppearRotate = {
   variants: {
     initial: { opacity: 0, scale: 0.25, rotate: -6 },
@@ -83,6 +107,48 @@ export const pageTransition = {
   },
   transition: {
     duration: 1.5,
+  },
+};
+
+export const onLogoAnimation = {
+  initial: {
+    y: -50,
+    opacity: 0,
+  },
+  animate: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      y: {
+        duration: 0.3,
+        ease: bezier.quadEaseIn,
+      },
+      opacity: {
+        duration: 0.15,
+        ease: bezier.principle,
+      },
+    },
+  },
+};
+
+export const timeLogoAnimation = {
+  initial: {
+    scale: 0,
+    opacity: 0,
+  },
+  animate: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      scale: {
+        duration: 0.8,
+        ease: bezier.backEaseOut,
+      },
+      opacity: {
+        duration: 0.2,
+        ease: bezier.backEaseInOut,
+      },
+    },
   },
 };
 
