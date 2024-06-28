@@ -222,7 +222,7 @@ export const piedTransportCard = {
 export const initialEventDrawer = [
   {
     id: transportDrawer.length + actionDrawer.length + 1,
-    name: 'MANIFESTION CONTRE LES SECRET SANTAS FORCES AU TRAVAIL',
+    name: 'MANIFESTATION CONTRE LES SECRET SANTAS FORCES AU TRAVAIL',
     type: 'event',
     impact: 0,
     category: CATEGORY.deuxRoues,
