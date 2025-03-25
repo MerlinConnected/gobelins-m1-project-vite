@@ -100,7 +100,7 @@ export const TIME_PLAYER_TURN = 25;
 export const TIME_END_TURN = 4;
 export const TIME_RESULT = 2;
 
-export const MAX_POINTS = 16;
+export const MAX_POINTS = 13;
 export const MAX_WINNERS = 3;
 // ---------------
 
